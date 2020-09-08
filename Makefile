@@ -56,6 +56,7 @@ src/builtin/access.c \
 src/builtin/ft_setenv.c \
 src/builtin/ft_unsetenv.c \
 src/builtin/ft_type.c \
+src/builtin/ft_intern_var.c \
 src/line_edition/add_key.c \
 src/line_edition/clipping.c \
 src/line_edition/ctrl_k.c \
@@ -79,6 +80,7 @@ src/utilities/ft_strjoin_and_free.c \
 src/utilities/set_oldpwd.c \
 src/utilities/clear_token.c \
 src/utilities/increment_shell_level.c \
+src/utilities/get_the_last_token.c \
 src/executor/print_binary_tree.c
 
 
@@ -156,7 +158,9 @@ check_syntax.o \
 jump_single_or_double_quote.o \
 ft_type.o \
 create_non_quoted_string.o \
-print_binary_tree.o
+print_binary_tree.o \
+ft_intern_var.o \
+get_the_last_token.o
 
 OBJS_PATH = obj/
 

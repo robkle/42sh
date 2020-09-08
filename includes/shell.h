@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/09/06 15:48:38 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/07 15:42:48 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <fcntl.h>
 # include <term.h>
 # include <termios.h>
+# include <stdbool.h>
 
 # include "shell_error.h"
 # include "ast.h"
@@ -64,6 +65,7 @@ typedef struct			s_exe
 }						t_exe;
 
 char					**g_env;
+char					**g_var;
 int						g_status;
 
 typedef	struct stat		t_stat;

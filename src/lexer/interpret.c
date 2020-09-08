@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:10 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:22 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/08 12:10:33 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void		interpret_tild(char **str)
 
 	if (str[0][0] == '~' && (str[0][1] == '\0' || str[0][1] == '/'))
 	{
-		home = get_env("HOME=", VAL);
+		if ((home = get_env("HOME=", VAL)) == NULL)
+			return ;
 		new_str = (char*)malloc(ft_strlen(home) + ft_strlen(*str) + 1);
 		ft_strcpy(new_str, home);
 		ft_strcat(new_str, &str[0][1]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 03:00:12 by tango             #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:28 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/08 12:36:13 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,11 @@ void			push_node_into_ltoken(char *input, \
 		*lst_tokens = node;
 	else
 	{
-		p = *lst_tokens;
+		p = get_the_last_token(*lst_tokens);
+	/*	p = *lst_tokens;
 		while (p->next)
 			p = p->next;
+			*/
 		p->next = node;
 	}
 	if (node->type == TOKEN_WORD)

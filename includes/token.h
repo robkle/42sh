@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 18:06:53 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/08 12:58:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ typedef struct			s_token
 	struct s_token		*next;
 }						t_token;
 
+
+t_token					*breakdown_node_for_intern_var(t_token *node);
+//int						ft_set_intern_var(t_exe *c);
+int						check_intern_var_syntax(t_token *node, \
+		t_token *lst_tokens);
+t_token					*get_the_last_token(t_token *lst_tokens);
 t_token					*get_token(char *input, char quote);
 void					deltoken(t_token **lst);
 void					print_token(t_token *token);
