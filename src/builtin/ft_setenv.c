@@ -6,29 +6,30 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/06 15:21:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/11 17:49:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	add_env(char *arg)
+char		**add_env(char *arg, char **env_list)
 {
 	int		i;
 	char	**temp;
 
 	i = -1;
-	while (g_env[++i])
+	while (env_list[++i])
 		NULL;
 	temp = (char**)malloc(sizeof(char*) * (i + 2));
 	i = -1;
-	while (g_env[++i])
-		temp[i] = g_env[i];
+	while (env_list[++i])
+		temp[i] = env_list[i];
 	temp[i] = (char*)malloc(sizeof(char) * PATH_MAX);
 	ft_strcpy(temp[i], arg);
 	temp[i + 1] = NULL;
-	free(g_env);
-	g_env = temp;
+	free(env_list);
+	env_list = temp;
+	return (env_list);
 }
 
 static void	ft_setenv_sub(char *arg)
@@ -38,7 +39,7 @@ static void	ft_setenv_sub(char *arg)
 	int		j;
 
 	split = ft_strsplit(arg, '=');
-	if ((var = get_env(split[0], VAL)))
+	if ((var = get_var(split[0], g_env, VAL)))
 	{
 		var++;
 		j = 0;
@@ -47,7 +48,7 @@ static void	ft_setenv_sub(char *arg)
 			ft_strcat(var, split[j]);
 	}
 	else
-		add_env(arg);
+		g_env = add_env(arg, g_env);
 	j = -1;
 	while (split[++j])
 		NULL;

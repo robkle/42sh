@@ -6,57 +6,76 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/08 13:19:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/15 21:31:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int		is_builtin(char *comm)
+static char		*builtin_status(t_exe *coms)
 {
-	if (ft_strequ(comm, "exit") || ft_strequ(comm, "cd") || \
-			ft_strequ(comm, "env") || ft_strequ(comm, "setenv") || \
-			ft_strequ(comm, "unsetenv") || ft_strequ(comm, "pwd") || \
-			ft_strequ(comm, "type") || ft_strequ(comm, "hash") || \
-			ft_strequ(comm, "echo"))
-		return (true);
-	return (false);
+	char		*ret_builtin;
+
+	ret_builtin = NULL;
+	if (ft_strequ(coms->av[0], "exit"))
+		ft_exit(EXIT_SUCCESS);
+	else if (check_intern_var_syntax(coms->av[0], NULL))
+		ret_builtin = ft_set_intern_var(coms);
+	else if (ft_strequ(coms->av[0], "export"))
+		ret_builtin = ft_export(coms);
+	else if (ft_strequ(coms->av[0], "unset"))
+		ret_builtin = ft_unset(coms, &g_env);
+	else if (ft_strequ(coms->av[0], "cd"))
+		ret_builtin = ft_cd(coms);
+	return (ret_builtin);
 }
 
-static void		run_builtin(t_exe *coms)
+static void		builtin_printings(t_exe *coms)
 {
-//	if (check_intern_var_syntax(coms))
-	//	ft_exit(ft_set_intern_var(coms));
 	if (ft_strequ(coms->av[0], "pwd"))
 		ft_exit(ft_pwd());
-	else if (ft_strequ(coms->av[0], "cd"))
-		ft_exit(ft_cd(coms));
 	else if (ft_strequ(coms->av[0], "env"))
 		ft_exit(ft_env());
-	else if (ft_strequ(coms->av[0], "setenv"))
-		ft_exit(ft_setenv(coms));
-	else if (ft_strequ(coms->av[0], "unsetenv"))
-		ft_exit(ft_unsetenv(coms));
 	else if (ft_strequ(coms->av[0], "echo"))
 		ft_exit(ft_echo(coms));
+	else if (ft_strequ(coms->av[0], "set"))
+		ft_exit(ft_set());
+}
+
+static void		print_ret_builtin(char *ret_builtin)
+{
+	if (ret_builtin == NULL)
+		return ;
+	else if (ft_strequ(ret_builtin, "success"))
+		ft_exit(EXIT_SUCCESS);
+	else if (ft_strequ(ret_builtin, "ft_env"))
+	{
+		ft_env();
+		ft_exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		ft_putstr_fd(ret_builtin, STDERR_FILENO);
+		ft_exit(EXIT_FAILURE);
+	}
 }
 
 int				run(t_exe *c)
 {
 	char		*path;
+	char		*ret_builtin;
 	int			status;
 
 	path = NULL;
 	status = 0;
-	if (ft_strequ(c->av[0], "exit"))
-		ft_exit(EXIT_SUCCESS);
+	ret_builtin = builtin_status(c);
 	if (fork() == 0)
 	{
 		if (c->redi != NULL)
 			handle_redirect(*c);
-		if (is_builtin(c->av[0]))
-			run_builtin(c);
-		else if ((path = is_in_path(c)))
+		print_ret_builtin(ret_builtin);
+		builtin_printings(c);
+		if ((path = is_in_path(c)))
 			return (make_child_path(c, path));
 		else if (possible_to_access_file(c))
 			make_child_binary(c);
@@ -66,6 +85,7 @@ int				run(t_exe *c)
 	}
 	else
 		wait(&status);
+	ret_builtin ? ft_strdel(&ret_builtin) : NULL;
 	return (status);
 }
 

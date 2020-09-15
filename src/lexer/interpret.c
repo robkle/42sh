@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:10 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/08 12:10:33 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/14 21:51:03 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		interpret_tild(char **str)
 
 	if (str[0][0] == '~' && (str[0][1] == '\0' || str[0][1] == '/'))
 	{
-		if ((home = get_env("HOME=", VAL)) == NULL)
+		if ((home = get_var("HOME", g_env, VAL)) == NULL)
 			return ;
 		new_str = (char*)malloc(ft_strlen(home) + ft_strlen(*str) + 1);
 		ft_strcpy(new_str, home);
@@ -34,7 +34,7 @@ static void	assign_str_to_node(t_token *node, char *rest, char *target)
 	char	*temp;
 
 	temp = node->data;
-	node->data = ft_strjoin(node->data, get_env(target, VAL));
+	node->data = ft_strjoin(node->data, get_var(target, g_env, VAL));
 	ft_strdel(&temp);
 	temp = node->data;
 	node->data = ft_strjoin(node->data, rest);
@@ -60,7 +60,7 @@ void		interpret_dollar(t_token *node)
 			ft_strncpy(target, &(node->data)[i + 1], j - i - 1);
 			rest = ft_strdup(&(node->data)[j]);
 			node->data[i] = '\0';
-			if (get_env(ft_strcat(target, "="), VAL))
+			if (get_var(target, g_env, VAL))
 				assign_str_to_node(node, rest, target);
 			ft_strdel(&rest);
 			ft_strdel(&target);

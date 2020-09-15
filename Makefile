@@ -52,9 +52,8 @@ src/executor/redirects_less.c \
 src/builtin/builtins.c \
 src/builtin/ft_cd.c \
 src/builtin/ft_cd_pathfinder.c \
-src/builtin/access.c \
 src/builtin/ft_setenv.c \
-src/builtin/ft_unsetenv.c \
+src/builtin/ft_unset.c \
 src/builtin/ft_type.c \
 src/builtin/ft_intern_var.c \
 src/line_edition/add_key.c \
@@ -72,7 +71,7 @@ src/line_edition/up_down_key.c \
 src/line_edition/carriage_return.c \
 src/line_edition/get_prompt.c \
 src/utilities/tool_for_checking.c \
-src/utilities/get_env.c \
+src/utilities/get_var.c \
 src/utilities/ft_strndup.c \
 src/utilities/ft_arraydel.c \
 src/utilities/error.c \
@@ -81,6 +80,7 @@ src/utilities/set_oldpwd.c \
 src/utilities/clear_token.c \
 src/utilities/increment_shell_level.c \
 src/utilities/get_the_last_token.c \
+src/utilities/access.c \
 src/executor/print_binary_tree.c
 
 
@@ -107,7 +107,7 @@ pipe_sequence.o \
 pipeline.o \
 simple_command.o \
 tool_for_checking.o \
-get_env.o \
+get_var.o \
 ft_strndup.o \
 ft_arraydel.o \
 error.o \
@@ -128,7 +128,7 @@ ft_cd.o \
 ft_cd_pathfinder.o \
 access.o \
 ft_setenv.o \
-ft_unsetenv.o \
+ft_unset.o \
 children.o \
 check_path.o \
 heredoc.o \

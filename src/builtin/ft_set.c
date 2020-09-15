@@ -6,24 +6,15 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 13:52:42 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/07 15:04:31 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/08 14:14:55 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int     ft_set(char *value)
+int         ft_set(void)
 {
-    if (value == NULL)
-    {
-        
-    }
-    else if (g_env == NULL)
-    {
-        
-    }
-    else
-    {
+    char    **sort;
 
-    }
+
 }

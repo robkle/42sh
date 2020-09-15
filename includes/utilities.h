@@ -6,13 +6,14 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 14:48:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/14 21:40:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILITIES_H
 # define UTILITIES_H
 
+char	**add_env(char *arg, char **env_list);
 int		is_open_dquote(char *input, int level, char *quote);
 int		is_made_of_digits(char *data);
 int		input_contain_dquote(char *input);

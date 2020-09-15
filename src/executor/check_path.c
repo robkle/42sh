@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:41:44 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/14 21:51:43 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	**check_path(t_exe *c)
 
 	if (c->av[0][0] == '.' || c->av[0][0] == '/')
 		return (NULL);
-	if ((path = get_env("PATH=", VAL)))
+	if ((path = get_var("PATH", g_env, VAL)))
 		return (ft_strsplit(path, ':'));
 	else
 		return (NULL);

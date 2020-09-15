@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   increment_shell_level.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 17:56:58 by tango             #+#    #+#             */
-/*   Updated: 2020/08/05 05:46:08 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/15 21:12:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void		increment_shlvl(void)
 	int		nb;
 	char	*ascii;
 
-	shlvl = get_env("SHLVL", VAL);
-	shlvl++;
+	shlvl = get_var("SHLVL", g_env, VAL);
 	nb = ft_atoi(shlvl);
 	nb++;
 	ascii = ft_itoa(nb);

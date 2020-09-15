@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/09/07 15:42:48 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/15 21:53:28 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,13 @@ t_astnode				*syntax_analysis(t_token *token);
 ** Utilities
 */
 
-char					*get_env(char *name, int keyval);
+char					*get_var(char *name, char **lst_var, int keyval);
 int						ft_isspace(int c);
 char					*ft_strndup(char *str, size_t len);
 void					ft_arraydel(char **string_array);
 char					*is_in_path(t_exe *c);
 int						make_child_path(t_exe *c, char *path);
 void					make_child_binary(t_exe *c);
-int						possible_to_access_dir(t_exe *c);
 int						possible_to_access_file(t_exe *c);
 
 /*
@@ -108,14 +107,17 @@ void					get_prompt(void);
 */
 
 int						ft_env(void);
+int						ft_set(void);
 int						ft_pwd(void);
 int						ft_echo(t_exe *c);
 int						ft_exit(int opt);
-int						ft_cd(t_exe *c);
-int						ft_cd_pathfinder(t_exe *c);
+char					*ft_cd(t_exe *c);
+char					*ft_cd_pathfinder(t_exe *c);
 int						ft_setenv(t_exe *c);
-int						ft_unsetenv(t_exe *c);
+char					*ft_unset(t_exe *c, char ***lst_var);
+char					*ft_export(t_exe *c);
 void					ft_type(t_exe *c);
+char					*ft_set_intern_var(t_exe *c);
 
 /*
 ** Signal

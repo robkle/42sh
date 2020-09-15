@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   get_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 14:49:46 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:46:06 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/15 21:11:44 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char		*get_env(char *name, int keyval)
+char		*get_var(char *name, char **lst_var, int keyval)
 {
 	int		i;
-	char	*ret;
+	int		len;
 
 	i = -1;
-	while (g_env[++i])
+	len = ft_strlen(name);
+	while (lst_var[++i])
 	{
 		if (keyval == VAL)
 		{
-			if (ft_strstr(g_env[i], name) && name[0] == g_env[i][0])
-				return (ft_strstr_e(g_env[i], name));
+			if (ft_strnequ(lst_var[i], name, len) && \
+				name[0] == lst_var[i][0] && lst_var[i][len] == '=')
+				return (&lst_var[i][len + 1]);
 		}
 		else
 		{
-			if ((ret = ft_strstr(g_env[i], name)) && name[0] == g_env[i][0])
-				return (ret);
+			if (ft_strnequ(lst_var[i], name, len) && \
+				name[0] == lst_var[i][0] && lst_var[i][len] == '=')
+				return (lst_var[i]);
 		}
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 13:01:13 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/08 13:24:08 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/15 20:54:29 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ t_token     *breakdown_node_for_intern_var(t_token *node)
     return (leader);
 }
 
-int	        check_intern_var_syntax(t_token *node, t_token *lst_tokens)
+int	        check_intern_var_syntax(char *data, t_token *lst_tokens)
 {
     t_token *last_token;
-    char    *data;
 
     last_token = NULL;
     last_token = get_the_last_token(lst_tokens);
@@ -41,7 +40,6 @@ int	        check_intern_var_syntax(t_token *node, t_token *lst_tokens)
         last_token->type != TOKEN_AND_IF && \
         last_token->type != TOKEN_OR_IF)
         return (false);
-    data = node->data;
     if (!ft_isalpha(*data))
         return (false);
     while (*data != '=' && *data != '\0')
@@ -55,11 +53,30 @@ int	        check_intern_var_syntax(t_token *node, t_token *lst_tokens)
     return (true);
 }
 
-/*
-int						ft_set_intern_var(t_exe *c)
+char		*ft_set_intern_var(t_exe *c)
 {
-    (void)c;
+    char    *var;
+    char    *copy_key;
+    char    *combiend;
 
-    return (0);
+    copy_key = ft_strndup(c->av[0], (int)(ft_strchr(c->av[0], '=') - c->av[0]));
+    if (g_var == NULL && (g_var = (char**)ft_memalloc(sizeof(char*) * 2)))
+    {
+        g_var[0] = (char*)ft_memalloc(PATH_MAX);
+        g_var[0] = ft_strcpy(g_var[0], c->av[0]);
+        g_var[0] = ft_strcat(g_var[0], c->av[1]);
+    }
+    else if ((var = get_var(copy_key, g_var, KEY)))
+    {
+        var = ft_strcpy(var, c->av[0]);
+        var = ft_strcat(var, c->av[1]);
+    }
+    else
+    {
+        combiend = ft_strjoin(c->av[0], c->av[1]);
+        g_var = add_env(combiend, g_var);
+        ft_strdel(&combiend);
+    }
+    ft_strdel(&copy_key);
+    return (ft_strdup("success"));
 }
-*/
