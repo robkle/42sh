@@ -6,13 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/17 21:46:44 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/06 18:48:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void post_signal(t_l *l)
+void			post_signal(t_l *l)
 {
 	int tmp_pmpt;
 	int current_row;
@@ -33,26 +33,22 @@ void post_signal(t_l *l)
 	g_prompt = 0;
 }
 
-static void sig_int_handler(int sig)
+static	void	sig_int_handler(int sig)
 {
 	(void)sig;
 	g_prompt = 1;
 	ioctl(1, TIOCSTI, "");
 }
 
-static void sig_tstp_handler(int sig)
+static	void	sig_tstp_handler(int sig)
 {
 	(void)sig;
 }
 
-void sig_controller(int option)
+void			sig_controller(int option)
 {
 	if (option == PARENT)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGTTIN, SIG_IGN);
-		signal(SIGTTOU, SIG_IGN);
-		signal(SIGCHLD, SIG_IGN);
 		signal(SIGINT, sig_int_handler);
 		signal(SIGTSTP, sig_tstp_handler);
 	}

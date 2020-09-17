@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/17 22:11:42 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/15 22:03:25 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static int		shell(void)
 	get_history(&g_h, 0);
 	while (1)
 	{
+		sig_controller(PARENT);
 		if (!g_prompt)
 			get_prompt();
 		g_status = 0;
@@ -90,35 +91,16 @@ static int		shell(void)
 	return (0);
 }
 
-int				init_shell(void)
-{
-	if (!isatty())
-	{
-		//Todo define macros for errno No.5 and NO.25
-		return (EXIT_FAILURE);
-	}
-	if (!(getenv("TERM")))
-	{
-		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
-		return (EXIT_FAILURE);
-	}
-	sig_controller(PARENT);
-
-	//Put ourselves in our own process group
-
-	// Grab controll of the terminal
-
-	// Save default terminal attributes for shell
-}
-
-
 int				main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
 	g_env = set_env(envp);
-	if (!init_shell())
-		ft_exit(EXIT_FAILURE);
 	increment_shlvl();
+	if (!(getenv("TERM")))
+	{
+		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
+		return (-1);
+	}
 	return (shell());
 }

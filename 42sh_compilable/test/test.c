@@ -1,0 +1,13 @@
+#include <stdio.h>
+
+char **g_var;
+
+int main(void)
+{
+	for (int i = 0; i < 2; ++i)
+	{
+		int b = 0;
+
+	}
+	return (0);
+}
