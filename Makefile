@@ -59,7 +59,8 @@ src/builtin/ft_intern_var.c \
 src/line_edition/add_key.c \
 src/line_edition/clipping.c \
 src/line_edition/ctrl_k.c \
-src/line_edition/ctrl_l.c \
+src/line_edition/paste_screen.c \
+src/line_edition/paste_background.c \
 src/line_edition/ctrl_left_right.c \
 src/line_edition/ctrl_up_down.c \
 src/line_edition/ft_get_line.c \
@@ -135,7 +136,8 @@ heredoc.o \
 add_key.o \
 clipping.o \
 ctrl_k.o \
-ctrl_l.o \
+paste_screen.o \
+paste_background.o \
 ctrl_left_right.o \
 ctrl_up_down.o \
 history.o \

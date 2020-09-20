@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_l.c                                           :+:      :+:    :+:   */
+/*   paste_screen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 01:37:15 by tango             #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:49 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/21 03:36:40 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void			ctrl_l_apply_screen(t_l *l, char *clip, int i)
+static void			paste_apply_screen(t_l *l, char *clip, int i)
 {
 	apply_termcap_str("cd", 0, 0);
 	ft_putstr(clip);
@@ -40,16 +40,53 @@ static void			wind_up_cursor(t_l *l, int clip_len)
 	}
 }
 
-int					ctrl_l(t_l *l, int clip_len, int i)
+static void			unify_space(char *clip)
+{
+	while (*clip)
+	{
+		if (*clip == '\n' || *clip == '\t')		
+			*clip = ' ';
+		++clip;
+	}
+}
+
+static char			*get_clip(char raw_clip[])
+{
+	char			*clip;
+	char			*temp;
+	char			buf[BUFF_LINE_EDITION];
+	int				len;
+
+	if (ft_strlen(raw_clip) >= BUFF_LINE_EDITION)
+		clip = ft_strndup(raw_clip, BUFF_LINE_EDITION);
+	else
+		clip = ft_strdup(raw_clip);
+	temp = NULL;
+	while (read(STDIN_FILENO, buf, BUFF_LINE_EDITION) > 0)
+	{
+		temp == NULL ? ioctl(0, TIOCSTI, "") : 0;
+		temp = ft_strnjoin(clip, buf, BUFF_LINE_EDITION, &len);
+		ft_strdel(&clip);
+		clip = temp;
+		if (len != BUFF_LINE_EDITION)
+			break ;
+	}
+	unify_space(clip);
+	return (clip);
+}
+
+int					paste(t_l *l, char raw_clip[], int clip_len, int i)
 {
 	char			*clip;
 	char			*tmp;
 
-	if (!(clip = clipboard(NULL, CLIP_TAKE)))
+	if (raw_clip)
+		clip = get_clip(raw_clip);
+	else if (!(clip = clipboard(NULL, CLIP_TAKE)))
 		return (1);
 	clip_len = ft_strlen(clip);
 	i = l->x + (l->y * l->co) - l->pmpt;
-	ctrl_l_apply_screen(l, clip, i);
+	paste_apply_screen(l, clip, i);
 	tmp = ft_strnew(l->nb + clip_len);
 	if (l->line)
 		tmp = ft_strncpy(tmp, l->line, i);
@@ -60,11 +97,6 @@ int					ctrl_l(t_l *l, int clip_len, int i)
 	l->line = tmp;
 	if (l->starting_row < (l->nb + l->pmpt + clip_len) / l->co)
 		wind_up_cursor(l, clip_len);
-	l->y += (l->x + clip_len) / l->co;
-	l->x = (l->x + clip_len) % l->co;
-	if (l->x == 0)
-		tputs(tgoto(tgetstr("cm", NULL), 0,\
-					get_current_row() - 1), 1, ft_putchar);
-	l->nb += clip_len;
+	paste_background(l, clip_len);
 	return (1);
 }

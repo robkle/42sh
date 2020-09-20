@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:11:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/06 02:15:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/21 00:14:46 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void			append_char(char t[], t_l *l)
 	l->nb++;
 }
 
-static void			store_cursor_position(t_l *l)
+static void			store_cursor_position(t_l *l/*, int nb*/)
 {
 	if (l->x != l->co - 1)
 		l->x++;
@@ -73,7 +73,6 @@ static void			insert_char(char t[], t_l *l)
 			l->starting_row < (l->nb + l->pmpt) / l->co)
 	{
 		l->starting_row++;
-		apply_termcap_str("up", 0, 0);
 	}
 	store_cursor_position(l);
 }

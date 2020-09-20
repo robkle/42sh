@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:14:04 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/06 18:17:47 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/16 13:40:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void				init_term(t_l *l)
 	tcgetattr(0, &t);
 	get_set_default_term(&t);
 	t.c_lflag &= ~(ICANON | ECHO);
+	t.c_cc[VMIN] = 1;
+	t.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSANOW, &t);
 	if (!(tgetent(NULL, getenv("TERM"))))
 	{

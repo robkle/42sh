@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/06 18:18:40 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/21 03:38:32 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #  define OS "not_apple"
 # endif
 
+# define BUFF_LINE_EDITION 8
 # define LINE_TYPE_SINGLE 0
 # define LINE_TYPE_DQUOTE 1
 # define LINE_TYPE_HEREDOC 2
@@ -89,7 +90,8 @@ void					add_key(char t[], t_l *l);
 int						home_key(t_l *l);
 int						end_key(t_l *l);
 int						ctrl_k(t_l *l, int y_dec);
-int						ctrl_l(t_l *l, int clip_len, int i);
+int						paste(t_l *l, char raw_clip[], int clip_len, int i);
+void					paste_background(t_l *l, int clip_len);
 void					ctrl_left(t_l *l, int y_dec);
 void					ctrl_right(t_l *l);
 void					ctrl_up(t_l *l);
