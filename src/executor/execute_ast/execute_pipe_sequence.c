@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:37:39 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 14:28:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/23 00:40:49 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,31 @@ t_exe *exec, pid_t pid[2], int pipefd[2])
 	}
 }
 
+static void	init_job(void)
+{
+	t_job	job;
+	t_list	*new_node;
+
+	job.pgid = 0;
+	//should be set in child process
+	job.command = NULL;
+	//in execute_simple_command 
+	job.notified = 0;
+	tcgetattr(STDIN_FILENO, &job.term);
+	new_node = ft_lstnew(&job, sizeof(t_job));
+	if (g_shell.job)
+		g_shell.job = new_node;
+	else
+		ft_lstadd(&g_shell.job, new_node);
+}
+
 int			execute_pipe_sequence(t_astnode *ast, t_exe *exec)
 {
 	int		pipefd[2];
 	int		status;
 	pid_t	pid[2];
 
+	init_job();
 	if (ast->type == AST_pipe_sequence)
 	{
 		execute_pipe_left(ast, exec, pid, pipefd);

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/09/17 20:43:03 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/22 20:54:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include "token.h"
 # include "utilities.h"
 # include "line_edition.h"
-# include "job.h"
+# include "jobs.h"
 
 # define READ_END 0
 # define WRITE_END 1

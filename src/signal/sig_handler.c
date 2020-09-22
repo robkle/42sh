@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/17 21:46:44 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/22 22:30:26 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,14 @@ static void sig_int_handler(int sig)
 	ioctl(1, TIOCSTI, "");
 }
 
+/*
 static void sig_tstp_handler(int sig)
 {
 	(void)sig;
+	g_prompt = 1;
+	ioctl(1, TIOCSTI, "");
 }
+*/
 
 void sig_controller(int option)
 {
@@ -53,12 +57,17 @@ void sig_controller(int option)
 		signal(SIGTTIN, SIG_IGN);
 		signal(SIGTTOU, SIG_IGN);
 		signal(SIGCHLD, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
 		signal(SIGINT, sig_int_handler);
-		signal(SIGTSTP, sig_tstp_handler);
 	}
 	else if (option == CHILD)
 	{
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGTTIN, SIG_DFL);
+		signal(SIGTTOU, SIG_DFL);
+		signal(SIGCHLD, SIG_DFL);
 		signal(SIGTSTP, SIG_DFL);
 	}
 }

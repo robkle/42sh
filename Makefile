@@ -79,7 +79,8 @@ src/utilities/ft_strjoin_and_free.c \
 src/utilities/set_oldpwd.c \
 src/utilities/clear_token.c \
 src/utilities/increment_shell_level.c \
-src/executor/print_binary_tree.c
+src/executor/print_binary_tree.c \
+src/jobs/ft_tcgetsetpgrp.c
 
 
 OBJS_NAME = main.o \
@@ -156,7 +157,8 @@ check_syntax.o \
 jump_single_or_double_quote.o \
 ft_type.o \
 create_non_quoted_string.o \
-print_binary_tree.o
+print_binary_tree.o \
+ft_tcgetsetpgrp.o
 
 OBJS_PATH = obj/
 

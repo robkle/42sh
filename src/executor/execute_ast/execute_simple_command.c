@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 14:27:05 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/23 01:05:15 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,22 @@ static void		clear_redi(t_exe *exe)
 	exe->redi = NULL;
 }
 
+char			*get_job_command(char **av)
+{
+	char		*command;
+	char		*temp;
+	int			i;
+
+	command = ft_strdup(av[0]);
+	i = 0;
+	while (av[++i])
+	{
+		command = ft_strjoin_and_free_string1(command, " ");
+		command = ft_strjoin_and_free_string1(command, av[i]);
+	}
+	return (command);
+}
+
 int				execute_simple_command(t_astnode *ast, t_exe *exe)
 {
 	int			status;
@@ -90,6 +106,7 @@ int				execute_simple_command(t_astnode *ast, t_exe *exe)
 	}
 	else
 		get_av_cmd_name(ast, exe);
+	(t_job*)(g_shell.job->content)->command = get_job_command(exe->av);
 	status = run(exe);
 	if (exe->redi)
 		clear_redi(exe);

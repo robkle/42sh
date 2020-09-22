@@ -6,12 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/17 20:43:17 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/23 00:48:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <termios.h>
+#include <sys/ioctl.h>
 
 #include "libft.h"
 
@@ -27,11 +28,23 @@ typedef struct			s_process
 typedef struct          s_job
 {
     char                *command;
-    t_list              *first_process;
     pid_t               pgid;
     char                notified;
     struct termios      term;
-    int                 stdin;
-    int                 stdout;
-    int                 stderr;
+    t_list              *process;
+    // int                 stdin;
+    // int                 stdout;
+    // int                 stderr;
 }                       t_job;
+
+typedef struct          s_shell
+{
+    pid_t               shell_pgid;
+    struct termios      shell_tmode;
+    t_list              *job;
+}                       t_shell;
+
+t_shell     g_shell;
+
+int         ft_tcsetpgrp(int fd, pid_t pgrp_id);
+pid_t       ft_tcgetpgrp(int fd);

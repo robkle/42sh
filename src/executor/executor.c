@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 16:01:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/23 00:40:59 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ static void		builtins_printing(t_exe *coms)
 		ft_type(coms);
 	else if (!ft_strcmp(coms->av[0], "echo"))
 		status = ft_echo(coms);
+/*	else if (ft_strequ(coms->av[0], "fg"))
+		status = ft_fg(coms);
+	else if (ft_strequ(coms->av[0], "bg"))
+		status = ft_bg(coms);
+	else if (ft_strequ(coms->av[0], "jobs"))
+		status = ft_jobs(coms);*/
 	//else if (!ft_strcmp(coms->av[0], "hash"))
 		//ft_hash(coms);
 	ft_exit(status);
@@ -60,19 +66,28 @@ static int		builtins_not_printing(t_exe *coms)
 	return (EXIT_FAILURE);
 }
 
+// g_shell.job = ft_memalloc(sizeof(t_list));
+// g_shell.job->content = ft_memalloc(sizeof(t_job));
+// g_shell.job->content_size = sizeof(t_job);
+
 int				run(t_exe *c)
 {
 	char		*path;
 	int			status;
+	pid_t		cpid;
+	t_job		*p_job;
 
 	path = NULL;
 	status = 0;
 	if (is_builtin_not_printing(c->av[0]))
 		return (builtins_not_printing(c));
-	if (fork() == 0)
+	if ((cpid = fork()) == 0)
 	{
 		if (c->redi != NULL)
 			handle_redirect(*c);
+		setpgid(0, 0);
+		ft_tcsetpgrp(STDIN_FILENO, getpgrp());
+		sig_controller(CHILD);
 		if (is_builtin_printing(c->av[0]))
 			builtins_printing(c);
 		else if ((path = is_in_path(c)))
@@ -84,7 +99,15 @@ int				run(t_exe *c)
 		ft_exit(EXIT_FAILURE);
 	}
 	else
-		wait(&status);
+	{
+		
+		setpgid(cpid, cpid);
+		ft_tcsetpgrp(STDIN_FILENO, cpid);
+		waitpid(cpid, &status, WUNTRACED);
+		//WIFSTOPPED(status);
+		ft_tcsetpgrp(STDIN_FILENO, getpid());
+		tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell.shell_tmode);
+	}
 	return (status);
 }
 
