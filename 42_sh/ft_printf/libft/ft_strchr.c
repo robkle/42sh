@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_complete_command.c                         :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/16 08:30:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/05 05:49:05 by tango            ###   ########.fr       */
+/*   Created: 2019/10/18 13:50:57 by dthan             #+#    #+#             */
+/*   Updated: 2019/10/18 14:21:23 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-void	execute_complete_command(t_astnode *ast, t_exe *exe)
+char	*ft_strchr(const char *s, int c)
 {
-	if (ast->type == AST_complete_command)
-		execute_list(ast->left, exe);
-	else
-		execute_list(ast, exe);
+	while (*s)
+	{
+		if (*s == c)
+			return ((char*)s);
+		++s;
+	}
+	if (c == '\0')
+		return ((char*)s);
+	return (NULL);
 }

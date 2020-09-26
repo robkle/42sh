@@ -1,5 +1,7 @@
 NAME = 42sh
 
+FT_PRINTF_PATH = ft_printf/
+
 LIBFT_PATH = libft/
 
 FLAGS = -Wall -Werror -Wextra -g #add -g for visual debugger
@@ -170,19 +172,22 @@ all: $(NAME)
 
 $(NAME):
 	@make -C ./libft
+	@make -C ./ft_printf
 	@gcc -c $(FLAGS) $(INC) $(SRCS)
 	@mkdir -p $(OBJS_PATH)
 	@mv $(OBJS_NAME) $(OBJS_PATH)
-	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -ltermcap -o $(NAME)
+	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -L$(FT_PRINTF_PATH) -lftprintf -ltermcap -o $(NAME)
 #	 @gcc $(FLAGS) $(SRCS) libft/libft.a $(INC) -ltermcap #debug for ihwang
 
 clean:
 	@make -C ./libft clean
+	@make -C ./ft_printf clean
 	@/bin/rm -rf $(OBJS_NAME)
 	@/bin/rm -rf $(OBJS_PATH)
 
 fclean: clean
 	@make -C ./libft fclean
+	@make -C ./ft_printf fclean
 	@/bin/rm -f $(NAME)
 
 re: fclean all

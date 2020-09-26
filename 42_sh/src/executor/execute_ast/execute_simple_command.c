@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/23 01:05:15 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/26 02:45:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static void		clear_redi(t_exe *exe)
 char			*get_job_command(char **av)
 {
 	char		*command;
-	char		*temp;
 	int			i;
 
 	command = ft_strdup(av[0]);
@@ -106,7 +105,6 @@ int				execute_simple_command(t_astnode *ast, t_exe *exe)
 	}
 	else
 		get_av_cmd_name(ast, exe);
-	(t_job*)(g_shell.job->content)->command = get_job_command(exe->av);
 	status = run(exe);
 	if (exe->redi)
 		clear_redi(exe);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/23 00:40:59 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/26 02:44:57 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int				run(t_exe *c)
 	char		*path;
 	int			status;
 	pid_t		cpid;
-	t_job		*p_job;
 
 	path = NULL;
 	status = 0;
@@ -99,15 +98,16 @@ int				run(t_exe *c)
 		ft_exit(EXIT_FAILURE);
 	}
 	else
-	{
+		wait(NULL);
+	// {
 		
-		setpgid(cpid, cpid);
-		ft_tcsetpgrp(STDIN_FILENO, cpid);
-		waitpid(cpid, &status, WUNTRACED);
-		//WIFSTOPPED(status);
-		ft_tcsetpgrp(STDIN_FILENO, getpid());
-		tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell.shell_tmode);
-	}
+	// 	setpgid(cpid, cpid);
+	// 	ft_tcsetpgrp(STDIN_FILENO, cpid);
+	// 	waitpid(cpid, &status, WUNTRACED);
+	// 	//WIFSTOPPED(status);
+	// 	ft_tcsetpgrp(STDIN_FILENO, getpid());
+	// 	tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell.shell_tmode);
+	// }
 	return (status);
 }
 
