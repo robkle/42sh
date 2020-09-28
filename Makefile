@@ -57,10 +57,10 @@ src/builtin/ft_unset.c \
 src/builtin/ft_type.c \
 src/builtin/ft_intern_var.c \
 src/line_edition/add_key.c \
-src/line_edition/clipping.c \
-src/line_edition/ctrl_k.c \
-src/line_edition/paste_screen.c \
-src/line_edition/paste_background.c \
+src/line_edition/copy_paste/paste_screen.c \
+src/line_edition/copy_paste/paste_background.c \
+src/line_edition/copy_paste/clipping.c \
+src/line_edition/copy_paste/ctrl_k.c \
 src/line_edition/ctrl_left_right.c \
 src/line_edition/ctrl_up_down.c \
 src/line_edition/ft_get_line.c \
@@ -71,9 +71,9 @@ src/line_edition/term_attr.c \
 src/line_edition/up_down_key.c \
 src/line_edition/carriage_return.c \
 src/line_edition/get_prompt.c \
+src/line_edition/line_edition_utilities.c \
 src/utilities/tool_for_checking.c \
 src/utilities/get_var.c \
-src/utilities/ft_strndup.c \
 src/utilities/ft_arraydel.c \
 src/utilities/error.c \
 src/utilities/ft_strjoin_and_free.c \
@@ -82,8 +82,18 @@ src/utilities/clear_token.c \
 src/utilities/increment_shell_level.c \
 src/utilities/get_the_last_token.c \
 src/utilities/access.c \
-src/executor/print_binary_tree.c
-
+src/executor/print_binary_tree.c \
+src/auto_completion/auto_status.c \
+src/auto_completion/auto_completion.c \
+src/auto_completion/auto_dir.c \
+src/auto_completion/auto_file.c \
+src/auto_completion/auto_is_dir.c \
+src/auto_completion/auto_no_other_possibility.c \
+src/auto_completion/auto_open_path.c \
+src/auto_completion/auto_ready_to_print.c \
+src/auto_completion/auto_make_list.c \
+src/auto_completion/auto_print_list.c \
+src/auto_completion/auto_get_list.c
 
 OBJS_NAME = main.o \
 lexical_analysis.o \
@@ -109,7 +119,6 @@ pipeline.o \
 simple_command.o \
 tool_for_checking.o \
 get_var.o \
-ft_strndup.o \
 ft_arraydel.o \
 error.o \
 ft_strjoin_and_free.o \
@@ -162,7 +171,21 @@ ft_type.o \
 create_non_quoted_string.o \
 print_binary_tree.o \
 ft_intern_var.o \
-get_the_last_token.o
+get_the_last_token.o \
+auto_status.o \
+auto_completion.o \
+auto_dir.o \
+auto_file.o \
+auto_is_dir.o \
+auto_no_other_possibility.o \
+auto_open_path.o \
+auto_ready_to_print.o \
+auto_make_list.o \
+auto_print_list.o \
+auto_get_list.o \
+line_edition_utilities.o
+
+
 
 OBJS_PATH = obj/
 

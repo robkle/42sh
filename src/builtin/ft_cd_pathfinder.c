@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:04:58 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/15 21:59:43 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/24 03:09:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static char	*possible_to_access_dir(t_exe *c)
 	ret = ft_strdup("cd: ");
 	ft_strjoin(ret, c->av[1]);
 	if (access(c->av[1], F_OK))
-		return (ft_strjoin(ret, ": No such file or directory"));
+		return (ft_strjoin(ret, ": No such file or directory\n"));
 	else if ((sb.st_mode & F_TYPE_MASK) != S_IFDIR)
-		return (ft_strjoin(ret, ": Not a directory"));
+		return (ft_strjoin(ret, ": Not a directory\n"));
 	else if (access(c->av[1], X_OK))
-		return (ft_strjoin(ret, ": Permission denied"));
+		return (ft_strjoin(ret, ": Permission denied\n"));
 	ft_strdel(&ret);
 	return (NULL);
 }

@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   line_edition_utilities.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/06 00:18:18 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/05 05:46:04 by tango            ###   ########.fr       */
+/*   Created: 2020/09/26 21:29:59 by marvin            #+#    #+#             */
+/*   Updated: 2020/09/26 21:44:34 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef LINE_EDITION_UTILITIES_H
+# define LINE_EDITION_UTILITIES_H
 
-char		*ft_strndup(char *str, size_t len)
-{
-	char	*new;
-	int		i;
+# include <fcntl.h>
+# include <term.h>
+# include "libft.h"
 
-	new = ft_strnew(len);
-	i = 0;
-	while (len > 0)
-	{
-		new[i] = str[i];
-		len--;
-		i++;
-	}
-	return (new);
-}
+void					apply_termcap_str(char *str, int x, int y);
+size_t					get_current_row(void);
+size_t					get_current_column(void);
+
+#endif

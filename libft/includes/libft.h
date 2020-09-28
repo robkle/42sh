@@ -6,19 +6,22 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:02:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/20 19:17:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/28 14:29:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# define BUFF_SIZE 30
-# define FD_SIZE 2000
 
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+
+# define BUFF_SIZE 30
+# define FD_SIZE 2000
+# define TRUE 1
+# define FALSE 0
 
 typedef struct		s_list
 {
@@ -48,6 +51,8 @@ void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t				ft_strlen(const char *s);
+char				*ft_strdup(const char *s1);
+char				*ft_strndup(char *str, size_t len);
 char				*ft_strdup(const char *s1);
 char				*ft_strcpy(char *dst, const char *src);
 char				*ft_strncpy(char *dst, const char *src, size_t len);
@@ -100,7 +105,9 @@ void				ft_putnbr_fd(int n, int fd);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
+void				ft_lstdel_strdel(t_list **alst);
 void				ft_lstadd(t_list **alst, t_list *new);
+void				ft_lstadd_end(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *slst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 

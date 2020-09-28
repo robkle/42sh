@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlst_del.c                                    :+:      :+:    :+:   */
+/*   auto_print_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/28 22:01:34 by tango             #+#    #+#             */
-/*   Updated: 2020/09/28 14:31:19 by ihwang           ###   ########.fr       */
+/*   Created: 2020/09/28 13:50:11 by marvin            #+#    #+#             */
+/*   Updated: 2020/09/28 13:50:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "auto_completion.h"
 
-void		ft_strlst_del(char ***target, int nb)
+void        auto_print_list(t_l *l)
 {
+    t_list  *trav;
 
-	while (0 <= --nb)
-		ft_strdel(&(target[0][nb]));
-	free(*target);
-	*target = NULL;
+    trav = l->auto_com->list;
+    while (trav)
+    {
+        ft_putstr((char*)l->auto_com->list->content);
+        ft_putchar('\n');
+        trav = trav->next;
+    }
 }

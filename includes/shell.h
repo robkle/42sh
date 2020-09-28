@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/09/15 21:53:28 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/24 00:13:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include "token.h"
 # include "utilities.h"
 # include "line_edition.h"
+# include "auto_completion.h"
 
 # define READ_END 0
 # define WRITE_END 1
@@ -41,6 +42,8 @@
 # define F_TYPE_MASK 0170000
 # define KEY 1
 # define VAL 0
+# define TRUE 1
+# define FALSE 0
 
 typedef	struct			s_heredoc
 {

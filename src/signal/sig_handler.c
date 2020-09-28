@@ -6,11 +6,12 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/06 18:48:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/26 21:36:03 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "line_edition_utilities.h"
 
 void			post_signal(t_l *l)
 {

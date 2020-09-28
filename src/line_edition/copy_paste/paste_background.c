@@ -3,14 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   paste_background.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 03:36:24 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/21 03:36:24 by marvin           ###   ########.fr       */
+/*   Updated: 2020/09/26 21:33:52 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "copy_paste.h"
+
+static void			unify_space(char *clip)
+{
+	while (*clip)
+	{
+		if (*clip == '\n' || *clip == '\t')		
+			*clip = ' ';
+		++clip;
+	}
+}
+
+char				*get_clip_external(char raw_clip[])
+{
+	char			*clip;
+	char			*temp;
+	char			buf[BUFF_LINE_EDITION];
+	int				len;
+
+	if (ft_strlen(raw_clip) >= BUFF_LINE_EDITION)
+		clip = ft_strndup(raw_clip, BUFF_LINE_EDITION);
+	else
+		clip = ft_strdup(raw_clip);
+	temp = NULL;
+	while (read(STDIN_FILENO, buf, BUFF_LINE_EDITION) > 0)
+	{
+		temp == NULL ? ioctl(0, TIOCSTI, "") : 0;
+		temp = ft_strnjoin(clip, buf, BUFF_LINE_EDITION, &len);
+		ft_strdel(&clip);
+		clip = temp;
+		if (len != BUFF_LINE_EDITION)
+			break ;
+	}
+	unify_space(clip);
+	return (clip);
+}
 
 void				paste_background(t_l *l, int clip_len)
 {

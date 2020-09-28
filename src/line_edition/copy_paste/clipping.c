@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clipping.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:20:27 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:45 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/25 23:00:29 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "copy_paste.h"
 
 char				*clipboard(char *str, int opt)
 {

@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlst_del.c                                    :+:      :+:    :+:   */
+/*   auto_is_dir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/28 22:01:34 by tango             #+#    #+#             */
-/*   Updated: 2020/09/28 14:31:19 by ihwang           ###   ########.fr       */
+/*   Created: 2020/09/27 14:58:41 by marvin            #+#    #+#             */
+/*   Updated: 2020/09/28 22:46:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "auto_completion.h"
 
-void		ft_strlst_del(char ***target, int nb)
+char        auto_is_dir(char *path, char *filename)
 {
+    t_stat  sb;
+    char    full_path[PATH_MAX];
 
-	while (0 <= --nb)
-		ft_strdel(&(target[0][nb]));
-	free(*target);
-	*target = NULL;
+	if (!path || !filename)
+		return (FALSE);
+    ft_strcpy(full_path, path);
+    ft_strcat(full_path, "/");
+    ft_strcat(full_path, filename);
+    lstat(full_path, &sb);
+    if (sb.st_mode & S_IFDIR)
+        return (TRUE);
+    else
+        return (FALSE);
 }
+

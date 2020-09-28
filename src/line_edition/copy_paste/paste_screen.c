@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 01:37:15 by tango             #+#    #+#             */
-/*   Updated: 2020/09/21 03:36:40 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/26 21:33:53 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "copy_paste.h"
 
 static void			paste_apply_screen(t_l *l, char *clip, int i)
 {
@@ -40,48 +40,16 @@ static void			wind_up_cursor(t_l *l, int clip_len)
 	}
 }
 
-static void			unify_space(char *clip)
-{
-	while (*clip)
-	{
-		if (*clip == '\n' || *clip == '\t')		
-			*clip = ' ';
-		++clip;
-	}
-}
-
-static char			*get_clip(char raw_clip[])
-{
-	char			*clip;
-	char			*temp;
-	char			buf[BUFF_LINE_EDITION];
-	int				len;
-
-	if (ft_strlen(raw_clip) >= BUFF_LINE_EDITION)
-		clip = ft_strndup(raw_clip, BUFF_LINE_EDITION);
-	else
-		clip = ft_strdup(raw_clip);
-	temp = NULL;
-	while (read(STDIN_FILENO, buf, BUFF_LINE_EDITION) > 0)
-	{
-		temp == NULL ? ioctl(0, TIOCSTI, "") : 0;
-		temp = ft_strnjoin(clip, buf, BUFF_LINE_EDITION, &len);
-		ft_strdel(&clip);
-		clip = temp;
-		if (len != BUFF_LINE_EDITION)
-			break ;
-	}
-	unify_space(clip);
-	return (clip);
-}
-
-int					paste(t_l *l, char raw_clip[], int clip_len, int i)
+int					paste(t_l *l, char raw_clip[], int clip_len, char *autocom_clip)
 {
 	char			*clip;
 	char			*tmp;
+	int				i;
 
-	if (raw_clip)
-		clip = get_clip(raw_clip);
+	if (autocom_clip)
+		clip = autocom_clip;
+	else if (raw_clip)
+		clip = get_clip_external(raw_clip);
 	else if (!(clip = clipboard(NULL, CLIP_TAKE)))
 		return (1);
 	clip_len = ft_strlen(clip);

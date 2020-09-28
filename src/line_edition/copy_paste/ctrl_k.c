@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:18:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:47 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/26 21:40:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "line_edition.h"
 
 static void			edit_line(t_l *l, int i, int j)
 {

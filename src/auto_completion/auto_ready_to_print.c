@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlst_del.c                                    :+:      :+:    :+:   */
+/*   auto_ready_to_print.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/28 22:01:34 by tango             #+#    #+#             */
-/*   Updated: 2020/09/28 14:31:19 by ihwang           ###   ########.fr       */
+/*   Created: 2020/09/27 13:47:28 by marvin            #+#    #+#             */
+/*   Updated: 2020/09/28 13:51:18 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "auto_completion.h"
 
-void		ft_strlst_del(char ***target, int nb)
+char        is_ready_to_print(t_auto *auto_com)
 {
+    if (auto_com->list && auto_com->status & AUTO_STAT_LIST)
+        return (TRUE);
+    else
+        return (FALSE);
+}
 
-	while (0 <= --nb)
-		ft_strdel(&(target[0][nb]));
-	free(*target);
-	*target = NULL;
+void        auto_ready_to_print(t_l *l)
+{
+    if (is_ready_to_print(l->auto_com))
+        auto_print_list(l);
+	else
+		auto_make_list(l->auto_com);
 }

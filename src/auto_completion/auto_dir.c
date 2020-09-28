@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlst_del.c                                    :+:      :+:    :+:   */
+/*   auto_dir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/28 22:01:34 by tango             #+#    #+#             */
-/*   Updated: 2020/09/28 14:31:19 by ihwang           ###   ########.fr       */
+/*   Created: 2020/09/27 13:47:07 by marvin            #+#    #+#             */
+/*   Updated: 2020/09/27 15:07:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "auto_completion.h"
 
-void		ft_strlst_del(char ***target, int nb)
+
+void        auto_dir(t_l *l)
 {
-
-	while (0 <= --nb)
-		ft_strdel(&(target[0][nb]));
-	free(*target);
-	*target = NULL;
+    if (auto_is_dir(l->auto_com->path, l->auto_com->word))
+    {
+        set_status_dir(&l->auto_com->status);
+        auto_ready_to_print(l);
+    }
 }
