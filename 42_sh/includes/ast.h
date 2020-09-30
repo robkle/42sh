@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:06:11 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 11:13:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/28 03:53:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ typedef enum
 	AST_cmd_name = (1 << 7),
 	AST_cmd_prefix = (1 << 8),
 	AST_cmd_suffix = (1 << 9),
-	AST_io_redirect = (1 << 11),
-	AST_io_file = (1 << 12),
+	AST_io_redirect = (1 << 10),
+	AST_io_file = (1 << 11),
+	AST_io_here = (1 << 12),
 	AST_filename = (1 << 13),
-	AST_io_fd = (1 << 14),
-	AST_WORD = (1 << 10),
+	AST_WORD = (1 << 14),
 }	t_astnode_type;
 
 typedef struct			s_astnode
@@ -94,6 +94,8 @@ t_astnode				*io_file3(t_token **token);
 t_astnode				*io_file4(t_token **token);
 t_astnode				*io_file5(t_token **token);
 t_astnode				*io_file6(t_token **token);
+
+t_astnode		*io_number(t_token **token);
 
 t_astnode				*build_node(t_astnode_type type);
 

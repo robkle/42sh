@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:41:44 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/30 04:28:39 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int	is_in_path_sub(char *str, t_exe *c)
+static int	is_in_path_sub(char *str, t_process *c)
 {
 	DIR		*dirp;
 	t_dir	*dir;
@@ -32,7 +32,7 @@ static int	is_in_path_sub(char *str, t_exe *c)
 	return (0);
 }
 
-static char	**check_path(t_exe *c)
+static char	**check_path(t_process *c)
 {
 	char	*path;
 
@@ -44,7 +44,7 @@ static char	**check_path(t_exe *c)
 		return (NULL);
 }
 
-char		*is_in_path(t_exe *c)
+char		*is_in_path(t_process *c)
 {
 	int		i;
 	int		nb;

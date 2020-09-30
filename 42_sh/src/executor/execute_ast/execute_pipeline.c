@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:36:24 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 14:28:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/30 03:29:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		execute_pipeline(t_astnode *ast, t_exe *exe)
+int		execute_pipeline(t_astnode *ast, t_list *heredoc, t_job *job)
 {
-	return (execute_pipe_sequence(ast, exe));
+	return (execute_pipe_sequence(ast, heredoc, job));
 }

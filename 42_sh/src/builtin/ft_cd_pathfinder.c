@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_pathfinder.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:04:58 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/06 15:22:48 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/30 04:55:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	cd_shaping_env(char *str)
 	ft_strlst_del(&split, i + 1);
 }
 
-static void cd_root(t_exe *c)
+static void cd_root(t_process *c)
 {
     char    *old;
 	char	pwd[PATH_MAX];
@@ -57,7 +57,7 @@ static void cd_root(t_exe *c)
 		ft_strcpy(var_pwd, pwd);
 }
 
-static void cd_not_root(t_exe *c)
+static void cd_not_root(t_process *c)
 {
     char    *old;
 	char	pwd[PATH_MAX];
@@ -69,7 +69,7 @@ static void cd_not_root(t_exe *c)
     cd_shaping_env(c->av[1]);
 }
 
-int     	ft_cd_pathfinder(t_exe *c)
+int     	ft_cd_pathfinder(t_process *c)
 {
 	if (possible_to_access_dir(c) == EXIT_FAILURE)
 		return (EXIT_FAILURE);

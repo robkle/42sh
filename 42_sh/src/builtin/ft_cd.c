@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/06 15:48:15 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/30 04:55:41 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	cd_exchange(void)
 	return (EXIT_SUCCESS);
 }
 
-int			ft_cd(t_exe *c)
+int			ft_cd(t_process *c)
 {
 	if (c->ac == 1)
 		return (cd_no_arg());

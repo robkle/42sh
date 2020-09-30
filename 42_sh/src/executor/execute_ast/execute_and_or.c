@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_and_or.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:52 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 16:12:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/28 10:50:07 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,53 @@ void	find_iofile(t_astnode *ast)
 	}
 }
 
-void	execute_and_or(t_astnode *ast, t_exe *exe)
+// void	execute_and_or(t_astnode *ast, t_exe *exe, t_job *job)
+// {
+// 	int status;
+
+// 	if (ast->type == AST_and_or && ft_strequ(ast->data, "&&"))
+// 	{
+// 		find_iofile(ast->left);
+// 		status = execute_pipeline(ast->left, exe, job);
+// 		if (WIFEXITED(status) != 0)
+// 			execute_and_or(ast->right, exe, job);
+// 	}
+// 	else if (ast->type == AST_and_or && ft_strequ(ast->data, "||"))
+// 	{
+// 		find_iofile(ast->left);
+// 		status = execute_pipeline(ast->left, exe, job);
+// 		if (WIFEXITED(status) == 0)
+// 			execute_and_or(ast->right, exe, job);
+// 	}
+// 	else
+// 	{
+// 		find_iofile(ast);
+// 		execute_pipeline(ast, exe, job);
+// 	}
+// 	//execute_pipeline(ast, exe);
+// }
+
+// need to check for the logical AND OR
+
+void	execute_and_or(t_astnode *ast, t_list *heredoc, t_job *job)
 {
 	int status;
 
 	if (ast->type == AST_and_or && ft_strequ(ast->data, "&&"))
 	{
 		find_iofile(ast->left);
-		status = execute_pipeline(ast->left, exe);
+		status = execute_pipeline(ast->left, heredoc, job);
 		if (WIFEXITED(status) != 0)
-			execute_and_or(ast->right, exe);
+			execute_and_or(ast->right, heredoc, job);
 	}
 	else if (ast->type == AST_and_or && ft_strequ(ast->data, "||"))
 	{
 		find_iofile(ast->left);
-		status = execute_pipeline(ast->left, exe);
+		status = execute_pipeline(ast->left, heredoc, job);
 		if (WIFEXITED(status) == 0)
-			execute_and_or(ast->right, exe);
+			execute_and_or(ast->right, heredoc, job);
 	}
 	else
-	{
-		find_iofile(ast);
-		execute_pipeline(ast, exe);
-	}
+		execute_pipeline(ast, heredoc, job);
 	//execute_pipeline(ast, exe);
 }

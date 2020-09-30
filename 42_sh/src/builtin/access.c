@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   access.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/06 15:01:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/30 04:55:41 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int				possible_to_access_dir(t_exe *c)
+int				possible_to_access_dir(t_process *c)
 {
 	t_stat		sb;
 
@@ -38,19 +38,19 @@ int				possible_to_access_dir(t_exe *c)
 	return (EXIT_SUCCESS);
 }
 
-int				possible_to_access_file(t_exe *c)
+int				possible_to_access_file(t_process *p)
 {
-	if (c->av[0][0] == '.' || c->av[0][0] == '/')
+	if (p->av[0][0] == '.' || p->av[0][0] == '/')
 	{
-		if (access(c->av[0], F_OK))
+		if (access(p->av[0], F_OK))
 		{
-			error_monitor(c->av[0], ":No such file or dirrectory" \
+			error_monitor(p->av[0], ":No such file or dirrectory" \
 			, NULL, EXIT_FAILURE);
 			return (0);
 		}
-		else if (access(c->av[0], X_OK))
+		else if (access(p->av[0], X_OK))
 		{
-			error_monitor(c->av[0], ": Permission denied" \
+			error_monitor(p->av[0], ": Permission denied" \
 			, NULL, EXIT_FAILURE);
 			return (0);
 		}

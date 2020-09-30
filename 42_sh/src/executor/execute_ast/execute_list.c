@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 14:36:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/28 04:43:42 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,44 @@ void	find_iofile(t_astnode *ast)
 }
 */
 
-void	execute_list(t_astnode *ast, t_exe *exe)
+void put_job_in_foreground(t_job *job)
 {
+	/* put the job into the foreground */
+	tcsetpgrp(STDIN_FILENO, job->pgid);
+	/* wait for it to report */
+	// wait_for_job(job); not sure abt this
+	waitpid(job->pgid, NULL, WUNTRACED);
+	// put the shell back in the foreground
+	tcsetpgrp(STDIN_FILENO, g_shell.shell_pgid);
+
+	/* Restore the shell's terminal modes*/
+	tcgetattr(STDIN_FILENO, &job->term);
+	tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell.shell_tmode);
+}
+
+void	execute_list(t_astnode *ast, t_list *heredoc, t_job *first_job)
+{
+	t_job *next_job;
+
+	next_job = NULL;
 	if (ast->type == AST_list)
 	{
 		//find_iofile(ast->left);
-		execute_and_or(ast->left, exe);
-		execute_list(ast->right, exe);
+		next_job = create_job();
+		if (ft_strequ(ast->data, "&"))
+			next_job->foreground = 0;
+		execute_and_or(ast->left, heredoc, first_job);
+		if (first_job->foreground)
+			put_job_in_foreground(first_job);
+		execute_list(ast->right, heredoc, next_job);
+		if (next_job->foreground)
+			put_job_in_foreground(next_job);
 	}
 	else
 	{
 		//find_iofile(ast);
-		execute_and_or(ast, exe);
+		execute_and_or(ast, heredoc, first_job);
+		if (first_job->foreground)
+			put_job_in_foreground(first_job);
 	}
 }

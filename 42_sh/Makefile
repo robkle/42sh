@@ -25,8 +25,8 @@ src/parser/AST/word.c \
 src/parser/AST/command.c \
 src/parser/AST/complete_command.c \
 src/parser/AST/file_name.c \
-src/parser/AST/io_files1.c \
-src/parser/AST/io_files2.c \
+src/parser/AST/io_files.c \
+src/parser/AST/io_here.c \
 src/parser/AST/io_file_branch.c \
 src/parser/AST/io_redirect.c \
 src/parser/AST/list.c \
@@ -82,7 +82,8 @@ src/utilities/set_oldpwd.c \
 src/utilities/clear_token.c \
 src/utilities/increment_shell_level.c \
 src/executor/print_binary_tree.c \
-src/jobs/ft_tcgetsetpgrp.c
+src/jobs/ft_tcgetsetpgrp.c \
+src/jobs/job_utils.c
 
 
 OBJS_NAME = main.o \
@@ -99,9 +100,9 @@ word.o \
 command.o \
 complete_command.o \
 file_name.o \
-io_files1.o \
-io_files2.o \
 io_file_branch.o \
+io_files.o \
+io_here.o \
 io_redirect.o \
 list.o \
 pipe_sequence.o \
@@ -160,7 +161,10 @@ jump_single_or_double_quote.o \
 ft_type.o \
 create_non_quoted_string.o \
 print_binary_tree.o \
-ft_tcgetsetpgrp.o
+ft_tcgetsetpgrp.o \
+job_utils.o
+#io_files1.o \
+io_files2.o \
 
 OBJS_PATH = obj/
 
@@ -171,8 +175,8 @@ OBJS = $(addprefix $(OBJS_PATH), $(OBJS_NAME))
 all: $(NAME)
 
 $(NAME):
-	@make -C ./libft
-	@make -C ./ft_printf
+	@make -s -C ./libft
+	@make -s -C ./ft_printf
 	@gcc -c $(FLAGS) $(INC) $(SRCS)
 	@mkdir -p $(OBJS_PATH)
 	@mv $(OBJS_NAME) $(OBJS_PATH)
@@ -180,14 +184,14 @@ $(NAME):
 #	 @gcc $(FLAGS) $(SRCS) libft/libft.a $(INC) -ltermcap #debug for ihwang
 
 clean:
-	@make -C ./libft clean
-	@make -C ./ft_printf clean
+	@make -s -C ./libft clean
+	@make -s -C ./ft_printf clean
 	@/bin/rm -rf $(OBJS_NAME)
 	@/bin/rm -rf $(OBJS_PATH)
 
 fclean: clean
-	@make -C ./libft fclean
-	@make -C ./ft_printf fclean
+	@make -s -C ./libft fclean
+	@make -s -C ./ft_printf fclean
 	@/bin/rm -f $(NAME)
 
 re: fclean all

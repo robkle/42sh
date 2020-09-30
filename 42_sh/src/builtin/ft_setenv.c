@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_setenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/06 15:21:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/30 05:15:38 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	ft_setenv_sub(char *arg)
 	ft_strlst_del(&split, j + 1);
 }
 
-int			ft_setenv(t_exe *c)
+int			ft_setenv(t_process *c)
 {
 	int		i;
 	int		j;

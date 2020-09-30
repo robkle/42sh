@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirects_less.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 01:52:52 by tango             #+#    #+#             */
-/*   Updated: 2020/08/05 05:41:59 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/30 05:14:32 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		redirect_lessand(t_redirect *trav)
+void		redirect_lessand(t_redirect *trav, t_process *p)
 {
 	t_stat	sb;
 	int		fd;
@@ -37,25 +37,25 @@ void		redirect_lessand(t_redirect *trav)
 		ft_exit(EXIT_FAILURE);
 	}
 	else
-		dup2(fd, ft_atoi(trav->redirect_des));
+		p->stdin = fd;
 }
 
-void		redirect_less(t_redirect *trav)
+void		redirect_less(t_redirect *trav, t_process *p)
 {
 	int fd;
 
 	fd = open(trav->redirect_src, O_RDONLY);
 	if (fd == -1)
 		error_monitor(SHELL_ENOENT, trav->redirect_src, NULL, 0);
-	dup2(fd, ft_atoi(trav->redirect_des));
+	p->stdin = fd;
 }
 
-void		redirect_dless(t_exe *exe)
+void		redirect_dless(t_redirect *trav, t_process *p)
 {
 	int fd[2];
 
 	pipe(fd);
-	ft_putstr_fd(exe->heredoc->heredoc, fd[WRITE_END]);
+	ft_putstr_fd(trav->redirect_src, fd[WRITE_END]);
 	close(fd[WRITE_END]);
-	dup2(fd[READ_END], STDIN_FILENO);
+	p->stdin = fd[READ_END];
 }

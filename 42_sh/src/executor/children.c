@@ -3,55 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/06 14:31:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/30 04:57:50 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		make_child_binary(t_exe *c)
+void		make_child_binary(t_process *p)
 {
-	pid_t	pid;
 	t_stat	sb;
 	char	buf[PATH_MAX];
 
-	lstat(c->av[0], &sb);
+	lstat(p->av[0], &sb);
 	if ((sb.st_mode & F_TYPE_MASK) != S_IFREG)
 	{
-		error_monitor(c->av[0], ": is a directory", NULL, 0);
+		error_monitor(p->av[0], ": is a directory", NULL, 0);
 		return ;
 	}
-	ft_strcpy(buf, c->av[0]);
-	pid = fork();
-	if (pid == 0)
-	{
-		sig_controller(CHILD);
-		execve(buf, c->av, g_env);
-		ft_exit(EXIT_FAILURE);
-	}
-	else
-		waitpid(pid, &g_status, 0);
+	ft_strcpy(buf, p->av[0]);
+	execve(buf, p->av, g_env);
+	ft_exit(EXIT_FAILURE);
 }
 
-static void	make_child_path_sub(t_exe *c, char buf[])
+static void	make_child_path_sub(t_process *c, char buf[])
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		sig_controller(CHILD);
-		execve(buf, c->av, g_env);
-		ft_exit(EXIT_FAILURE);
-	}
-	else
-		waitpid(pid, &g_status, 0);
+	sig_controller(CHILD);
+	execve(buf, c->av, g_env);
+	ft_exit(EXIT_FAILURE);
 }
 
-int			make_child_path(t_exe *c, char *path)
+int			make_child_path(t_process *c, char *path)
 {
 	char	buf[PATH_MAX];
 

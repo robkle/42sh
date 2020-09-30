@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/26 02:47:50 by dthan            ###   ########.fr       */
+/*   Updated: 2020/09/30 06:41:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@
 
 typedef struct			s_process
 {
-    char                **argv;
+	int					ac;
+    char                **av;
     pid_t               pid;
+	int					stdin;
+	int					stdout;
+	int					stderr;
+	t_list				*redi;
     char                completed;
     char                stopped;
     int                 status;
@@ -32,10 +37,10 @@ typedef struct          s_job
     char                notified;
     struct termios      term;
     t_list              *process;
-	int					background;
-    // int                 stdin;
-    // int                 stdout;
-    // int                 stderr;
+	int					stdin;
+	int					stdout;
+	int					stderr;
+	int					foreground;
 }                       t_job;
 
 typedef struct          s_shell
@@ -49,3 +54,4 @@ t_shell     g_shell;
 
 int         ft_tcsetpgrp(int fd, pid_t pgrp_id);
 pid_t       ft_tcgetpgrp(int fd);
+t_job		*create_job();

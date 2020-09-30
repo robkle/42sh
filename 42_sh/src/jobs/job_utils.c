@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   job_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 14:46:48 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/27 04:39:03 by dthan            ###   ########.fr       */
+/*   Created: 2020/09/26 03:29:07 by dthan             #+#    #+#             */
+/*   Updated: 2020/09/26 04:30:18 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../../includes/jobs.h"
 
-void	ft_lstadd(t_list **alst, t_list *new)
+t_job	*create_job(void)
 {
-	if (alst && new)
-	{
-		new->next = *alst;
-		*alst = new;
-	}
-}
+	t_job *new;
 
-void	ft_lstadd_tail(t_list **alst, t_list *new)
-{
-	t_list *ptr;
-	#include <stdio.h>
-	if (alst && new)
-	{
-		ptr = *alst;
-		while(ptr->next)
-			ptr = ptr->next;
-		ptr->next = new;
-	}
+	new = (t_job*)ft_memalloc(sizeof(t_job));
+	new->command = NULL;
+	new->pgid = 0;
+	new->notified = 0;
+	tcgetattr(STDIN_FILENO, &new->term);
+	new->process = NULL;
+	new->stdin = STDIN_FILENO;
+	new->stdout = STDOUT_FILENO;
+	new->stderr = STDERR_FILENO;
+	new->foreground = 1;
+	return new;
 }
