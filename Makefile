@@ -88,6 +88,7 @@ src/auto_completion/auto_completion.c \
 src/auto_completion/auto_dir.c \
 src/auto_completion/auto_file.c \
 src/auto_completion/auto_is_dir.c \
+src/auto_completion/auto_other_possibility.c \
 src/auto_completion/auto_no_other_possibility.c \
 src/auto_completion/auto_open_path.c \
 src/auto_completion/auto_ready_to_print.c \
@@ -177,6 +178,7 @@ auto_completion.o \
 auto_dir.o \
 auto_file.o \
 auto_is_dir.o \
+auto_other_possibility.o \
 auto_no_other_possibility.o \
 auto_open_path.o \
 auto_ready_to_print.o \

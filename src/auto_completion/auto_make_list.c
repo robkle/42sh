@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:50:06 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/28 13:57:56 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/29 20:07:15 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void			auto_make_list(t_auto *auto_com)
 
 	if (auto_com->list && !(auto_com->status & AUTO_STAT_LIST))
 		del_lst(auto_com);
-	dirp = opendir(auto_com->path);
+	dirp = opendir(auto_com->full_path);
 	auto_get_list(auto_com, dirp);
 	closedir(dirp);
 }

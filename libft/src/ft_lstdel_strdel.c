@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 14:23:17 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/28 14:32:39 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 00:41:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void		ft_lstdel_strdel(t_list **alst)
 		ft_strdel(&copy_str);
 		temp_lst = p_lst;
 		p_lst = p_lst->next;
-		free(temp_lst->content);
 		free(temp_lst);
 	}
 	*alst = NULL;

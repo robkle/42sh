@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 21:26:59 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/29 00:07:41 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/29 20:05:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ void        set_status_list(long *status)
 void        set_status_perm(long *status)
 {
     *status |= AUTO_STAT_PERM;
+}
+
+void        set_status_root(long *status)
+{
+    *status |= AUTO_STAT_ROOT;
 }
 
 void        delete_status_new_pos(long *status)

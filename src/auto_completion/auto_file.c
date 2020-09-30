@@ -6,13 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:12 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/28 22:53:58 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 01:20:28 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "auto_completion.h"
 
-char        *auto_get_word(t_l *l)
+char        *auto_get_typed_str(t_l *l)
 {
     int     tail;
     int     head;
@@ -21,82 +21,75 @@ char        *auto_get_word(t_l *l)
     head = tail;
     while (!ft_iswhite(l->line[--head]))
         NULL;
-	return (ft_strndup(&l->line[head + 1], tail - head));
-	//l->auto_com->word = ft_strndup(&l->line[head + 1], tail - head);
+	return (ft_strndup(&l->line[head + 1], tail - head - 1));
+	//l->auto_com->typed = ft_strndup(&l->line[head + 1], tail - head);
 }
 
-void        get_path(t_l *l)
+void        get_full_path(t_auto *auto_com)
 {
-    char    path[PATH_MAX];
-    char    *temp_word;
-
-    temp_word = l->auto_com->word;
-    // if (ft_strrchr(temp_word, '/'))
-    // {
-    //     if (temp_word[0] == '/')
-    //         l->auto_com->path = ft_strsub(temp_word, 0, \
-    //             (int)(ft_strrchr(temp_word, '/') - temp_word));
-    //     // else
-    //     // {
-    //     //     ft_addchar(getcwd(path, PATH_MAX), '/');
-    //     //     l->auto_com->path = ft_strjoin(path, temp_word);
-    //     // }
-    // }
-	if (temp_word[0] == '/')
-		l->auto_com->path = ft_strsub(temp_word, 0, \
-		(int)(ft_strrchr(temp_word, '/') - temp_word));
-    else
-        l->auto_com->path = ft_strdup(getcwd(path, PATH_MAX));
+	ft_bzero(auto_com->full_path, PATH_MAX);
+	if (auto_com->typed_str[0] == '/')
+	{
+		ft_strncpy(auto_com->full_path, auto_com->typed_str, \
+			(int)(ft_strrchr(auto_com->typed_str, '/') - auto_com->typed_str));
+		set_status_root(&auto_com->status);
+	}
+	else if ((auto_com->status & AUTO_STAT_COMPLETED && \
+			auto_com->status & AUTO_STAT_DIR) || \
+			ft_strrchr(auto_com->typed_str, '/'))
+	{
+		ft_strcpy(auto_com->full_path, auto_com->cwd);
+		ft_strcat(auto_com->full_path, "/");
+		ft_strncat(auto_com->full_path, auto_com->typed_str, \
+			(int)(ft_strrchr(auto_com->typed_str, '/') - auto_com->typed_str + 1));
+	}
+	else
+		ft_strcpy(auto_com->full_path, auto_com->cwd);
 }
 
-// void        auto_get_path(t_l *l)
-// {
-//     char    path[PATH_MAX];
-//     int     tail;
-//     int     head;
-//     char    *temp;
-
-//    tail = l->x + (l->y * l->co) - l->pmpt;
-//    head = tail;
-//    while (!ft_iswhite(l->line[--head]))
-//        NULL;
-//    l->auto_com->word = ft_strndup(&l->line[head + 1], tail - head);
-    // temp = l->auto_com->word;
-    // if (ft_strrchr(temp, '/'))
-    // {
-    //     if (temp[0] == '/')
-    //         l->auto_com->path = ft_strsub(temp, 0, \
-    //             (int)(ft_strrchr(temp, '/') - temp));
-    //     else
-    //     {
-    //         ft_addchar(getcwd(path, PATH_MAX), '/');
-    //         l->auto_com->path = ft_strjoin(path, temp);
-    //     }
-    // }
-    // else
-    //     l->auto_com->path = ft_strdup(getcwd(path, PATH_MAX));
-//}
-
-char        auto_has_access(t_auto *auto_com)
+char		*auto_get_target_str(t_auto *auto_com)
 {
-    if (auto_com->path)
-    {
-        if (access(auto_com->path, F_OK))
-            return (FALSE);
-        else if (access(auto_com->path, X_OK))
-            return (FALSE);
-    }
+	int		separtor_pos;
+	size_t	typed_len;
+
+	typed_len = ft_strlen(auto_com->typed_str);
+	separtor_pos = (int)(ft_strrchr(auto_com->typed_str, '/') \
+					- auto_com->typed_str) + 1;
+	if ((auto_com->status & AUTO_STAT_COMPLETED && \
+		auto_com->status & AUTO_STAT_DIR) || separtor_pos > 0)
+		return (ft_strsub(auto_com->typed_str, separtor_pos, \
+				typed_len - separtor_pos));
+	else
+		return (ft_strdup(auto_com->typed_str));
+}
+
+char        has_access(char *full_path)
+{
+	if (access(full_path, F_OK))
+		return (FALSE);
+	else if (access(full_path, X_OK))
+		return (FALSE);
     return (TRUE);
 }
 
 void        auto_file(t_l *l)
 {
-    if (l->auto_com->word)
-        ft_strdel(&l->auto_com->word);
-    l->auto_com->word = auto_get_word(l);
-    if (!l->auto_com->path)
-		get_path(l);
-    if (auto_has_access(l->auto_com))
+	static char	prev_full_path[PATH_MAX];
+
+	if (!l->auto_com->cwd[0])
+		getcwd(l->auto_com->cwd, PATH_MAX);
+    if (l->auto_com->typed_str)
+        ft_strdel(&l->auto_com->typed_str);
+    l->auto_com->typed_str = auto_get_typed_str(l);
+    if (!l->auto_com->full_path[0])
+	{
+		get_full_path(l->auto_com);
+		ft_strcpy(prev_full_path, l->auto_com->full_path);
+	}
+	if (l->auto_com->target_str)
+		ft_strdel(&l->auto_com->target_str);
+	l->auto_com->target_str = auto_get_target_str(l->auto_com);
+    if (has_access(l->auto_com->full_path))
         auto_open_path(l);
     else
         NULL; // done
