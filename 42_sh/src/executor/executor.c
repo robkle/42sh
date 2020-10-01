@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/30 06:42:57 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/01 06:26:43 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,51 +66,6 @@ static int		builtins_not_printing(t_process *coms)
 	return (EXIT_FAILURE);
 }
 
-// g_shell.job = ft_memalloc(sizeof(t_list));
-// g_shell.job->content = ft_memalloc(sizeof(t_job));
-// g_shell.job->content_size = sizeof(t_job);
-
-// int				run(t_exe *c)
-// {
-// 	char		*path;
-// 	int			status;
-// 	pid_t		cpid;
-
-// 	path = NULL;
-// 	status = 0;
-// 	if (is_builtin_not_printing(c->av[0]))
-// 		return (builtins_not_printing(c));
-// 	if ((cpid = fork()) == 0)
-// 	{
-// 		if (c->redi != NULL)
-// 			handle_redirect(*c);
-// 		setpgid(0, 0);
-// 		ft_tcsetpgrp(STDIN_FILENO, getpgrp());
-// 		sig_controller(CHILD);
-// 		if (is_builtin_printing(c->av[0]))
-// 			builtins_printing(c);
-// 		else if ((path = is_in_path(c)))
-// 			return (make_child_path(c, path));
-// 		else if (possible_to_access_file(c))
-// 			make_child_binary(c);
-// 		else if (c->av[0][0] != '.' && c->av[0][0] != '/')
-// 			error_monitor(c->av[0], ": command not found", NULL, EXIT_FAILURE);
-// 		ft_exit(EXIT_FAILURE);
-// 	}
-// 	else
-// 		wait(NULL);
-// 	// {
-		
-// 	// 	setpgid(cpid, cpid);
-// 	// 	ft_tcsetpgrp(STDIN_FILENO, cpid);
-// 	// 	waitpid(cpid, &status, WUNTRACED);
-// 	// 	//WIFSTOPPED(status);
-// 	// 	ft_tcsetpgrp(STDIN_FILENO, getpid());
-// 	// 	tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell.shell_tmode);
-// 	// }
-// 	return (status);
-// }
-
 void lauch_child_process(t_job *j, t_process *p)
 {
 	pid_t pid;
@@ -147,7 +102,8 @@ void lauch_child_process(t_job *j, t_process *p)
 	if (is_builtin_printing(p->av[0]))
 		builtins_printing(p);
 	else if ((path = is_in_path(p)))
-		make_child_path(p, path); //return sth here
+		// return (make_child_path(c, path));
+		make_child_path(p, path); //return sth here, but why need to return?
 	else if (possible_to_access_file(p))
 		make_child_binary(p);
 	else if (p->av[0][0] != '.' && p->av[0][0] != '/')
@@ -233,19 +189,6 @@ int				lauch_process(t_job *j, t_process *p)
 // 	return (status);
 // }
 
-// void			executor(t_astnode *ast)
-// {
-// 	t_exe exec;
-
-// 	printBinaryTree(ast);
-// 	ft_bzero(&exec, sizeof(t_exe));
-// 	exec.av = (char**)malloc(sysconf(_SC_ARG_MAX));
-// 	find_heredoc(ast, &exec);
-// 	execute_complete_command(ast, &exec);
-// 	clear_ast(ast);
-	// clear_exe(&exec);
-// }
-
 // we can use lstdel here
 void	clear_heredoc(t_list *heredoc)
 {
@@ -262,16 +205,15 @@ void	clear_heredoc(t_list *heredoc)
 
 void			executor(t_astnode *ast)
 {
-	// t_exe exec;
 	t_list *heredoc;
+	t_list	*ptr_heredoc;
 
 	heredoc = NULL;
 	printBinaryTree(ast);
-	// ft_bzero(&exec, sizeof(t_exe));
-	// exec.av = (char**)malloc(sysconf(_SC_ARG_MAX));
-	find_heredoc(ast, heredoc);
-	execute_complete_command(ast, heredoc);
-	clear_heredoc(heredoc);
+	find_heredoc(ast, &heredoc);
+	ptr_heredoc = heredoc;
+	execute_complete_command(ast, &heredoc);
+	clear_heredoc(ptr_heredoc);
 	clear_ast(ast);
 }
 

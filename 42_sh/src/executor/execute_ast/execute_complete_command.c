@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:30:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/28 04:43:05 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/01 05:57:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	execute_complete_command(t_astnode *ast, t_list *heredoc)
+void	execute_complete_command(t_astnode *ast, t_list **heredoc)
 {
 	t_job *job;
 

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:37:39 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/30 05:00:47 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/01 05:57:44 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@
 // 		ft_lstadd(&g_shell.job, new_node);
 // }
 
-int			execute_pipe_sequence(t_astnode *ast, t_list *heredoc, t_job *job)
+int			execute_pipe_sequence(t_astnode *ast, t_list **heredoc, t_job *job)
 {
 	int		pipefd[2];
 	int		status;

@@ -48,6 +48,7 @@ src/executor/execute_ast/execute_command.c \
 src/executor/execute_ast/execute_simple_command.c \
 src/executor/execute_ast/execute_cmd_name.c \
 src/executor/execute_ast/execute_cmd_suffix.c \
+src/executor/execute_ast/execute_io_redirect.c \
 src/executor/handle_redirect.c \
 src/executor/redirects_great.c \
 src/executor/redirects_less.c \
@@ -126,6 +127,7 @@ execute_command.o \
 execute_simple_command.o \
 execute_cmd_name.o \
 execute_cmd_suffix.o \
+execute_io_redirect.o \
 ft_cd.o \
 ft_cd_pathfinder.o \
 access.o \

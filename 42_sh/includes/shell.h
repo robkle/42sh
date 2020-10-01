@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/09/30 05:11:03 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/01 06:05:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,16 +156,16 @@ void					executor(t_astnode *ast);
 // int						execute_command(t_astnode *ast, t_exe *exe);
 // int						execute_simple_command(t_astnode *ast, t_exe *exe);
 
-void					execute_complete_command(t_astnode *ast, t_list *heredoc);
-void					execute_list(t_astnode *ast, t_list *heredoc, t_job *fist_job);
-void					execute_and_or(t_astnode *ast, t_list *heredoc, t_job *job);
-int						execute_pipeline(t_astnode *ast, t_list *heredoc, t_job *job);
-int						execute_pipe_sequence(t_astnode *ast, t_list *heredoc, t_job *job);
-int						execute_command(t_astnode *ast, t_list *heredoc, t_job *job);
-int						execute_simple_command(t_astnode *ast, t_list *heredoc, t_job *job);
+void					execute_complete_command(t_astnode *ast, t_list **heredoc);
+void					execute_list(t_astnode *ast, t_list **heredoc, t_job *fist_job);
+void					execute_and_or(t_astnode *ast, t_list **heredoc, t_job *job);
+int						execute_pipeline(t_astnode *ast, t_list **heredoc, t_job *job);
+int						execute_pipe_sequence(t_astnode *ast, t_list **heredoc, t_job *job);
+int						execute_command(t_astnode *ast, t_list **heredoc, t_job *job);
+int						execute_simple_command(t_astnode *ast, t_list **heredoc, t_job *job);
 void	execute_cmd_name(t_astnode *ast, t_job *j, t_process *p);
-void	execute_cmd_suffix(t_astnode *ast, t_list *hd, t_job *j, t_process *p);
-void	execute_io_redirect(t_astnode *ast, t_list *hd, t_process *p);
+void	execute_cmd_suffix(t_astnode *ast, t_list **hd, t_job *j, t_process *p);
+void	execute_io_redirect(t_astnode *ast, t_list **hd, t_process *p);
 
 
 /*
@@ -201,7 +201,7 @@ void		redirect_dless(t_redirect *trav, t_process *p);
 // void					clear_exe(t_exe *exe);
 void					clear_token(t_token *token);
 
-void				find_heredoc(t_astnode *ast, t_list *heredoc);
+void				find_heredoc(t_astnode *ast, t_list **heredoc);
 void	clear_heredoc(t_list *heredoc);
 int				lauch_process(t_job *j, t_process *p);
 void lauch_child_process(t_job *j, t_process *p);

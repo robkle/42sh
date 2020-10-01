@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/28 04:43:42 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/01 05:57:20 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void put_job_in_foreground(t_job *job)
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell.shell_tmode);
 }
 
-void	execute_list(t_astnode *ast, t_list *heredoc, t_job *first_job)
+void	execute_list(t_astnode *ast, t_list **heredoc, t_job *first_job)
 {
 	t_job *next_job;
 
