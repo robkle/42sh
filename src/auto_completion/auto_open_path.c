@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:23 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/30 14:45:42 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 21:33:56 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ void		auto_open_path(t_l *l)
 {
 	int		count;
 
-	count = get_list_and_count(l->auto_com);
+	count = get_list_and_count(&l->auto_com);
 	if (count == 0)
 		return ;
 	else if (count > 1)
 	{
-		set_status_other_possibility(&l->auto_com->status);
+		set_status_other_possibility(&l->auto_com.status);
 		auto_other_possibility(l);
 	}
     else

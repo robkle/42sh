@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:14:04 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/26 21:45:10 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 14:13:30 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void				init_term(t_l *l)
 	l->co = tgetnum("co");
 	l->total_row = tgetnum("li");
 	l->starting_row = l->total_row - get_current_row();
-	l->auto_com = (t_auto*)ft_memalloc(sizeof(t_auto));
+	ft_memset(&l->auto_com, 0, sizeof(t_auto));
+	//l->auto_com = (t_auto*)ft_memalloc(sizeof(t_auto));
 }

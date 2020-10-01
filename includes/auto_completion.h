@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 21:14:14 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 00:26:19 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 14:38:58 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ char        auto_is_dir(char *path, char *filename);
 void		auto_get_list(t_auto *auto_com, DIR *dirp);
 char        *auto_get_typed_str(t_l *l);
 char        *auto_get_target_str(t_auto *auto_com);
+void        auto_reset(t_auto *auto_com);
 
 #endif

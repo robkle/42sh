@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 22:32:11 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 00:16:54 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 21:46:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct			s_auto
 {
     t_list              *list;
 	size_t				largest_list_size;
+	void				*largest_content;
 	size_t				count_list;
 	char				cwd[PATH_MAX];
     char                full_path[PATH_MAX];
@@ -71,7 +72,8 @@ typedef struct			s_l
 	int					pmpt;
 	int					type;
 	int					eof_flag;
-	t_auto				*auto_com; //need to be initialized
+	t_auto				auto_com;
+	//t_auto				*auto_com; //need to be initialized
 }						t_l;
 
 #endif

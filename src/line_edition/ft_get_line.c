@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/27 11:12:35 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 14:20:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int			parse_key(char t[], t_l *l)
 	else if (t[0] == '\t')
 		ret = auto_complete(l);
 	if (ret != AUTO_COMPLETION)
-		set_status_new_pos(&l->auto_com->status);
+		set_status_new_pos(&l->auto_com.status);
 	return (ret);
 }
 
@@ -55,7 +55,7 @@ static void			parse_key_arrow(char t[], t_l *l, t_h **h)
 		paste(l, t, 0, NULL);
 	else if (ft_isprint(t[0]) || (t[0] == '\x04' && l->nb == 0))
 		add_key(t, l);
-	set_status_new_pos(&l->auto_com->status);
+	set_status_new_pos(&l->auto_com.status);
 }
 
 void				ft_get_line(t_l *l, t_h **h)

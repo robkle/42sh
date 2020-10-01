@@ -6,7 +6,7 @@
 #    By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 19:29:47 by ihwang            #+#    #+#              #
-#    Updated: 2020/09/30 15:39:28 by ihwang           ###   ########.fr        #
+#    Updated: 2020/10/01 15:17:44 by ihwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRCS_NAME = ft_atoi.c ft_bzero.c ft_isspace.c ft_isalpha.c \
 			get_next_line.c ft_strstr_e.c ft_strlst_del.c ft_is_d_quote.c \
 			ft_strtrim_d_quote.c ft_addchar.c ft_iswhite.c ft_split_d_quote.c \
 			ft_split_shell.c ft_check_d_quote.c ft_isext.c ft_strnjoin.c \
-			ft_strndup.c ft_lstadd_end.c ft_lstdel_strdel.c ft_strrstr.c
+			ft_strndup.c ft_lstadd_end.c ft_lstdel_strdel.c ft_strrstr.c \
+			ft_lstnew_str.c
 
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)

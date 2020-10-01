@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 17:13:51 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 01:10:38 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 14:38:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,28 @@ int         auto_is_command(t_l *l)
 
 // }
 
-void        reset_auto(t_l *l)
+void        auto_reset(t_auto *auto_com)
 {
-	ft_lstdel_strdel(&l->auto_com->list);
-    ft_strdel(&l->auto_com->target_str);
-    ft_strdel(&l->auto_com->typed_str);
-	ft_memset(l->auto_com->cwd, 0, PATH_MAX);
-	ft_memset(l->auto_com->full_path, 0, PATH_MAX);
-	l->auto_com->count_list = 0;
-	l->auto_com->largest_list_size = 0;
-	l->auto_com->status = 0;
-    //free(l->auto_com);
+	ft_lstdel_strdel(&auto_com->list);
+    ft_strdel(&auto_com->target_str);
+    ft_strdel(&auto_com->typed_str);
+	ft_memset(auto_com->cwd, 0, PATH_MAX);
+	ft_memset(auto_com->full_path, 0, PATH_MAX);
+	auto_com->count_list = 0;
+	auto_com->largest_list_size = 0;
+	auto_com->status = 0;
 }
 
 int         auto_complete(t_l *l)
 {
-    if (l->auto_com->status & AUTO_STAT_NEW_POS)
-        reset_auto(l);
-	delete_status_new_pos(&l->auto_com->status);
+	if (l->auto_com.status & AUTO_STAT_NEW_POS)
+        auto_reset(&l->auto_com);
+	delete_status_new_pos(&l->auto_com.status);
     if (auto_is_command(l))
         NULL;
    //     auto_command(l);
     else
         auto_file(l);
-    delete_status_new_pos(&l->auto_com->status);
+    delete_status_new_pos(&l->auto_com.status);
     return (AUTO_COMPLETION);
 }

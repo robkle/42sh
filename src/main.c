@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/15 23:01:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 21:37:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int				main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
+
 	g_env = set_env(envp);
 	if (!get_var("HOME", g_env, KEY))
 		g_env = add_env("HOME=/tmp", g_env);
