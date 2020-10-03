@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 21:26:59 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/29 20:05:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/02 00:43:48 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,9 @@ void        delete_status_new_pos(long *status)
 void        delete_status_dir(long *status)
 {
     *status &= ~AUTO_STAT_DIR;
+}
+
+void        delete_status_completed(long *status)
+{
+    *status &= ~AUTO_STAT_COMPLETED;
 }

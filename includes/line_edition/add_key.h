@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel_strdel.c                                 :+:      :+:    :+:   */
+/*   add_key.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/28 14:23:17 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 00:41:47 by ihwang           ###   ########.fr       */
+/*   Created: 2020/09/25 22:31:13 by marvin            #+#    #+#             */
+/*   Updated: 2020/10/01 22:28:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef ADD_KEY
+# define ADD_KEY
 
-void		ft_lstdel_strdel(t_list **alst)
-{
-	t_list	*p_lst;
-	t_list	*temp_lst;
-	char	*copy_str;
+# include <sys/ioctl.h>
+# include <term.h>
+# include "line_edition_structure.h"
+# include "line_edition_utilities.h"
+# include "libft.h"
 
-	p_lst = *alst;
-	while (p_lst)
-	{
-		copy_str = (char*)p_lst->content;
-		ft_strdel(&copy_str);
-		temp_lst = p_lst;
-		p_lst = p_lst->next;
-		free(temp_lst);
-	}
-	*alst = NULL;
-}
+void				add_key(char t[], t_l *l);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 22:31:13 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/26 21:34:25 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/03 16:43:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@
 # include "line_edition_utilities.h"
 # include "libft.h"
 
-# define CLIP_SAVE 0
-# define CLIP_TAKE 1
-# define CLIP_DELT 2
+typedef enum
+{
+	CLIP_SAVE,
+	CLIP_TAKE,
+	CLIP_DELT,
+}	t_clipping_options;
 
-int						ctrl_k(t_l *l, int y_dec);
-void					ctrl_k_clipping(t_l *l, int i, int j);
+int						cutting(t_l *l, int y_dec);
+void					cutting_clipping(t_l *l, int i, int j);
 char					*clipboard(char *str, int opt);
 int						paste(t_l *l, char raw_clip[], int clip_len, \
                         char *autocom_clip);

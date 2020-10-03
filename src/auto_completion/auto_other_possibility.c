@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:59:10 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 21:33:46 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 23:43:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ size_t		measure_len_filling_up(t_auto *auto_com)
 char		is_partialy_completed(t_auto *auto_com, size_t *len)
 {
 	*len = measure_len_filling_up(auto_com);
-	return (ft_strlen(auto_com->target_str) == *len);
+	return (!(*len > 0));
 }
 
 void		auto_fulfill_upto(size_t len, t_l *l)

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/01 14:20:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/03 18:41:30 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int			parse_key(char t[], t_l *l)
 	if (t[0] == 127 && t[1] == '\0')
 		ret = bs_key(l);
 	else if (t[0] == '\v' && t[1] == '\0')
-		ret = ctrl_k(l, 0);
+		ret = cutting(l, 0);
 	else if (t[0] == '\f' && t[1] == '\0')
 		ret = paste(l, NULL, 0, NULL);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'H')
@@ -60,17 +60,22 @@ static void			parse_key_arrow(char t[], t_l *l, t_h **h)
 
 void				ft_get_line(t_l *l, t_h **h)
 {
-char			tmp[BUFF_LINE_EDITION];
+	char			tmp[BUFF_LINE_EDITION];
 
 	init_term(l);
 	while (1)
 	{
 		ft_bzero(tmp, sizeof(tmp));
-		if (!g_prompt)
+		if (!(g_signal_indicator & SIGINT_INDICATOR))
 			read(0, tmp, sizeof(tmp));
-		if (g_prompt)
+		if (g_signal_indicator & SIGINT_INDICATOR)
 		{
-			post_signal(l);
+			post_sigint(l);
+			continue ;
+		}
+		else if (g_signal_indicator & SIGWINCH_INDICATOR)
+		{
+			post_sigwinch(l);
 			continue ;
 		}
 		if (tmp[0] == '\n')

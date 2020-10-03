@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:11:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/26 21:36:55 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 22:28:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "line_edition.h"
+#include "add_key.h"
 
 static void			append_char(char t[], t_l *l)
 {

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/01 21:44:41 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/03 01:27:01 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,32 @@
 # include "line_edition_structure.h"
 # include "line_edition_utilities.h"
 # include "copy_paste.h"
+# include "add_key.h"
 
-# ifdef __APPLE__
-#  if __MAC_OS_X_VERSION_MIN_REQUIRED <= 101200
-#   define OS "sierra"
-#   define LEFT "#4"
-#  else
-#   define LEFT "#4"
-#   define OS "not_sierra"
-#  endif
-# else
-#  define LEFT "#4"
-#  define OS "not_apple"
-# endif
+/*
+** # ifdef __APPLE__
+** #  if __MAC_OS_X_VERSION_MIN_REQUIRED <= 101200
+** #   define OS "sierra"
+** #   define LEFT "#4"
+** #  else
+** #   define LEFT "#4"
+** #   define OS "not_sierra"
+** #  endif
+** # else
+** #  define LEFT "#4"
+** #  define OS "not_apple"
+** # endif
+*/
+
+# define LEFT "#4"
 
 # define BUFF_LINE_EDITION 8
 # define LINE_TYPE_SINGLE 0
 # define LINE_TYPE_DQUOTE 1
 # define LINE_TYPE_HEREDOC 2
+
 # define ERR_EOF 1
+
 # define INIT "\033[0m"
 # define BOLD "\033[1m"
 # define RED "\033[31m"
@@ -48,35 +55,7 @@
 # define TMGT "\033[95m"
 # define SKYB "\033[96m"
 
-int g_prompt;
-
 typedef struct termios	t_term;
-
-/*typedef struct			s_auto
-{
-	char				**list;
-	int					count_list;
-	long				status;
-}						t_auto;
-*/
-
-/*typedef struct			s_l
-{
-	char				*line;
-	int					co;
-	int					starting_row;
-	int					total_row;
-	int					nb;
-	int					x;
-	int					y;
-	int					down;
-	int					curr;
-	int					pmpt;
-	int					type;
-	int					eof_flag;
-	t_auto				*auto_com; //need to be initialized
-}						t_l;
-*/
 
 typedef struct			s_h
 {
@@ -85,23 +64,6 @@ typedef struct			s_h
 	short				nb;
 	int					len;
 }						t_h;
-
-/*
-typedef	enum
-{
-	AUTO_COM_FILE,
-	AUTO_COM_CMD
-}		t_auto_com_type;
-
-typedef enum
-{
-	AUTO_ROLE_FULFILL_ALL,
-	AUTO_ROLE_FULFILL_UPTO,
-	AUTO_ROLE_PRINT,
-	AUTO_ROLE_OPEN_LIST,
-	AUTO_ROLE_ERR
-}		t_auto_com_role;
-*/
 
 t_h						*g_h;
 
@@ -118,7 +80,6 @@ int						auto_complete(t_l *l);
 void					up_down(t_l *l, t_h **h, char t[]);
 void					right_key(t_l *l);
 void					left_key(t_l *l);
-void					add_key(char t[], t_l *l);
 void					ctrl_left(t_l *l, int y_dec);
 void					ctrl_right(t_l *l);
 void					ctrl_up(t_l *l);

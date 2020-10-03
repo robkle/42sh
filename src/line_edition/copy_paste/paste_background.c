@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 03:36:24 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/26 21:33:52 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/03 17:05:06 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void				paste_background(t_l *l, int clip_len)
 	l->y += (l->x + clip_len) / l->co;
 	l->x = (l->x + clip_len) % l->co;
 	if (l->x == 0)
-		 tputs(tgoto(tgetstr("cm", NULL), 0, \
-		 			get_current_row() - 1), 1, ft_putchar);
+		tputs(tgoto(tgetstr("cm", NULL), 0, \
+				get_current_row() - 1), 1, ft_putchar);
 	l->nb += clip_len;
 }

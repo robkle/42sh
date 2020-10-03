@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_dir.c                                         :+:      :+:    :+:   */
+/*   auto_lstdel_strdel.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/27 13:47:07 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 23:21:43 by ihwang           ###   ########.fr       */
+/*   Created: 2020/10/01 23:26:06 by marvin            #+#    #+#             */
+/*   Updated: 2020/10/01 23:26:20 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "auto_completion.h"
 
-void        auto_dir(t_l *l)
+void		auto_lstdel_strdel(t_list **alst)
 {
-    if (auto_is_dir(l->auto_com.full_path, l->auto_com.target_str))
-    {
-        set_status_dir(&l->auto_com.status);
-        auto_ready_to_print(l);
-    }
+	t_list	*p_lst;
+	t_list	*temp_lst;
+	char	*copy_str;
+
+	p_lst = *alst;
+	while (p_lst)
+	{
+		copy_str = (char*)p_lst->content;
+		ft_strdel(&copy_str);
+		temp_lst = p_lst;
+		p_lst = p_lst->next;
+		free(temp_lst);
+	}
+	*alst = NULL;
 }
+

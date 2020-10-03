@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_k.c                                           :+:      :+:    :+:   */
+/*   cutting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:18:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/26 21:40:10 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/03 16:59:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static void			apply_to_screen(t_l *l, int i, int j, int y_dec)
 
 static void			clip_edit_apply(t_l *l, int i, int j, int y_dec)
 {
-	ctrl_k_clipping(l, i, j);
+	cutting_clipping(l, i, j);
 	edit_line(l, i, j);
 	apply_to_screen(l, i, j, y_dec);
 }
 
-int					ctrl_k(t_l *l, int y_dec)
+int					cutting(t_l *l, int y_dec)
 {
 	int				curr;
 	int				i;

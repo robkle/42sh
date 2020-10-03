@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/01 21:37:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/03 01:33:16 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int		shell(void)
 	while (1)
 	{
 		sig_controller(PARENT);
-		if (!g_prompt)
+		if (!(g_signal_indicator & SIGINT_INDICATOR))
 			get_prompt();
 		g_status = 0;
 		quote = '\0';

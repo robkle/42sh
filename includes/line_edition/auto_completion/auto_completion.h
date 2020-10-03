@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 21:14:14 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 14:38:58 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/02 18:07:00 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void        set_status_perm(long *status);
 void        set_status_root(long *status);
 void        delete_status_new_pos(long *status);
 void        delete_status_dir(long *status);
+void        delete_status_completed(long *status);
 
 void        auto_command(t_l *l);
 void        auto_file(t_l *l);
@@ -46,10 +47,12 @@ void        auto_ready_to_print(t_l *l);
 void		auto_print_list(t_l *l);
 void		auto_make_list(t_auto *auto_com);
 
-char        auto_is_dir(char *path, char *filename);
-void		auto_get_list(t_auto *auto_com, DIR *dirp);
 char        *auto_get_typed_str(t_l *l);
 char        *auto_get_target_str(t_auto *auto_com);
+char        auto_is_dir(char *path, char *filename);
+void		auto_get_list(t_auto *auto_com, DIR *dirp);
+void        auto_reset(t_auto *auto_com);
+void		auto_lstdel_strdel(t_list **alst);
 void        auto_reset(t_auto *auto_com);
 
 #endif

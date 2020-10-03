@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 22:32:11 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 21:46:10 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/03 19:54:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct			s_l
 	int					nb;
 	int					x;
 	int					y;
-	int					down;
+//	int					down;
 	int					curr;
 	int					pmpt;
 	int					type;

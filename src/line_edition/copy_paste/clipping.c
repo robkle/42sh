@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:20:27 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/25 23:00:29 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/03 17:00:40 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char				*clipboard(char *str, int opt)
 	return (NULL);
 }
 
-void				ctrl_k_clipping(t_l *l, int i, int j)
+void				cutting_clipping(t_l *l, int i, int j)
 {
 	char			*clip;
 

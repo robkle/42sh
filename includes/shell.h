@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/09/24 00:13:22 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/03 01:35:21 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@
 # define TRUE 1
 # define FALSE 0
 
+typedef enum
+{
+	SIGINT_INDICATOR = (1 << 0),
+	SIGWINCH_INDICATOR = (1 << 1),
+}	t_signal_indicator;
+
 typedef	struct			s_heredoc
 {
 	char				*heredoc;
@@ -69,6 +75,7 @@ typedef struct			s_exe
 
 char					**g_env;
 char					**g_var;
+long					g_signal_indicator;
 int						g_status;
 
 typedef	struct stat		t_stat;
@@ -127,7 +134,8 @@ char					*ft_set_intern_var(t_exe *c);
 */
 
 void					sig_controller(int option);
-void					post_signal(t_l *l);
+void					post_sigint(t_l *l);
+void					post_sigwinch(t_l *l);
 int						iseof_in_line(char *line);
 void					eof_handler(t_l *l);
 

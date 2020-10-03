@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:12 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 21:51:01 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/02 18:02:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ void        get_full_path(t_auto *auto_com)
 	else
 		ft_strcpy(auto_com->full_path, auto_com->cwd);
 }
-
-	//separtor_pos = (int)(ft_strrchr(auto_com->typed_str, '/') \
-		//			- auto_com->typed_str) + 1;
 
 char		*auto_get_target_str(t_auto *auto_com)
 {
@@ -92,7 +89,7 @@ void        auto_file(t_l *l)
 		ft_strdel(&l->auto_com.target_str);
 	l->auto_com.target_str = auto_get_target_str(&l->auto_com);
     if (has_access(l->auto_com.full_path))
-        auto_open_path(l);
-    else
-        NULL; // done
+        return (auto_open_path(l));
+	else
+		auto_reset(&l->auto_com);
 }

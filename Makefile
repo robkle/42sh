@@ -3,7 +3,8 @@ NAME = 42sh
 LIBFT_PATH = libft/
 
 FLAGS = -Wall -Werror -Wextra -g #add -g for visual debugger
-INC = -I ./includes/ -I ./libft/includes
+INC = -I ./includes/ -I ./includes/line_edition \
+		-I ./includes/line_edition/auto_completion -I ./libft/includes
 
 SRCS = src/main.c \
 src/lexer/lexical_analysis.c \
@@ -56,11 +57,11 @@ src/builtin/ft_setenv.c \
 src/builtin/ft_unset.c \
 src/builtin/ft_type.c \
 src/builtin/ft_intern_var.c \
-src/line_edition/add_key.c \
+src/line_edition/add_key/add_key.c \
 src/line_edition/copy_paste/paste_screen.c \
 src/line_edition/copy_paste/paste_background.c \
 src/line_edition/copy_paste/clipping.c \
-src/line_edition/copy_paste/ctrl_k.c \
+src/line_edition/copy_paste/cutting.c \
 src/line_edition/ctrl_left_right.c \
 src/line_edition/ctrl_up_down.c \
 src/line_edition/ft_get_line.c \
@@ -94,7 +95,8 @@ src/auto_completion/auto_open_path.c \
 src/auto_completion/auto_ready_to_print.c \
 src/auto_completion/auto_make_list.c \
 src/auto_completion/auto_print_list.c \
-src/auto_completion/auto_get_list.c
+src/auto_completion/auto_get_list.c \
+src/auto_completion/auto_lstdel_strdel.c
 
 OBJS_NAME = main.o \
 lexical_analysis.o \
@@ -145,7 +147,7 @@ check_path.o \
 heredoc.o \
 add_key.o \
 clipping.o \
-ctrl_k.o \
+cutting.o \
 paste_screen.o \
 paste_background.o \
 ctrl_left_right.o \
@@ -185,6 +187,7 @@ auto_ready_to_print.o \
 auto_make_list.o \
 auto_print_list.o \
 auto_get_list.o \
+auto_lstdel_strdel.o \
 line_edition_utilities.o
 
 

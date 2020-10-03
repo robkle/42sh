@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:13:02 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/23 21:31:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 23:05:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int					bs_key(t_l *l)
 		apply_termcap_str("ch", 0, l->co);
 	}
 	else
-		apply_termcap_str(LEFT, 0, 0);
+		apply_termcap_str("#4", 0, 0);
 	apply_termcap_str("cd", 0, 0);
 	apply_termcap_str("sc", 0, 0);
 	bs_key_str(l);
@@ -70,7 +70,7 @@ void				left_key(t_l *l)
 	}
 	else
 	{
-		apply_termcap_str(LEFT, 0, 0);
+		apply_termcap_str("#4", 0, 0);
 		l->x--;
 	}
 }

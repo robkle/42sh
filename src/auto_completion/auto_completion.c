@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 17:13:51 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 14:38:42 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/01 23:29:28 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int         auto_is_command(t_l *l)
 
 void        auto_reset(t_auto *auto_com)
 {
-	ft_lstdel_strdel(&auto_com->list);
+	auto_lstdel_strdel(&auto_com->list);
     ft_strdel(&auto_com->target_str);
     ft_strdel(&auto_com->typed_str);
 	ft_memset(auto_com->cwd, 0, PATH_MAX);

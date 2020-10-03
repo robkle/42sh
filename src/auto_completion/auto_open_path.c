@@ -6,67 +6,51 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:23 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 21:33:56 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/02 18:43:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "auto_completion.h"
 
-// DIR			*get_dirp(t_auto *auto_com)
-// {
-// 	char	path[PATH_MAX];
-// 	DIR		*dirp;
+size_t			get_count(t_auto *auto_com)
+{
+	t_list		*iter;
+	size_t		count;
+	char		*content;
+	char		*target_str;
 
-// 	dirp = NULL;
-// 	if (auto_com->status & AUTO_STAT_ROOT)
-// 	{
-// 		dirp = opendir(auto_com->full_path);
-// 	}
-// 	else
-// 	{
-
-// 	}
-// 	auto_com->path;
-// 	ft_strcpy(path, auto_com->path);
-// 	if (auto_com->status & AUTO_STAT_DIR)
-// 	{
-// 		ft_strcat(path, "/");
-// 		ft_strcat(path, auto_com->word);
-// 	}
-// 	if ((dirp = opendir((const char*)path)))
-// 	{
-//         set_status_open(&auto_com->status);
-// 		return (dirp);
-// 	}
-// 	return (NULL);
-// }
+	iter = auto_com->list;
+	count = 0;
+	target_str = auto_com->target_str;
+	while (iter != NULL)
+    {
+		content = iter->content;
+		if ((!ft_strequ(content, "./") && !ft_strequ(content, "../")) || \
+				((ft_strequ(content, "./") ||ft_strequ(content, "../")) && \
+				(ft_strequ(target_str, ".") || ft_strequ(target_str, ".."))))
+        	count++;
+        iter = iter->next;
+    }
+	return (count);
+}
 
 char            get_list_and_count(t_auto *auto_com)
 {
-    t_list      *iter;
     int         count;
     DIR     	*dirp;
 
-//	if ((dirp = get_dirp(auto_com)) == NULL)
-	//	return (0);
 	dirp = opendir(auto_com->full_path);
     auto_get_list(auto_com, dirp);
     closedir(dirp);
-    iter = auto_com->list;
-    count = 0;
-    while (iter != NULL)
-    {
-        count++;
-        iter = iter->next;
-    }
-   if (count > 0)
+    count = get_count(auto_com);
+	if (count > 0)
        set_status_word_in_path(&auto_com->status);
     return (count);
 }
 
 void		auto_open_path(t_l *l)
 {
-	int		count;
+	size_t	count;
 
 	count = get_list_and_count(&l->auto_com);
 	if (count == 0)
