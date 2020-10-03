@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 16:44:30 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/03 00:33:35 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/04 00:56:01 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ void            auto_get_list(t_auto *auto_com, DIR *dirp)
     size_t      target_len;
 	char		identical;
 
-	char *debug;
-
 	identical = FALSE;
 	target_len = ft_strlen(auto_com->target_str);
     while ((dir = readdir(dirp)))
     {
-		debug = dir->d_name;
 		if (ft_strnequ(dir->d_name, auto_com->target_str, target_len) || \
 			auto_com->status & AUTO_STAT_DIR)
 		{
@@ -55,5 +52,3 @@ void            auto_get_list(t_auto *auto_com, DIR *dirp)
 	if (identical == FALSE)
 		delete_status_completed(&auto_com->status);
 }
-
-//				!auto_is_dir(auto_com->full_path, auto_com->target_str))
