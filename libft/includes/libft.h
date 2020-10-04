@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:02:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/02 00:22:51 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/05 00:41:25 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char				*ft_itoa(int n);
 int					ft_putchar(int c);
 void				ft_putstr(char const *s);
 void				ft_putnstr(char const *s, size_t len);
+size_t				ft_putstr_return_size(char const *s);
 void				ft_putendl(char const *s);
 void				ft_putnbr(int n);
 void				ft_putchar_fd(char c, int fd);

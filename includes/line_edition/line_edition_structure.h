@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 22:32:11 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/04 00:27:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/04 21:00:08 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ typedef struct			s_auto
     char                *target_str; //Not freed yet
 	long				status;
 }						t_auto;
+
+typedef struct			s_auto_print
+{
+	size_t				longest_col_len;
+	size_t				term_col_len;
+	size_t				col_count;
+	size_t				row_count;
+	size_t				file_count;
+}						t_auto_print;
 
 typedef struct			s_l
 {

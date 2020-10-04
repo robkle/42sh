@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/10/03 01:35:21 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/04 23:46:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@
 # define PARENT 1
 # define CHILD 0
 # define F_TYPE_MASK 0170000
-# define KEY 1
-# define VAL 0
 # define TRUE 1
 # define FALSE 0
 
@@ -97,7 +95,6 @@ t_astnode				*syntax_analysis(t_token *token);
 ** Utilities
 */
 
-char					*get_var(char *name, char **lst_var, int keyval);
 int						ft_isspace(int c);
 char					*ft_strndup(char *str, size_t len);
 void					ft_arraydel(char **string_array);
@@ -105,12 +102,6 @@ char					*is_in_path(t_exe *c);
 int						make_child_path(t_exe *c, char *path);
 void					make_child_binary(t_exe *c);
 int						possible_to_access_file(t_exe *c);
-
-/*
-** Prompt
-*/
-
-void					get_prompt(void);
 
 /*
 ** Commands

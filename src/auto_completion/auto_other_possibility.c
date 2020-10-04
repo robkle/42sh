@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:59:10 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 23:43:10 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/04 22:55:15 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ void		auto_other_possibility(t_l *l)
 	size_t	print_char_len;
 
 	if (is_partialy_completed(&l->auto_com, &print_char_len))
-		//print
-		NULL;
+		auto_print_list(l);
 	else if (l->auto_com.target_str[0] != '\0')
 		auto_fulfill_upto(print_char_len, l);
 }

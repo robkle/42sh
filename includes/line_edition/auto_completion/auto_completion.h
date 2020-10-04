@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 21:14:14 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/02 18:07:00 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/04 23:50:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "libft.h"
 # include "line_edition_structure.h"
 # include "copy_paste.h"
+# include "get_prompt.h"
 
 typedef struct dirent   t_dirent;
 typedef struct stat     t_stat;
@@ -43,9 +44,7 @@ void        auto_open_path(t_l *l);
 void        auto_other_possibility(t_l *l);
 void        auto_no_other_possibility(t_l *l);
 void        auto_dir(t_l *l);
-void        auto_ready_to_print(t_l *l);
 void		auto_print_list(t_l *l);
-void		auto_make_list(t_auto *auto_com);
 
 char        *auto_get_typed_str(t_l *l);
 char        *auto_get_target_str(t_auto *auto_com);

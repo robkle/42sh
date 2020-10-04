@@ -6,11 +6,12 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 14:49:46 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/15 21:11:44 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/04 23:46:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+//#include "shell.h"
+#include "utilities.h"
 
 char		*get_var(char *name, char **lst_var, int keyval)
 {

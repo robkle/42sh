@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_ready_to_print.c                              :+:      :+:    :+:   */
+/*   ft_putstr_return_size.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/27 13:47:28 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/01 14:22:33 by ihwang           ###   ########.fr       */
+/*   Created: 2019/10/27 14:54:08 by ihwang            #+#    #+#             */
+/*   Updated: 2020/10/05 01:19:39 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "auto_completion.h"
+#include "../includes/libft.h"
 
-char        is_ready_to_print(t_auto *auto_com)
+size_t		ft_putstr_return_size(char const *s)
 {
-    if (auto_com->list && auto_com->status & AUTO_STAT_LIST)
-        return (TRUE);
-    else
-        return (FALSE);
-}
+	size_t	ret;
 
-void        auto_ready_to_print(t_l *l)
-{
-    if (is_ready_to_print(&l->auto_com))
-        auto_print_list(l);
-	else
-		auto_make_list(&l->auto_com);
+	ret = 0;
+	while (*s)
+	{
+		write(1, s++, 1);
+		++ret;
+	}
+	return (ret);
 }

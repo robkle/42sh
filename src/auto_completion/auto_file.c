@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:12 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/02 18:02:17 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/04 20:25:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,25 @@ char        *auto_get_typed_str(t_l *l)
 
 void        get_full_path(t_auto *auto_com)
 {
+	char	*last_slash_pos;
+
+	last_slash_pos = ft_strrchr(auto_com->typed_str, '/');
 	if (auto_com->typed_str[0] == '/')
 	{
-		ft_strncpy(auto_com->full_path, auto_com->typed_str, \
-			(int)(ft_strrchr(auto_com->typed_str, '/') - auto_com->typed_str));
-		set_status_root(&auto_com->status);
+		if (last_slash_pos == auto_com->typed_str)
+			ft_strcpy(auto_com->full_path, "/");
+		else
+			ft_strncpy(auto_com->full_path, auto_com->typed_str, \
+			(int)(last_slash_pos - auto_com->typed_str));
 	}
 	else if ((auto_com->status & AUTO_STAT_COMPLETED && \
-			auto_com->status & AUTO_STAT_DIR) || \
-			ft_strrchr(auto_com->typed_str, '/'))
+			auto_com->status & AUTO_STAT_DIR) \
+			|| last_slash_pos)
 	{
 		ft_strcpy(auto_com->full_path, auto_com->cwd);
 		ft_strcat(auto_com->full_path, "/");
 		ft_strncat(auto_com->full_path, auto_com->typed_str, \
-			(int)(ft_strrchr(auto_com->typed_str, '/') - auto_com->typed_str + 1));
+			(int)(last_slash_pos - auto_com->typed_str + 1));
 	}
 	else
 		ft_strcpy(auto_com->full_path, auto_com->cwd);

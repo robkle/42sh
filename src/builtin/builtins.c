@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/15 21:05:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/04 20:08:09 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ void		merge(char **arr, int low, int mid, int high)
 	}
 }
 
-void		merge_sort(char **arr, int low, int high)
+void		merge_sort_for_var(char **arr, int low, int high)
 {
 	int		mid;
 
 	if (low < high)
 	{
 		mid = (low + high) / 2;
-		merge_sort(arr, low, mid);
-		merge_sort(arr, mid + 1, high);
+		merge_sort_for_var(arr, low, mid);
+		merge_sort_for_var(arr, mid + 1, high);
 		merge(arr, low, mid, high);
 	}
 	else
@@ -91,13 +91,13 @@ int         ft_set(void)
 	env_len = 0;
 	while (g_env[env_len])
 		++env_len;
-	merge_sort(g_env, 0, env_len - 1);
+	merge_sort_for_var(g_env, 0, env_len - 1);
 	var_len = 0;
 	if (g_var && g_var[var_len] && g_var[0][0] != '\0')
 	{
 		while (g_var[var_len] && g_var[var_len][0] != '\0')
 			++var_len;
-		merge_sort(g_var, 0, var_len - 1);
+		merge_sort_for_var(g_var, 0, var_len - 1);
 	}
 	combine_two_sorted_arrays();
 	index = 0;

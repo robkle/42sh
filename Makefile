@@ -71,7 +71,7 @@ src/line_edition/left_right_bs_key.c \
 src/line_edition/term_attr.c \
 src/line_edition/up_down_key.c \
 src/line_edition/carriage_return.c \
-src/line_edition/get_prompt.c \
+src/line_edition/get_prompt/get_prompt.c \
 src/line_edition/line_edition_utilities.c \
 src/utilities/tool_for_checking.c \
 src/utilities/get_var.c \
@@ -92,7 +92,6 @@ src/auto_completion/auto_is_dir.c \
 src/auto_completion/auto_other_possibility.c \
 src/auto_completion/auto_no_other_possibility.c \
 src/auto_completion/auto_open_path.c \
-src/auto_completion/auto_ready_to_print.c \
 src/auto_completion/auto_make_list.c \
 src/auto_completion/auto_print_list.c \
 src/auto_completion/auto_get_list.c \
@@ -183,7 +182,6 @@ auto_is_dir.o \
 auto_other_possibility.o \
 auto_no_other_possibility.o \
 auto_open_path.o \
-auto_ready_to_print.o \
 auto_make_list.o \
 auto_print_list.o \
 auto_get_list.o \

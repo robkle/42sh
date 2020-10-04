@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/03 01:27:01 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/04 23:49:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "line_edition_utilities.h"
 # include "copy_paste.h"
 # include "add_key.h"
+# include "get_prompt.h"
 
 /*
 ** # ifdef __APPLE__
