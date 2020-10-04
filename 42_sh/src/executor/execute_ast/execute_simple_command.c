@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/01 06:11:06 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/02 17:04:13 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ int				execute_simple_command(t_astnode *ast, t_list **heredoc, t_job *job)
 	}
 	else
 		execute_cmd_name(ast, job, &process);
+	// print_process(process);
+	// print_redirect(process);
+	lauch_process(job, &process); // no need to pass address, change later
+	//need to delete process (only save if it run background)
 	node = ft_lstnew(&process, sizeof(t_process));
 	if (job->process == NULL)
 		job->process = node;
 	else
 		ft_lstadd_tail(&(job->process), node);
-	// print_process(process);
-	// print_redirect(process);
-	lauch_process(job, &process); // no need to pass address, change later
-	//need to delete process (only save if it run background)
 	return (status);
 }

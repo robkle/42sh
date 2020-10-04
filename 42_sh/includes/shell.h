@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/10/01 06:05:09 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/02 04:55:46 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void					executor(t_astnode *ast);
 // int						execute_simple_command(t_astnode *ast, t_exe *exe);
 
 void					execute_complete_command(t_astnode *ast, t_list **heredoc);
-void					execute_list(t_astnode *ast, t_list **heredoc, t_job *fist_job);
+void					execute_list(t_astnode *ast, t_list **heredoc, t_list *fist_job);
 void					execute_and_or(t_astnode *ast, t_list **heredoc, t_job *job);
 int						execute_pipeline(t_astnode *ast, t_list **heredoc, t_job *job);
 int						execute_pipe_sequence(t_astnode *ast, t_list **heredoc, t_job *job);

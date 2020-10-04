@@ -84,7 +84,11 @@ src/utilities/clear_token.c \
 src/utilities/increment_shell_level.c \
 src/executor/print_binary_tree.c \
 src/jobs/ft_tcgetsetpgrp.c \
-src/jobs/job_utils.c
+src/jobs/job_utils.c \
+src/jobs/foreground_and_background.c \
+src/jobs/stopped_and_terminated_jobs.c \
+src/jobs/continuing_stopped_jobs.c \
+src/jobs/jobs.c
 
 
 OBJS_NAME = main.o \
@@ -164,9 +168,11 @@ ft_type.o \
 create_non_quoted_string.o \
 print_binary_tree.o \
 ft_tcgetsetpgrp.o \
-job_utils.o
-#io_files1.o \
-io_files2.o \
+job_utils.o \
+foreground_and_background.o \
+stopped_and_terminated_jobs.o \
+continuing_stopped_jobs.o \
+jobs.o
 
 OBJS_PATH = obj/
 

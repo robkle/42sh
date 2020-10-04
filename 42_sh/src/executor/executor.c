@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/01 06:26:43 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/04 02:45:08 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ static void		builtins_printing(t_process *p)
 		ft_type(p);
 	else if (!ft_strcmp(p->av[0], "echo"))
 		status = ft_echo(p);
-/*	else if (ft_strequ(coms->av[0], "fg"))
-		status = ft_fg(coms);
-	else if (ft_strequ(coms->av[0], "bg"))
-		status = ft_bg(coms);
-	else if (ft_strequ(coms->av[0], "jobs"))
-		status = ft_jobs(coms);*/
+	// else if (ft_strequ(coms->av[0], "fg"))
+	// 	status = ft_fg(coms);
+	// else if (ft_strequ(coms->av[0], "bg"))
+	// 	status = ft_bg(coms);
+	// else if (ft_strequ(p->av[0], "jobs"))
+	// 	status = ft_jobs();
 	//else if (!ft_strcmp(coms->av[0], "hash"))
 		//ft_hash(coms);
 	ft_exit(status);
@@ -44,7 +44,8 @@ static int		is_builtin_not_printing(char *comm)
 {
 	if (!ft_strcmp(comm, "exit") || !ft_strcmp(comm, "cd") || \
 			!ft_strcmp(comm, "env") || !ft_strcmp(comm, "setenv") || \
-			!ft_strcmp(comm, "unsetenv") || !ft_strcmp(comm, "pwd"))
+			!ft_strcmp(comm, "unsetenv") || !ft_strcmp(comm, "pwd") || \
+			ft_strequ(comm, "jobs")) // test jobs here
 		return (1);
 	return (0);
 }
@@ -63,6 +64,8 @@ static int		builtins_not_printing(t_process *coms)
 		return (ft_setenv(coms));
 	else if (!ft_strcmp(coms->av[0], "unsetenv"))
 		return (ft_unsetenv(coms));
+	// else if (ft_strequ(coms->av[0], "jobs")) // test jobs here
+	// 	return (ft_jobs());
 	return (EXIT_FAILURE);
 }
 
@@ -116,8 +119,7 @@ int				lauch_process(t_job *j, t_process *p)
 	int			status;
 	pid_t		cpid;
 	
-	// if backjground
-	// add process in the list of job or maybe not
+
 	status = 0;
 	// will take care the printing builtin no priting later
 	if (is_builtin_not_printing(p->av[0]))
@@ -129,22 +131,10 @@ int				lauch_process(t_job *j, t_process *p)
 		perror("fork");
 		exit(EXIT_FAILURE);
 	}
-	else
-	{
-		// ft_printf("From parent: %d\n", cpid);
-		if (j->pgid == 0)
-			j->pgid = cpid;
-		setpgid(cpid, j->pgid);
-	}
-	// {
-		
-	// 	setpgid(cpid, cpid);
-	// 	ft_tcsetpgrp(STDIN_FILENO, cpid);
-	// 	waitpid(cpid, &status, WUNTRACED);
-	// 	//WIFSTOPPED(status);
-	// 	ft_tcsetpgrp(STDIN_FILENO, getpid());
-	// 	tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell.shell_tmode);
-	// }
+	p->pid = cpid;
+	if (j->pgid == 0)
+	j->pgid = cpid;
+	setpgid(cpid, j->pgid);
 	return (status);
 }
 

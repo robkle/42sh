@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_complete_command.c                         :+:      :+:    :+:   */
+/*   jobs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/16 08:30:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/02 04:59:59 by dthan            ###   ########.fr       */
+/*   Created: 2020/10/02 04:00:07 by dthan             #+#    #+#             */
+/*   Updated: 2020/10/02 05:35:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../../includes/shell.h"
 
-void	execute_complete_command(t_astnode *ast, t_list **heredoc)
+int ft_jobs(void)
 {
-	t_list *job;
+	t_list *j_ptr;
+	t_job *j;
+	int i;
 
-	job = create_job();		
-	if (ast->type == AST_complete_command)
+	i = 1;
+	j_ptr = g_shell.job;
+	while (j_ptr)
 	{
-		if (ft_strequ(ast->data, "&"))
-			((t_job*)(job->content))->foreground = 0;
-		execute_list(ast->left, heredoc, job);
+			ft_printf("HERE\n");
+		j = (t_job*)j_ptr->content;
+		//output will be deferent when a process is finished
+		ft_printf("[%d]  +  %d  running  %s\n", i++, j->pgid, j->command);
+		j_ptr = j_ptr->next; 
 	}
-	else
-		execute_list(ast, heredoc, job);
+	return (EXIT_SUCCESS);
 }
