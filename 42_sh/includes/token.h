@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 18:06:53 by tango            ###   ########.fr       */
+/*   Updated: 2020/10/05 05:13:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ char					jump_single_or_double_quote(char *input,\
 		int *tail, char quote);
 void					push_node_into_ltoken(char *input,\
 		int head, t_token *node, t_token **lst_tokens);
+void					clear_token(t_token *token);
 
 #endif

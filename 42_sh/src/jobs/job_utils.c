@@ -6,11 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 03:29:07 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/04 01:10:01 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/05 05:16:13 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/jobs.h"
+#include "shell.h"
 
 t_list	*create_job(void)
 {

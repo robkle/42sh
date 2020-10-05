@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/04 03:34:52 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/05 06:27:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int job_is_stopped(t_job *j)
 		p = (t_process*)(p_ptr->content);
 		if (!p->completed && !p->stopped)
 			return (0);
+		p_ptr = p_ptr->next;
 	}
 	return (1);
 }
@@ -39,6 +40,7 @@ int job_is_completed(t_job *j)
 		p = (t_process*)(p_ptr->content);
 		if (!p->completed)
 			return (0);
+		p_ptr = p_ptr->next;
 	}
 	return (1);
 }
@@ -47,7 +49,6 @@ int job_is_completed(t_job *j)
 int mark_process_status(pid_t pid, int status)
 {
 	t_list *j_ptr;
-	// t_job	*j;
 	t_list *p_ptr;
 	t_process *p;
 
@@ -64,6 +65,7 @@ int mark_process_status(pid_t pid, int status)
 				if (p->pid == pid)
 				{
 					p->status = status;
+					
 					if (WIFSTOPPED(status))
 						p->stopped = 1;
 					else
@@ -77,7 +79,7 @@ int mark_process_status(pid_t pid, int status)
 				p_ptr = p_ptr->next;
 			}
 			j_ptr = j_ptr->next;
-		}
+		}	
 		ft_printf("No child process %d.\n", pid); // need to change to stderr
 		return (-1);
 	}
@@ -109,37 +111,19 @@ void update_status(void)
 blocking until all processes in teh given job have reported*/
 void wait_for_job(t_job *j)
 {
-	int status = 10;
 	int pid;
-	t_process *p;
+	int status = 123;
 
-	p = (t_process*)(j->process->content);
-	ft_printf("cpid: %d\n", j->pgid);
-	ft_printf("cpid2: %d\n", p->pid);
-	pid = waitpid(p->pid, &status, WUNTRACED);
-	ft_printf("cpid3: %d\n", pid);
-	if (pid == -1)
-	{
-		perror("waitpid");
-		exit(EXIT_FAILURE);
-	}
-	// while(1)
-	// {
-	// 	if ((pid = waitpid(-j->pgid, &status, WUNTRACED)) == -1 && errno != ECHILD)
-	// 	{
-	// 		perror("waitpid");
-	// 	}
-	// 	if (pid <= 1 || mark_process_status(pid, status) || job_is_stopped(j) || job_is_completed(j))
-	// 		break;
-	// }
+	pid = waitpid(-j->pgid, &status, WUNTRACED);
+	while(!mark_process_status(pid, status) && !job_is_stopped(j) &&!job_is_completed(j))
+		pid = waitpid(-j->pgid, &status, WUNTRACED);
 }
 
 /* Format information about job status for the user to look at */
-void format_job_info(t_list *j, const char *status)
+void format_job_info(t_job *j, const char *status)
 {
-	ft_printf("%d (%s): %s\n", ((t_job*)(j->content))->pgid,
-								status,
-								((t_job*)(j->content))->command);
+	if (!j->foreground)
+		ft_printf("%d (%s): %s\n", j->pgid, status, j->command);
 }
 
 /* Notify the user about stopped or terminated jobs.
@@ -161,7 +145,7 @@ void	do_job_notification(void)
 		completed and delete it from the list of active jobs*/
 		if (job_is_completed((t_job*)(j->content)))
 		{
-			format_job_info(j, "completed");
+			format_job_info((t_job*)(j->content), "completed");
 			if (jlast)
 				jlast->next = jnext;
 			else
@@ -170,7 +154,7 @@ void	do_job_notification(void)
 		}
 		else if (job_is_stopped((t_job*)(j->content)) && !((t_job*)(j->content))->notified)
 		{
-			format_job_info(j, "stopped");
+			format_job_info((t_job*)(j->content), "stopped");
 			((t_job*)(j->content))->notified = 1;
 			jlast = j;
 		}

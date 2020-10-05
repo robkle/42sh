@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:52 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/01 05:57:29 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/05 05:42:14 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,16 @@ void	execute_and_or(t_astnode *ast, t_list **heredoc, t_job *job)
 
 	if (ast->type == AST_and_or && ft_strequ(ast->data, "&&"))
 	{
-		// find_iofile(ast->left);
 		status = execute_pipeline(ast->left, heredoc, job);
 		if (WIFEXITED(status) != 0)
 			execute_and_or(ast->right, heredoc, job);
 	}
 	else if (ast->type == AST_and_or && ft_strequ(ast->data, "||"))
 	{
-		// find_iofile(ast->left);
 		status = execute_pipeline(ast->left, heredoc, job);
 		if (WIFEXITED(status) == 0)
 			execute_and_or(ast->right, heredoc, job);
 	}
 	else
 		execute_pipeline(ast, heredoc, job);
-	//execute_pipeline(ast, exe);
 }

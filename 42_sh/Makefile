@@ -16,6 +16,7 @@ src/lexer/interpret.c \
 src/lexer/jump_single_or_double_quote.c \
 src/lexer/create_non_quoted_string.c \
 src/lexer/check_syntax.c \
+src/lexer/clear_token.c \
 src/parser/syntax_analysis.c \
 src/parser/AST/and_or.c \
 src/parser/AST/ast_tool.c \
@@ -59,6 +60,8 @@ src/builtin/access.c \
 src/builtin/ft_setenv.c \
 src/builtin/ft_unsetenv.c \
 src/builtin/ft_type.c \
+src/builtin/builtin_utils.c \
+src/builtin/ft_jobs.c \
 src/line_edition/add_key.c \
 src/line_edition/clipping.c \
 src/line_edition/ctrl_k.c \
@@ -80,7 +83,6 @@ src/utilities/ft_arraydel.c \
 src/utilities/error.c \
 src/utilities/ft_strjoin_and_free.c \
 src/utilities/set_oldpwd.c \
-src/utilities/clear_token.c \
 src/utilities/increment_shell_level.c \
 src/executor/print_binary_tree.c \
 src/jobs/ft_tcgetsetpgrp.c \
@@ -88,7 +90,7 @@ src/jobs/job_utils.c \
 src/jobs/foreground_and_background.c \
 src/jobs/stopped_and_terminated_jobs.c \
 src/jobs/continuing_stopped_jobs.c \
-src/jobs/jobs.c
+src/jobs/lauch_process.c \
 
 
 OBJS_NAME = main.o \
@@ -137,6 +139,7 @@ ft_cd_pathfinder.o \
 access.o \
 ft_setenv.o \
 ft_unsetenv.o \
+ft_jobs.o \
 children.o \
 check_path.o \
 heredoc.o \
@@ -165,6 +168,7 @@ increment_shell_level.o \
 check_syntax.o \
 jump_single_or_double_quote.o \
 ft_type.o \
+builtin_utils.o \
 create_non_quoted_string.o \
 print_binary_tree.o \
 ft_tcgetsetpgrp.o \
@@ -172,7 +176,7 @@ job_utils.o \
 foreground_and_background.o \
 stopped_and_terminated_jobs.o \
 continuing_stopped_jobs.o \
-jobs.o
+lauch_process.o
 
 OBJS_PATH = obj/
 

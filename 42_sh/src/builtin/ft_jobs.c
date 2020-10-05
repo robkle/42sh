@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   ft_jobs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/05 05:18:21 by dthan            ###   ########.fr       */
+/*   Created: 2020/10/02 04:00:07 by dthan             #+#    #+#             */
+/*   Updated: 2020/10/05 04:17:46 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-// we can use lstdel here
-
-void			executor(t_astnode *ast)
+int ft_jobs(void)
 {
-	t_list *heredoc;
-	t_list	*ptr_heredoc;
+	t_list *j_ptr;
+	t_job *j;
+	int i;
 
-	heredoc = NULL;
-	printBinaryTree(ast);
-	find_heredoc(ast, &heredoc);
-	ptr_heredoc = heredoc;
-	execute_complete_command(ast, &heredoc);
-	clear_heredoc(ptr_heredoc);
-	clear_ast(ast);
+	i = 1;
+	j_ptr = g_shell.job;
+	while (j_ptr)
+	{
+		j = (t_job*)j_ptr->content;
+		//output will be deferent when a process is finished
+		ft_printf("[%d]  +  %d  running  %s\n", i++, j->pgid, j->command);
+		j_ptr = j_ptr->next; 
+	}
+	return (EXIT_SUCCESS);
 }

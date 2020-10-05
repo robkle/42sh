@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 10:16:43 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/30 05:22:16 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/05 04:06:59 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,5 @@ t_astnode	*io_file(t_token **token)
 		return (io_file4(token));
 	if (ft_strcmp((*token)->data, ">>") == 0)
 		return (io_file5(token));
-	// if (ft_strcmp((*token)->data, "<<") == 0)
-	// 	return (io_file6(token));
 	return (NULL);
 }

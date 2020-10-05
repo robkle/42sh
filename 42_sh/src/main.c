@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/30 05:32:35 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/05 03:05:31 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static int		shell(void)
 	get_history(&g_h, 0);
 	while (1)
 	{
+		do_job_notification();
 		if (!g_prompt)
 			get_prompt();
 		g_status = 0;

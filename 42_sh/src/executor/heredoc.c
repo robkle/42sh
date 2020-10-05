@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/01 06:01:33 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/05 05:18:36 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,17 @@ void				find_heredoc(t_astnode *ast, t_list **heredoc)
 		find_heredoc(ast->left, heredoc);
 	else if (ast->type == AST_io_here && ft_strequ(ast->data, "<<"))
 		apply_heredoc(ast->left, heredoc);
+}
+
+void				clear_heredoc(t_list *heredoc)
+{
+	t_list *temp;
+
+	while(heredoc)
+	{
+		temp = heredoc;
+		heredoc = heredoc->next;
+		free(temp->content);
+		free(temp);
+	}
 }

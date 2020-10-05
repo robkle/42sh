@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tcgetsetpgrp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 20:41:08 by marvin            #+#    #+#             */
-/*   Updated: 2020/09/22 21:20:48 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/05 05:15:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "jobs.h"
+#include "shell.h"
 
 int     ft_tcsetpgrp (int fd, pid_t pgrp_id)
 {

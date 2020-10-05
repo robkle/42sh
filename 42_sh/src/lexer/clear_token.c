@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jobs.c                                             :+:      :+:    :+:   */
+/*   clear_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/02 04:00:07 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/02 05:35:49 by dthan            ###   ########.fr       */
+/*   Created: 2020/08/02 17:56:39 by tango             #+#    #+#             */
+/*   Updated: 2020/10/05 04:02:20 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shell.h"
+#include "shell.h"
 
-int ft_jobs(void)
+void	clear_token(t_token *token)
 {
-	t_list *j_ptr;
-	t_job *j;
-	int i;
+	t_token *temp;
 
-	i = 1;
-	j_ptr = g_shell.job;
-	while (j_ptr)
+	while (token)
 	{
-			ft_printf("HERE\n");
-		j = (t_job*)j_ptr->content;
-		//output will be deferent when a process is finished
-		ft_printf("[%d]  +  %d  running  %s\n", i++, j->pgid, j->command);
-		j_ptr = j_ptr->next; 
+		ft_strdel(&token->data);
+		temp = token;
+		token = token->next;
+		free(temp);
 	}
-	return (EXIT_SUCCESS);
 }

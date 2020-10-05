@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:28:34 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/02 02:36:21 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/05 05:26:58 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void put_job_in_foreground(t_job *job, int cont)
 			perror("kill (SIGCONT)"); //error management here
 	}
 	/* wait for it to report */
+	
 	wait_for_job(job);
 	// waitpid(job->pgid, NULL, WUNTRACED);
 	// put the shell back in the foreground
 	tcsetpgrp(STDIN_FILENO, g_shell.shell_pgid);
-
 	/* Restore the shell's terminal modes*/
 	tcgetattr(STDIN_FILENO, &job->term);
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &g_shell.shell_tmode);

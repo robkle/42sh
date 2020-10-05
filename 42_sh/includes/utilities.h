@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 14:48:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/05 04:16:18 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,9 @@ char	*ft_strjoin_and_free_string2(char *string1, char *string2);
 char	*ft_strjoin_and_free_string1(char *string1, char *string2);
 int 	set_oldpwd(char pwd[PATH_MAX]);
 void	increment_shlvl(void);
+char	*get_env(char *name, int keyval);
+int		ft_isspace(int c);
+char	*ft_strndup(char *str, size_t len);
+void	ft_arraydel(char **string_array);
 
 #endif
