@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/06 17:19:13 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/06 19:11:43 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	execute_list(t_astnode *ast, t_list **heredoc, t_list *job);
 void	execute_and_or(t_astnode *ast, t_list **heredoc, t_job *job);
 void	execute_pipeline(t_astnode *ast, t_list **heredoc, t_job *job);
 void	execute_pipe_sequence(t_astnode *ast, t_list **heredoc, t_job *job);
-void	execute_command(t_astnode *ast, t_list **heredoc, t_job *job, t_process *p);
-void	execute_simple_command(t_astnode *ast, t_list **heredoc, t_job *job, t_process *p);
+void	execute_command(t_astnode *ast, t_list **heredoc, t_job *job);
+void	execute_simple_command(t_astnode *ast, t_list **heredoc, t_job *job);
 void	execute_cmd_name(t_astnode *ast, t_job *j, t_process *p);
 void	execute_cmd_suffix(t_astnode *ast, t_list **hd, t_job *j, t_process *p);
 void	execute_io_redirect(t_astnode *ast, t_list **hd, t_process *p);
