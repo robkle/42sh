@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/05 06:18:53 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/06 17:05:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,10 @@ void lauch_child_process(t_job *j, t_process *p)
 	ft_exit(EXIT_FAILURE);
 }
 
-int				lauch_process(t_job *j, t_process *p)
+int		lauch_process(t_job *j, t_process *p)
 {
-	int			status;
-	pid_t		cpid;
+	pid_t	cpid;
 	
-
-	status = 0;
-	// will take care the printing builtin no priting later
 	if (is_builtin_not_printing(p->av[0]))
 		return (builtins_not_printing(p));
 	if ((cpid = fork()) == 0)
@@ -78,5 +74,5 @@ int				lauch_process(t_job *j, t_process *p)
 	}
 	p->pid = cpid;
 	set_process_group_id(j, cpid);
-	return (status);
+	return (UNAVAILABLE_STATUS);
 }

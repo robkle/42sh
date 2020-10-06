@@ -1,3 +1,6 @@
 2nd Oct
 		+ fix wait_for_job: since it takes any process id
 		+ jobs function
+
+5th Oct
+	err: No such file ... (hard to see) ./savy1.out | ./savi2.out ... happend when savi2.out is incorrect name

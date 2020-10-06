@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/05 06:21:49 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/06 17:19:13 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 /*
 ** =============================== DATA STRUCTURE =============================
 */
+
+# define NOT_COMPLETED 0
+# define COMPLETED 1
+# define NOT_STOPPED 0
+# define STOPPED 1
+# define UNAVAILABLE_STATUS 0
 
 typedef struct			s_process
 {
@@ -41,7 +47,7 @@ typedef struct          s_job
     pid_t               pgid;
     char                notified;
     struct termios      term;
-    t_list              *process;
+    t_list              *first_process;
 	int					stdin;
 	int					stdout;
 	int					stderr;
@@ -62,10 +68,10 @@ typedef	struct			s_redirect
 void	execute_complete_command(t_astnode *ast, t_list **heredoc);
 void	execute_list(t_astnode *ast, t_list **heredoc, t_list *job);
 void	execute_and_or(t_astnode *ast, t_list **heredoc, t_job *job);
-int		execute_pipeline(t_astnode *ast, t_list **heredoc, t_job *job);
-int		execute_pipe_sequence(t_astnode *ast, t_list **heredoc, t_job *job);
-int		execute_command(t_astnode *ast, t_list **heredoc, t_job *job);
-int		execute_simple_command(t_astnode *ast, t_list **heredoc, t_job *job);
+void	execute_pipeline(t_astnode *ast, t_list **heredoc, t_job *job);
+void	execute_pipe_sequence(t_astnode *ast, t_list **heredoc, t_job *job);
+void	execute_command(t_astnode *ast, t_list **heredoc, t_job *job, t_process *p);
+void	execute_simple_command(t_astnode *ast, t_list **heredoc, t_job *job, t_process *p);
 void	execute_cmd_name(t_astnode *ast, t_job *j, t_process *p);
 void	execute_cmd_suffix(t_astnode *ast, t_list **hd, t_job *j, t_process *p);
 void	execute_io_redirect(t_astnode *ast, t_list **hd, t_process *p);
@@ -104,5 +110,7 @@ pid_t	ft_tcgetpgrp(int fd);
 t_list	*create_job();
 void	put_to_list_job(t_list *newjob);
 void	delete_job(t_list *j);
+int		job_is_stopped(t_job *j);
+int		job_is_completed(t_job *j);
 
 #endif

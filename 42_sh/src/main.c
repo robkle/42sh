@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/05 03:05:31 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/05 17:43:17 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,29 @@ static void		ft_execute(char **input)
 	}
 }
 
-static char		*get_input(int level, int count_pmpt, char *quote)
-{
-	t_l			l;
+// static char		*get_input(int level, int count_pmpt, char *quote)
+// {
+// 	t_l			l;
 
-	ft_memset(&l, 0, sizeof(t_l));
-	if (level != 1)
-		l.type = LINE_TYPE_DQUOTE;
-	l.pmpt = count_pmpt;
-	ft_get_line(&l, &g_h);
-	if (is_open_dquote(l.line, level, quote))
-	{
-		ft_putstr("dquote> ");
-		l.line = ft_strjoin_and_free_string1(l.line, "\n");
-		l.line = \
-			ft_strjoin_and_free_string2(l.line, get_input((int)2, 8, quote));
-	}
-	return (l.line);
-}
+// 	ft_memset(&l, 0, sizeof(t_l));
+// 	if (level != 1)
+// 		l.type = LINE_TYPE_DQUOTE;
+// 	l.pmpt = count_pmpt;
+// 	ft_get_line(&l, &g_h);
+// 	if (is_open_dquote(l.line, level, quote))
+// 	{
+// 		ft_putstr("dquote> ");
+// 		l.line = ft_strjoin_and_free_string1(l.line, "\n");
+// 		l.line = 
+// 			ft_strjoin_and_free_string2(l.line, get_input((int)2, 8, quote));
+// 	}
+// 	return (l.line);
+// }
 
 static int		shell(void)
 {
 	char *line;
-	char quote;
+	// char quote;
 
 	get_history(&g_h, 0);
 	while (1)
@@ -83,8 +83,9 @@ static int		shell(void)
 		if (!g_prompt)
 			get_prompt();
 		g_status = 0;
-		quote = '\0';
-		line = get_input(1, 2, &quote);
+		// quote = '\0';
+		// line = get_input(1, 2, &quote);
+		get_next_line(STDOUT_FILENO, &line);
 		if (!iseof_in_line(line))
 			ft_execute(&line);
 	}

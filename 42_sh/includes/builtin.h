@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/05 05:13:11 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/05 16:32:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		ft_setenv(t_process *c);
 int		ft_unsetenv(t_process *c);
 void	ft_type(t_process *c);
 int		ft_jobs(void);
+int		ft_fg(void);
 
 /*
 ** =============================== Utils ===================================

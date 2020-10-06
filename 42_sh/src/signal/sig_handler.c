@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/04 19:48:13 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/06 13:37:06 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void sig_controller(int option)
 	{
     	signal (SIGINT, SIG_IGN);
     	signal (SIGQUIT, SIG_IGN);
+		signal (SIGSTOP, SIG_IGN);
     	signal (SIGTSTP, SIG_IGN);
     	signal (SIGTTIN, SIG_IGN);
     	signal (SIGTTOU, SIG_IGN);

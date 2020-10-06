@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:20:48 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/05 06:38:41 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/06 16:56:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,28 @@ int		is_builtin_not_printing(char *comm)
 		ft_strequ(comm, "env") || \
 		ft_strequ(comm, "setenv") || \
 		ft_strequ(comm, "unsetenv") || \
-		ft_strequ(comm, "pwd"))
+		ft_strequ(comm, "pwd") || \
+		ft_strequ(comm, "fg"))
 		return (1);
 	return (0);
 }
 
-int		builtins_not_printing(t_process *coms)
+int		builtins_not_printing(t_process *p)
 {
-	if (!ft_strcmp(coms->av[0], "exit"))
+	p->completed = COMPLETED;
+	if (!ft_strcmp(p->av[0], "exit"))
 		ft_exit(EXIT_SUCCESS);
-	if (!ft_strcmp(coms->av[0], "pwd"))
+	if (!ft_strcmp(p->av[0], "pwd"))
 		return (ft_pwd());
-	else if (!ft_strcmp(coms->av[0], "cd"))
-		return (ft_cd(coms));
-	else if (!ft_strcmp(coms->av[0], "env"))
+	else if (!ft_strcmp(p->av[0], "cd"))
+		return (ft_cd(p));
+	else if (!ft_strcmp(p->av[0], "env"))
 		return (ft_env());
-	else if (!ft_strcmp(coms->av[0], "setenv"))
-		return (ft_setenv(coms));
-	else if (!ft_strcmp(coms->av[0], "unsetenv"))
-		return (ft_unsetenv(coms));
-	// else if (ft_strequ(coms->av[0], "jobs")) // test jobs here
-	// 	return (ft_jobs());
+	else if (!ft_strcmp(p->av[0], "setenv"))
+		return (ft_setenv(p));
+	else if (!ft_strcmp(p->av[0], "unsetenv"))
+		return (ft_unsetenv(p));
+	else if (ft_strequ(p->av[0], "fg"))
+		return (ft_fg());
 	return (EXIT_FAILURE);
 }

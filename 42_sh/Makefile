@@ -62,6 +62,7 @@ src/builtin/ft_unsetenv.c \
 src/builtin/ft_type.c \
 src/builtin/builtin_utils.c \
 src/builtin/ft_jobs.c \
+src/builtin/ft_fg.c \
 src/line_edition/add_key.c \
 src/line_edition/clipping.c \
 src/line_edition/ctrl_k.c \
@@ -140,6 +141,7 @@ access.o \
 ft_setenv.o \
 ft_unsetenv.o \
 ft_jobs.o \
+ft_fg.o \
 children.o \
 check_path.o \
 heredoc.o \

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/05 06:27:25 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/06 17:24:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int job_is_stopped(t_job *j)
 	t_process *p;
 	t_list *p_ptr;
 
-	p_ptr = j->process;
+	p_ptr = j->first_process;
 	while(p_ptr)
 	{
 		p = (t_process*)(p_ptr->content);
@@ -34,7 +34,7 @@ int job_is_completed(t_job *j)
 	t_process *p;
 	t_list *p_ptr;
 
-	p_ptr = j->process;
+	p_ptr = j->first_process;
 	while(p_ptr)
 	{
 		p = (t_process*)(p_ptr->content);
@@ -55,10 +55,10 @@ int mark_process_status(pid_t pid, int status)
 	if (pid > 0)
 	{
 		/* Update the record for the process. */
-		j_ptr = g_shell.job;
+		j_ptr = g_shell.first_job;
 		while (j_ptr)
 		{
-			p_ptr = ((t_job*)(j_ptr->content))->process;
+			p_ptr = ((t_job*)(j_ptr->content))->first_process;
 			while (p_ptr)
 			{
 				p = (t_process*)(p_ptr->content);
@@ -67,7 +67,10 @@ int mark_process_status(pid_t pid, int status)
 					p->status = status;
 					
 					if (WIFSTOPPED(status))
+					{
 						p->stopped = 1;
+						ft_printf("%d suspended\n", p->pid);
+					}
 					else
 					{
 						p->completed = 1;
@@ -122,7 +125,7 @@ void wait_for_job(t_job *j)
 /* Format information about job status for the user to look at */
 void format_job_info(t_job *j, const char *status)
 {
-	if (!j->foreground)
+	// if (!j->foreground)
 		ft_printf("%d (%s): %s\n", j->pgid, status, j->command);
 }
 
@@ -137,19 +140,17 @@ void	do_job_notification(void)
 	/* Updated status information for child processes */
 	update_status();
 	jlast = NULL;
-	j = g_shell.job;
+	j = g_shell.first_job;
 	while (j)
 	{
 		jnext = j->next;
-		/* If all processes have completed, tell the user the job has 
-		completed and delete it from the list of active jobs*/
 		if (job_is_completed((t_job*)(j->content)))
 		{
 			format_job_info((t_job*)(j->content), "completed");
 			if (jlast)
 				jlast->next = jnext;
 			else
-				g_shell.job = jnext;
+				g_shell.first_job = jnext;
 			delete_job(j);
 		}
 		else if (job_is_stopped((t_job*)(j->content)) && !((t_job*)(j->content))->notified)
@@ -158,7 +159,7 @@ void	do_job_notification(void)
 			((t_job*)(j->content))->notified = 1;
 			jlast = j;
 		}
-		else /*Dont say anything about jobs that are still running*/
+		else
 			jlast = j;
 		j = jnext;
 	}

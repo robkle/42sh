@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/10/05 05:13:11 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/06 17:21:38 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct          s_shell
 {
     pid_t               shell_pgid;
     struct termios      shell_tmode;
-    t_list              *job;
+    t_list              *first_job;
 }                       t_shell;
 
 t_shell     g_shell;

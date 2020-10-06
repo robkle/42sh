@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 03:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/02 05:10:27 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/06 17:21:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void mark_job_as_running(t_job *j)
 	t_list		*p_ptr;
 	t_process *p;
 	
-	p_ptr = j->process;
+	p_ptr = j->first_process;
 	while(p_ptr)
 	{
 		p = (t_process*)(p_ptr->content);

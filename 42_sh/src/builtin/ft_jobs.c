@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 04:00:07 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/05 04:17:46 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/06 17:22:02 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@ int ft_jobs(void)
 	int i;
 
 	i = 1;
-	j_ptr = g_shell.job;
+	j_ptr = g_shell.first_job;
 	while (j_ptr)
 	{
 		j = (t_job*)j_ptr->content;
-		//output will be deferent when a process is finished
-		ft_printf("[%d]  +  %d  running  %s\n", i++, j->pgid, j->command);
+		ft_printf("[%d]  +  %d  %s  %s\n", \
+					i++, \
+					j->pgid, \
+					job_is_stopped(j) ? "suspended" : "running", \
+					j->command);
 		j_ptr = j_ptr->next; 
 	}
 	return (EXIT_SUCCESS);
