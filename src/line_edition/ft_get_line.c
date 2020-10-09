@@ -35,11 +35,11 @@ static int			parse_key(char t[], t_l *l)
 	return (0);
 }
 
-static void			parse_key_arrow(char t[], t_l *l, t_h **h)
+static void			parse_key_arrow(char t[], t_l *l)
 {
 	if ((t[0] == 27 && t[1] == 91 && t[2] == 'A')
 		|| (t[0] == 27 && t[1] == 91 && t[2] == 'B'))
-		up_down(l, h, t);
+		up_down(l, t);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'D')
 		left_key(l);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'C')
@@ -56,7 +56,7 @@ static void			parse_key_arrow(char t[], t_l *l, t_h **h)
 		add_key(t, l);
 }
 
-void				ft_get_line(t_l *l, t_h **h)
+void				ft_get_line(t_l *l)
 {
 	char			tmp[8];
 
@@ -72,9 +72,9 @@ void				ft_get_line(t_l *l, t_h **h)
 			continue ;
 		}
 		if (tmp[0] == '\n')
-			return (carriage_return_key(l, h));
+			return (carriage_return_key(l));
 		if (!parse_key(tmp, l))
-			parse_key_arrow(tmp, l, h);
+			parse_key_arrow(tmp, l);
 		if (l->line && (l->line[0] == '\x04' && l->line[1] == '\0'))
 			return (eof_handler(l));
 	}

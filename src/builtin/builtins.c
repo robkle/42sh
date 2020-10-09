@@ -41,7 +41,7 @@ int			ft_exit(int opt)
 	int		i;
 
 	i = -1;
-	delete_save_history(&g_h);
+	//delete_save_history(); //updates after each command
 	while (g_env[++i])
 		ft_strdel(&g_env[i]);
 	ft_strdel(&g_env[i]);

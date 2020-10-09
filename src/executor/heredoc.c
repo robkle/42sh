@@ -20,7 +20,7 @@ static char			*prompt_heredoc(char *end_word)
 	l.type = LINE_TYPE_HEREDOC;
 	l.pmpt = 9;
 	ft_putstr("heredoc> ");
-	ft_get_line(&l, &g_h);
+	ft_get_line(&l);
 	if (ft_strequ(l.line, end_word) || ft_strequ(l.line, "\x04"))
 	{
 		ft_strdel(&l.line);

@@ -52,40 +52,42 @@ static void		ft_execute(char **input)
 	}
 }
 
-// static char		*get_input(int level, int count_pmpt, char *quote)
-// {
-// 	t_l			l;
+static char		*get_input(int level, int count_pmpt, char *quote)
+{
+	t_l			l;
 
-// 	ft_memset(&l, 0, sizeof(t_l));
-// 	if (level != 1)
-// 		l.type = LINE_TYPE_DQUOTE;
-// 	l.pmpt = count_pmpt;
-// 	ft_get_line(&l, &g_h);
-// 	if (is_open_dquote(l.line, level, quote))
-// 	{
-// 		ft_putstr("dquote> ");
-// 		l.line = ft_strjoin_and_free_string1(l.line, "\n");
-// 		l.line = 
-// 			ft_strjoin_and_free_string2(l.line, get_input((int)2, 8, quote));
-// 	}
-// 	return (l.line);
-// }
+	ft_memset(&l, 0, sizeof(t_l));
+	if (level != 1)
+		l.type = LINE_TYPE_DQUOTE;
+	l.pmpt = count_pmpt;
+	ft_get_line(&l);
+	if (is_open_dquote(l.line, level, quote))
+	{
+		ft_putstr("dquote> ");
+		l.line = ft_strjoin_and_free_string1(l.line, "\n");
+		l.line = 
+			ft_strjoin_and_free_string2(l.line, get_input((int)2, 8, quote));
+	}
+	return (l.line);
+}
 
 static int		shell(void)
 {
 	char *line;
-	// char quote;
+	char quote;
 
-	get_history(&g_h, 0);
+	g_h = (t_h*)malloc(sizeof(t_h));
+	g_h->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 1));
+	get_history(0);
 	while (1)
 	{
 		do_job_notification();
 		if (!g_prompt)
 			get_prompt();
 		g_status = 0;
-		// quote = '\0';
-		// line = get_input(1, 2, &quote);
-		get_next_line(STDOUT_FILENO, &line);
+		quote = '\0';
+		line = get_input(1, 2, &quote);
+		//get_next_line(STDOUT_FILENO, &line);
 		if (!iseof_in_line(line))
 			ft_execute(&line);
 	}

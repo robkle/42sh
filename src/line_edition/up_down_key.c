@@ -38,48 +38,37 @@ static void			up_down_key_apply_statuses(t_l *l)
 		ft_putchar('\n');
 }
 
-static void			up_key(t_l *l, t_h **h)
+static void			up_key(t_l *l)
 {
-	t_h				*trav;
 	int				i;
 
-	if (!*h || l->curr == h[0]->nb)
+	if (g_h->curr == 0 || g_h->hst == 0 || g_h->hst == g_h->curr - HISTSIZE) 
 		return ;
-	trav = *h;
-	i = l->curr - 1;
-	l->curr++;
-	while (i-- > -1)
-		trav = trav->next;
+	g_h->hst--;
+	i = g_h->curr >= HISTSIZE ? g_h->curr - (g_h->hst % HISTSIZE) : \
+		g_h->curr - (g_h->hst % g_h->curr);
 	ft_strdel(&l->line);
-	l->line = ft_strdup(trav->data);
+	l->line = ft_strdup(g_h->hist[i]);
 	up_down_key_apply_statuses(l);
 }
 
-static void			down_key(t_l *l, t_h **h, char *first)
+static void			down_key(t_l *l, char *first)
 {
-	t_h				*trav;
 	int				i;
 
-	if (!*h || l->curr == 0)
+	if (g_h->curr == 0 || g_h->hst == g_h->curr)
 		return ;
-	trav = *h;
-	l->curr--;
-	i = l->curr - 1;
-	ft_strdel(&l->line);
-	if (l->curr)
-	{
-		while (i--)
-			trav = trav->next;
-		l->line = ft_strdup(trav->data);
-	}
-	else if (first)
-		l->line = ft_strdup(first);
+	g_h->hst++;
+	i = g_h->curr >= HISTSIZE ? g_h->curr - (g_h->hst % HISTSIZE) : \
+		g_h->curr - (g_h->hst % g_h->curr);
+	if (i != g_h->curr)
+		l->line = ft_strdup(g_h->hist[i]);
 	else
-		l->line = ft_strnew(0);
+		l->line = first ? ft_strdup(first) : ft_strnew(0);	
 	up_down_key_apply_statuses(l);
 }
 
-void				up_down(t_l *l, t_h **h, char t[])
+void				up_down(t_l *l, char t[])
 {
 	static char		*tmp;
 
@@ -87,10 +76,10 @@ void				up_down(t_l *l, t_h **h, char t[])
 		ft_strdel(&tmp);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'A')
 	{
-		if (l->curr == 0 && l->line && ft_isprint(l->line[0]))
+		if (g_h->hst == g_h->curr && l->line && ft_isprint(l->line[0]))
 			tmp = ft_strdup(l->line);
-		up_key(l, h);
+		up_key(l);
 	}
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
-		down_key(l, h, tmp);
+		down_key(l, tmp);
 }

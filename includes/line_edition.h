@@ -33,6 +33,10 @@
 # define CLIP_SAVE 0
 # define CLIP_TAKE 1
 # define CLIP_DELT 2
+
+# define HISTFILESIZE 50 //move to rc file
+# define HISTSIZE 10 //move to rc file
+
 # define INIT "\033[0m"
 # define BOLD "\033[1m"
 # define RED "\033[31m"
@@ -59,7 +63,6 @@ typedef struct			s_l
 	int					x;
 	int					y;
 	int					down;
-	int					curr;
 	int					pmpt;
 	int					type;
 	int					eof_flag;
@@ -67,21 +70,20 @@ typedef struct			s_l
 
 typedef struct			s_h
 {
-	char				*data;
-	struct s_h			*next;
-	short				nb;
-	int					len;
+	char				**hist;
+	int					hst;
+	int					curr;
 }						t_h;
 
 t_h						*g_h;
 
-void					ft_get_line(t_l *l, t_h **h);
+void					ft_get_line(t_l *l);
 
 /*
 ** Available keys
 */
 
-void					up_down(t_l *l, t_h **h, char t[]);
+void					up_down(t_l *l, char t[]);
 void					right_key(t_l *l);
 void					left_key(t_l *l);
 int						bs_key(t_l *l);
@@ -94,15 +96,21 @@ void					ctrl_left(t_l *l, int y_dec);
 void					ctrl_right(t_l *l);
 void					ctrl_up(t_l *l);
 void					ctrl_down(t_l *l);
-void					carriage_return_key(t_l *l, t_h **h);
+void					carriage_return_key(t_l *l);
 
 /*
 ** History
 */
 
-void					delete_save_history(t_h **g_h);
-void					append_history(t_l *l, t_h **g_h);
-void					get_history(t_h **g_h, int fd);
+void					delete_save_history(void);
+void					append_history(t_l *l);
+void					get_history(int fd);
+
+/*
+** History expansion
+*/
+
+void					ft_hist_exp(t_l *l);
 
 /*
 ** Term_attr

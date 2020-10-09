@@ -12,70 +12,69 @@
 
 #include "shell.h"
 
-void		get_history(t_h **h, int fd)
+void		get_history(int fd)
 {
-	t_h		*node;
-	t_h		*tmp;
+/* currently this only reads one line per hist string. modify to 
+** take into account multi line commands by using buffer
+*/
 	char	*line;
+	//char	*buffer;
+	int		i;
 
 	fd = open("./.history", O_RDWR | O_CREAT, 0644);
-	if (!get_next_line(fd, &line))
-		return ;
-	h[0] = (t_h*)malloc(sizeof(t_h));
-	ft_memset(h[0], 0, sizeof(t_h));
-	h[0]->data = line;
-	h[0]->len = ft_strlen(line);
-	h[0]->nb = 1;
-	node = h[0];
-	while (get_next_line(fd, &line) > 0)
+	//buffer = ft_memalloc(4096);//change to ARG_MAX
+	i = 0;
+	while (get_next_line(fd, &line))	
 	{
-		tmp = (t_h*)malloc(sizeof(t_h));
-		ft_memset(tmp, 0, sizeof(t_h));
-		tmp->data = line;
-		tmp->len = ft_strlen(line);
-		node->next = tmp;
-		node = node->next;
-		h[0]->nb++;
+		g_h->hist[i++] = ft_strdup(line);
+		g_h->curr = i;
 	}
+	g_h->hist[i] = ft_strnew(0);
+	g_h->hst = g_h->curr;
 	close(fd);
 }
 
-void		append_history(t_l *l, t_h **h)
+void		append_history(t_l *l)
 {
-	t_h		*append;
+	int	i;
 
 	if (!l->line || !ft_isprint(l->line[0]))
 		return ;
-	append = (t_h*)malloc(sizeof(t_h));
-	ft_memset(append, 0, sizeof(t_h));
-	append->nb = h[0] ? h[0]->nb + 1 : 1;
-	append->data = ft_strdup(l->line);
-	append->len = ft_strlen(append->data);
-	append->next = h[0];
-	h[0] = append;
-	l->curr = 0;
+	if (g_h->curr < HISTFILESIZE)
+	{
+		free(g_h->hist[g_h->curr]);
+		g_h->hist[g_h->curr++] = ft_strdup(l->line);
+		g_h->hist[g_h->curr] = ft_strnew(0);
+	}
+	else
+	{
+		i = 0;
+		free(g_h->hist[i]);
+		while (i < HISTFILESIZE - 1)
+		{
+			g_h->hist[i] = g_h->hist[i + 1];
+			i++;
+		}
+		free(g_h->hist[i]);
+		g_h->hist[i] = ft_strdup(l->line);
+	}
+	delete_save_history(); //history file update after each command.
 }
 
-void		delete_save_history(t_h **h)
+void		delete_save_history(void)
 {
-	t_h		*trav;
-	t_h		*tmp;
+	int		i;
 	int		fd;
 
-	if (!h[0])
+	if (g_h->curr == 0)
 		return ;
-	trav = h[0];
 	fd = open("./.history", O_RDWR);
-	while (trav)
+	i = -1;
+	while (++i < g_h->curr)
 	{
-		write(fd, trav->data, trav->len);
-		if (trav->next)
+		write(fd, g_h->hist[i], ft_strlen(g_h->hist[i]));
+		if (i + 1 < g_h->curr)
 			write(fd, "\n", 1);
-		ft_strdel(&trav->data);
-		tmp = trav->next;
-		if (trav)
-			free(trav);
-		trav = tmp;
 	}
 	close(fd);
 }

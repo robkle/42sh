@@ -12,9 +12,10 @@
 
 #include "shell.h"
 
-void	carriage_return_key(t_l *l, t_h **h)
+void	carriage_return_key(t_l *l)
 {
-	append_history(l, h);
-	up_down(l, h, NULL);
+	ft_hist_exp(l);
+	append_history(l);
+	up_down(l, NULL);
 	restore_term(l);
 }
