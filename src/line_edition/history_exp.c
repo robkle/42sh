@@ -25,7 +25,11 @@ static int		ft_construct_exp(t_l *l, char *exp, char **split, char **exp_split)
 		free(tmp);
 	}
 	else
+	{
 		r = 0;
+		l->line = ft_strnew(0);
+		ft_printf("\n42sh: %s: event not found", exp_split[0]);
+	}
 	free(exp);
 	free(split[0]);
 	free(split[1]);
@@ -100,7 +104,7 @@ static void		ft_split_exp(char **exp_split, char *str)
 	}
 }
 
-void	ft_hist_exp(t_l *l)
+int		ft_hist_exp(t_l *l)
 {
 	int		i;
 	char	*split[2];
@@ -115,8 +119,10 @@ void	ft_hist_exp(t_l *l)
 			split[1] = ft_strdup(&l->line[i]);
 			ft_split_exp(exp_split, split[1]);
 			if (!ft_expand_exp(l, split, exp_split))
-				return ;
+				return (0);
 			ft_hist_exp(l);
+			return (1);
 		}
 	}
+	return (0);
 }

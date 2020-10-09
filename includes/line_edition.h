@@ -110,7 +110,7 @@ void					get_history(int fd);
 ** History expansion
 */
 
-void					ft_hist_exp(t_l *l);
+int						ft_hist_exp(t_l *l);
 
 /*
 ** Term_attr
