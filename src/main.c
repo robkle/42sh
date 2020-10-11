@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/03 01:33:16 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/11 07:09:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ static int		shell(void)
 	get_history(&g_h, 0);
 	while (1)
 	{
-		sig_controller(PARENT);
-		if (!(g_signal_indicator & SIGINT_INDICATOR))
+		do_job_notification();
+        if (!(g_shell.signal_indicator & SIGINT_INDICATOR))
 			get_prompt();
-		g_status = 0;
+		//g_status = 0;
 		quote = '\0';
 		line = get_input(1, 2, &quote);
 		if (!iseof_in_line(line))
@@ -91,19 +91,35 @@ static int		shell(void)
 	return (0);
 }
 
+int				init_shell(void)
+{
+	if (!isatty(STDIN_FILENO))
+	{
+		//Todo define macros for errno No.5 and NO.25
+		return (0);
+	}
+	if (!(getenv("TERM")))
+	{
+		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
+		return (0);
+	}
+	sig_controller(PARENT);
+	g_shell.shell_pgid = getpgrp();
+	if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
+		return (0);
+	ft_tcsetpgrp(STDIN_FILENO, g_shell.shell_pgid);
+	tcgetattr(STDIN_FILENO, &g_shell.shell_tmode);
+	return (1);
+}
+
 int				main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-
-	g_env = set_env(envp);
-	if (!get_var("HOME", g_env, KEY))
-		g_env = add_env("HOME=/tmp", g_env);
+	g_shell.env = set_env(envp);
+	if (!init_shell())
+		NULL;
+		//ft_exit(EXIT_FAILURE);
 	increment_shlvl();
-	if (!(getenv("TERM")))
-	{
-		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
-		return (-1);
-	}
 	return (shell());
 }

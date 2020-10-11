@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 21:14:14 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/04 23:50:50 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/11 07:44:21 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/stat.h>
 # include "libft.h"
 # include "line_edition_structure.h"
+# include "line_edition_utilities.h"
 # include "copy_paste.h"
 # include "get_prompt.h"
 
@@ -41,8 +42,8 @@ void        delete_status_completed(long *status);
 void        auto_command(t_l *l);
 void        auto_file(t_l *l);
 void        auto_open_path(t_l *l);
-void        auto_other_possibility(t_l *l);
-void        auto_no_other_possibility(t_l *l);
+void        auto_file_multiple_cases(t_l *l);
+void        auto_file_one_case(t_l *l);
 void        auto_dir(t_l *l);
 void		auto_print_list(t_l *l);
 

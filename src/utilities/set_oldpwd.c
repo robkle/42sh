@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   set_oldpwd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 16:11:35 by tango             #+#    #+#             */
-/*   Updated: 2020/09/06 15:22:09 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/30 05:18:38 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+//need to check this again
+
 int			set_oldpwd(char pwd[PATH_MAX])
 {
-	t_exe	*cmd;
+	t_process	*cmd;
 
 	if ((getcwd(pwd, PATH_MAX)) == NULL)
 		return (EXIT_FAILURE);
-	if ((cmd = (t_exe*)ft_memalloc(sizeof(t_exe))) == NULL)
+	if ((cmd = (t_process*)ft_memalloc(sizeof(t_process))) == NULL)
 		return (EXIT_FAILURE);
 	if ((cmd->av = (char**)ft_memalloc(sizeof(char*) * 2)) == NULL)
 		return (EXIT_FAILURE);

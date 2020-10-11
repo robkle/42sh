@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 14:27:05 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/08 04:04:48 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static void		exchange_src_des_for_less(t_exe *exe)
-{
-	char		*temp;
-	t_redirect	*trav;
-
-	trav = exe->redi;
-	while (trav)
-	{
-		if (ft_strequ(trav->redirect_op, "<") || \
-				ft_strequ(trav->redirect_op, "<<") || \
-				ft_strequ(trav->redirect_op, "<&"))
-		{
-			temp = trav->redirect_des;
-			trav->redirect_des = trav->redirect_src;
-			trav->redirect_src = temp;
-		}
-		trav = trav->next;
-	}
-}
 
 void			clear_ast(t_astnode *ast)
 {
@@ -42,56 +22,47 @@ void			clear_ast(t_astnode *ast)
 	ft_delast(ast);
 }
 
-void			clear_exe(t_exe *exe)
+t_list	*create_process(t_job *j)
 {
-	void *ptr;
+	t_process process;
+	t_list		*node;
 
-	while (exe->heredoc)
-	{
-		ft_strdel(&exe->heredoc->heredoc);
-		ptr = exe->heredoc;
-		exe->heredoc = exe->heredoc->next;
-		free(ptr);
-	}
-	while (exe->redi)
-	{
-		ptr = exe->redi;
-		exe->redi = exe->redi->next;
-		free(ptr);
-	}
-	free(exe->av);
+	process.av = (char**)ft_memalloc(sysconf(_SC_ARG_MAX));
+	process.ac = 0;
+	process.pid = 0;
+	process.stdin = j->stdin;
+	process.stdout = j->stdout;
+	process.stderr = j->stderr;
+	process.redi = NULL;
+	process.completed = NOT_COMPLETED;
+	process.stopped = NOT_STOPPED;
+	process.status = UNAVAILABLE_STATUS;
+	node = ft_lstnew(&process, sizeof(t_process));
+	return (node);
 }
 
-static void		clear_redi(t_exe *exe)
+void put_to_plist(t_list *new_process, t_list **first_process)
 {
-	t_redirect	*trav;
-	t_redirect	*temp_trav;
-
-	trav = exe->redi;
-	temp_trav = NULL;
-	while (trav)
-	{
-		temp_trav = trav;
-		trav = trav->next;
-		free(temp_trav);
-	}
-	exe->redi = NULL;
+	if (*first_process == NULL)
+		*first_process = new_process;
+	else
+		ft_lstadd_tail(first_process, new_process);
 }
 
-int				execute_simple_command(t_astnode *ast, t_exe *exe)
+void	execute_simple_command(t_astnode *ast, t_list **heredoc, t_job *j)
 {
-	int			status;
+	t_list	*p_ptr;
+	t_process *p;
 
+	p_ptr = create_process(j);
+	p = (t_process*)(p_ptr->content);
 	if (ast->type == AST_simple_command)
 	{
-		get_av_cmd_name(ast->left, exe);
-		get_av_cmd_suffix(ast->right, exe, 0);
-		exchange_src_des_for_less(exe);
+		execute_cmd_name(ast->left, j, p);
+		execute_cmd_suffix(ast->right, heredoc, j, p);
 	}
 	else
-		get_av_cmd_name(ast, exe);
-	status = run(exe);
-	if (exe->redi)
-		clear_redi(exe);
-	return (status);
+		execute_cmd_name(ast, j, p);
+	put_to_plist(p_ptr, &j->first_process);
+	lauch_process(j, p);
 }

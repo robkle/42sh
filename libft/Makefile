@@ -6,7 +6,7 @@
 #    By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 19:29:47 by ihwang            #+#    #+#              #
-#    Updated: 2020/10/05 00:43:05 by ihwang           ###   ########.fr        #
+#    Updated: 2020/10/10 18:11:38 by ihwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS_PATH = obj/
 SRCS_PATH = src/
 
 SRCS_NAME = ft_atoi.c ft_bzero.c ft_isspace.c ft_isalpha.c \
-			ft_isascii.c ft_isalnum.c ft_isprint.c ft_isdigit.c \
+			ft_isascii.c ft_isalnu.c ft_isprint.c ft_isdigit.c \
 			ft_itoa.c ft_itoh.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c \
 			ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_memalloc.c ft_memccpy.c \
 			ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memdel.c ft_memmove.c \
@@ -31,7 +31,7 @@ SRCS_NAME = ft_atoi.c ft_bzero.c ft_isspace.c ft_isalpha.c \
 			get_next_line.c ft_strstr_e.c ft_strlst_del.c ft_is_d_quote.c \
 			ft_strtrim_d_quote.c ft_addchar.c ft_iswhite.c ft_split_d_quote.c \
 			ft_split_shell.c ft_check_d_quote.c ft_isext.c ft_strnjoin.c \
-			ft_strndup.c ft_lstadd_end.c ft_strrstr.c \
+			ft_strndup.c ft_lstadd_end.c \
 			ft_lstnew_str.c
 
 

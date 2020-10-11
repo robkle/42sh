@@ -6,10 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:30:45 by tango             #+#    #+#             */
-/*   Updated: 2020/10/05 00:45:56 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/10 17:38:52 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell.h"
 #include "get_prompt.h"
 
 static size_t	print_42sh_usr(void)
@@ -22,7 +23,7 @@ static size_t	print_42sh_usr(void)
 	ft_putstr(PMPT_BOLD);
 	ret += ft_putstr_return_size("42sh ");
 	ft_putstr(PMPT_INIT);
-	if ((usr = get_var("USER", g_env, VAL)))
+	if ((usr = get_var("USER", g_shell.env, VAL)))
 	{
 		ft_putstr(PMPT_SKYB);
 		ret += ft_putstr_return_size(usr);
@@ -41,7 +42,7 @@ static size_t	print_cwd(void)
 	ft_putstr(PMPT_YELW);
 	ret = 0;
 	ret += ft_putstr_return_size("[");
-	if ((home = get_var("HOME", g_env, VAL)))
+	if ((home = get_var("HOME", g_shell.env, VAL)))
 	{
 		if (!ft_strcmp(pwd, home))
 			ret += ft_putstr_return_size(pwd);

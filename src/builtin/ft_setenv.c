@@ -6,13 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/11 17:49:02 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/10 17:42:09 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char		**add_env(char *arg, char **env_list)
+char    	**add_env(char *arg, char **env_list)
 {
 	int		i;
 	char	**temp;
@@ -39,7 +39,7 @@ static void	ft_setenv_sub(char *arg)
 	int		j;
 
 	split = ft_strsplit(arg, '=');
-	if ((var = get_var(split[0], g_env, VAL)))
+	if ((var = get_var(split[0], g_shell.env, VAL)))
 	{
 		var++;
 		j = 0;
@@ -48,14 +48,14 @@ static void	ft_setenv_sub(char *arg)
 			ft_strcat(var, split[j]);
 	}
 	else
-		g_env = add_env(arg, g_env);
+		add_env(arg, g_shell.env);
 	j = -1;
 	while (split[++j])
 		NULL;
 	ft_strlst_del(&split, j + 1);
 }
 
-int			ft_setenv(t_exe *c)
+int			ft_setenv(t_process *c)
 {
 	int		i;
 	int		j;

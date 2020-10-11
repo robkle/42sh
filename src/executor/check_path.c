@@ -6,13 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/14 21:51:43 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/11 07:15:05 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int	is_in_path_sub(char *str, t_exe *c)
+static int	is_in_path_sub(char *str, t_process *c)
 {
 	DIR		*dirp;
 	t_dir	*dir;
@@ -32,19 +32,19 @@ static int	is_in_path_sub(char *str, t_exe *c)
 	return (0);
 }
 
-static char	**check_path(t_exe *c)
+static char	**check_path(t_process *c)
 {
 	char	*path;
 
 	if (c->av[0][0] == '.' || c->av[0][0] == '/')
 		return (NULL);
-	if ((path = get_var("PATH", g_env, VAL)))
+	if ((path = get_var("PATH", g_shell.env, VAL)))
 		return (ft_strsplit(path, ':'));
 	else
 		return (NULL);
 }
 
-char		*is_in_path(t_exe *c)
+char		*is_in_path(t_process *c)
 {
 	int		i;
 	int		nb;

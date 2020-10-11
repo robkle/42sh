@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 17:56:58 by tango             #+#    #+#             */
-/*   Updated: 2020/09/15 21:12:22 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/10 17:41:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void		increment_shlvl(void)
 	int		nb;
 	char	*ascii;
 
-	shlvl = get_var("SHLVL", g_env, VAL);
+	shlvl = get_var("SHLVL", g_shell.env, VAL);
+	shlvl++;
 	nb = ft_atoi(shlvl);
 	nb++;
 	ascii = ft_itoa(nb);

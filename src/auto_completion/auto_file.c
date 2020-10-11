@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:12 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/04 20:25:02 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/11 09:02:24 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char        *auto_get_typed_str(t_l *l)
     head = tail;
     while (!ft_iswhite(l->line[--head]))
         NULL;
-	return (ft_strsub(l->line, head + 1, tail - head - 1));	
+	//Sev fault here.
+	return (ft_strsub(l->line, head + 1, tail - head - 1));
 	//return (ft_strndup(&l->line[head + 1], tail - head - 1));
 	//l->auto_com->typed = ft_strndup(&l->line[head + 1], tail - head);
 }

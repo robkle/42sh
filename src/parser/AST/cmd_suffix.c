@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_suffix.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:02:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/05 05:44:27 by tango            ###   ########.fr       */
+/*   Updated: 2020/09/30 05:41:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_astnode		*cmd_suffix3(t_token **token)
 		return (NULL);
 	if ((rnode = cmd_suffix(token)) == NULL)
 	{
-		ft_delast(lnode);
+		clear_ast(lnode);
 		return (NULL);
 	}
 	node = build_node(AST_cmd_suffix);

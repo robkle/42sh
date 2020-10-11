@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:06:11 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 11:13:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/07 00:12:29 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,35 @@
 
 typedef enum
 {
-	AST_complete_command = (1 << 0),
-	AST_list = (1 << 1),
-	AST_and_or = (1 << 2),
-	AST_pipeline = (1 << 3),
-	AST_pipe_sequence = (1 << 4),
-	AST_command = (1 << 5),
-	AST_simple_command = (1 << 6),
-	AST_cmd_name = (1 << 7),
-	AST_cmd_prefix = (1 << 8),
-	AST_cmd_suffix = (1 << 9),
-	AST_io_redirect = (1 << 11),
-	AST_io_file = (1 << 12),
-	AST_filename = (1 << 13),
-	AST_io_fd = (1 << 14),
-	AST_WORD = (1 << 10),
+	AST_complete_command = 1,
+	AST_list,
+	AST_and_or,
+	AST_pipeline,
+	AST_pipe_sequence,
+	AST_command,
+	AST_simple_command,
+	AST_cmd_name,
+	AST_cmd_prefix,
+	AST_cmd_suffix,
+	AST_io_redirect,
+	AST_io_file,
+	AST_io_here,
+	AST_filename,
+	AST_WORD,
 }	t_astnode_type;
 
 typedef struct			s_astnode
 {
 	int					type;
-	int					exitcode;
+	int					exitcode; // what is this?
 	char				*data;
 	struct s_astnode	*left;
 	struct s_astnode	*right;
 }						t_astnode;
+
+/*
+** =================== BUILT TREE FUNCTIONS ============================
+*/
 
 t_astnode				*complete_command(t_token **token);
 t_astnode				*list(t_token **token);
@@ -78,6 +82,7 @@ t_astnode				*cmd_suffix(t_token **token);
 t_astnode				*redirect_list(t_token **token);
 t_astnode				*io_redirect(t_token **token);
 t_astnode				*io_file(t_token **token);
+t_astnode				*io_number(t_token **token);
 t_astnode				*filename(t_token **token);
 t_astnode				*io_here(t_token **token);
 t_astnode				*here_end(t_token **token);
@@ -87,20 +92,21 @@ t_astnode				*separator_op(t_token **token);
 t_astnode				*separotor(t_token **token);
 t_astnode				*sequential_sep(t_token **token);
 t_astnode				*word(t_token **token);
-
 t_astnode				*io_file1(t_token **token);
 t_astnode				*io_file2(t_token **token);
 t_astnode				*io_file3(t_token **token);
 t_astnode				*io_file4(t_token **token);
 t_astnode				*io_file5(t_token **token);
-t_astnode				*io_file6(t_token **token);
+
+/*
+** ======================= UTILS FUNCTIONS ============================
+*/
 
 t_astnode				*build_node(t_astnode_type type);
-
 void					ft_delast(t_astnode *node);
 void					clear_ast(t_astnode *ast);
 
- void printBinaryTree(t_astnode * t);
+void printBinaryTree(t_astnode * t);
 
 /*
 ** debugging

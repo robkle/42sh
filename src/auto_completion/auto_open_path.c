@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:23 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/04 20:13:45 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/11 06:38:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ void		auto_open_path(t_l *l)
 	else if (count > 1)
 	{
 		set_status_other_possibility(&l->auto_com.status);
-		auto_other_possibility(l);
+		auto_file_multiple_cases(l);
 	}
     else
-		auto_no_other_possibility(l);
+		auto_file_one_case(l);
 }
 

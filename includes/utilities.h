@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/04 23:50:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/10 17:32:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # define KEY 1
 # define VAL 0
 
-char	**g_env;
 
 char	**add_env(char *arg, char **env_list);
 int		is_open_dquote(char *input, int level, char *quote);
@@ -30,5 +29,7 @@ char	*ft_strjoin_and_free_string1(char *string1, char *string2);
 int 	set_oldpwd(char pwd[PATH_MAX]);
 void	increment_shlvl(void);
 char	*get_var(char *name, char **lst_var, int keyval);
+int		ft_isspace(int c);
+void	ft_arraydel(char **string_array);
 
 #endif

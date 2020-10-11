@@ -6,56 +6,65 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/15 22:05:00 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/11 07:16:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static char *cd_no_arg(void)
+static int	cd_no_arg(void)
 {
 	char	*var_pwd;
 	char	pwd[PATH_MAX];
 	char	*home;
 	char	*old;
 
-	if (!(home = get_var("HOME", g_env, VAL)))
-		return (ft_strdup("42sh: cd: Home not set\n"));
-	getcwd(pwd, PATH_MAX);
-	if ((old = get_var("OLDPWD", g_env, VAL)))
+	if (!(home = get_var("HOME", g_shell.env, VAL)))
+	{
+		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	if ((getcwd(pwd, PATH_MAX)) == NULL)
+		return (EXIT_FAILURE);
+	if ((old = get_var("OLDPWD", g_shell.env, VAL)))
 		ft_strcpy(old, pwd);
-	if ((var_pwd = get_var("PWD", g_env, VAL)))
+	if ((var_pwd = get_var("PWD", g_shell.env, VAL)))
 		ft_strcpy(pwd, home);
-	chdir(home);
-	return (ft_strdup("success"));
+	if ((chdir(home)) == -1)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
-static char	*cd_exchange(void)
+static int	cd_exchange(void)
 {
 	char	pwd[PATH_MAX];
 	char	*old;
 	char	*var_pwd;
 	char	*temp;
 
-	temp = (char*)malloc(PATH_MAX);
+	if ((temp = (char*)malloc(PATH_MAX)) == NULL)
+		return (EXIT_FAILURE);
 	temp[0] = '\0';
-	if ((old = get_var("OLDPWD", g_env, VAL)))
+	if ((old = get_var("OLDPWD", g_shell.env, VAL)))
 	{
 		getcwd(pwd, PATH_MAX);
 		ft_strcpy(temp, pwd);
-		if ((var_pwd = get_var("PWD", g_env, VAL)))
+		if ((var_pwd = get_var("PWD", g_shell.env, VAL)))
 			ft_strcpy(var_pwd, old);
 		ft_strcpy(pwd, old);
 		chdir(pwd);
 		ft_strcpy(old, temp);
 	}
 	else
-		return (ft_strdup("cd: OLDPWD not set \n"));
+	{
+		ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	ft_strdel(&temp);
-	return (ft_strdup("success"));
+	return (EXIT_SUCCESS);
 }
 
-char		*ft_cd(t_exe *c)
+int			ft_cd(t_process *c)
 {
 	if (c->ac == 1)
 		return (cd_no_arg());

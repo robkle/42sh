@@ -6,11 +6,12 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/15 20:25:12 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/10 18:14:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "builtin.h"
 
 static int	del_replace(int index, char ***lst_var)
 {
@@ -23,7 +24,7 @@ static int	del_replace(int index, char ***lst_var)
 	while ((*lst_var)[++nb])
 		NULL;
 	if ((temp = (char**)malloc(sizeof(char*) * nb)) == NULL)
-		return (false);
+		return (FALSE);
 	i = -1;
 	j = 0;
 	while (++i < nb)
@@ -31,14 +32,14 @@ static int	del_replace(int index, char ***lst_var)
 		if (i != index)
 		{
 			if ((temp[j] = (char*)malloc(PATH_MAX)) == NULL)
-				return (false);
+				return (FALSE);
 			ft_strcpy(temp[j++], (*lst_var)[i]);
 		}
 	}
 	temp[j] = NULL;
 	ft_strlst_del(lst_var, nb + 1);
 	*lst_var = temp;
-	return (true);
+	return (TRUE);
 }
 
 static int	is_var(char *str, char **lst_var)
@@ -71,7 +72,7 @@ static char	*create_errmsg(char *target, char *msg)
 	return (msg);
 }
 
-char		*ft_unset(t_exe *c, char ***lst_var)
+char		*ft_unset(t_process *c, char ***lst_var)
 {
 	int		i;
 	int		j;
@@ -89,9 +90,9 @@ char		*ft_unset(t_exe *c, char ***lst_var)
 			ret = create_errmsg(c->av[i], ret);
 		else if ((index = is_var(c->av[i], *lst_var)) > -1)
 			del_replace(index, lst_var);
-		else if (*lst_var == g_env && \
-			(index = is_var(c->av[i], g_var)) > -1)
-			del_replace(index, &g_var);
+		else if (*lst_var == g_shell.env && \
+			(index = is_var(c->av[i], g_shell.var)) > -1)
+			del_replace(index, &g_shell.var);
 	}
 	return (ret);
 }

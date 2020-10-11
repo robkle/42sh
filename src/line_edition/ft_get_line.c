@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/03 18:41:30 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/10 17:48:48 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ void				ft_get_line(t_l *l, t_h **h)
 	while (1)
 	{
 		ft_bzero(tmp, sizeof(tmp));
-		if (!(g_signal_indicator & SIGINT_INDICATOR))
+		if (!(g_shell.signal_indicator & SIGINT_INDICATOR))
 			read(0, tmp, sizeof(tmp));
-		if (g_signal_indicator & SIGINT_INDICATOR)
+		if (g_shell.signal_indicator & SIGINT_INDICATOR)
 		{
 			post_sigint(l);
 			continue ;
 		}
-		else if (g_signal_indicator & SIGWINCH_INDICATOR)
+		else if (g_shell.signal_indicator & SIGWINCH_INDICATOR)
 		{
 			post_sigwinch(l);
 			continue ;

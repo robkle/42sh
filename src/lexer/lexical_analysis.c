@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/08 13:45:01 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/06 10:48:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static	void	word_jump(char *input, int *tail, t_token **lst_tokens)
 		(*tail)++;
 	}
 	node = get_token(ft_strndup(&input[head], *tail - head), quote);
-	if (check_intern_var_syntax(node->data, *lst_tokens))
-		node = breakdown_node_for_intern_var(node);
 	push_node_into_ltoken(input, head, node, lst_tokens);
 }
 
