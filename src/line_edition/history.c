@@ -14,36 +14,40 @@
 
 void		get_history(int fd)
 {
-/* currently this only reads one line per hist string. modify to 
-** take into account multi line commands by using buffer
-*/
 	char	*line;
-	//char	*buffer;
+	char	*buffer;
 	int		i;
 
 	fd = open("./.history", O_RDWR | O_CREAT, 0644);
-	//buffer = ft_memalloc(4096);//change to ARG_MAX
+	buffer = ft_memalloc(4096);//change to ARG_MAX
 	i = 0;
 	while (get_next_line(fd, &line))	
 	{
-		g_h->hist[i++] = ft_strdup(line);
-		g_h->curr = i;
+		ft_strcat(buffer, line);
+		if (!ft_check_cont(buffer))
+		{
+			g_h->hist[i++] = ft_strdup(buffer);
+			g_h->curr = i;
+			ft_bzero(buffer, ft_strlen(buffer));
+		}
+		else
+			ft_strcat(buffer, "\n");
 	}
 	g_h->hist[i] = ft_strnew(0);
 	g_h->hst = g_h->curr;
 	close(fd);
 }
 
-void		append_history(t_l *l)
+void		append_history(char *line)
 {
 	int	i;
 
-	if (!l->line || !ft_isprint(l->line[0]))
+	if (!line || !ft_isprint(line[0]))
 		return ;
 	if (g_h->curr < HISTFILESIZE)
 	{
 		free(g_h->hist[g_h->curr]);
-		g_h->hist[g_h->curr++] = ft_strdup(l->line);
+		g_h->hist[g_h->curr++] = ft_strdup(line);
 		g_h->hist[g_h->curr] = ft_strnew(0);
 	}
 	else
@@ -56,16 +60,27 @@ void		append_history(t_l *l)
 			i++;
 		}
 		free(g_h->hist[i]);
-		g_h->hist[i] = ft_strdup(l->line);
+		g_h->hist[i] = ft_strdup(line);
 	}
-	delete_save_history(); //history file update after each command.
+	g_h->hst = g_h->curr;
+}
+
+char		*ft_process_history(t_l *l)
+{
+	if (l->line)
+	{
+		if (ft_hist_exp(l))
+			ft_printf("\n%s", l->line);
+	}
+	append_history(l->line);
+	return (l->line);
 }
 
 void		delete_save_history(void)
 {
 	int		i;
 	int		fd;
-
+	
 	if (g_h->curr == 0)
 		return ;
 	fd = open("./.history", O_RDWR);

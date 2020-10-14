@@ -14,12 +14,12 @@
 
 void	carriage_return_key(t_l *l)
 {
-	if (l->line)
+/*	if (l->line)
 	{
 		if (ft_hist_exp(l))
 			ft_printf("\n%s", l->line);
 	}
-	append_history(l);
+	append_history(l);*/
 	up_down(l, NULL);
 	restore_term(l);
 }

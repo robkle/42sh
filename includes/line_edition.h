@@ -103,14 +103,16 @@ void					carriage_return_key(t_l *l);
 */
 
 void					delete_save_history(void);
-void					append_history(t_l *l);
+void					append_history(char *line);
 void					get_history(int fd);
+char					*ft_process_history(t_l *l);
 
 /*
 ** History expansion
 */
 
 int						ft_hist_exp(t_l *l);
+int						ft_check_cont(char *buffer);
 
 /*
 ** Term_attr

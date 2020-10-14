@@ -1,4 +1,3 @@
-/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   sig_handler.c                                      :+:      :+:    :+:   */
@@ -31,6 +30,8 @@ void post_signal(t_l *l)
 	ft_putchar('\n');
 	get_prompt();
 	g_prompt = 0;
+	g_h->hst = g_h->curr;//NEW
+	up_down(l, NULL); //NEW
 }
 
 static void sig_int_handler(int sig)

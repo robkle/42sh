@@ -68,7 +68,7 @@ static char		*get_input(int level, int count_pmpt, char *quote)
 		l.line = 
 			ft_strjoin_and_free_string2(l.line, get_input((int)2, 8, quote));
 	}
-	return (l.line);
+	return (ft_process_history(&l));
 }
 
 static int		shell(void)

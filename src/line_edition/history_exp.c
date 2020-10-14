@@ -113,7 +113,8 @@ int		ft_hist_exp(t_l *l)
 	i = -1;
 	while (l->line[++i])
 	{
-		if (l->line[i] == '!' && l->line[i + 1] && l->line[i + 1] != ' ' && l->line[i + 1] != '=') //check all ristrictions from man
+		if (l->line[i] == '!' && l->line[i + 1] && !ft_isspace(l->line[i + 1])
+				&& l->line[i + 1] != '=' && l->line[i + 1] != '(')
 		{
 			split[0] = ft_strsub(l->line, 0, i);
 			split[1] = ft_strdup(&l->line[i]);

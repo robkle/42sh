@@ -72,6 +72,7 @@ src/line_edition/ctrl_up_down.c \
 src/line_edition/ft_get_line.c \
 src/line_edition/history.c \
 src/line_edition/history_exp.c \
+src/line_edition/history_input_check.c \
 src/line_edition/home_end_key.c \
 src/line_edition/left_right_bs_key.c \
 src/line_edition/term_attr.c \
@@ -154,6 +155,7 @@ ctrl_left_right.o \
 ctrl_up_down.o \
 history.o \
 history_exp.o \
+history_input_check.o \
 home_end_key.o \
 left_right_bs_key.o \
 term_attr.o \
