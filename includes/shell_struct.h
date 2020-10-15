@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_key.h                                          :+:      :+:    :+:   */
+/*   shell_struct.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/25 22:31:13 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/11 14:58:44 by ihwang           ###   ########.fr       */
+/*   Created: 2020/10/11 14:49:22 by marvin            #+#    #+#             */
+/*   Updated: 2020/10/11 14:50:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ADD_KEY
-# define ADD_KEY
+#ifndef SHELL_STRUCT_H
+# define SHELL_STRUCT_H
 
-# include <sys/ioctl.h>
-# include <term.h>
-# include "line_auto_structs.h"
-# include "line_edition_utilities.h"
 # include "libft.h"
+# include <termios.h>
 
-void				add_key(char t[], t_l *l);
+typedef struct          s_shell
+{
+    pid_t               shell_pgid;
+    struct termios      shell_tmode;
+    t_list              *first_job;
+	int					previous_exitcode;
+    long                signal_indicator;
+    char                **env;
+    char                **var;
+}                       t_shell;
 
 #endif

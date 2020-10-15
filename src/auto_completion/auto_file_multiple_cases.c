@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:59:10 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/11 07:29:06 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/14 23:45:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ size_t		measure_len_filling_up(t_auto *auto_com)
 	t_list	*p_list;
 	char	*largest_str;
 
-	ret = auto_com->largest_list_size;
+	ret = auto_com->largest_content_size;
 	target_len = ft_strlen(auto_com->target_str);
 	p_list = auto_com->list;
 	largest_str = (char*)auto_com->largest_content;
@@ -74,7 +74,7 @@ void		auto_complete_upto(size_t len, t_l *l)
 	ft_strdel(&target_for_printing);
 }
 
-void		auto_file_multiple_cases(t_l *l)
+void		auto_cmd_file_multiple_cases(t_l *l)
 {
 	size_t	print_char_len;
 

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:02:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/10 17:46:53 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/15 01:03:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ void				ft_lstadd_tail(t_list **alst, t_list *new);
 void				ft_lstadd_end(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *slst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+void				ft_beep_sound(void);
 
 #endif

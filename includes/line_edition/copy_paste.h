@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 22:31:13 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/03 16:43:50 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/11 14:58:26 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <sys/ioctl.h>
 # include <term.h>
-# include "line_edition_structure.h"
+# include "line_auto_structs.h"
 # include "line_edition_utilities.h"
 # include "libft.h"
 

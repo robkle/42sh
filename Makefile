@@ -109,7 +109,10 @@ src/auto_completion/auto_open_path.c \
 src/auto_completion/auto_make_list.c \
 src/auto_completion/auto_print_list.c \
 src/auto_completion/auto_get_list.c \
-src/auto_completion/auto_lstdel_strdel.c
+src/auto_completion/auto_lstdel_strdel.c \
+src/auto_completion/auto_command.c \
+src/auto_completion/auto_add_one_extra_char.c \
+src/auto_completion/auto_add_list_on_spot.c
 
 
 OBJS_NAME = main.o \
@@ -211,7 +214,10 @@ auto_make_list.o \
 auto_print_list.o \
 auto_get_list.o \
 auto_lstdel_strdel.o \
-line_edition_utilities.o
+auto_add_one_extra_char.o \
+line_edition_utilities.o \
+auto_command.o \
+auto_add_list_on_spot.o
 
 OBJS_PATH = obj/
 

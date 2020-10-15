@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_edition_structure.h                           :+:      :+:    :+:   */
+/*   line_auto_structs.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 22:32:11 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/11 08:27:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/14 22:43:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LINE_EDITION_STRUCTURE_H
-# define LINE_EDITION_STRUCTURE_H
+#ifndef LINE_AUTO_STRUCTS_H
+# define LINE_AUTO_STRUCTS_H
 
 # include <dirent.h>
 # include "libft.h"
@@ -48,17 +48,18 @@ typedef enum
 typedef struct			s_auto
 {
     t_list              *list;
-	size_t				largest_list_size;
+	size_t				largest_content_size;
 	void				*largest_content;
 	size_t				count_list;
 	char				cwd[PATH_MAX];
     char                full_path[PATH_MAX];
 	char				*typed_str;
     char                *target_str; //Not freed yet
+	char				*path_env;
 	long				status;
 }						t_auto;
 
-typedef struct			s_auto_print
+typedef struct			s_auto_grid
 {
 	size_t				longest_col_len;
 	size_t				term_col_len;
@@ -67,7 +68,7 @@ typedef struct			s_auto_print
 	size_t			    start_row;
 	size_t			    end_row;
 	size_t			    filled_col_count;
-}						t_auto_print;
+}						t_auto_grid;
 
 typedef struct			s_l
 {

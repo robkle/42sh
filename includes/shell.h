@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/10/10 17:50:32 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/11 14:51:13 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <term.h>
 # include <termios.h>
 
+# include "shell_struct.h"
 # include "shell_error.h"
 # include "ast.h"
 # include "token.h"
@@ -46,17 +47,6 @@
 # define TRUE 1
 # define FALSE 0
 
-typedef struct          s_shell
-{
-    pid_t               shell_pgid;
-    struct termios      shell_tmode;
-    t_list              *first_job;
-	int					previous_exitcode;
-    long                signal_indicator;
-    char                **env;
-    char                **var;
-}                       t_shell;
-
 typedef enum
 {
 	SIGINT_INDICATOR = (1 << 0),
@@ -65,6 +55,7 @@ typedef enum
 
 typedef	struct stat		t_stat;
 typedef	struct dirent	t_dir;
+
 t_shell     g_shell;
 
 //int						g_status;

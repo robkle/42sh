@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 16:44:30 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/04 00:56:01 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/15 02:37:03 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ void			create_list(t_auto *auto_com, char filename[])
     t_list      *node;
 
 	node = ft_lstnew_str((void*)filename, ft_strlen(filename));
-	if (node->content_size > auto_com->largest_list_size)
+	if (node->content_size > auto_com->largest_content_size)
 	{
-		auto_com->largest_list_size = node->content_size;
+		auto_com->largest_content_size = node->content_size;
 		auto_com->largest_content = node->content;
 	}
 	if (auto_com->list == NULL)
 		auto_com->list = node;
 	else
-		ft_lstadd_end(&auto_com->list, node);
+		auto_add_list_on_spot(auto_com, node);
 }
 
 void            auto_get_list(t_auto *auto_com, DIR *dirp)

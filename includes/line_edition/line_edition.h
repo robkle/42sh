@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/04 23:49:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/11 14:58:52 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LINE_EDITION_H
 
 # include "auto_completion.h"
-# include "line_edition_structure.h"
+# include "line_auto_structs.h"
 # include "line_edition_utilities.h"
 # include "copy_paste.h"
 # include "add_key.h"

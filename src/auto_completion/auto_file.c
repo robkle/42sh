@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:12 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/11 09:02:24 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/14 22:47:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 char        *auto_get_typed_str(t_l *l)
 {
-    int     tail;
-    int     head;
+	int     tail;
+	int     head;
 
-    tail = l->x + (l->y * l->co) - l->pmpt;
-    head = tail;
-    while (!ft_iswhite(l->line[--head]))
-        NULL;
-	//Sev fault here.
-	return (ft_strsub(l->line, head + 1, tail - head - 1));
-	//return (ft_strndup(&l->line[head + 1], tail - head - 1));
-	//l->auto_com->typed = ft_strndup(&l->line[head + 1], tail - head);
+	tail = l->x + (l->y * l->co) - l->pmpt;
+	if (tail == 0)
+		return (ft_strnew(0));
+	head = tail;
+	while (!ft_iswhite(l->line[--head]) && &l->line[head] != l->line)
+		NULL;
+	if (&l->line[head] == l->line)
+		return (ft_strsub(l->line, head, tail));
+	//Segfault here with changing screen size.
+	else
+		return (ft_strsub(l->line, head + 1, tail - head - 1));
 }
 
 void        get_full_path(t_auto *auto_com)
@@ -32,11 +35,10 @@ void        get_full_path(t_auto *auto_com)
 	char	*last_slash_pos;
 
 	last_slash_pos = ft_strrchr(auto_com->typed_str, '/');
-	if (auto_com->typed_str[0] == '/')
+	if (auto_com->typed_str[0] == '/' && last_slash_pos == auto_com->typed_str)
+		ft_strcpy(auto_com->full_path, "/");
+	else if (auto_com->typed_str[0] == '/')
 	{
-		if (last_slash_pos == auto_com->typed_str)
-			ft_strcpy(auto_com->full_path, "/");
-		else
 			ft_strncpy(auto_com->full_path, auto_com->typed_str, \
 			(int)(last_slash_pos - auto_com->typed_str));
 	}
@@ -73,29 +75,26 @@ char		*auto_get_target_str(t_auto *auto_com)
 		return (ft_strdup(auto_com->typed_str));
 }
 
-char        has_access(char *full_path)
-{
-	if (access(full_path, F_OK))
-		return (FALSE);
-	else if (access(full_path, X_OK))
-		return (FALSE);
-    return (TRUE);
-}
-
-void        auto_file(t_l *l)
+void		get_basic_info(t_l *l)
 {
 	if (!l->auto_com.cwd[0])
 		getcwd(l->auto_com.cwd, PATH_MAX);
-    if (l->auto_com.typed_str)
-        ft_strdel(&l->auto_com.typed_str);
-    l->auto_com.typed_str = auto_get_typed_str(l);
-    if (!l->auto_com.full_path[0])
+ 	if (l->auto_com.typed_str)
+		ft_strdel(&l->auto_com.typed_str);
+	l->auto_com.typed_str = auto_get_typed_str(l);
+	if (!l->auto_com.full_path[0])
 		get_full_path(&l->auto_com);
 	if (l->auto_com.target_str)
 		ft_strdel(&l->auto_com.target_str);
 	l->auto_com.target_str = auto_get_target_str(&l->auto_com);
-    if (has_access(l->auto_com.full_path))
-        return (auto_open_path(l));
-	else
+}
+
+void        auto_file(t_l *l)
+{
+	get_basic_info(l);
+	if (access(l->auto_com.full_path, F_OK) || \
+		access(l->auto_com.full_path, X_OK))
 		auto_reset(&l->auto_com);
+	else
+		return (auto_file_open_path(l));
 }

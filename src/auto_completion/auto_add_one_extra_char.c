@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_key.h                                          :+:      :+:    :+:   */
+/*   auto_add_one_extra_char.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/25 22:31:13 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/11 14:58:44 by ihwang           ###   ########.fr       */
+/*   Created: 2020/10/14 22:29:50 by marvin            #+#    #+#             */
+/*   Updated: 2020/10/14 22:30:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ADD_KEY
-# define ADD_KEY
+#include "add_key.h"
 
-# include <sys/ioctl.h>
-# include <term.h>
-# include "line_auto_structs.h"
-# include "line_edition_utilities.h"
-# include "libft.h"
+void		auto_add_one_extra_char(t_l *l)
+{
+	char	buf_for_addkey[2];
 
-void				add_key(char t[], t_l *l);
-
-#endif
+	ft_memset(buf_for_addkey, 0, sizeof(buf_for_addkey));
+	buf_for_addkey[0] = ' ';
+	add_key(buf_for_addkey, l);
+}

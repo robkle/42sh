@@ -6,23 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:17 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/11 07:17:42 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/14 22:30:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "auto_completion.h"
-#include "add_key.h"
 
-void		add_one_extra_char(t_l *l)
-{
-	char	buf_for_addkey[2];
-
-	ft_memset(buf_for_addkey, 0, sizeof(buf_for_addkey));
-	buf_for_addkey[0] = ' ';
-	add_key(buf_for_addkey, l);
-}
-// vim resource/ 에서 tab누를때, 자꾸 ./가 나옴
-void        complete_filename(t_l *l)
+void        auto_complete_cmd_file(t_l *l)
 {
     char    *p_fulfill;
 
@@ -43,14 +33,14 @@ void        auto_file_one_case(t_l *l)
 	char	*completed_target;
 
 	if (!(l->auto_com.status & AUTO_STAT_COMPLETED))
-		complete_filename(l);
+		auto_complete_cmd_file(l);
 	completed_target = get_completed_target_str(l);
 	if (auto_is_dir(l->auto_com.full_path, completed_target))
 		set_status_dir(&l->auto_com.status);
 	else
 		delete_status_dir(&l->auto_com.status);
 	if (!(l->auto_com.status & AUTO_STAT_DIR))
-		add_one_extra_char(l);
+		auto_add_one_extra_char(l);
 	else if (l->auto_com.status & AUTO_STAT_COMPLETED)
 		auto_dir(l);
 	set_status_completed(&l->auto_com.status);
