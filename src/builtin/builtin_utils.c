@@ -50,7 +50,8 @@ int		is_builtin_not_printing(char *comm)
 		ft_strequ(comm, "setenv") || \
 		ft_strequ(comm, "unsetenv") || \
 		ft_strequ(comm, "pwd") || \
-		ft_strequ(comm, "fg"))
+		ft_strequ(comm, "fg") || \
+		ft_strequ(comm, "fc"))//NEW
 		return (1);
 	return (0);
 }
@@ -72,5 +73,7 @@ int		builtins_not_printing(t_process *p)
 		return (p->status = ft_unsetenv(p));
 	else if (ft_strequ(p->av[0], "fg"))
 		return (p->status = ft_fg());
+	else if (ft_strequ(p->av[0], "fc"))//NEW
+		return (p->status = ft_fc(p));//NEW
 	return (EXIT_FAILURE);
 }

@@ -29,6 +29,10 @@ int		ft_unsetenv(t_process *c);
 void	ft_type(t_process *c);
 int		ft_jobs(void);
 int		ft_fg(void);
+int		ft_fc(t_process *p);
+int		ft_fc_list(int flags, char **range);
+int		ft_fc_range(char *str);
+
 
 /*
 ** =============================== Utils ===================================
