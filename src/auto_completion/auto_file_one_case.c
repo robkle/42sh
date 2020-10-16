@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:17 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/14 22:30:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/16 22:53:19 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void        auto_file_one_case(t_l *l)
 	else
 		delete_status_dir(&l->auto_com.status);
 	if (!(l->auto_com.status & AUTO_STAT_DIR))
-		auto_add_one_extra_char(l);
+		auto_add_one_extra_char(l, ' ');
 	else if (l->auto_com.status & AUTO_STAT_COMPLETED)
 		auto_dir(l);
 	set_status_completed(&l->auto_com.status);

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/10 17:50:48 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/16 23:15:33 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void post_sigint(t_l *l)
 
 void			post_sigwinch(t_l *l)
 {
+	int			len_pmpt;
+
 	apply_termcap_str("cl", 0, 0);
-	get_prompt();
+	len_pmpt = get_prompt() - l->pmpt;
 	l->co = tgetnum("co");
 	l->total_row = tgetnum("li");
 	l->starting_row = l->total_row - get_current_row();
@@ -45,7 +47,7 @@ void			post_sigwinch(t_l *l)
 	l->y = 0;
 	if (l->line)
 		ft_putstr(l->line);
-	apply_termcap_str("cm", l->pmpt, 1);
+	apply_termcap_str("cm", l->pmpt, len_pmpt / l->co + 1);
 	g_shell.signal_indicator &= ~SIGWINCH_INDICATOR;
 }
 

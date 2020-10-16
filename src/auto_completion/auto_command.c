@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 10:33:21 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/15 02:37:17 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/16 23:01:16 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,6 @@ void		auto_command(t_l *l)
 	else
 	{
 		auto_complete_cmd_file(l);
-		auto_add_one_extra_char(l);
+		auto_add_one_extra_char(l, ' ');
 	}
 }

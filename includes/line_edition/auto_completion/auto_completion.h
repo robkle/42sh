@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 21:14:14 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/15 02:37:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/16 22:52:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "line_edition_utilities.h"
 # include "copy_paste.h"
 # include "get_prompt.h"
+# include "ft_printf.h"
 
 typedef struct dirent   t_dirent;
 typedef struct stat     t_stat;
@@ -50,7 +51,7 @@ void        auto_file_one_case(t_l *l);
 void        auto_dir(t_l *l);
 void		auto_print_list(t_l *l);
 
-void		auto_add_one_extra_char(t_l *l);
+void		auto_add_one_extra_char(t_l *l, char c);
 void		auto_add_list_on_spot(t_auto *auto_com, t_list *node);
 void        auto_complete_cmd_file(t_l *l);
 char        *auto_get_typed_str(t_l *l);
