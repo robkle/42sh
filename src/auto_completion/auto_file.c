@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:12 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/14 22:47:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/18 20:13:30 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ char        *auto_get_typed_str(t_l *l)
 	head = tail;
 	while (!ft_iswhite(l->line[--head]) && &l->line[head] != l->line)
 		NULL;
-	if (&l->line[head] == l->line)
+	if (&l->line[head] == l->line && l->line[0] == ' ' && l->line[1] != ' ')
+		return (ft_strsub(l->line, 1, tail - 1));
+	else if (&l->line[head] == l->line)
 		return (ft_strsub(l->line, head, tail));
 	//Segfault here with changing screen size.
 	else
