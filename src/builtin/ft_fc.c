@@ -1,5 +1,21 @@
 #include "shell.h"
 
+int		ft_num_check(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	while(str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static int		ft_fc_flags(char *str, int *flags)
 {
 	int i;
@@ -36,6 +52,8 @@ static int		ft_fc_options(t_process *p, int *flags, char **ed, char **range)
 	i = 1;
 	while (i < p->ac && p->av[i][0] == '-' && p->av[i][1])
 	{
+		if (ft_num_check(p->av[i]))
+			break;
 		if (!ft_fc_flags(p->av[i], flags))
 			return (0);
 		else if (*flags == 16)

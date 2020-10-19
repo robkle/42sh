@@ -77,7 +77,7 @@ static int		shell(void)
 	char quote;
 
 	g_h = (t_h*)malloc(sizeof(t_h));
-	g_h->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 1));
+	g_h->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 2));
 	get_history(0);
 	while (1)
 	{

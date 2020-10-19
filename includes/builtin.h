@@ -47,5 +47,6 @@ int		is_builtin_printing(char *comm);
 void	builtins_printing(t_process *p);
 int		is_builtin_not_printing(char *comm);
 int		builtins_not_printing(t_process *coms);
+int		ft_num_check(char *str); //Temporarily here until function moved somewhere ele
 
 #endif

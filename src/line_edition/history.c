@@ -21,7 +21,7 @@ void		get_history(int fd)
 	fd = open("./.history", O_RDWR | O_CREAT, 0644);
 	buffer = ft_memalloc(4096);//change to ARG_MAX
 	i = 0;
-	while (get_next_line(fd, &line))	
+	while (get_next_line(fd, &line) && i <= HISTFILESIZE)	
 	{
 		ft_strcat(buffer, line);
 		if (!ft_check_cont(buffer))
@@ -33,14 +33,16 @@ void		get_history(int fd)
 		else
 			ft_strcat(buffer, "\n");
 	}
-	g_h->hist[i] = ft_strnew(0);
 	g_h->hst = g_h->curr;
+	g_h->hist[i++] = ft_strnew(0);
+	g_h->hist[i] = NULL;
 	close(fd);
 }
 
 void		append_history(char *line)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	if (!line || !ft_isprint(line[0]))
 		return ;
@@ -53,26 +55,30 @@ void		append_history(char *line)
 	else
 	{
 		i = 0;
-		free(g_h->hist[i]);
-		while (i < HISTFILESIZE - 1)
+		while (i < g_h->curr - 1)
 		{
-			g_h->hist[i] = g_h->hist[i + 1];
+			tmp = g_h->hist[i];//NEW
+			g_h->hist[i] = ft_strdup(g_h->hist[i + 1]);//NEW
+			free(tmp);
 			i++;
 		}
-		free(g_h->hist[i]);
+		tmp = g_h->hist[i];//NEW
 		g_h->hist[i] = ft_strdup(line);
+		free(tmp);//NEW
 	}
 	g_h->hst = g_h->curr;
 }
 
 char		*ft_process_history(t_l *l)
 {
+	
 	if (l->line)
 	{
 		if (ft_hist_exp(l))
 			ft_printf("\n%s", l->line);
 	}
-	append_history(l->line);
+	if (!ft_check_cont(l->line))
+		append_history(l->line);
 	return (l->line);
 }
 
@@ -83,7 +89,7 @@ void		delete_save_history(void)
 	
 	if (g_h->curr == 0)
 		return ;
-	fd = open("./.history", O_RDWR);
+	fd = open("./.history", O_TRUNC | O_WRONLY);
 	i = -1;
 	while (++i < g_h->curr)
 	{

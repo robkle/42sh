@@ -7,7 +7,7 @@ static void	ft_fc_print(int *r_ind, int flags)
 	i = r_ind[0];
 	if (i <= r_ind[1])
 	{
-		while (i <= r_ind[1])
+		while (i <= r_ind[1] && i < g_h->curr)
 		{
 			if ((flags & 1) && !(flags & 2))
 				ft_printf("%d", i + 1);
@@ -31,24 +31,24 @@ static void	ft_fc_print(int *r_ind, int flags)
 int	ft_fc_range(char *str)
 {
 	int	i;
-	int index;
 
-	i = -1;
-	while (str[++i])
+	if (!ft_num_check(str))
 	{
-		if (!ft_isdigit(str[i]))
+		i = g_h->curr - 2;
+		while (i >= 0 && g_h->hist[i][0])
 		{
-			index = g_h->curr - 1;
-			while (--index >= 0)
-			{
-				if (ft_strequ(g_h->hist[index], str))
-					return (index);
-			}
-			return (-1);
+			if (ft_strnequ(g_h->hist[i], str, ft_strlen(str)))
+				return (i);
+			i--;
 		}
+		return (-1);
 	}
-	index = ft_atoi(str);
-	return (index < 0 ? (g_h->curr - 1) - index : index - 1);
+	i = ft_atoi(str);
+	if (i < 0)
+		i = (g_h->curr - 1) + i;
+	if (i < 0 || (i - 1) > (g_h->curr - 1))
+		return (-1);
+	return (i - 1);
 }
 
 static void		ft_swap(int *nums)
@@ -75,6 +75,8 @@ int	ft_fc_list(int flags, char **range)
 		r_ind[0] = ft_fc_range(range[0]);
 	if (range[1])
 		r_ind[1] = ft_fc_range(range[1]);
+	else
+		r_ind[1] = g_h->curr - 2;
 	if (r_ind[0] < 0 || r_ind[1] < 0)
 	{
 		ft_printf("bash: fc: history specification out of range\n");
