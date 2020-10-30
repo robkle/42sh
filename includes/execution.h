@@ -65,6 +65,7 @@ typedef	struct			s_redirect
 ** ========================== EXECUTION FUNCTIONS =============================
 */
 
+void	ft_execute(char **input);//added because of fc funtions
 void	execute_complete_command(t_astnode *ast, t_list **heredoc);
 void	execute_list(t_astnode *ast, t_list **heredoc, t_list *job);
 void	execute_and_or(t_astnode *ast, t_list **heredoc, t_job *job);

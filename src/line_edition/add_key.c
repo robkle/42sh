@@ -80,8 +80,13 @@ static void			insert_char(char t[], t_l *l)
 
 void				add_key(char t[], t_l *l)
 {
-	if (l->nb != l->x + (l->co * l->y) - l->pmpt)
-		insert_char(t, l);
+	if (l->rs)
+		ft_reverse_search_add(t, l);
 	else
-		append_char(t, l);
+	{
+		if (l->nb != l->x + (l->co * l->y) - l->pmpt)
+			insert_char(t, l);
+		else
+			append_char(t, l);
+	}
 }

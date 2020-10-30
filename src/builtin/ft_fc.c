@@ -44,6 +44,19 @@ static int		ft_fc_flags(char *str, int *flags)
 	}
 	return (1);
 }
+
+static int		ft_strchr_int(char *str, int c)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == c)
+			return (1);
+	}
+	return (0);
+}
 	
 static int		ft_fc_options(t_process *p, int *flags, char **ed, char **range)
 {
@@ -64,14 +77,14 @@ static int		ft_fc_options(t_process *p, int *flags, char **ed, char **range)
 		}
 		i++;
 	}
-	//check option pat=rep for -s flag
+	range[2] = i < p->ac && ft_strchr_int(p->av[i], '=') ?
+		ft_strdup(p->av[i++]) : NULL;
 	range[0] = i < p->ac ? ft_strdup(p->av[i++]) : NULL;
 	range[1] = i < p->ac ? ft_strdup(p->av[i]) : NULL;
-	range[2] = NULL;
 	return (1);
 }
 
-static int	ft_fc_process(int flags, /*char *ed,*/ char **range)
+static int	ft_fc_process(int flags, char *ed, char **range)
 {
 	if (flags < 8 && flags % 2)
 	{
@@ -81,14 +94,14 @@ static int	ft_fc_process(int flags, /*char *ed,*/ char **range)
 			return (0);	
 		}
 	}
-/*	else
+	else
 	{
-		if (!ft_fc_exec(flags, range, ed))
+		if (!ft_fc_exec(flags, ed, range))
 		{
 			//error message
 			return (0);
 		}
-	}*/ //commented out until ft is written
+	}
 	return (1);
 }
 
@@ -107,7 +120,7 @@ int		ft_fc(t_process *p)
 		//error message
 		return (EXIT_FAILURE);
 	}
-	if (!ft_fc_process(flags/*, ed*/, range))
+	if (!ft_fc_process(flags, ed, range))
 	{
 		//error message
 		return (EXIT_FAILURE);

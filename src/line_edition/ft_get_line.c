@@ -54,6 +54,8 @@ static void			parse_key_arrow(char t[], t_l *l)
 		ctrl_left(l, 0);
 	else if (ft_isprint(t[0]) || (t[0] == '\x04' && l->nb == 0))
 		add_key(t, l);
+	else if (t[0] == 18 && !t[1])
+		ft_reverse_search(l);
 }
 
 void				ft_get_line(t_l *l)

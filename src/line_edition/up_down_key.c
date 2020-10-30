@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-static int		ft_count_rows(t_l *l)
+int		ft_count_rows(t_l *l)
 {
 	int	count;
 	int	row;

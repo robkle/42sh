@@ -31,7 +31,7 @@ static char		**set_env(char **sample)
 	return (env);
 }
 
-static void		ft_execute(char **input)
+void		ft_execute(char **input)
 {
 	t_token		*tokens;
 	t_astnode	*ast;

@@ -51,7 +51,7 @@ int	ft_fc_range(char *str)
 	return (i - 1);
 }
 
-static void		ft_swap(int *nums)
+void		ft_swap(int *nums)
 {
 	int	tmp;
 	

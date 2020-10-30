@@ -24,5 +24,6 @@ char	*get_env(char *name, int keyval);
 int		ft_isspace(int c);
 char	*ft_strndup(char *str, size_t len);
 void	ft_arraydel(char **string_array);
+int		ft_strstr_int(const char *haystack, const char *needle);
 
 #endif

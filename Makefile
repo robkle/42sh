@@ -65,6 +65,7 @@ src/builtin/ft_jobs.c \
 src/builtin/ft_fg.c \
 src/builtin/ft_fc.c \
 src/builtin/ft_fc_list.c \
+src/builtin/ft_fc_exec.c \
 src/line_edition/add_key.c \
 src/line_edition/clipping.c \
 src/line_edition/ctrl_k.c \
@@ -77,6 +78,7 @@ src/line_edition/history_exp.c \
 src/line_edition/history_input_check.c \
 src/line_edition/home_end_key.c \
 src/line_edition/left_right_bs_key.c \
+src/line_edition/reverse_search.c \
 src/line_edition/term_attr.c \
 src/line_edition/up_down_key.c \
 src/line_edition/carriage_return.c \
@@ -89,6 +91,7 @@ src/utilities/error.c \
 src/utilities/ft_strjoin_and_free.c \
 src/utilities/set_oldpwd.c \
 src/utilities/increment_shell_level.c \
+src/utilities/ft_strstr_int.c \
 src/executor/print_binary_tree.c \
 src/jobs/ft_tcgetsetpgrp.c \
 src/jobs/job_utils.c \
@@ -148,6 +151,7 @@ ft_jobs.o \
 ft_fg.o \
 ft_fc.o \
 ft_fc_list.o \
+ft_fc_exec.o \
 children.o \
 check_path.o \
 heredoc.o \
@@ -162,6 +166,7 @@ history_exp.o \
 history_input_check.o \
 home_end_key.o \
 left_right_bs_key.o \
+reverse_search.o \
 term_attr.o \
 up_down_key.o \
 ft_get_line.o \
@@ -175,6 +180,7 @@ redirects_less.o \
 clear_token.o \
 get_prompt.o \
 increment_shell_level.o \
+ft_strstr_int.o \
 check_syntax.o \
 jump_single_or_double_quote.o \
 ft_type.o \

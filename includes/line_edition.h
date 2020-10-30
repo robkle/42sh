@@ -66,6 +66,9 @@ typedef struct			s_l
 	int					pmpt;
 	int					type;
 	int					eof_flag;
+	char				*rev_sr;
+	int					rs;
+	int					rs_i;
 }						t_l;
 
 typedef struct			s_h
@@ -114,6 +117,13 @@ char					*ft_process_history(t_l *l);
 int						ft_hist_exp(t_l *l);
 int						ft_check_cont(char *buffer);
 
+/* 
+** Reverse history search
+*/
+
+void	ft_reverse_search(t_l *l);
+void	ft_reverse_search_add(char t[], t_l *l);
+
 /*
 ** Term_attr
 */
@@ -132,5 +142,6 @@ void					ctrl_k_clipping(t_l *l, int i, int j);
 char					*clipboard(char *str, int opt);
 size_t					get_current_row(void);
 size_t					get_current_column(void);
+int						ft_count_rows(t_l *l);
 
 #endif
