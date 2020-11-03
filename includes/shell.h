@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/10/11 14:51:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/18 20:30:25 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # include "execution.h"
 # include "builtin.h"
 # include "auto_completion.h"
+# include "signal_indicator.h"
 
 # define READ_END 0
 # define WRITE_END 1
@@ -46,12 +47,6 @@
 # define F_TYPE_MASK 0170000
 # define TRUE 1
 # define FALSE 0
-
-typedef enum
-{
-	SIGINT_INDICATOR = (1 << 0),
-	SIGWINCH_INDICATOR = (1 << 1),
-}	t_signal_indicator;
 
 typedef	struct stat		t_stat;
 typedef	struct dirent	t_dir;

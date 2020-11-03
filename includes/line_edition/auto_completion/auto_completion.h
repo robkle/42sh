@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 21:14:14 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/16 22:52:38 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/11/01 23:32:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "line_edition_utilities.h"
 # include "copy_paste.h"
 # include "get_prompt.h"
+# include "signal_indicator.h"
 # include "ft_printf.h"
 
 typedef struct dirent   t_dirent;
@@ -61,5 +62,6 @@ void		auto_get_list(t_auto *auto_com, DIR *dirp);
 void        auto_reset(t_auto *auto_com);
 void		auto_lstdel_strdel(t_list **alst);
 void        auto_reset(t_auto *auto_com);
+char        auto_is_separator(char c);
 
 #endif

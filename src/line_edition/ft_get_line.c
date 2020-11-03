@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/10 17:48:48 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/18 20:43:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,17 @@ void				ft_get_line(t_l *l, t_h **h)
 {
 	char			tmp[BUFF_LINE_EDITION];
 
+//	int				debug = 0;
+
 	init_term(l);
 	while (1)
 	{
 		ft_bzero(tmp, sizeof(tmp));
 		if (!(g_shell.signal_indicator & SIGINT_INDICATOR))
+	//	if (debug == 0)
 			read(0, tmp, sizeof(tmp));
 		if (g_shell.signal_indicator & SIGINT_INDICATOR)
+	//	if (debug == 1)
 		{
 			post_sigint(l);
 			continue ;

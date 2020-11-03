@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/16 23:15:33 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/18 20:27:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void			post_sigwinch(t_l *l)
 	g_shell.signal_indicator &= ~SIGWINCH_INDICATOR;
 }
 
-
 static void sig_int_handler(int sig)
 {
 	(void)sig;
@@ -76,8 +75,6 @@ static void		sig_winch_handler(int sig)
 	}
 	ioctl(1, TIOCSTI, "");
 }
-
-
 
 void sig_controller(int option)
 {

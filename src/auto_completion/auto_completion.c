@@ -6,13 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 17:13:51 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/16 23:04:58 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/11/01 23:34:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "auto_completion.h"
 
-int         is_separator(char c)
+char			auto_is_separator(char c)
 {
     return (c == '&' || c == ';' || c == '|');
 }
@@ -27,12 +27,12 @@ int				auto_is_command(t_l *l)
 	if (head < 0)
 		return (TRUE);
 	while (head > 0 && ft_isalnum(l->line[head]) && \
-			!is_separator(l->line[head]) && !ft_isspace(l->line[head]))
+			!auto_is_separator(l->line[head]) && !ft_isspace(l->line[head]))
 		--head;
 	while (head > 0 && ft_isspace(l->line[head]))
 		--head;
-	if ((head == 0 || is_separator(l->line[head])) && \
-		l->line[head] != '.')	
+	if ((head == 0 || auto_is_separator(l->line[head])) && \
+		l->line[head] != '.' && l->line[head] != '/')	
 		return (TRUE);
 	else if (l->line[head] == '.' && curr == head)
 	{
