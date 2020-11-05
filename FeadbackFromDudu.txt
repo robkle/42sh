@@ -1,0 +1,4 @@
+1. Leaks found after execute a command which is used autocompletion
+2. When using autocompletion with hidden file, the line automatically added '/' at the end and it made impossible to use with hidden file
+3. When browsing through the list of possibilities, then 'q' for quiting is not working
+4. When at the "Display all ... posibilities? (y or n)", then Ctrl-c, the line was not erased, it was like choosing 'n' or pressing ctrl-8
