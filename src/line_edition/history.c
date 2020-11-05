@@ -36,6 +36,7 @@ void		get_history(int fd)
 	g_h->hst = g_h->curr;
 	g_h->hist[i++] = ft_strnew(0);
 	g_h->hist[i] = NULL;
+	free(buffer);
 	close(fd);
 }
 
@@ -57,14 +58,14 @@ void		append_history(char *line)
 		i = 0;
 		while (i < g_h->curr - 1)
 		{
-			tmp = g_h->hist[i];//NEW
-			g_h->hist[i] = ft_strdup(g_h->hist[i + 1]);//NEW
+			tmp = g_h->hist[i];
+			g_h->hist[i] = ft_strdup(g_h->hist[i + 1]);
 			free(tmp);
 			i++;
 		}
-		tmp = g_h->hist[i];//NEW
+		tmp = g_h->hist[i];
 		g_h->hist[i] = ft_strdup(line);
-		free(tmp);//NEW
+		free(tmp);
 	}
 	g_h->hst = g_h->curr;
 }

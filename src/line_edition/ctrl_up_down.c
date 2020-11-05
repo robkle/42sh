@@ -14,6 +14,8 @@
 
 void				ctrl_up(t_l *l)
 {
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	if (l->y == 0)
 	{
 		apply_termcap_str("ch", 0, l->pmpt);
@@ -35,6 +37,8 @@ void				ctrl_up(t_l *l)
 
 void				ctrl_down(t_l *l)
 {
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	if ((l->co * (l->y + 1)) + l->x > l->nb + l->pmpt)
 	{
 		if (l->co - l->x <= l->nb + l->pmpt - (l->x + (l->y * l->co)))

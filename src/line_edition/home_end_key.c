@@ -16,6 +16,8 @@ int					home_key(t_l *l)
 {
 	int				i;
 
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	i = l->y;
 	while (i--)
 		apply_termcap_str("up", 0, 0);
@@ -29,6 +31,8 @@ int					end_key(t_l *l)
 {
 	int				i;
 
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	home_key(l);
 	l->y = (l->nb + l->pmpt) / l->co;
 	l->x = (l->nb + l->pmpt) % l->co;

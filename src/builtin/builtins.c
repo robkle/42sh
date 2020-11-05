@@ -42,6 +42,9 @@ int			ft_exit(int opt)
 
 	i = -1;
 	delete_save_history();
+	ft_arraydel(g_h->hist);//NEW
+	free(g_h->hist);//NEW
+	free(g_h);//NEW	
 	while (g_env[++i])
 		ft_strdel(&g_env[i]);
 	ft_strdel(&g_env[i]);

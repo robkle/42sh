@@ -79,6 +79,7 @@ src/line_edition/history_input_check.c \
 src/line_edition/home_end_key.c \
 src/line_edition/left_right_bs_key.c \
 src/line_edition/reverse_search.c \
+src/line_edition/reverse_search_utils.c \
 src/line_edition/term_attr.c \
 src/line_edition/up_down_key.c \
 src/line_edition/carriage_return.c \
@@ -167,6 +168,7 @@ history_input_check.o \
 home_end_key.o \
 left_right_bs_key.o \
 reverse_search.o \
+reverse_search_utils.o \
 term_attr.o \
 up_down_key.o \
 ft_get_line.o \

@@ -41,24 +41,31 @@ static void			bs_key_str(t_l *l)
 
 int					bs_key(t_l *l)
 {
-	if (l->y == 0 && l->x == l->pmpt)
-		return (1);
-	if (l->x == 0 && l->y != 0)
-	{
-		apply_termcap_str("up", 0, 0);
-		apply_termcap_str("ch", 0, l->co);
-	}
+	if (l->rs)
+		ft_reverse_search_bs(l);
 	else
-		apply_termcap_str(LEFT, 0, 0);
-	apply_termcap_str("cd", 0, 0);
-	apply_termcap_str("sc", 0, 0);
-	bs_key_str(l);
-	apply_termcap_str("rc", 0, 0);
+	{
+		if (l->y == 0 && l->x == l->pmpt)
+			return (1);
+		if (l->x == 0 && l->y != 0)
+		{
+			apply_termcap_str("up", 0, 0);
+			apply_termcap_str("ch", 0, l->co);
+		}
+		else
+			apply_termcap_str(LEFT, 0, 0);
+		apply_termcap_str("cd", 0, 0);
+		apply_termcap_str("sc", 0, 0);
+		bs_key_str(l);
+		apply_termcap_str("rc", 0, 0);
+	}
 	return (1);
 }
 
 void				left_key(t_l *l)
 {
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	if (l->x == l->pmpt && l->y == 0)
 		return ;
 	if (l->x == 0 && l->y != 0)
@@ -77,6 +84,8 @@ void				left_key(t_l *l)
 
 void				right_key(t_l *l)
 {
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	if (l->x + (l->y * l->co) - l->pmpt == l->nb)
 		return ;
 	if (l->x != l->co - 1)

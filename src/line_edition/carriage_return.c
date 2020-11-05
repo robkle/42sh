@@ -20,6 +20,8 @@ void	carriage_return_key(t_l *l)
 			ft_printf("\n%s", l->line);
 	}
 	append_history(l);*/
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	up_down(l, NULL);
 	restore_term(l);
 }

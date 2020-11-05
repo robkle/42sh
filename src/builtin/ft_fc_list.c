@@ -79,7 +79,7 @@ int	ft_fc_list(int flags, char **range)
 		r_ind[1] = g_h->curr - 2;
 	if (r_ind[0] < 0 || r_ind[1] < 0)
 	{
-		ft_printf("bash: fc: history specification out of range\n");
+		ft_printf("42sh: fc: history specification out of range\n");
 		return (0);
 	}
 	if ((flags & 4) && r_ind[0] < r_ind[1])
