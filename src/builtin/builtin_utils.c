@@ -37,6 +37,8 @@ void		builtins_printing(t_process *p)
 	// 	status = ft_bg(coms);
 	else if (ft_strequ(p->av[0], "jobs"))
 		status = ft_jobs();
+	else if (ft_strequ(p->av[0], "alias"))
+		status = ft_alias(p);
 	//else if (!ft_strcmp(coms->av[0], "hash"))
 		//ft_hash(coms);
 	ft_exit(status);
@@ -50,7 +52,8 @@ int		is_builtin_not_printing(char *comm)
 		ft_strequ(comm, "setenv") || \
 		ft_strequ(comm, "unsetenv") || \
 		ft_strequ(comm, "pwd") || \
-		ft_strequ(comm, "fg"))
+		ft_strequ(comm, "fg") || \
+		ft_strequ(comm, "alias"))
 		return (1);
 	return (0);
 }
@@ -72,5 +75,7 @@ int		builtins_not_printing(t_process *p)
 		return (p->status = ft_unsetenv(p));
 	else if (ft_strequ(p->av[0], "fg"))
 		return (p->status = ft_fg());
+	else if (ft_strequ(p->av[0], "alias"))
+		return (p->status = ft_alias(p));
 	return (EXIT_FAILURE);
 }

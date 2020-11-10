@@ -44,11 +44,18 @@
 # define KEY 1
 # define VAL 0
 
+typedef struct          s_alias
+{
+    char *value;
+    char *name;
+}                       t_alias;
+
 typedef struct          s_shell
 {
     pid_t               shell_pgid;
     struct termios      shell_tmode;
     t_list              *first_job;
+    t_alias             **alias;
 	int					previous_exitcode;
 }                       t_shell;
 

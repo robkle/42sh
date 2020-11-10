@@ -29,6 +29,7 @@ int		ft_unsetenv(t_process *c);
 void	ft_type(t_process *c);
 int		ft_jobs(void);
 int		ft_fg(void);
+int     ft_alias(t_process *c);
 
 /*
 ** =============================== Utils ===================================
