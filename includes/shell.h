@@ -12,6 +12,7 @@
 
 #ifndef SHELL_H
 # define SHELL_H
+
 # include "libft.h"
 # include "../ft_printf/includes/ft_printf.h"
 # include <limits.h>
@@ -50,12 +51,13 @@ typedef struct          s_alias
     char *name;
 }                       t_alias;
 
+t_alias     **g_alias;
+
 typedef struct          s_shell
 {
     pid_t               shell_pgid;
     struct termios      shell_tmode;
     t_list              *first_job;
-    t_alias             **alias;
 	int					previous_exitcode;
 }                       t_shell;
 

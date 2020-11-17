@@ -12,6 +12,42 @@
 
 #include "shell.h"
 
+void sort_alias_list(t_alias **aliaslist)
+{
+	int i;
+	int j;
+	t_alias *tmp;
+
+	i = 0;
+	while(aliaslist[i] != NULL)
+	{
+		j = i;
+		while (aliaslist[j + 1] != NULL)
+		{
+			if (ft_strcmp(aliaslist[i]->name, aliaslist[j + 1]->name) > 0)
+			{
+				tmp = aliaslist[i];
+				aliaslist[i] = aliaslist[j + 1];
+				aliaslist[j + 1] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void print_all()
+{
+	int i;
+
+	i = 0;
+	while(g_alias[i] != NULL)
+	{
+		ft_printf("alias %s='%s'\n", g_alias[i]->name, g_alias[i]->value);
+		i++;
+	}
+}
+
 char	*set_value(char *argv)
 {
 	int		i;
@@ -38,7 +74,6 @@ char	*set_name(char *argv)
 
 int   add_alias(int count, char *alias, t_alias ***aliaslist)
 {
-	// the list should be sorted also.
 	t_alias   **new;
 	int     j;
 
@@ -47,33 +82,24 @@ int   add_alias(int count, char *alias, t_alias ***aliaslist)
 	{
 		while((*aliaslist)[j] != NULL)
 		{
-			new[j] = (t_alias*)malloc(sizeof(t_alias)); // check if fail
-			new[j]->name = ft_strdup((*aliaslist)[j]->name);
-			new[j]->value = ft_strdup((*aliaslist)[j]->value);
-			   j++;
+			if ((new[j] = (t_alias*)malloc(sizeof(t_alias))))
+			{
+				new[j]->name = ft_strdup((*aliaslist)[j]->name);
+				new[j]->value = ft_strdup((*aliaslist)[j]->value);
+			}
+			j++;
 		}
 	}
-	new[j] = (t_alias*)malloc(sizeof(t_alias)); // check if fail
-	new[j]->name = set_name(alias);
-	new[j]->value = set_value(alias);
-	j++;
+	if((new[j] = (t_alias*)malloc(sizeof(t_alias))))
+	{
+		new[j]->name = set_name(alias);
+		new[j]->value = set_value(alias);
+		j++;
+	}
 	new[j] = NULL;
+	sort_alias_list(new);
 	free((*aliaslist));
 	(*aliaslist) = new;
-	return (0);
-}
-
-int		a_strchr(char *str, int c)
-{
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	} 
 	return (0);
 }
 
@@ -81,12 +107,6 @@ int set_alias(char *alias, t_alias ***aliaslist)
 {
 	int i;
 
-	i = 0;
-	while ((*aliaslist)[i] != NULL)
-	{
-		ft_printf("%s %s\n", (*aliaslist)[i]->name,(*aliaslist)[i]->value);
-		i++;
-	}
 	i = 0;
 	while((*aliaslist)[i] != NULL)
 	{
@@ -106,25 +126,16 @@ void print_alias(char *alias)
 	int i;
 
 	i = 0;
-	while(g_shell.alias[i] != NULL)
+	while(g_alias[i] != NULL)
 	{
-		if (ft_strncmp(g_shell.alias[i]->name, alias, ft_strlen(g_shell.alias[i]->name)) == 0)
-			ft_printf("alias %s'%s'\n", g_shell.alias[i]->name, g_shell.alias[i]->value);
+		if (ft_strncmp(g_alias[i]->name, alias, ft_strlen(g_alias[i]->name)) == 0)
+		{
+			ft_printf("alias %s='%s'\n", g_alias[i]->name, g_alias[i]->value);
+			return ;
+		}
 		i++;
 	}
-	ft_printf("42sh: alias: %s: not found", alias);
-}
-
-void print_all()
-{
-	int i;
-
-	i = 0;
-	while(g_shell.alias[i] != NULL)
-	{
-		ft_printf("alias %s'%s'\n", g_shell.alias[i]->name, g_shell.alias[i]->value);
-		i++;
-	}  // bövs den läggas till NUll i något skede, finns någon sådan funktion, initialize i ft_alias ifall det inte finns
+	ft_printf("42sh: alias: %s: not found\n", alias);
 }
 
 int ft_alias(t_process *c)
@@ -132,25 +143,20 @@ int ft_alias(t_process *c)
 	int i;
 
 	i = 1;
-	g_shell.alias = (t_alias**)malloc(sizeof(t_alias*));
-	if (c->ac == 0)
+	ft_printf("ALIAS börjar\n");
+	if (c->ac == 1)
 		print_all();
 	else
 	{
 		while(c->av[i] != NULL)
 		{
 			if (ft_strchr(c->av[i], '=') != NULL)
-				set_alias(c->av[i], &g_shell.alias);
+				set_alias(c->av[i], &g_alias);
 			else
 				print_alias(c->av[i]);
 			i++; 
 		} 
 	}
-	i = 0;
-	while(g_shell.alias[i] != NULL)
-	{
-		ft_printf("heres%s %s\n", g_shell.alias[i]->name, g_shell.alias[i]->value);
-		i++;
-	}
+	ft_printf("alias DONE\n");
 	return (0);
 }
