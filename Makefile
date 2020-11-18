@@ -64,6 +64,7 @@ src/builtin/builtin_utils.c \
 src/builtin/ft_jobs.c \
 src/builtin/ft_fg.c \
 src/builtin/ft_alias.c \
+src/builtin/ft_unalias.c \
 src/line_edition/add_key.c \
 src/line_edition/clipping.c \
 src/line_edition/ctrl_k.c \
@@ -144,6 +145,7 @@ ft_unsetenv.o \
 ft_jobs.o \
 ft_fg.o \
 ft_alias.o \
+ft_unalias.o \
 children.o \
 check_path.o \
 heredoc.o \

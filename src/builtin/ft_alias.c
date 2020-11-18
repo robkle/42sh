@@ -110,10 +110,10 @@ int set_alias(char *alias, t_alias ***aliaslist)
 	i = 0;
 	while((*aliaslist)[i] != NULL)
 	{
-		if (ft_strncmp((*aliaslist)[i]->name, alias, ft_strlen((*aliaslist)[i]->name)) == 0)
+		if (ft_strcmp((*aliaslist)[i]->name, alias) == 0)
 		{
 			free((*aliaslist)[i]->value);
-			(*aliaslist)[i]->value = set_value(alias);
+			(*aliaslist)[i]->value = set_value(alias); // check for null, set tmp to value if null return -1
 			return (0);
 		}
 		i++;
@@ -125,10 +125,10 @@ void print_alias(char *alias)
 {
 	int i;
 
-	i = 0;
+	i = 0;	
 	while(g_alias[i] != NULL)
 	{
-		if (ft_strncmp(g_alias[i]->name, alias, ft_strlen(g_alias[i]->name)) == 0)
+		if (ft_strcmp(g_alias[i]->name, alias) == 0)
 		{
 			ft_printf("alias %s='%s'\n", g_alias[i]->name, g_alias[i]->value);
 			return ;
