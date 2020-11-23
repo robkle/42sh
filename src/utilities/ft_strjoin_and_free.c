@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_and_free.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 08:09:40 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/23 01:01:56 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/12 14:43:18 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ char	*ft_strjoin_and_free_string1(char *string1, char *string2)
 		jointstring = ft_strcpy(jointstring, (char*)string2);
 	if (string1 && string2)
 		jointstring = ft_strcat(jointstring, (char*)string2);
-	ft_strdel(&string1);
+	(string1) ? ft_strdel(&string1) : NULL;
 	return (jointstring);
 }

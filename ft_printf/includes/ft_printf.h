@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 23:45:44 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/26 02:59:34 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/21 21:53:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include "libft.h"
-
-# include <stdio.h>
 
 /*
 ** Flags uses a binary addressing system
@@ -79,10 +77,10 @@ typedef struct		s_info
 */
 
 int					ft_printf(char const *format, ...);
-int					full_str_printing(const char *format, va_list args, \
-		t_info *info);
+int					ft_dprintf(int fd, char const*format, ...);
+int					full_str_printing(const char *format, va_list args, int fd);
 int					parse_and_print(const char *format, va_list args, \
-		size_t *pos, t_info *info);
+		size_t *pos, int fd);
 
 /*
 ** -------------------------Parsing part file---------------------------------
@@ -97,6 +95,7 @@ void				struct_init(t_info *info);
 
 int					ft_skip_atoi(const char *format, size_t *pos);
 int					ft_isspecifier(char specifier);
+int					ft_isflag(char chr);
 
 /*
 ** Filling struct file
@@ -115,7 +114,7 @@ void				get_specifier(const char *format, size_t *pos, \
 ** -------------------------Printing files------------------------------------
 */
 
-int					printing(t_info *info, va_list arg);
+int					printing(t_info *info, va_list arg, int fd);
 
 /*
 ** Flag_control.c
@@ -163,37 +162,37 @@ int					special_case(char **s, double num);
 ** Type character
 */
 
-void				type_c(t_info *info, va_list arg, size_t *ct);
+void				type_c(t_info *info, va_list arg, size_t *ct, int fd);
 
 /*
 ** Type string
 */
 
-void				type_s(t_info *info, va_list arg, size_t *ct);
+void				type_s(t_info *info, va_list arg, size_t *ct, int fd);
 
 /*
 ** Type pointer
 */
 
-void				type_p(t_info *info, va_list arg, size_t *ct);
+void				type_p(t_info *info, va_list arg, size_t *ct, int fd);
 
 /*
 ** Type signed Integer
 */
 
-void				type_di(t_info *info, va_list arg, size_t *ct);
+void				type_di(t_info *info, va_list arg, size_t *ct, int fd);
 
 /*
 ** Type unsigned integer
 */
 
-void				type_u(t_info *info, va_list arg, size_t *ct);
+void				type_u(t_info *info, va_list arg, size_t *ct, int fd);
 
 /*
 ** Type Octal number
 */
 
-void				type_o(t_info *info, va_list arg, size_t *ct);
+void				type_o(t_info *info, va_list arg, size_t *ct, int fd);
 
 /*
 ** Type Hexadecimal number
@@ -201,7 +200,7 @@ void				type_o(t_info *info, va_list arg, size_t *ct);
 
 void				small_x(t_info *info, va_list arg, char **output);
 void				big_x(char **output);
-void				type_x(t_info *info, va_list arg, size_t *ct);
+void				type_x(t_info *info, va_list arg, size_t *ct, int fd);
 
 /*
 ** Type floating point
@@ -211,13 +210,13 @@ float				ft_pow(float x, int y);
 char				*ft_decimal(long double *nbr);
 char				*ft_fractional(long double nbr, t_info *info);
 void				float_to_string(long double num, t_info *info, char **str);
-void				type_f(t_info *info, va_list arg, size_t *ct);
+void				type_f(t_info *info, va_list arg, size_t *ct, int fd);
 
 /*
 ** Type percentage
 */
 
 void				type_percent(t_info *info, __attribute__((unused)) \
-		va_list arg, size_t *ct);
+		va_list arg, size_t *ct, int fd);
 
 #endif

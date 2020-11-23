@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   complete_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 11:17:31 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/05 05:44:31 by tango            ###   ########.fr       */
+/*   Updated: 2020/10/28 01:06:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_astnode	*complete_command1(t_token **token)
 
 	if ((lnode = list(token)) == NULL)
 		return (NULL);
-	if (!*token || ((ft_strcmp((*token)->data, ";") != 0) \
-				&& (ft_strcmp((*token)->data, "&") != 0)))
+	if (!*token || 
+		((*token)->type != TOKEN_APS && (*token)->type != TOKEN_SEMI))
 	{
 		clear_ast(lnode);
 		return (NULL);

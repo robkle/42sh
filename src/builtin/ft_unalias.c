@@ -12,6 +12,26 @@
 
 #include "shell.h"
 
+int		find_alias(char *alias)
+{
+	int i;
+	char *alias_name;
+
+	i = 0;
+	while(g_alias[i] != NULL)
+	{
+		if (ft_strcmp(g_alias[i]->name, (alias_name = set_name(alias))) == 0)
+		{
+			free(alias_name);
+			return (0);
+		}
+		free(alias_name);
+		i++;
+	}
+	ft_printf("42sh: unalias: %s: not found\n", alias);
+	return (1);
+}
+
 int		count_arr()
 {
 	int i;
@@ -25,6 +45,7 @@ int		count_arr()
 void remove_alias(char *alias, t_alias ***aliaslist)
 {
 	t_alias   **new;
+	char		*alias_name;
 	int     j;
     int     i;
     int     count;
@@ -36,8 +57,9 @@ void remove_alias(char *alias, t_alias ***aliaslist)
 	{
 		while(j < count)
 		{
-            if (ft_strcmp((*aliaslist)[i]->name, alias) == 0)
+            if (ft_strcmp((*aliaslist)[i]->name, (alias_name = set_name(alias))) == 0)
                 i++;
+			free(alias_name);
 			if ((new[j] = (t_alias*)malloc(sizeof(t_alias))))
 			{
 				new[j]->name = ft_strdup((*aliaslist)[i]->name);
@@ -64,7 +86,9 @@ void remove_all(t_alias ***aliaslist)
         free((*aliaslist)[i]);
         i++;
     }
-    //free((*aliaslist));
+    free((*aliaslist));
+	(*aliaslist) = (t_alias**)malloc(sizeof(t_alias*) + 1);
+	(*aliaslist)[0] = NULL;
 }
 
 int ft_unalias(t_process *c)
@@ -80,7 +104,7 @@ int ft_unalias(t_process *c)
 		{
 			if (ft_strcmp(c->av[i], "-a") == 0)
 				remove_all(&g_alias);
-            else
+            else if (find_alias(c->av[i]) == 0)
 				remove_alias(c->av[i], &g_alias);
 			i++; 
 		} 

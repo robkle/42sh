@@ -48,30 +48,6 @@ void print_all()
 	}
 }
 
-char	*set_value(char *argv)
-{
-	int		i;
-	char	*value;
-
-	i = 0;
-	while (argv[i] != '\0' && argv[i] != '=')
-		i++;
-	value = ft_strsub(argv, i + 1, ft_strlen(argv) - (i + 1));
-	return (value);
-}
-
-char	*set_name(char *argv)
-{
-	int		i;
-	char	*name;
-
-	i = 0;
-	while (argv[i] != '\0' && argv[i] != '=')
-		i++;
-	name = ft_strsub(argv, 0, i);
-	return (name);
-}
-
 int   add_alias(int count, char *alias, t_alias ***aliaslist)
 {
 	t_alias   **new;
@@ -106,16 +82,19 @@ int   add_alias(int count, char *alias, t_alias ***aliaslist)
 int set_alias(char *alias, t_alias ***aliaslist)
 {
 	int i;
+	char *alias_name;
 
 	i = 0;
 	while((*aliaslist)[i] != NULL)
 	{
-		if (ft_strcmp((*aliaslist)[i]->name, alias) == 0)
+		if (ft_strcmp((*aliaslist)[i]->name, (alias_name = set_name(alias))) == 0)
 		{
+			free(alias_name);
 			free((*aliaslist)[i]->value);
 			(*aliaslist)[i]->value = set_value(alias); // check for null, set tmp to value if null return -1
 			return (0);
 		}
+		free(alias_name);
 		i++;
 	}
 	return(add_alias(i + 1, alias, aliaslist));
@@ -150,7 +129,9 @@ int ft_alias(t_process *c)
 	{
 		while(c->av[i] != NULL)
 		{
-			if (ft_strchr(c->av[i], '=') != NULL)
+			if (ft_strcmp(c->av[i], "-p") == 0)
+				print_all();
+			else if (ft_strchr(c->av[i], '=') != NULL)
 				set_alias(c->av[i], &g_alias);
 			else
 				print_alias(c->av[i]);

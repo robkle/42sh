@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:24:37 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/30 05:45:05 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/28 01:08:47 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_astnode		*io_redirect1(t_token **token)
 	
 	if (*token == NULL)
 		return (NULL);
-	if (*token != NULL)
 	if ((*token)->type != TOKEN_IO_NUMBER)
 		return (NULL);
 	ionumber = (*token)->data;

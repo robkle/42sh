@@ -9,14 +9,10 @@ INC = -I ./includes/ -I ./libft/includes
 
 SRCS = src/main.c \
 src/lexer/lexical_analysis.c \
-src/lexer/get_token_info.c \
 src/lexer/lexer_helper1.c \
 src/lexer/lexer_helper2.c \
-src/lexer/interpret.c \
-src/lexer/jump_single_or_double_quote.c \
-src/lexer/create_non_quoted_string.c \
-src/lexer/check_syntax.c \
-src/lexer/clear_token.c \
+src/lexer/non_operator_token.c \
+src/lexer/operator_token.c \
 src/parser/syntax_analysis.c \
 src/parser/AST/and_or.c \
 src/parser/AST/ast_tool.c \
@@ -27,6 +23,7 @@ src/parser/AST/command.c \
 src/parser/AST/complete_command.c \
 src/parser/AST/file_name.c \
 src/parser/AST/io_files.c \
+src/parser/AST/here_end.c \
 src/parser/AST/io_here.c \
 src/parser/AST/io_file_branch.c \
 src/parser/AST/io_redirect.c \
@@ -43,6 +40,7 @@ src/executor/heredoc.c \
 src/executor/execute_ast/execute_complete_command.c \
 src/executor/execute_ast/execute_list.c \
 src/executor/execute_ast/execute_and_or.c \
+src/executor/execute_ast/execute_and_or_bg.c \
 src/executor/execute_ast/execute_pipeline.c \
 src/executor/execute_ast/execute_pipe_sequence.c \
 src/executor/execute_ast/execute_command.c \
@@ -63,8 +61,10 @@ src/builtin/ft_type.c \
 src/builtin/builtin_utils.c \
 src/builtin/ft_jobs.c \
 src/builtin/ft_fg.c \
+src/builtin/ft_bg.c \
 src/builtin/ft_alias.c \
 src/builtin/ft_unalias.c \
+src/builtin/ft_alias_utils.c \
 src/line_edition/add_key.c \
 src/line_edition/clipping.c \
 src/line_edition/ctrl_k.c \
@@ -87,9 +87,14 @@ src/utilities/error.c \
 src/utilities/ft_strjoin_and_free.c \
 src/utilities/set_oldpwd.c \
 src/utilities/increment_shell_level.c \
+src/utilities/ft_lstlen.c \
+src/utilities/jump_quote.c \
+src/utilities/ft_strncpm.c \
+src/utilities/ft_strnequ.c \
 src/executor/print_binary_tree.c \
 src/jobs/ft_tcgetsetpgrp.c \
 src/jobs/job_utils.c \
+src/jobs/process_utils.c \
 src/jobs/foreground_and_background.c \
 src/jobs/stopped_and_terminated_jobs.c \
 src/jobs/continuing_stopped_jobs.c \
@@ -98,9 +103,10 @@ src/jobs/lauch_process.c \
 
 OBJS_NAME = main.o \
 lexical_analysis.o \
-get_token_info.o \
 lexer_helper1.o \
 lexer_helper2.o \
+non_operator_token.o \
+operator_token.o \
 syntax_analysis.o \
 and_or.o \
 ast_tool.o \
@@ -112,6 +118,7 @@ complete_command.o \
 file_name.o \
 io_file_branch.o \
 io_files.o \
+here_end.o \
 io_here.o \
 io_redirect.o \
 list.o \
@@ -130,6 +137,7 @@ builtins.o \
 execute_complete_command.o \
 execute_list.o \
 execute_and_or.o \
+execute_and_or_bg.o \
 execute_pipeline.o \
 execute_pipe_sequence.o \
 execute_command.o \
@@ -144,8 +152,10 @@ ft_setenv.o \
 ft_unsetenv.o \
 ft_jobs.o \
 ft_fg.o \
+ft_bg.o \
 ft_alias.o \
 ft_unalias.o \
+ft_alias_utils.o \
 children.o \
 check_path.o \
 heredoc.o \
@@ -161,24 +171,24 @@ left_right_bs_key.o \
 term_attr.o \
 up_down_key.o \
 ft_get_line.o \
-interpret.o \
 eof_handler.o \
 carriage_return.o \
 set_oldpwd.o \
 handle_redirect.o \
 redirects_great.o \
 redirects_less.o \
-clear_token.o \
 get_prompt.o \
 increment_shell_level.o \
-check_syntax.o \
-jump_single_or_double_quote.o \
+ft_lstlen.o \
+jump_quote.o \
+ft_strncpm.o \
+ft_strnequ.o \
 ft_type.o \
 builtin_utils.o \
-create_non_quoted_string.o \
 print_binary_tree.o \
 ft_tcgetsetpgrp.o \
 job_utils.o \
+process_utils.o \
 foreground_and_background.o \
 stopped_and_terminated_jobs.o \
 continuing_stopped_jobs.o \
