@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:12 by marvin            #+#    #+#             */
-/*   Updated: 2020/11/01 23:34:19 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/11/25 16:30:32 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ char        *auto_get_typed_str(t_l *l)
 	if (tail == 0)
 		return (ft_strnew(0));
 	head = tail;
-	while (!ft_iswhite(l->line[--head]) && &l->line[head] != l->line)
+	while (!ft_iswhite(l->line[--head]) && !auto_is_separator(l->line[head]) && &l->line[head] != l->line)
 		NULL;
+	//if (&l->line[head] == l->line && (auto_is_separator(l->line[0]) || l->line[0] == ' ') && l->line[1] != ' ')
 	if (&l->line[head] == l->line && (auto_is_separator(l->line[0]) || l->line[0] == ' ') && l->line[1] != ' ')
 		return (ft_strsub(l->line, 1, tail - 1));
 	else if (&l->line[head] == l->line)
