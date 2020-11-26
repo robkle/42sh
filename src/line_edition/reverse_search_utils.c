@@ -52,7 +52,7 @@ void	ft_reverse_search_reset(t_l *l)
 	free(l->line);
 	l->line = ft_strdup(g_h->hist[g_h->hst]);
 	ft_reverse_search_clear(l);
-	ft_putstr("> ");
+	ft_putstr("> ");//THIS DOESN'T SEEM TO STAY WITH ARROWS
 	ft_putstr(l->line);
 	home_key(l);	
 }

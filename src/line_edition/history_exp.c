@@ -28,7 +28,7 @@ static int		ft_construct_exp(t_l *l, char *exp, char **split, char **exp_split)
 	{
 		r = 0;
 		l->line = ft_strnew(0);
-		ft_printf("\n42sh: %s: event not found", exp_split[0]);
+		ft_printf("\n42sh: %s: event not found\n", exp_split[0]);
 	}
 	free(exp);
 	free(split[0]);

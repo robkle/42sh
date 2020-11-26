@@ -93,6 +93,8 @@ void				up_down(t_l *l, char t[])
 {
 	static char		*tmp;
 
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	if (t == NULL)
 		ft_strdel(&tmp);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'A')

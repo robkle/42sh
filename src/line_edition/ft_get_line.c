@@ -56,7 +56,7 @@ static void			parse_key_arrow(char t[], t_l *l)
 		add_key(t, l);
 	else if (t[0] == 18 && !t[1])
 		ft_reverse_search(l);
-	else if (t[0] == 27 && !t[1])
+	else if (t[0] == 27 && !t[1] && l->rs)
 		ft_reverse_search_reset(l);
 }
 
