@@ -1,0 +1,24 @@
+Bugs
+1. Restore from the incremental search to the normal prompt by press a down arrow key doesn't work in your version. It is a slightly different function than bash.
+2. When you restore from the incremental search to the normal prompt with the left or right arrow, it leaves two extra characters. 
+3. Pressing ESC after restoring from incremental search causes a double-free error.
+4. In the expansion !<WORD>, the error message has extra characters like,
+	42sh; !<WORD>: event not foundNULL
+   The minor typos, "NULL" following "not found"
+
+How to reproduce
+1.
+CTRL+R
+Press down arrow
+
+2.
+CTRL+R
+Press left or right arrow
+
+3.
+CTRL+R
+Press ESC, left, right or up arrow.(any of these)
+Press ESC again.
+
+Note:
+I haven't checked leaks for this version since there were pre-existing leasks come from other part.
