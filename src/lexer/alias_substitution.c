@@ -45,6 +45,7 @@ int alias_substitution(t_token *current_token, t_token **prev_token, t_token **t
                 if (!parser(lst, *(prev_token)))
 			    {
 				    clear_token(lst);
+                    //return NULL?
 			    }
 			    *prev_token = lst;
                 lst = lst->next;

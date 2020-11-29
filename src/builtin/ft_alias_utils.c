@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "../includes/libft.h"
 
 char	*set_value(char *argv)
 {
@@ -20,7 +21,7 @@ char	*set_value(char *argv)
 	i = 0;
 	while (argv[i] != '\0' && argv[i] != '=')
 		i++;
-	value = ft_strsub(argv, i + 1, ft_strlen(argv) - (i + 1));
+	ft_strtrim_d_quote(value = ft_strsub(argv, i + 1, ft_strlen(argv) - (i + 1)));
 	return (value);
 }
 

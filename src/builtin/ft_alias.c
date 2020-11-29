@@ -91,7 +91,7 @@ int set_alias(char *alias, t_alias ***aliaslist)
 		{
 			free(alias_name);
 			free((*aliaslist)[i]->value);
-			(*aliaslist)[i]->value = set_value(alias); // check for null, set tmp to value if null return -1
+			(*aliaslist)[i]->value = set_value(alias);
 			return (0);
 		}
 		free(alias_name);
@@ -122,7 +122,6 @@ int ft_alias(t_process *c)
 	int i;
 
 	i = 1;
-	ft_printf("ALIAS börjar\n");
 	if (c->ac == 1)
 		print_all();
 	else
@@ -138,6 +137,5 @@ int ft_alias(t_process *c)
 			i++; 
 		} 
 	}
-	ft_printf("alias DONE\n");
 	return (0);
 }
