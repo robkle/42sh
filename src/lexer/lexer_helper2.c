@@ -24,6 +24,7 @@ void	print_token(t_token *token)
 		ft_putchar('[');
 		ft_putstr(token->data);
 		ft_putstr("]->");
+		ft_printf("%d", token->type);
 		token = token->next;
 	}
 	ft_putstr("NULL\n");

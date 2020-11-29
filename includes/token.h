@@ -53,6 +53,8 @@ int		is_unsupported_tokens(t_token_type type);
 int		is_control_op_not_newline(t_token_type type);
 int		is_redirect_op(t_token_type type);
 int		is_made_of_digits(char *data);
+int		alias_substitution(t_token *current_token, t_token **prev_token, t_token **token_lst);
+int		parser(t_token *curr, t_token *prev);
 void	add_token_into_token_list(t_token **token_lst, t_token *new);
 void	clear_token(t_token *token);
 void	print_token(t_token *token); //debug

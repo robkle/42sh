@@ -35,7 +35,7 @@ static int redirect_ops_issue(t_token *curr, t_token *prev)
 	return (0);
 }
 
-static int parser(t_token *curr, t_token *prev)
+int parser(t_token *curr, t_token *prev)
 {
 	if (is_unsupported_tokens(curr->type))
 	{
@@ -84,13 +84,17 @@ t_token			*lexer_and_parser(char *input)
 		}
 		else
 			current_token = get_non_operator_token(input, &i);
-		add_token_into_token_list(&token_lst, current_token);
-		if (!parser(current_token, prev_token))
+		if (alias_substitution(current_token, &prev_token, &token_lst) != 1)
 		{
-			clear_token(token_lst);
-			return (NULL);
+			add_token_into_token_list(&token_lst, current_token);
+			if (!parser(current_token, prev_token))
+			{
+				clear_token(token_lst);
+				return (NULL);
+			}
+			prev_token = current_token;
 		}
-		prev_token = current_token;
+		
 	}
 	print_token(token_lst);
 	return (token_lst);

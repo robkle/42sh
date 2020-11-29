@@ -13,6 +13,7 @@ src/lexer/lexer_helper1.c \
 src/lexer/lexer_helper2.c \
 src/lexer/non_operator_token.c \
 src/lexer/operator_token.c \
+src/lexer/alias_substitution.c \
 src/parser/syntax_analysis.c \
 src/parser/AST/and_or.c \
 src/parser/AST/ast_tool.c \
@@ -107,6 +108,7 @@ lexer_helper1.o \
 lexer_helper2.o \
 non_operator_token.o \
 operator_token.o \
+alias_substitution.o \
 syntax_analysis.o \
 and_or.o \
 ast_tool.o \
