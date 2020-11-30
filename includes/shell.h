@@ -50,26 +50,18 @@
 
 # define SHELL_NAME "42sh"
 
-typedef struct          s_alias
-{
-    char *value;
-    char *name;
-}                       t_alias;
-
-t_alias     **g_alias;
-
-typedef struct          s_shell
+typedef struct			s_shell
 {
 	char				**env;
 	char				shell_terminal;
 	char				interactive_shell;
-    pid_t               shell_pgid;
-    struct termios      shell_tmode;
-    t_list              *first_job;
+	pid_t				shell_pgid;
+	struct termios		shell_tmode;
+	t_list				*first_job;
 	t_list				*heredoc;
-}                       t_shell;
+}						t_shell;
 
-t_shell     g_shell;
+t_shell					g_shell;
 
 char					**g_env;
 int						g_status;
@@ -81,7 +73,7 @@ typedef	struct dirent	t_dir;
 **	Lexer
 */
 
-// t_token					*lexical_analysis(char *input);
+// t_token				*lexical_analysis(char *input);
 t_token					*lexer_and_parser(char *input);
 /*
 **	Parser

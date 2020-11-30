@@ -151,6 +151,7 @@ int				main(int ac, char **av, char **envp)
 	g_env = set_env(envp);
 	g_alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
 	g_alias[0] = NULL;
+	g_last_alias = NULL;
 	if (!init_shell())
 		ft_exit(EXIT_FAILURE);
 	increment_shlvl();

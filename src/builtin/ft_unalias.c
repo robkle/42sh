@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unalias.c                                         :+:      :+:    :+: */
+/*   ft_unalias.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgrankul <vgrankul@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "builtin.h"
 
 int		find_alias(char *alias)
 {
-	int i;
-	char *alias_name;
+	int		i;
+	char	*alias_name;
 
 	i = 0;
-	while(g_alias[i] != NULL)
+	while (g_alias[i] != NULL)
 	{
 		if (ft_strcmp(g_alias[i]->name, (alias_name = set_name(alias))) == 0)
 		{
@@ -32,7 +32,7 @@ int		find_alias(char *alias)
 	return (1);
 }
 
-int		count_arr()
+int		count_arr(t_alias **g_alias)
 {
 	int i;
 
@@ -42,23 +42,24 @@ int		count_arr()
 	return (i);
 }
 
-void remove_alias(char *alias, t_alias ***aliaslist)
+void	remove_alias(char *alias, t_alias ***aliaslist)
 {
-	t_alias   **new;
-	char		*alias_name;
-	int     j;
-    int     i;
-    int     count;
+	t_alias	**new;
+	char	*alias_name;
+	int		j;
+	int		i;
+	int		count;
 
 	j = 0;
-    i = 0;
-    count = count_arr() - 1;
-	if((new = (t_alias**)malloc(count * sizeof(t_alias*) + 1)))
+	i = 0;
+	count = count_arr(g_alias) - 1;
+	if ((new = (t_alias**)malloc(count * sizeof(t_alias*) + 1)))
 	{
-		while(j < count)
+		while (j < count)
 		{
-            if (ft_strcmp((*aliaslist)[i]->name, (alias_name = set_name(alias))) == 0)
-                i++;
+			if (ft_strcmp((*aliaslist)[i]->name,
+			(alias_name = set_name(alias))) == 0)
+				i++;
 			free(alias_name);
 			if ((new[j] = (t_alias*)malloc(sizeof(t_alias))))
 			{
@@ -66,48 +67,48 @@ void remove_alias(char *alias, t_alias ***aliaslist)
 				new[j]->value = ft_strdup((*aliaslist)[i]->value);
 			}
 			j++;
-            i++;
+			i++;
 		}
 	}
 	new[j] = NULL;
 	free((*aliaslist));
-    (*aliaslist) = new;
+	(*aliaslist) = new;
 }
 
-void remove_all(t_alias ***aliaslist)
+void	remove_all(t_alias ***aliaslist)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while((*aliaslist)[i] != NULL)
-    {
-        free((*aliaslist)[i]->name);
-        free((*aliaslist)[i]->value);
-        free((*aliaslist)[i]);
-        i++;
-    }
-    free((*aliaslist));
+	i = 0;
+	while ((*aliaslist)[i] != NULL)
+	{
+		free((*aliaslist)[i]->name);
+		free((*aliaslist)[i]->value);
+		free((*aliaslist)[i]);
+		i++;
+	}
+	free((*aliaslist));
 	(*aliaslist) = (t_alias**)malloc(sizeof(t_alias*) + 1);
 	(*aliaslist)[0] = NULL;
 }
 
-int ft_unalias(t_process *c)
+int		ft_unalias(t_process *c)
 {
-    int i;
+	int i;
 
 	i = 1;
 	if (c->ac == 1)
 		ft_printf("unalias: usage: unalias [-a] name [name...]\n");
 	else
 	{
-		while(c->av[i] != NULL)
+		while (c->av[i] != NULL)
 		{
 			if (ft_strcmp(c->av[i], "-a") == 0)
 				remove_all(&g_alias);
-            else if (find_alias(c->av[i]) == 0)
+			else if (find_alias(c->av[i]) == 0)
 				remove_alias(c->av[i], &g_alias);
-			i++; 
-		} 
+			i++;
+		}
 	}
 	return (0);
 }

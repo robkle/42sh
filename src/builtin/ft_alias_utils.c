@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "builtin.h"
 #include "../includes/libft.h"
 
 char	*set_value(char *argv)
@@ -21,7 +21,7 @@ char	*set_value(char *argv)
 	i = 0;
 	while (argv[i] != '\0' && argv[i] != '=')
 		i++;
-	ft_strtrim_d_quote(value = ft_strsub(argv, i + 1, ft_strlen(argv) - (i + 1)));
+	value = ft_strsub(argv, i + 1, ft_strlen(argv) - (i + 1));
 	return (value);
 }
 
@@ -35,4 +35,28 @@ char	*set_name(char *argv)
 		i++;
 	name = ft_strsub(argv, 0, i);
 	return (name);
+}
+
+void	sort_alias_list(t_alias **aliaslist)
+{
+	int		i;
+	int		j;
+	t_alias	*tmp;
+
+	i = 0;
+	while (aliaslist[i] != NULL)
+	{
+		j = i;
+		while (aliaslist[j + 1] != NULL)
+		{
+			if (ft_strcmp(aliaslist[i]->name, aliaslist[j + 1]->name) > 0)
+			{
+				tmp = aliaslist[i];
+				aliaslist[i] = aliaslist[j + 1];
+				aliaslist[j + 1] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
 }

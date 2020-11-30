@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-static int control_ops_issue(t_token *curr, t_token *prev)
+static int	control_ops_issue(t_token *curr, t_token *prev)
 {
 	if (!is_control_op_not_newline(curr->type))
 		return (0);
@@ -23,7 +23,7 @@ static int control_ops_issue(t_token *curr, t_token *prev)
 	return (0);
 }
 
-static int redirect_ops_issue(t_token *curr, t_token *prev)
+static int	redirect_ops_issue(t_token *curr, t_token *prev)
 {
 	if (!prev)
 		return (0);
@@ -35,7 +35,7 @@ static int redirect_ops_issue(t_token *curr, t_token *prev)
 	return (0);
 }
 
-int parser(t_token *curr, t_token *prev)
+int			parser(t_token *curr, t_token *prev)
 {
 	if (is_unsupported_tokens(curr->type))
 	{
@@ -53,10 +53,10 @@ int parser(t_token *curr, t_token *prev)
 		ft_dprintf(2, "%s: syntax error near unexpected token `%s'\n", "42sh", curr->data);
 		return (0);
 	}
-	return(1);
+	return (1);
 }
 
-t_token			*lexer_and_parser(char *input)
+t_token		*lexer_and_parser(char *input)
 {
 	t_token		*token_lst;
 	t_token		*current_token;
@@ -94,7 +94,6 @@ t_token			*lexer_and_parser(char *input)
 			}
 			prev_token = current_token;
 		}
-		
 	}
 	print_token(token_lst);
 	return (token_lst);
