@@ -33,4 +33,6 @@ Gj man, btw there are some bugs i have found
 7. In fc -e <range>, range can be negative too, but seems not working
 8. I am not sure if it is a bug but
 	output of 'fc ls pwd' => '42sh: fc: history specification out of range'
-
+9. With Ctrl_R and Ctrl_C, the output looks different comparing with bash or zsh,
+	but I am ok with this
+Btw, i have not check memory leaks yet
