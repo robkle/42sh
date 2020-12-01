@@ -10,7 +10,7 @@ Gj man, btw there are some bugs i have found
 	emacs on mine pc.
 	Firstly I typed command ls
 	Secondly I typed fc -e emacs
-	Result => I have outout of
+	Result => I have output of
 	a, emacs: command not found
 	b; result from the previous ls command
 5. When I am testing, I open the file .history with 
