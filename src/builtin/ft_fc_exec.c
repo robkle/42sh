@@ -102,9 +102,10 @@ int	ft_fc_exec(int flags, char *ed, char **range)
 {
 	int		r_ind[2];
 	char	*cmd;
-	char	*tmp;
+	//char	*tmp;//UNUSED
 
-	r_ind[0] = range[0] ? ft_fc_range(range[0]) : g_h->curr - 2;
+	//r_ind[0] = range[0] ? ft_fc_range(range[0]) : g_h->curr - 2;
+	r_ind[0] = range[0] ? ft_fc_range(range[0]) : g_h->curr - 1; //NEW
 	r_ind[1] = range[1] && !flags ? ft_fc_range(range[1]) : r_ind[0];
 	if (r_ind[0] < 0 || r_ind[1] < 0)
 	{
@@ -114,9 +115,11 @@ int	ft_fc_exec(int flags, char *ed, char **range)
 	if (flags & 4 && r_ind[0] < r_ind[1])
 		ft_swap(r_ind);
 	cmd = flags & 8 ? ft_fc_s(r_ind, range[2]) : ft_fc_e(r_ind, ed);
-	tmp = g_h->hist[g_h->curr - 1];
+	free(g_h->tmp);
+	g_h->tmp = ft_strdup(cmd);
+	/*tmp = g_h->hist[g_h->curr - 1];
 	g_h->hist[g_h->curr - 1] = ft_strdup(cmd);
-	free(tmp);
+	free(tmp);*///NO NEED FOR THIS ANYMORE
 	ft_execute(&cmd);
 	free(cmd);
 	return (1);

@@ -34,7 +34,8 @@ int	ft_fc_range(char *str)
 
 	if (!ft_num_check(str))
 	{
-		i = g_h->curr - 2;
+		//i = g_h->curr - 2;
+		i = g_h->curr - 1; //NEW
 		while (i >= 0 && g_h->hist[i][0])
 		{
 			if (ft_strnequ(g_h->hist[i], str, ft_strlen(str)))
@@ -45,8 +46,10 @@ int	ft_fc_range(char *str)
 	}
 	i = ft_atoi(str);
 	if (i < 0)
-		i = (g_h->curr - 1) + i;
-	if (i < 0 || (i - 1) > (g_h->curr - 1))
+		//i = (g_h->curr - 1) + i;
+		i = g_h->curr + i; //NEW
+	//if (i < 0 || (i - 1) > (g_h->curr - 1))
+	if (i < 0 || i > (g_h->curr - 1))//NEW
 		return (-1);
 	return (i - 1);
 }
@@ -68,15 +71,18 @@ int	ft_fc_list(int flags, char **range)
 	if (!range[0])
 	{
 		min = (g_h->curr - 1) - HISTSIZE ? (g_h->curr - 1) - HISTSIZE : 0;
-		r_ind[0] = flags & 4 ? g_h->curr - 2 : min;
-		r_ind[1] = flags & 4 ? min : g_h->curr - 2;
+		//r_ind[0] = flags & 4 ? g_h->curr - 2 : min;
+		r_ind[0] = flags & 4 ? g_h->curr - 1 : min;//NEW
+		//r_ind[1] = flags & 4 ? min : g_h->curr - 2;
+		r_ind[1] = flags & 4 ? min : g_h->curr - 1; //NEW
 	}
 	else
 		r_ind[0] = ft_fc_range(range[0]);
 	if (range[1])
 		r_ind[1] = ft_fc_range(range[1]);
 	else
-		r_ind[1] = g_h->curr - 2;
+		//r_ind[1] = g_h->curr - 2;
+		r_ind[1] = g_h->curr - 1;//NEW
 	if (r_ind[0] < 0 || r_ind[1] < 0)
 	{
 		ft_printf("42sh: fc: history specification out of range\n");

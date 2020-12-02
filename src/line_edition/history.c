@@ -40,17 +40,19 @@ void		get_history(int fd)
 	close(fd);
 }
 
-void		append_history(char *line)
+void		append_history(/*char *line*/)
 {
 	int		i;
 	char	*tmp;
 
-	if (!line || !ft_isprint(line[0]))
+	//if (!line || !ft_isprint(line[0]))
+	if (!g_h->tmp || !ft_isprint(g_h->tmp[0]))
 		return ;
 	if (g_h->curr < HISTFILESIZE)
 	{
 		free(g_h->hist[g_h->curr]);
-		g_h->hist[g_h->curr++] = ft_strdup(line);
+		//g_h->hist[g_h->curr++] = ft_strdup(line);
+		g_h->hist[g_h->curr++] = ft_strdup(g_h->tmp);//NEW
 		g_h->hist[g_h->curr] = ft_strnew(0);
 	}
 	else
@@ -64,10 +66,13 @@ void		append_history(char *line)
 			i++;
 		}
 		tmp = g_h->hist[i];
-		g_h->hist[i] = ft_strdup(line);
+		//g_h->hist[i] = ft_strdup(line);
+		g_h->hist[i] = ft_strdup(g_h->tmp);//NEW
 		free(tmp);
 	}
 	g_h->hst = g_h->curr;
+	free(g_h->tmp);
+	g_h->tmp = NULL;
 }
 
 char		*ft_process_history(t_l *l)
@@ -79,7 +84,8 @@ char		*ft_process_history(t_l *l)
 			ft_printf("\n%s", l->line);
 	}
 	if (!ft_check_cont(l->line))
-		append_history(l->line);
+		g_h->tmp = ft_strdup(l->line);
+		//append_history(l->line);
 	return (l->line);
 }
 

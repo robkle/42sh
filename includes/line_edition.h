@@ -74,6 +74,7 @@ typedef struct			s_l
 typedef struct			s_h
 {
 	char				**hist;
+	char				*tmp;
 	int					hst;
 	int					curr;
 }						t_h;
@@ -106,7 +107,8 @@ void					carriage_return_key(t_l *l);
 */
 
 void					delete_save_history(void);
-void					append_history(char *line);
+//void					append_history(char *line);
+void					append_history(void);//NEW
 void					get_history(int fd);
 char					*ft_process_history(t_l *l);
 

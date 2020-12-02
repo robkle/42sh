@@ -56,6 +56,54 @@ static int		ft_strchr_int(char *str, int c)
 			return (1);
 	}
 	return (0);
+	}
+
+static int	ft_check_ed(char *ed)
+{
+	char	**options;
+	char	*cmd;
+	char	*path;
+	int		i;
+
+	options = NULL;
+	i = -1;
+	while (g_env[++i])
+	{
+		if (!ft_strncmp(g_env[i], "PATH=", 5))
+			options = ft_strsplit(&g_env[i][5], 58);
+	}
+	cmd = ed[0] ?  ft_strjoin("/", ed) : NULL;
+	if (!cmd)
+	{
+		ft_printf("42sh: fc: -e: option requires an argument\n");
+		ft_printf("fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]\n");
+		return (0);
+	}
+	if (options)
+	{
+		i = -1;
+		while (options[++i])
+		{
+			path = ft_strjoin(options[i], cmd);
+			if (access(path, F_OK) == 0)
+			{
+				free(cmd);
+				ft_arraydel(options);
+				return (1);
+			}
+			free(path);
+		}
+	}
+	else if (access(cmd, F_OK) == 0)
+	{
+		free(cmd);
+		ft_arraydel(options);
+		return (1);
+	}
+	ft_printf("%s: command not found\n", ed);
+	free(g_h->tmp);
+	g_h->tmp = NULL;
+	return (0);
 }
 	
 static int		ft_fc_options(t_process *p, int *flags, char **ed, char **range)
@@ -73,7 +121,10 @@ static int		ft_fc_options(t_process *p, int *flags, char **ed, char **range)
 		{
 			*flags = 0;
 			bzero(*ed, 16);
-			ft_strcpy(*ed, p->av[++i]);
+			if (p->av[++i])
+				ft_strcpy(*ed, p->av[i]);
+			if (!ft_check_ed(*ed))
+				return (0);
 		}
 		i++;
 	}
@@ -89,18 +140,12 @@ static int	ft_fc_process(int flags, char *ed, char **range)
 	if (flags < 8 && flags % 2)
 	{
 		if (!ft_fc_list(flags, range))
-		{
-			//error message
 			return (0);	
-		}
 	}
 	else
 	{
 		if (!ft_fc_exec(flags, ed, range))
-		{
-			//error message
 			return (0);
-		}
 	}
 	return (1);
 }

@@ -90,6 +90,7 @@ static int		shell(void)
 		//get_next_line(STDOUT_FILENO, &line);
 		if (!iseof_in_line(line))
 			ft_execute(&line);
+		append_history(); //NEW
 	}
 	return (0);
 }
