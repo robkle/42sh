@@ -64,6 +64,7 @@ src/builtin/builtin_utils.c \
 src/builtin/ft_jobs.c \
 src/builtin/ft_fg.c \
 src/builtin/ft_fc.c \
+src/builtin/ft_fc_ed.c \
 src/builtin/ft_fc_list.c \
 src/builtin/ft_fc_exec.c \
 src/line_edition/add_key.c \
@@ -92,6 +93,9 @@ src/utilities/error.c \
 src/utilities/ft_strjoin_and_free.c \
 src/utilities/set_oldpwd.c \
 src/utilities/increment_shell_level.c \
+src/utilities/ft_num_check.c \
+src/utilities/ft_strchr_int.c \
+src/utilities/ft_swap.c \
 src/utilities/ft_strstr_int.c \
 src/executor/print_binary_tree.c \
 src/jobs/ft_tcgetsetpgrp.c \
@@ -129,6 +133,9 @@ get_env.o \
 ft_strndup.o \
 ft_arraydel.o \
 error.o \
+ft_num_check.o \
+ft_strchr_int.o \
+ft_swap.o \
 ft_strjoin_and_free.o \
 sig_handler.o \
 executor.o \
@@ -151,6 +158,7 @@ ft_unsetenv.o \
 ft_jobs.o \
 ft_fg.o \
 ft_fc.o \
+ft_fc_ed.o \
 ft_fc_list.o \
 ft_fc_exec.o \
 children.o \

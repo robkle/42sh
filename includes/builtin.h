@@ -30,6 +30,7 @@ void	ft_type(t_process *c);
 int		ft_jobs(void);
 int		ft_fg(void);
 int		ft_fc(t_process *p);
+int		ft_check_ed(char *ed);
 int		ft_fc_list(int flags, char **range);
 int		ft_fc_range(char *str);
 int		ft_fc_exec(int flags, char *ed, char **range);
@@ -48,7 +49,5 @@ int		is_builtin_printing(char *comm);
 void	builtins_printing(t_process *p);
 int		is_builtin_not_printing(char *comm);
 int		builtins_not_printing(t_process *coms);
-int		ft_num_check(char *str); //Temporarily here until function moved somewhere ele
-void	ft_swap(int *nums); //TEMP until moved somewhere else
 
 #endif

@@ -41,6 +41,7 @@ int			ft_exit(int opt)
 	int		i;
 
 	i = -1;
+	append_history();//NEW
 	delete_save_history();
 	ft_arraydel(g_h->hist);//NEW
 	free(g_h->hist);//NEW

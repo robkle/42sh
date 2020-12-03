@@ -25,5 +25,8 @@ int		ft_isspace(int c);
 char	*ft_strndup(char *str, size_t len);
 void	ft_arraydel(char **string_array);
 int		ft_strstr_int(const char *haystack, const char *needle);
+int		ft_strchr_int(char *str, int c);
+int		ft_num_check(char *str);
+void	ft_swap(int *nums);
 
 #endif

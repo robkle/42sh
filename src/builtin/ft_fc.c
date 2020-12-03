@@ -1,21 +1,5 @@
 #include "shell.h"
 
-int		ft_num_check(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] == '-')
-		i++;
-	while(str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 static int		ft_fc_flags(char *str, int *flags)
 {
 	int i;
@@ -43,67 +27,6 @@ static int		ft_fc_flags(char *str, int *flags)
 		}
 	}
 	return (1);
-}
-
-static int		ft_strchr_int(char *str, int c)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == c)
-			return (1);
-	}
-	return (0);
-	}
-
-static int	ft_check_ed(char *ed)
-{
-	char	**options;
-	char	*cmd;
-	char	*path;
-	int		i;
-
-	options = NULL;
-	i = -1;
-	while (g_env[++i])
-	{
-		if (!ft_strncmp(g_env[i], "PATH=", 5))
-			options = ft_strsplit(&g_env[i][5], 58);
-	}
-	cmd = ed[0] ?  ft_strjoin("/", ed) : NULL;
-	if (!cmd)
-	{
-		ft_printf("42sh: fc: -e: option requires an argument\n");
-		ft_printf("fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]\n");
-		return (0);
-	}
-	if (options)
-	{
-		i = -1;
-		while (options[++i])
-		{
-			path = ft_strjoin(options[i], cmd);
-			if (access(path, F_OK) == 0)
-			{
-				free(cmd);
-				ft_arraydel(options);
-				return (1);
-			}
-			free(path);
-		}
-	}
-	else if (access(cmd, F_OK) == 0)
-	{
-		free(cmd);
-		ft_arraydel(options);
-		return (1);
-	}
-	ft_printf("%s: command not found\n", ed);
-	free(g_h->tmp);
-	g_h->tmp = NULL;
-	return (0);
 }
 	
 static int		ft_fc_options(t_process *p, int *flags, char **ed, char **range)
@@ -161,14 +84,8 @@ int		ft_fc(t_process *p)
 	ft_strcpy(ed, "vim");
 	range = (char **)malloc(sizeof(char*) * 3);
 	if (!ft_fc_options(p, &flags, &ed, range))
-	{
-		//error message
 		return (EXIT_FAILURE);
-	}
 	if (!ft_fc_process(flags, ed, range))
-	{
-		//error message
 		return (EXIT_FAILURE);
-	}
 	return (EXIT_SUCCESS);
 }
