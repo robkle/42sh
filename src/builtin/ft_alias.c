@@ -24,7 +24,7 @@ void	print_all(t_alias **g_alias)
 	}
 }
 
-void	add_alias(int count, char *alias, t_alias ***aliaslist)
+int		add_alias(int count, char *alias, t_alias ***aliaslist)
 {
 	t_alias	**new;
 	int		j;
@@ -52,9 +52,10 @@ void	add_alias(int count, char *alias, t_alias ***aliaslist)
 	sort_alias_list(new);
 	free((*aliaslist));
 	(*aliaslist) = new;
+	return (0);
 }
 
-void	set_alias(char *alias, t_alias ***aliaslist)
+int		set_alias(char *alias, t_alias ***aliaslist)
 {
 	int		i;
 	char	*alias_name;
@@ -68,11 +69,12 @@ void	set_alias(char *alias, t_alias ***aliaslist)
 			free(alias_name);
 			free((*aliaslist)[i]->value);
 			(*aliaslist)[i]->value = set_value(alias);
+			return (0);
 		}
 		free(alias_name);
 		i++;
 	}
-	add_alias(i + 1, alias, aliaslist);
+	return (add_alias(i + 1, alias, aliaslist));
 }
 
 void	print_alias(char *alias)
