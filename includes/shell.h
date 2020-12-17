@@ -27,6 +27,10 @@
 # include <term.h>
 # include <termios.h>
 
+# include <signal.h>
+#define _POSIX_SOURCE
+
+
 # include "shell_error.h"
 # include "ast.h"
 # include "token.h"
