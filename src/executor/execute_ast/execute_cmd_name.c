@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 10:50:56 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/05 15:17:49 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/09 08:53:41 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ void	execute_cmd_name(t_astnode *ast, t_job *j, t_process *p)
 		p->ac = 1;
 		p->av[0] = ast->data;
 		p->av[1] = NULL;
-		if (j->command != NULL)
-		{
-			j->command = ft_strjoin_and_free_string1(j->command, " |");
-			j->command = ft_strjoin_and_free_string1(j->command, p->av[0]);
-		}
-		else
-			j->command = ft_strdup(p->av[0]);
+		job_command_builder(1, j, p->av[0]);
 	}
 }

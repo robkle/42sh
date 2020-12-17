@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_p.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 04:07:20 by dthan             #+#    #+#             */
-/*   Updated: 2020/02/10 07:43:46 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/10 02:09:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define HEX_MASK 15
 #define SHIFF_HEX_MASK 4
 
-void	type_p(t_info *info, va_list arg, size_t *ct)
+void	type_p(t_info *info, va_list arg, size_t *ct, int fd)
 {
 	unsigned long long	num;
 	char				*str;
@@ -29,6 +29,6 @@ void	type_p(t_info *info, va_list arg, size_t *ct)
 	prec_ctrl_oct_hex(info, &str);
 	flag_control(info, &str, 0);
 	width_ctrl(info, &str);
-	write(STDOUT, str, *ct = ft_strlen(str));
+	write(fd, str, *ct = ft_strlen(str));
 	free(str);
 }

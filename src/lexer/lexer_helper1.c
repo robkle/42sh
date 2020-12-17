@@ -3,43 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:26 by tango            ###   ########.fr       */
+/*   Updated: 2020/10/27 00:18:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		is_hiphen(char *data)
+int is_metacharacter(char chr)
 {
-	return (ft_strlen(data) == 1 && data[0] == '-');
-}
-
-int		is_separator_operator(char *input, int i)
-{
-	int front;
-
-	front = i == 0 ? i : i - 1;
-	if ((input[i] == '&' && input[front] != '>' && input[front] != '<')
-			|| input[i] == ';')
+	if (chr == '|' || chr == '&' || chr == ';' || \
+		chr == '(' || chr == ')' || chr == '<' || \
+		chr == '>' || chr == ' ' || chr == '\t')
 		return (1);
 	return (0);
 }
 
-int		is_redirection_operator(char *input, int i)
+int is_valid_operator_token(char *str)
 {
-	int front;
-
-	front = i == 0 ? i : i - 1;
-	if ((input[i] == '&' && (input[front] == '>' || input[front] == '<'))
-			|| input[i] == '<' || input[i] == '>')
+	if (ft_strequ(str, "&") || ft_strequ(str, ";") || \
+		ft_strequ(str, "(") || ft_strequ(str, ")") || \
+		ft_strequ(str, "&&") || ft_strequ(str, "||") || \
+		ft_strequ(str, ";;") || \
+		ft_strequ(str, "<") || ft_strequ(str, ">") || \
+		ft_strequ(str, "<<") || ft_strequ(str, ">>") || \
+		ft_strequ(str, "<&") || ft_strequ(str, ">&") || \
+		ft_strequ(str, "<>") || ft_strequ(str, "<<-") || \
+		ft_strequ(str, ">|"))
 		return (1);
 	return (0);
 }
 
-char	*is_pipe_operator(char *input, int i)
+int is_unsupported_tokens(t_token_type type)
 {
-	return (ft_strchr("|", input[i]));
+	if (type == TOKEN_LESSGREAT || \
+		type == TOKEN_DLESSDASH || type == TOKEN_CLOBBER || \
+		type == TOKEN_DSEMI || type == TOKEN_OB || \
+		type == TOKEN_CB)
+		return (1);
+	return (0);
+}
+
+int is_control_op_not_newline(t_token_type type)
+{
+	if (type == TOKEN_SEMI || type == TOKEN_APS || \
+		type == TOKEN_PIPE || type == TOKEN_AND_IF || \
+		type == TOKEN_OR_IF)
+		return (1);
+	return (0);
+}
+
+int is_redirect_op(t_token_type type)
+{
+	if (type == TOKEN_GREAT || type == TOKEN_DGREAT || \
+		type == TOKEN_LESS || type == TOKEN_DLESS || \
+		type == TOKEN_LESSAND || type == TOKEN_GREATAND)
+		return (1);
+	return (0);
+}
+
+int	is_made_of_digits(char *data)
+{
+	int			i;
+
+	i = -1;
+	while (data[++i])
+		if (!ft_isdigit(data[i]))
+			return (0);
+	return (1);
 }

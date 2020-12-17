@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   type_xX.c                                          :+:      :+:    :+:   */
+/*   type_hex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 03:31:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/02/10 07:42:08 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/10 02:09:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	big_x(char **output)
 	}
 }
 
-void	type_x(t_info *info, va_list arg, size_t *ct)
+void	type_x(t_info *info, va_list arg, size_t *ct, int fd)
 {
 	char *output;
 
 	small_x(info, arg, &output);
 	if (info->specifier == spec_hexupcase)
 		big_x(&output);
-	write(STDOUT, output, *ct = ft_strlen(output));
+	write(fd, output, *ct = ft_strlen(output));
 	free(output);
 }

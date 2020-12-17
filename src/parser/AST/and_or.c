@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:30:42 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/01 05:15:00 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/28 01:07:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_astnode	*and_or1(t_token **token)
 
 	if ((lnode = pipeline(token)) == NULL)
 		return (NULL);
-	if (!*token || ((*token)->type != TOKEN_AND_IF && \
-					(*token)->type != TOKEN_OR_IF))
+	if (!*token || \
+		((*token)->type != TOKEN_AND_IF && (*token)->type != TOKEN_OR_IF))
 	{
 		clear_ast(lnode);
 		return (NULL);

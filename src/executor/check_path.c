@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/30 04:28:39 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/10 05:41:55 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,31 @@ static char	**check_path(t_process *c)
 		return (NULL);
 }
 
-char		*is_in_path(t_process *c)
+int		is_in_path(t_process *c)
+{
+	int		i;
+	int		nb;
+	char	**split;
+
+	if (!(split = check_path(c)))
+		return (0);
+	nb = -1;
+	while (split[++nb])
+		NULL;
+	i = -1;
+	while (++i < nb)
+	{
+		if (is_in_path_sub(split[i], c))
+		{
+			ft_strlst_del(&split, nb + 1);
+			return (1);
+		}
+	}
+	ft_strlst_del(&split, nb + 1);
+	return (0);
+}
+
+char		*build_path(t_process *c)
 {
 	int		i;
 	int		nb;

@@ -3,115 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 10:48:47 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/10/27 05:38:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static	void	word_jump(char *input, int *tail, t_token **lst_tokens)
+static int	control_ops_issue(t_token *curr, t_token *prev)
 {
-	int			head;
-	t_token		*node;
-	char		quote;
+	if (!is_control_op_not_newline(curr->type))
+		return (0);
+	if (!prev)
+		return (1);
+	if (is_control_op_not_newline(prev->type))
+		return (1);
+	return (0);
+}
 
-	quote = 0;
-	head = *tail;
-	while (input[*tail] && !ft_isspace(input[*tail]) && \
-			!is_separator_operator(input, *tail) && \
-			!is_redirection_operator(input, *tail) && \
-			!is_pipe_operator(input, *tail))
+static int	redirect_ops_issue(t_token *curr, t_token *prev)
+{
+	if (!prev)
+		return (0);
+	if (is_redirect_op(prev->type) && \
+		(is_redirect_op(curr->type) || \
+		is_control_op_not_newline(curr->type) ||
+		curr->type == TOKEN_NEWLINE))
+		return (1);
+	return (0);
+}
+
+int			parser(t_token *curr, t_token *prev)
+{
+	if (is_unsupported_tokens(curr->type))
 	{
-		if (input[*tail] == '"')
-			quote = jump_single_or_double_quote(input, tail, '"');
-		else if (input[*tail] == '\'')
-			quote = jump_single_or_double_quote(input, tail, '\'');
-		(*tail)++;
+		ft_dprintf(2, "%s: Unsupported token `%s`\n", "42sh", curr->data); // need to change value
+		return (0);
 	}
-	node = get_token(ft_strndup(&input[head], *tail - head), quote);
-	push_node_into_ltoken(input, head, node, lst_tokens);
-}
-
-static	void	separator_operator_jump(char *input, \
-		int *tail, t_token **lst_tokens)
-{
-	int			head;
-	t_token		*node;
-
-	head = *tail;
-	while (input[*tail] && is_separator_operator(input, *tail))
-		(*tail)++;
-	node = get_token(ft_strndup(&input[head], *tail - head), 0);
-	push_node_into_ltoken(input, head, node, lst_tokens);
-}
-
-static	void	redirection_operator_jump(char *input,\
-		int *tail, t_token **lst_tokens)
-{
-	int			head;
-	t_token		*node;
-
-	head = *tail;
-	while (input[*tail] && is_redirection_operator(input, *tail))
-		(*tail)++;
-	node = get_token(ft_strndup(&input[head], *tail - head), 0);
-	push_node_into_ltoken(input, head, node, lst_tokens);
-}
-
-static	void	pipe_operator_jump(char *input, int *tail, t_token **lst_tokens)
-{
-	int			head;
-	t_token		*node;
-
-	head = *tail;
-	while (input[*tail] && is_pipe_operator(input, *tail))
-		(*tail)++;
-	node = get_token(ft_strndup(&input[head], *tail - head), 0);
-	push_node_into_ltoken(input, head, node, lst_tokens);
-}
-
-/*
-** print_token(lst_tokens);
-** debugging purpose in lexical_analysis
-*/
-
-void print_token(t_token *token)
-{
-	while (token)
+	if (!prev && is_redirect_op(curr->type))
 	{
-		ft_putchar('[');
-		ft_putstr(token->data);
-		ft_putstr("]->");
-		token = token->next;
+		ft_dprintf(2, "%s: Unsupported cmd_prefix\n", "42sh"); // need to change value
+		return (0);
 	}
-	ft_putstr("NULL\n");
+	if (control_ops_issue(curr, prev) || \
+		redirect_ops_issue(curr, prev))
+	{
+		ft_dprintf(2, "%s: syntax error near unexpected token `%s'\n", "42sh", curr->data);
+		return (0);
+	}
+	return (1);
 }
 
-t_token			*lexical_analysis(char *input)
+t_token		*lexer_and_parser(char *input)
 {
-	t_token		*lst_tokens;
+	t_token		*token_lst;
+	t_token		*current_token;
+	t_token		*prev_token;
 	int			i;
 
 	i = 0;
-	lst_tokens = NULL;
+	token_lst = NULL;
+	prev_token = NULL;
 	while (input[i])
 	{
-		if (is_separator_operator(input, i))
-			separator_operator_jump(input, &i, &lst_tokens);
-		else if (is_redirection_operator(input, i))
-			redirection_operator_jump(input, &i, &lst_tokens);
-		else if (is_pipe_operator(input, i))
-			pipe_operator_jump(input, &i, &lst_tokens);
-		else if (!ft_isspace(input[i]))
-			word_jump(input, &i, &lst_tokens);
-		else
+		if (input[i] == '\n')
+		{
+			current_token = non_operator_token(ft_strdup("newline"), TOKEN_NEWLINE);
 			i++;
+		}
+		else if (is_metacharacter(input[i]))
+		{
+			if (input[i] == ' ' || input[i] == '\t')
+			{
+				i++;
+				continue;
+			}
+			current_token = get_operator_token(input, &i);
+		}
+		else
+			current_token = get_non_operator_token(input, &i);
+		if (alias_substitution(current_token, &prev_token, &token_lst) != 1)
+		{
+			add_token_into_token_list(&token_lst, current_token);
+			if (!parser(current_token, prev_token))
+			{
+				clear_token(token_lst);
+				return (NULL);
+			}
+			prev_token = current_token;
+		}
 	}
-	print_token(lst_tokens);
-	if (check_syntax(lst_tokens) == EXIT_FAILURE)
-		deltoken(&lst_tokens);
-	return (lst_tokens);
+	print_token(token_lst);
+	return (token_lst);
 }

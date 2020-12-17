@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/08 03:14:50 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/14 13:49:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,24 @@ int			ft_exit(int opt)
 		ft_strdel(&g_env[i]);
 	ft_strdel(&g_env[i]);
 	free(g_env);
+	/* delete job*/
+	t_job *j_ptr;
+
+	update_status();
+	i = 0;
+	while (g_shell.first_job->next)
+	{
+		j_ptr = (t_job*)(g_shell.first_job->content);
+		if (job_is_stopped(j_ptr))
+		{
+			if (kill(- j_ptr->pgid, SIGCONT) < 0)
+				perror("kill (SIGCONT)");
+		}
+		kill(- j_ptr->pgid, SIGTERM);
+		delete_job(g_shell.first_job);
+		g_shell.first_job = g_shell.first_job->next;
+	}
+	delete_job(g_shell.first_job);
 	exit(opt);
 	return (EXIT_FAILURE);
 }

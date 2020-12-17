@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_error.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 06:09:01 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 18:07:20 by tango            ###   ########.fr       */
+/*   Updated: 2020/10/10 04:42:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 # define SYNTAX_AMBIG_REDI "21sh : ambiguous redirect: "
 # define SYNTAX_BAD_FD "21sh : Bad file descriptor: "
 # define SHELL_ENOENT "21sh: no such file or directory: "
+
+# define ENOENT "no such file or directory"
+# define EACCES "Permission denied"
+# define SHELL_CMDNF "command not found"
+// # define SYNTAX_AMBIG_REDI "ambiguous redirect"
 
 void			ft_error_malloc(void);
 int				error_monitor(char *first, char *second, char *third,\

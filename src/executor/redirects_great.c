@@ -6,53 +6,118 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 01:52:52 by tango             #+#    #+#             */
-/*   Updated: 2020/10/01 04:20:51 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/30 05:54:12 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void			redirect_great(t_redirect *trav, t_process *p)
+int		redirect_great(t_redi *redi, t_process *p)
 {
-	int fd;
+	int new_fd;
+	int old_fd;
 
-	if (!ft_strequ(trav->redirect_des, "-"))
+	new_fd = p->stdout;
+	if (redi->n)
+		new_fd = ft_atoi(redi->n);
+	old_fd = open(redi->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	if (old_fd == -1)
 	{
-		fd = open(trav->redirect_des, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		// need to return error when open fail
-		p->stdout = fd;
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+			SHELL_NAME, ENOENT, redi->word);
+			return (EXIT_FAILURE);
 	}
-	else
-		close(ft_atoi(trav->redirect_src));
+	dup2(old_fd, new_fd);
+	close(old_fd);
+	return (EXIT_SUCCESS);
 }
 
-void			redirect_dgreat(t_redirect *trav, t_process *p)
+int		redirect_dgreat(t_redi *redi, t_process *p)
 {
-	int fd;
+	int new_fd;
+	int old_fd;
 
-	if (!ft_strequ(trav->redirect_des, "-"))
+	new_fd = p->stdout;
+	if (redi->n)
+		new_fd = (ft_atoi(redi->n));
+	old_fd = open(redi->word, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	if (old_fd == -1)
 	{
-		fd = open(trav->redirect_des, O_WRONLY | O_APPEND | O_CREAT, 0644);
-		// need to return error when open fail
-		p->stdout = fd;
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+			SHELL_NAME, ENOENT, redi->word);
+		return (EXIT_FAILURE);
 	}
-	else
-		close(ft_atoi(trav->redirect_src));
+	dup2(old_fd, new_fd);
+	close(old_fd);
+	return (EXIT_SUCCESS);
 }
 
-void			redirect_greatand(t_redirect *trav, t_process *p)
+int redirecting_stdout_and_stderr(t_redi *redi, t_process *p)
 {
-	int fd;
+	int old_fd;
 
-	if (!is_made_of_digits(trav->redirect_des) && \
-		!ft_strequ("-", trav->redirect_des))
+	if (redi->n && ft_atoi(redi->n) != 1)
 	{
-		fd = open(trav->redirect_des, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		// need to return error when open fail
-		p->stdout = fd;
+		ft_dprintf(2, "%s: %s: ambiguous redirect\n", "42sh", redi->word);
+		return (EXIT_FAILURE);
 	}
-	else if (is_made_of_digits(trav->redirect_des)) // check this later
-		dup2(ft_atoi(trav->redirect_des), ft_atoi(trav->redirect_src));
+	old_fd = open(redi->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	if (old_fd == -1)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", 
+			SHELL_NAME, ENOENT, redi->word);
+		return (EXIT_FAILURE);
+	}
+	dup2(old_fd, p->stdout);
+	dup2(old_fd, p->stderr);
+	close(old_fd);
+	return (EXIT_SUCCESS);
+}
+
+int duplicating_file_descriptor(t_redi *redi, t_process *p)
+{
+	int duplicated_fd;
+	int old_fd;
+	struct stat statbuf;
+
+	if (fstat(ft_atoi(redi->word), &statbuf) == -1)
+	{
+		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42sh", redi->word);
+		return (EXIT_FAILURE);
+	}
+	old_fd = p->stdout;
+	if (redi->n)
+		old_fd = ft_atoi(redi->n);
+	duplicated_fd = dup(ft_atoi(redi->word));
+	dup2(duplicated_fd, old_fd);
+	close(duplicated_fd);
+	return (EXIT_SUCCESS);
+}
+
+int close_file_descriptor(t_redi *redi, t_process *p)
+{
+	int dev_null;
+	struct stat statbuf;
+
+	if (redi->n && fstat(ft_atoi(redi->n), &statbuf) == -1)
+	{
+		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42s", redi->n);
+		return (EXIT_FAILURE);
+	}
+	dev_null = open("/dev/null", O_WRONLY);
+	if (redi->n)
+		dup2(dev_null, ft_atoi(redi->n));
 	else
-		close(ft_atoi(trav->redirect_src));
+		dup2(dev_null, p->stdout);
+	close(dev_null);
+	return (EXIT_SUCCESS);
+}
+
+int		redirect_greatand(t_redi *redi, t_process *p)
+{
+	if (ft_strequ(redi->word, "-"))
+		return (close_file_descriptor(redi, p));
+	else if (!is_made_of_digits(redi->word))
+		return (redirecting_stdout_and_stderr(redi, p));
+	return (duplicating_file_descriptor(redi, p));
 }

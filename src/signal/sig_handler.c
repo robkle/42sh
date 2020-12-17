@@ -5,7 +5,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/08 03:33:25 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/16 14:57:23 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void sig_controller(int option)
 {
 	if (option == PARENT)
 	{
-    	signal (SIGINT, SIG_IGN);
+    	// signal (SIGINT, SIG_IGN);
     	signal (SIGQUIT, SIG_IGN);
 		signal (SIGSTOP, SIG_IGN);
     	signal (SIGTSTP, SIG_IGN);
@@ -71,5 +71,13 @@ void sig_controller(int option)
 		signal(SIGTTIN, SIG_DFL);
 		signal(SIGTTOU, SIG_DFL);
 		signal(SIGCHLD, SIG_DFL);
+		int i;
+
+		i = 1;
+		while (i < 32)
+		{
+			signal(i, SIG_DFL);
+			i++;
+		}
 	}
 }

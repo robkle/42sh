@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/09/30 04:57:50 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/10 21:58:07 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		make_child_binary(t_process *p)
+int	make_child_binary(t_process *p)
 {
 	t_stat	sb;
 	char	buf[PATH_MAX];
@@ -21,41 +21,36 @@ void		make_child_binary(t_process *p)
 	if ((sb.st_mode & F_TYPE_MASK) != S_IFREG)
 	{
 		error_monitor(p->av[0], ": is a directory", NULL, 0);
-		return ;
+		return (EXIT_FAILURE);
 	}
 	ft_strcpy(buf, p->av[0]);
 	execve(buf, p->av, g_env);
-	ft_exit(EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }
 
-static void	make_child_path_sub(t_process *c, char buf[])
+static int	make_child_path_sub(t_process *c, char buf[])
 {
-	sig_controller(CHILD);
 	execve(buf, c->av, g_env);
-	ft_exit(EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }
 
-int			make_child_path(t_process *c, char *path)
+int			make_child_path(t_process *c)
 {
 	char	buf[PATH_MAX];
+	char	*path;
 
+	path = build_path(c);
 	ft_strcpy(buf, path);
 	ft_strdel(&path);
 	if (access(buf, X_OK))
 	{
-		ft_putstr_fd(buf, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-		return (0);
+		ft_dprintf(2, "%s %s %s\n", SHELL_NAME, buf ,EACCES);
+		return (EXIT_FAILURE);
 	}
 	ft_strcat(buf, "/");
 	ft_strcat(buf, c->av[0]);
 	if (!access(buf, X_OK))
-		make_child_path_sub(c, buf);
-	else
-	{
-		ft_putstr_fd(buf, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-	}
-	ft_exit(EXIT_SUCCESS);
-	return (0);
+		return (make_child_path_sub(c, buf));
+	ft_dprintf(2, "%s %s %s\n", SHELL_NAME, buf ,EACCES);
+	return (EXIT_FAILURE);
 }

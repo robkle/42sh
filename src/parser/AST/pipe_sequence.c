@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_sequence.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:33:28 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/05 05:45:03 by tango            ###   ########.fr       */
+/*   Updated: 2020/10/28 01:07:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_astnode		*pipe_sequence1(t_token **token)
 
 	if ((lnode = command(token)) == NULL)
 		return (NULL);
-	if (!*token || ft_strcmp((*token)->data, "|") != 0)
+	if (!*token || (*token)->type != TOKEN_PIPE)
 	{
 		clear_ast(lnode);
 		return (NULL);

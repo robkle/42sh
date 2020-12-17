@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 03:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/06 17:21:19 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/14 13:23:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void mark_job_as_running(t_job *j)
 
 /* Continue the job j */
 
-void continue_job(t_job *j, int foreground)
-{
-	mark_job_as_running(j);
-	if (foreground)
-		put_job_in_foreground(j, 1);
-	else
-		put_job_in_background(j , 1);
-}
+// void continue_job(t_job *j, int foreground)
+// {
+// 	mark_job_as_running(j);
+// 	if (foreground)
+// 		put_job_in_foreground(j, 1);
+// 	else
+// 		put_job_in_background(j , 1);
+// }

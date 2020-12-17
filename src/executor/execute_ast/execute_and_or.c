@@ -6,42 +6,51 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:52 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/08 02:43:48 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/28 01:00:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int last_process_status(t_job *job)
-{
-	t_list *p_ptr;
-	t_process *p;
-
-	p_ptr = job->first_process;
-	while (p_ptr && p_ptr->next)
-		p_ptr = p_ptr->next;
-	p = (t_process*)p_ptr->content;
-	return (p->status);
-}
-
-void	execute_and_or(t_astnode *ast, t_list **heredoc, t_job *job)
+void searching_or_list(t_astnode *ast, int foreground, int forked, int noticed)
 {
 	if (ast->type == AST_and_or && ft_strequ(ast->data, "&&"))
+		searching_or_list(ast->right, foreground, forked, noticed);
+	else if (ast->type == AST_and_or && ft_strequ(ast->data, "||"))
+		execute_and_or(ast->right, foreground, forked, noticed);
+}
+
+void searching_and_list(t_astnode *ast, int foreground, int forked, int noticed)
+{
+	if (ast->type == AST_and_or && ft_strequ(ast->data, "||"))
+		searching_and_list(ast->right, foreground, forked, noticed);
+	else if (ast->type == AST_and_or && ft_strequ(ast->data, "&&"))
+		execute_and_or(ast->right, foreground, forked, noticed);
+}
+
+void	execute_and_or(t_astnode *ast, int foreground, int forked, int noticed)
+{
+	t_job *job;
+
+	job = create_job(foreground, forked);
+	if (ast->type == AST_and_or && ft_strequ(ast->data, "&&"))
 	{
-		execute_pipeline(ast->left, heredoc, job);
+		execute_pipeline(ast->left, job);
 		if (last_process_status(job) == 0)
-			execute_and_or(ast->right, heredoc, job);
-		else if (ast->right->right->type == AST_and_or)
-			execute_and_or(ast->right->right, heredoc, job);
+			execute_and_or(ast->right, foreground, forked, noticed);
+		else
+			searching_or_list(ast->right, foreground, forked, noticed);
 	}
 	else if (ast->type == AST_and_or && ft_strequ(ast->data, "||"))
 	{
-		execute_pipeline(ast->left, heredoc, job);
+		execute_pipeline(ast->left, job);
 		if (last_process_status(job) != 0)
-			execute_and_or(ast->right, heredoc, job);
-		else if (ast->right->right->type == AST_and_or)
-			execute_and_or(ast->right->right, heredoc, job);
+			execute_and_or(ast->right, foreground, forked, noticed);
+		else
+			searching_and_list(ast->right, foreground, forked, noticed);
 	}
 	else
-		return (execute_pipeline(ast, heredoc, job));
+		execute_pipeline(ast, job);
+	if (!foreground && noticed)
+		ft_printf("[%d] %d\n", job->id, job->pgid);
 }

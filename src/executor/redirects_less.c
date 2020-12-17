@@ -6,56 +6,92 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 01:52:52 by tango             #+#    #+#             */
-/*   Updated: 2020/10/01 04:18:29 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/30 05:54:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		redirect_lessand(t_redirect *trav, t_process *p)
+// respectively the same as close file descriptor for great-and
+int close_file_descriptor2(t_redi *redi, t_process *p)
 {
-	t_stat	sb;
-	int		fd;
+	int dev_null;
+	struct stat statbuf;
 
-	fd = ft_atoi(trav->redirect_src);
-	if (!is_made_of_digits(trav->redirect_src) && \
-			!ft_strequ(trav->redirect_src, "-"))
+	if (redi->n && fstat(ft_atoi(redi->n), &statbuf) == -1)
 	{
-		error_monitor(SYNTAX_AMBIG_REDI, trav->redirect_src, NULL, 1);
-		ft_exit(EXIT_FAILURE);
+		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42s", redi->n);
+		return (EXIT_FAILURE);
 	}
-	else if (ft_strequ(trav->redirect_src, "-"))
-		close(ft_atoi(trav->redirect_des));
-	else if ((fstat(fd, &sb)) < 0)
-	{
-		error_monitor(SYNTAX_BAD_FD, trav->redirect_src, NULL, 1);
-		ft_exit(EXIT_FAILURE);
-	}
-	else if (!(sb.st_mode & S_IRUSR))
-	{
-		error_monitor(SYNTAX_BAD_FD, trav->redirect_src, NULL, 1);
-		ft_exit(EXIT_FAILURE);
-	}
+	dev_null = open("/dev/null", O_WRONLY);
+	if (redi->n)
+		dup2(dev_null, ft_atoi(redi->n));
 	else
-		p->stdin = fd;
+		dup2(dev_null, p->stdin);
+	close(dev_null);
+	return (EXIT_SUCCESS);
 }
 
-void		redirect_less(t_redirect *trav, t_process *p)
+int duplicating_file_descriptor2(t_redi *redi, t_process *p)
 {
-	int fd;
+	int duplicated_fd;
+	int old_fd;
+	struct stat statbuf;
 
-	fd = open(trav->redirect_src, O_RDONLY);
-	if (fd == -1)
-		error_monitor(SHELL_ENOENT, trav->redirect_src, NULL, 0);
-	p->stdin = fd;
+	if (fstat(ft_atoi(redi->word), &statbuf) == -1)
+	{
+		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42sh", redi->word);
+		return (EXIT_FAILURE);
+	}
+	old_fd = p->stdin;
+	if (redi->n)
+		old_fd = ft_atoi(redi->n);
+	duplicated_fd = dup(ft_atoi(redi->word));
+	dup2(duplicated_fd, old_fd);
+	close(duplicated_fd);
+	return (EXIT_SUCCESS);
 }
 
-void		redirect_dless(t_redirect *trav, t_process *p)
+int		redirect_lessand(t_redi *redi, t_process *p)
+{
+	if (ft_strequ(redi->word, "-"))
+		return (close_file_descriptor2(redi, p));
+	if (!is_made_of_digits(redi->word))
+	{
+		ft_dprintf(2, "%s: %s: ambiguous redirect\n", "42sh", redi->word);
+		return (EXIT_FAILURE);
+	}
+	return (duplicating_file_descriptor2(redi, p));
+}
+
+int		redirect_less(t_redi *redi, t_process *p)
+{
+	int new_fd;
+	int old_fd;
+
+	new_fd = p->stdin;
+	if (redi->n)
+		new_fd = ft_atoi(redi->n);
+	old_fd = open(redi->word, O_RDONLY);
+	if (old_fd == -1)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+				SHELL_NAME, ENOENT, redi->word);
+		return (EXIT_FAILURE);
+	}
+	dup2(old_fd, new_fd);
+	close(old_fd);
+	return (EXIT_SUCCESS);
+}
+
+int		redirect_dless(t_redi *redi, t_process *p)
 {
 	int fd[2];
 
 	pipe(fd);
-	ft_putstr_fd(trav->redirect_src, fd[WRITE_END]);
+	ft_putstr_fd(redi->word, fd[WRITE_END]);
 	close(fd[WRITE_END]);
-	p->stdin = fd[READ_END];
+	dup2(fd[READ_END], p->stdin);
+	close(fd[READ_END]);
+	return (EXIT_SUCCESS);
 }

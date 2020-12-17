@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/05 04:14:12 by dthan            ###   ########.fr       */
+/*   Updated: 2020/10/10 05:19:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ int				possible_to_access_file(t_process *p)
 	{
 		if (access(p->av[0], F_OK))
 		{
-			error_monitor(p->av[0], ":No such file or dirrectory" \
-			, NULL, EXIT_FAILURE);
+			ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+				SHELL_NAME, ENOENT, p->av[0]);
 			return (0);
 		}
 		else if (access(p->av[0], X_OK))
 		{
-			error_monitor(p->av[0], ": Permission denied" \
-			, NULL, EXIT_FAILURE);
+			ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+				SHELL_NAME, EACCES, p->av[0]);
 			return (0);
 		}
 		else

@@ -6,12 +6,14 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/05 04:16:18 by dthan            ###   ########.fr       */
+/*   Updated: 2020/11/03 11:31:52 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILITIES_H
 # define UTILITIES_H
+# include <string.h>
+# include "shell.h"
 
 int		is_open_dquote(char *input, int level, char *quote);
 int		is_made_of_digits(char *data);
@@ -28,5 +30,8 @@ int		ft_strstr_int(const char *haystack, const char *needle);
 int		ft_strchr_int(char *str, int c);
 int		ft_num_check(char *str);
 void	ft_swap(int *nums);
+int 	ft_lstlen(t_list *head);
+void	jump_quote(char *input, int *i, char quote_type);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif
