@@ -19,7 +19,7 @@ void		get_history(int fd)
 	int		i;
 
 	fd = open("./.history", O_RDWR | O_CREAT, 0644);
-	buffer = ft_memalloc(4096);//change to ARG_MAX
+	buffer = ft_memalloc(4096);
 	i = 0;
 	while (get_next_line(fd, &line) && i <= HISTFILESIZE)	
 	{
@@ -40,19 +40,17 @@ void		get_history(int fd)
 	close(fd);
 }
 
-void		append_history(/*char *line*/)
+void		append_history(void)
 {
 	int		i;
 	char	*tmp;
 
-	//if (!line || !ft_isprint(line[0]))
 	if (!g_h->tmp || !ft_isprint(g_h->tmp[0]))
 		return ;
 	if (g_h->curr < HISTFILESIZE)
 	{
 		free(g_h->hist[g_h->curr]);
-		//g_h->hist[g_h->curr++] = ft_strdup(line);
-		g_h->hist[g_h->curr++] = ft_strdup(g_h->tmp);//NEW
+		g_h->hist[g_h->curr++] = ft_strdup(g_h->tmp);
 		g_h->hist[g_h->curr] = ft_strnew(0);
 	}
 	else
@@ -66,8 +64,7 @@ void		append_history(/*char *line*/)
 			i++;
 		}
 		tmp = g_h->hist[i];
-		//g_h->hist[i] = ft_strdup(line);
-		g_h->hist[i] = ft_strdup(g_h->tmp);//NEW
+		g_h->hist[i] = ft_strdup(g_h->tmp);
 		free(tmp);
 	}
 	g_h->hst = g_h->curr;
