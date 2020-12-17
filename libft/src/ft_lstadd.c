@@ -24,7 +24,7 @@ void	ft_lstadd(t_list **alst, t_list *new)
 void	ft_lstadd_tail(t_list **alst, t_list *new)
 {
 	t_list *ptr;
-	#include <stdio.h>
+
 	if (alst && new)
 	{
 		ptr = *alst;
