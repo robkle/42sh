@@ -34,20 +34,18 @@ int		add_alias(int count, char *alias, t_alias ***aliaslist)
 	{
 		while ((*aliaslist)[j] != NULL)
 		{
-			if ((new[j] = (t_alias*)malloc(sizeof(t_alias))))
-			{
-				new[j]->name = ft_strdup((*aliaslist)[j]->name);
-				new[j]->value = ft_strdup((*aliaslist)[j]->value);
-			}
+			if (!(new[j] = (t_alias*)malloc(sizeof(t_alias))))
+				return (-1);
+			new[j]->name = ft_strdup((*aliaslist)[j]->name);
+			new[j]->value = ft_strdup((*aliaslist)[j]->value);
 			j++;
 		}
 	}
-	if ((new[j] = (t_alias*)malloc(sizeof(t_alias))))
-	{
-		new[j]->name = set_name(alias);
-		new[j]->value = set_value(alias);
-		j++;
-	}
+	if (!(new[j] = (t_alias*)malloc(sizeof(t_alias))))
+		return (-1);
+	new[j]->name = set_name(alias);
+	new[j]->value = set_value(alias);
+	j++;
 	new[j] = NULL;
 	sort_alias_list(new);
 	free((*aliaslist));
@@ -97,8 +95,10 @@ void	print_alias(char *alias)
 int		ft_alias(t_process *c)
 {
 	int i;
+	int status;
 
 	i = 1;
+	status = 0;
 	if (c->ac == 1)
 		print_all(g_alias);
 	else
@@ -108,11 +108,11 @@ int		ft_alias(t_process *c)
 			if (ft_strcmp(c->av[i], "-p") == 0)
 				print_all(g_alias);
 			else if (ft_strchr(c->av[i], '=') != NULL)
-				set_alias(c->av[i], &g_alias);
+				status = set_alias(c->av[i], &g_alias);
 			else
 				print_alias(c->av[i]);
 			i++;
 		}
 	}
-	return (0);
+	return (status);
 }
