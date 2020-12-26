@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:23 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/15 01:08:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/12/26 08:54:09 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ static char		get_list_and_count(t_auto *auto_com)
 	auto_get_list(auto_com, dirp);
 	closedir(dirp);
 	count = get_count(auto_com);
-	if (count > 0)
-		set_status_word_in_path(&auto_com->status);
 	prune_list(auto_com, count);
 	return (count);
 }
@@ -125,7 +123,6 @@ void		auto_file_open_path(t_l *l)
 	}
 	else if (count > 1)
 	{
-		set_status_other_possibility(&l->auto_com.status);
 		auto_cmd_file_multiple_cases(l);
 	}
     else

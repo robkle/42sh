@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 22:32:11 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/14 22:43:17 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/12/26 09:10:40 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ typedef enum
 typedef enum
 {
 	AUTO_STAT_NEW_POS = (1 << 0), // o
-	AUTO_STAT_COMMAND = (1 << 1),
-	AUTO_STAT_ROOT = (1 << 10),
-	AUTO_STAT_OPEN = (1 << 2), // o
-	AUTO_STAT_WORD_IN_PATH = (1 << 3), // o
-	AUTO_STAT_OTHER_POSSIBILITY = (1 << 4),
+	//AUTO_STAT_COMMAND = (1 << 1),
+	//AUTO_STAT_ROOT = (1 << 10),
+	//AUTO_STAT_OPEN = (1 << 2), // o
+	//AUTO_STAT_WORD_IN_PATH = (1 << 3), // o
+	//AUTO_STAT_OTHER_POSSIBILITY = (1 << 4),
 	AUTO_STAT_COMPLETED = (1 << 5),
 	AUTO_STAT_DIR = (1 << 6),
-	AUTO_STAT_TYPED_UPTO = (1 << 7),
+	//AUTO_STAT_TYPED_UPTO = (1 << 7),
 	AUTO_STAT_LIST = (1 << 8),
-	AUTO_STAT_PERM = (1 << 9),
+	AUTO_STAT_OVER_TERM_SIZE = (1 << 9)
 }   t_auto_com_stat;
 
 typedef struct			s_auto
@@ -54,7 +54,7 @@ typedef struct			s_auto
 	char				cwd[PATH_MAX];
     char                full_path[PATH_MAX];
 	char				*typed_str;
-    char                *target_str; //Not freed yet
+    char                *target_str;
 	char				*path_env;
 	long				status;
 }						t_auto;
@@ -79,13 +79,11 @@ typedef struct			s_l
 	int					nb;
 	int					x;
 	int					y;
-//	int					down;
 	int					curr;
 	int					pmpt;
 	int					type;
 	int					eof_flag;
 	t_auto				auto_com;
-	//t_auto				*auto_com; //need to be initialized
 }						t_l;
 
 #endif

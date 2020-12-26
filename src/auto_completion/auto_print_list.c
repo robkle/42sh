@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:50:11 by marvin            #+#    #+#             */
-/*   Updated: 2020/11/25 17:51:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/12/26 09:17:46 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ void print_each(
 void restore_line_edition(t_l *l)
 {
 	auto_reset(&l->auto_com);
-	ft_putchar('\n');
+	if (!(l->auto_com.status & AUTO_STAT_OVER_TERM_SIZE))
+		ft_putchar('\n');
 	get_prompt();
 	ft_putstr(l->line);
 	apply_termcap_str("cm", l->x, l->y + get_current_row() - 1);
@@ -261,6 +262,7 @@ void print_over_term_size(t_l *l)
 	char *count;
 	char buf[BUFF_LINE_EDITION];
 
+	set_status_over_term_size(&l->auto_com.status);
 	count = ft_itoa(l->auto_com.count_list);
 	ft_printf("Display all %s possibilities? (y or n)", count);
 	ft_strdel(&count);
@@ -279,6 +281,7 @@ void print_over_term_size(t_l *l)
 		ft_putchar('\n');
 	}
 	restore_line_edition(l);
+	delete_status_over_term_size(&l->auto_com.status);
 }
 
 void auto_print_list(t_l *l)

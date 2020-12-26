@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 17:13:51 by marvin            #+#    #+#             */
-/*   Updated: 2020/11/25 16:10:06 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/12/26 09:18:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ int				auto_is_command(t_l *l)
 	if ((head == 0 || auto_is_separator(l->line[head])) && \
 		l->line[head] != '.' && l->line[head] != '/')	
 		return (TRUE);
-	// else if (l->line[head] == '.' && curr == head)
-	// {
-	// 	auto_add_one_extra_char(l, '/');
-	// 	return (AUTO_COMPLETION);
-	// }
 	else
 		return (FALSE);
 }

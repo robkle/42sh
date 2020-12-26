@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 21:14:14 by marvin            #+#    #+#             */
-/*   Updated: 2020/11/01 23:32:57 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/12/26 09:16:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,14 @@ typedef struct stat     t_stat;
 t_shell		g_shell;
 
 void        set_status_new_pos(long *status);
-void        set_status_open(long *status);
-void        set_status_word_in_path(long *status);
-void        set_status_other_possibility(long *status);
 void        set_status_completed(long *status);
 void        set_status_dir(long *status);
-void        set_status_typed_upto(long *status);
 void        set_status_list(long *status);
-void        set_status_perm(long *status);
-void        set_status_root(long *status);
+void        set_status_over_term_size(long *status);
 void        delete_status_new_pos(long *status);
 void        delete_status_dir(long *status);
 void        delete_status_completed(long *status);
+void        delete_status_over_term_size(long *status);
 
 void        auto_file(t_l *l);
 void        auto_command(t_l *l);
