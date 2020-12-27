@@ -6,7 +6,7 @@
 #    By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 19:29:47 by ihwang            #+#    #+#              #
-#    Updated: 2020/08/05 06:02:03 by tango            ###   ########.fr        #
+#    Updated: 2020/10/15 01:03:53 by ihwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ NAME = libft.a
 OBJS_PATH = obj/
 SRCS_PATH = src/
 
-SRCS_NAME = ft_atoi.c ft_bzero.c ft_isspace.c \
+SRCS_NAME = ft_atoi.c ft_bzero.c ft_isspace.c ft_isalpha.c \
 			ft_isascii.c ft_isalnu.c ft_isprint.c ft_isdigit.c \
 			ft_itoa.c ft_itoh.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c \
 			ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_memalloc.c ft_memccpy.c \
 			ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memdel.c ft_memmove.c \
 			ft_memset.c ft_nbrlen.c ft_putchar.c ft_putchar_fd.c ft_putendl.c \
-			ft_putendl_fd.c  ft_putstr.c \
+			ft_putendl_fd.c  ft_putstr.c ft_putnstr.c ft_putstr_return_size.c \
 			ft_putstr_fd.c ft_strcat.c ft_strchr.c ft_strclr.c ft_strcmp.c \
 			ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_striter.c \
 			ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlen.c ft_strmap.c \
@@ -30,7 +30,9 @@ SRCS_NAME = ft_atoi.c ft_bzero.c ft_isspace.c \
 			ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c \
 			get_next_line.c ft_strstr_e.c ft_strlst_del.c ft_is_d_quote.c \
 			ft_strtrim_d_quote.c ft_addchar.c ft_iswhite.c ft_split_d_quote.c \
-			ft_split_shell.c ft_check_d_quote.c ft_isext.c \
+			ft_split_shell.c ft_check_d_quote.c ft_isext.c ft_strnjoin.c \
+			ft_strndup.c ft_lstadd_end.c \
+			ft_lstnew_str.c ft_beep_sound.c
 
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)

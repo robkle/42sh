@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 14:47:20 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 00:57:28 by tango            ###   ########.fr       */
+/*   Updated: 2020/12/16 10:11:45 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
+#include <stdio.h>
 
 t_list	*ft_lstnew(void const *content, size_t content_size)
 {
@@ -29,6 +30,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 			return (NULL);
 		ft_memcpy(fresh->content, content, content_size);
 		fresh->content_size = content_size;
+		printf("\n%s\n", (char*)fresh->content);
 	}
 	fresh->next = NULL;
 	return (fresh);

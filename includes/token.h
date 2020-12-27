@@ -6,45 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/27 05:31:25 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:58:39 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
-
-typedef enum
-{
-	TOKEN_APS, // &		control op
-	TOKEN_SEMI, // ;	control op
-	TOKEN_PIPE, // |	control	op
-	TOKEN_OB, // (  // not support
-	TOKEN_CB, // )   //not support
-	TOKEN_WORD,
-	TOKEN_ASSIGNMENT_WORD, //not support
-	TOKEN_NAME, // not support
-	TOKEN_NEWLINE, // not yet, it depends
-	TOKEN_IO_NUMBER,
-	TOKEN_AND_IF, // &&		control op
-	TOKEN_OR_IF, // ||		control op
-	TOKEN_DSEMI, // ;;  // not support
-	TOKEN_GREAT, // >						reidrect op
-	TOKEN_DGREAT, // >>						redirect op
-	TOKEN_LESS, // <						redirect op
-	TOKEN_DLESS, // <<						redirect op
-	TOKEN_LESSAND, // <&					redirect op
-	TOKEN_GREATAND, // >&					redirect op
-	TOKEN_LESSGREAT, // <>  // not support
-	TOKEN_DLESSDASH, // <<- // not support
-	TOKEN_CLOBBER, // >|  // not support
-}	t_token_type;
-
-typedef struct			s_token
-{
-	char				*data;
-	t_token_type		type;
-	struct s_token		*next;
-}						t_token;
+# include "struct.h"
 
 t_token	*lexer_and_parser(char *input);
 int		is_metacharacter(char chr);

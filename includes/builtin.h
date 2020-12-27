@@ -6,23 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/16 15:25:46 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:57:47 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
-# include "shell.h"
-
-typedef struct			s_alias
-{
-	char *value;
-	char *name;
-}						t_alias;
-
-t_alias					**g_alias;
-
-char					*g_last_alias;
+# include "struct.h"
 
 /*
 ** ========================== builtin functions ============================
@@ -37,17 +27,53 @@ int		ft_cd_pathfinder(t_process *c);
 int		ft_setenv(t_process *c);
 int		ft_unsetenv(t_process *c);
 void	ft_type(t_process *c);
-int		ft_fc(t_process *p);
-int		ft_check_ed(char *ed);
-int		ft_fc_list(int flags, char **range);
-int		ft_fc_range(char *str);
-int		ft_fc_exec(int flags, char *ed, char **range);
-int		ft_jobs(t_job *j, t_process *p);
-int		ft_fg(t_job *j, t_process *p);
+int		ft_jobs(t_process *p);
+int		ft_jobs_child(t_process *p);
+int		ft_fg(t_process *p);
 int		ft_fg_child();
-int		ft_bg(t_job *j, t_process *p);
+int		ft_bg(t_process *p);
+int		ft_bg_child();
+
+
+/*
+** Fc built-in
+*/
+# define FC_MODE_LISTING
+# define FC_MODE_EDITING
+# define DEFAULT_EDITOR "vim"
+# define FC_EDITING_FILE "/tmp/fc_42sh"
+# define FC_L_OP 1
+# define FC_N_OP 2
+# define FC_R_OP 4
+# define FC_S_OP 8
+# define FC_E_OP 16
+# define FIRST 0
+# define LAST 1
+# define REPLACE 2
+
+void	fc_cleanup(char *editor, char **block);
+int 	fc_error_no_command_found(void);
+int 	fc_error_history_specification_out_of_range(void);
+int 	fc_range(char *str);
+int		fc_exec(int ops, char *editor, char **block);
+int		fc_s_op(char *replace, char *first);
+int		fc_e_op(int ops, char *editor, char *first, char *last);
+int		fc_list(int ops, char *first, char *last);
+int		ft_fc(t_process *p);
+/*
+** End of Fc built-in
+*/
+
+int		ft_fg_child();
+
+/*
+** Alias built-in
+*/
 int		ft_alias(t_process *c);
 int		ft_unalias(t_process *c);
+/*
+** End Alias built-in
+*/
 
 /*
 ** =============================== Utils ===================================
