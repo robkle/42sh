@@ -6,12 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 04:38:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/02/18 02:06:43 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:09:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
-#define IS_FLAG(x) ((x)=='-'||(x)=='+'||(x)==' '||(x)=='#'||(x)=='0')
 
 /*
 ** the ft parsing flags will pare the flags at the position of the string format
@@ -21,7 +20,7 @@
 
 void	get_flags(const char *format, size_t *pos, t_info *info)
 {
-	while (IS_FLAG(format[*pos]))
+	while (ft_isflag(format[*pos]))
 	{
 		if (format[*pos] == '-')
 			info->flags |= MINUS_SIGN;

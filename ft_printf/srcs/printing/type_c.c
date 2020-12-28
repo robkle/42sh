@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 04:33:24 by dthan             #+#    #+#             */
-/*   Updated: 2020/02/10 08:38:46 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:09:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-void	type_c(t_info *info, va_list arg, size_t *ct)
+void	type_c(t_info *info, va_list arg, size_t *ct, int fd)
 {
 	char	chr;
 	char	*str;
@@ -32,6 +32,6 @@ void	type_c(t_info *info, va_list arg, size_t *ct)
 			null_position++;
 		str[null_position] = 0;
 	}
-	write(STDOUT, str, *ct);
+	write(fd, str, *ct);
 	free(str);
 }

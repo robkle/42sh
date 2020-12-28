@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 04:34:28 by dthan             #+#    #+#             */
-/*   Updated: 2019/12/31 14:29:34 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:09:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-void	type_s(t_info *info, va_list arg, size_t *ct)
+void	type_s(t_info *info, va_list arg, size_t *ct, int fd)
 {
 	char *ctemp;
 	char *str;
@@ -24,6 +24,6 @@ void	type_s(t_info *info, va_list arg, size_t *ct)
 		str = ft_strdup(ctemp);
 	prec_ctrl_str(info, &str);
 	width_ctrl(info, &str);
-	write(STDOUT, str, *ct = ft_strlen(str));
+	write(fd, str, *ct = ft_strlen(str));
 	free(str);
 }

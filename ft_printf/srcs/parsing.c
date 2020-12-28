@@ -6,11 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 03:30:22 by dthan             #+#    #+#             */
-/*   Updated: 2020/02/18 01:41:45 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:09:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../includes/ft_printf.h"
 
 void	struct_init(t_info *info)
 {

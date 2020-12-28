@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 04:43:51 by dthan             #+#    #+#             */
-/*   Updated: 2020/02/18 00:01:47 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:09:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-void	type_di(t_info *info, va_list arg, size_t *ct)
+void	type_di(t_info *info, va_list arg, size_t *ct, int fd)
 {
 	long long	num;
 	char		*str;
@@ -27,6 +27,6 @@ void	type_di(t_info *info, va_list arg, size_t *ct)
 	prec_ctrl_nums(info, &str, negative);
 	flag_control(info, &str, negative);
 	width_ctrl(info, &str);
-	write(STDOUT, str, *ct = ft_strlen(str));
+	write(fd, str, *ct = ft_strlen(str));
 	free(str);
 }

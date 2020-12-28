@@ -1,0 +1,10 @@
+blank: a space or tab character
+control operator:
+	A token that performs a control function. It is a newline or one of the
+	following:
+		'||', '&&', '&', ';', ';;', ';&', ';;&', '|', '|&, '(', ')'.
+metacharacter:
+	A character that, when unquoted, separates words. A metacharacter is a
+	space, tab, newline, or one of the following character:
+		'|', '&', ';', '(', ')', '<', or '>'
+

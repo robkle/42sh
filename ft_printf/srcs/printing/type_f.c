@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_f.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 04:25:23 by dthan             #+#    #+#             */
-/*   Updated: 2020/02/18 00:05:05 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:09:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	float_to_string(long double num, t_info *info, char **str)
 	free(str_fractional);
 }
 
-void	type_f(t_info *info, va_list arg, size_t *ct)
+void	type_f(t_info *info, va_list arg, size_t *ct, int fd)
 {
 	long double	num;
 	char		*str;
@@ -107,6 +107,6 @@ void	type_f(t_info *info, va_list arg, size_t *ct)
 	flag_ignore(info, str);
 	flag_control(info, &str, negative);
 	width_ctrl(info, &str);
-	write(STDOUT, str, *ct = ft_strlen(str));
+	write(fd, str, *ct = ft_strlen(str));
 	free(str);
 }

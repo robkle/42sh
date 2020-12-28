@@ -1,0 +1,6 @@
+1. shell.h header files will include all the other header files
+2. Put your struct in the struct.h header file when you declare a new struct and include struct.h header file into your own header file
+3. General functions that you think you will use it in the next feature or it is not relate to your feature or a function from man page that you wrote your self, put that function in the utilities header file
+4. The same with general constants, which will go to constant.h header file
+5. Dont declare separate global variable, if you need a global variable, declare it in global variable g_shell, which will include every global variable in order to keep track all the global variable. And remember to initialize the value yourself since you put it in g_shell.
+6. If there is any bugs, leaks which you think not coming from your work, ping me @dudu so I will fix it asap
