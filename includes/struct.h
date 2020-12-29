@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 20:43:10 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/28 23:05:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,31 @@ typedef struct          s_job
 	int					pipe_fd_closer[2];
 	struct s_job		*next;
 }                       t_job;
+
+/*
+**======================================builtin options (temporary by ihwang)===============================
+*/
+
+# define BUILTIN_CD_OPT_SET "PL"
+//# define BUILTIN_CD_MINUS_HIPHEN '-'
+# define BUILTIN_NO_OPT 0
+# define BUILTIN_INVALID_OPT -1
+
+typedef enum
+{
+	BUILTIN_CD_OPT_P = (1 << 0),
+	BUILTIN_CD_OPT_L = (1 << 1)
+}					t_cd_opts;
+
+typedef struct		s_builtin_options
+{
+	char			*opt_set; //
+	char			opt_len;
+	unsigned int	operand_count;
+	unsigned int	opt_apply;
+	char			invalid_opt;
+}					t_opt;
+
 
 /*
 ** Auto completion

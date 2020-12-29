@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 19:57:47 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/28 17:45:48 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ int		ft_fg_child();
 int		ft_bg(t_process *p);
 int		ft_bg_child();
 
+/*
+** ========================== handle_builtin_options ============================
+*/
+
+void		init_opt(t_opt *opt, const char *opt_set);
+void		check_builtin_options(char **av, t_opt *opt);
 
 /*
 ** Fc built-in

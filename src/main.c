@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 16:32:42 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/28 23:00:01 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,8 @@ static int		shell(void)
 	while (1)
 	{
 		do_job_notification();
-        if (!(g_shell.signal_indicator & SIGINT))
+        if (g_shell.signal_indicator != SIGINT)
 			get_prompt();
-		//g_status = 0;
 		quote = '\0';
 		line = get_input(1, 2, &quote);
 		line = ft_strjoin_and_free_string1(line, "\n");
