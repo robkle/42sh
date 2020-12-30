@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-void	carriage_return_key(t_l *l)
+void		carriage_return_key(t_l *l)
 {
 /*	if (l->line)
 	{
@@ -22,6 +22,9 @@ void	carriage_return_key(t_l *l)
 	append_history(l);*/
 	if (l->rs)
 		ft_reverse_search_reset(l);
+	if (l->line == NULL)
+		l->line = ft_strnew(2);
+	l->line = ft_strjoin_and_free_string1(l->line, "\n");
 	up_down(l, NULL);
 	restore_term(l);
 	auto_reset(&l->auto_com);
