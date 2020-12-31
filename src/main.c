@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 16:32:42 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/31 14:58:43 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,32 @@ static char		*get_input(int level, int count_pmpt, char *quote)
 	ft_get_line(&l);
 	if (is_open_dquote(l.line, level, quote))
 	{
-		ft_putstr("dquote> ");
-		l.line = ft_strjoin_and_free_string1(l.line, "\n");
+		int len = 0;
+
+		if (*quote == '"')
+		{
+			ft_putstr("dquote> ");
+			len = 8;
+		}
+		else if (*quote == '\'')
+		{
+			ft_putstr("quote> ");
+			len = 7;
+		}
 		l.line = 
-			ft_strjoin_and_free_2strings(l.line, get_input((int)2, 8, quote));
+			ft_strjoin_and_free_2strings(l.line, get_input((int)2, len, quote));
+	}
+	else if (is_open_back_slash(l.line))
+	{
+		ft_putstr("> ");
+		// delete the linebreak from userinput
+		// char *temp;
+		// temp = get_input(1, 2, "\0");
+		char *temp = ft_strndup(l.line, ft_strlen(l.line) - 2);
+		char *temp2 = l.line;
+		l.line = temp;
+		free(temp2);
+		l.line = ft_strjoin_and_free_2strings(l.line, get_input(1, 2, "\0"));
 	}
 	return (ft_process_history(&l));
 }
@@ -77,7 +99,6 @@ static int		shell(void)
 		//g_status = 0;
 		quote = '\0';
 		line = get_input(1, 2, &quote);
-		line = ft_strjoin_and_free_string1(line, "\n");
 		//get_next_line(STDOUT_FILENO, &line);
 		if (!iseof_in_line(line))
 			ft_execute(line);

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:51:17 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/30 06:29:47 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/31 17:41:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ t_token	*get_non_operator_token(char *input, int *i)
 	head = *i;
 	while (input[*i] && !is_metacharacter(input[*i]) && (input[*i] != '\n'))
 	{
-		if(input[*i] == '"' || input[*i] == '\'')
+		if ((input[*i] == '"' || input[*i] == '\'') && is_real_quote(input, *i))
 			jump_quote(input, i, input[*i]);
+		else if (input[*i] == '\\')
+			(*i)++;
 		(*i)++;
 	}
 	str = ft_strndup(&input[head], *i - head);

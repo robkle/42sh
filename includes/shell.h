@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/12/27 18:14:33 by dthan            ###   ########.fr       */
+/*   Updated: 2020/12/31 00:26:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # include "history.h"
 # include "auto_completion.h"
 # include "handle_signal.h"
+# include "inhibitor.h"
 
 # define F_TYPE_MASK 0170000
 # define KEY 1

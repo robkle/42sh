@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jump_quote.c                                       :+:      :+:    :+:   */
+/*   inhibitor.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/30 06:30:22 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/31 17:43:52 by dthan            ###   ########.fr       */
+/*   Created: 2020/12/30 19:22:41 by dthan             #+#    #+#             */
+/*   Updated: 2020/12/31 17:48:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef INHIBITOR_H
+# define INHIBITOR_H
 
-void jump_quote(char *input, int *i, char quote_type)
-{
-	(*i)++;
-	while (input[*i])
-	{
-		if (input[*i] == quote_type && is_real_quote(input, *i))
-			break;
-		(*i)++;
-	}
-}
+int		is_open_dquote(char *input, int level, char *quote);
+int		is_open_back_slash(char *input);
+int is_real_quote(char *str, int i);
+#endif

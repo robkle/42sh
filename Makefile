@@ -180,8 +180,16 @@ SIGNAL := $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_FILE))
 # Expansion
 EXPANSION_DIR := $(FEATURES_DIR)/expansion
 EXPANSION_FILE += handle_expansion.c
-EXPANSION_FILE += quote_removal.c
+EXPANSION_FILE += ansi_c.c
+EXPANSION_FILE += octal_value.c
+EXPANSION_FILE += hex_value.c
 EXPANSION := $(addprefix $(EXPANSION_DIR)/,$(EXPANSION_FILE))
+# Inhibitor
+INHIBITOR_DIR := $(FEATURES_DIR)/inhibitor
+INHIBITOR_FILE += tool_for_checking.c
+INHIBITOR_FILE += inhibitor_utility.c
+INHIBITOR_FILE += quote_removal.c
+INHIBITOR := $(addprefix $(INHIBITOR_DIR)/,$(INHIBITOR_FILE))
 # Auto-complition
 AUTO_COMPLETION_DIR := $(FEATURES_DIR)/auto_completion
 AUTO_COMPLETION_FILE += auto_status.c
@@ -208,9 +216,9 @@ FEATURES += $(ALIAS)
 FEATURES += $(SIGNAL)
 FEATURES += $(EXPANSION)
 FEATURES += $(AUTO_COMPLETION)
+FEATURES += $(INHIBITOR)
 ########################### Create utility_FILE files ##############################
 UTILITY_DIR := src/utility
-UTILITY_FILE += tool_for_checking.c
 UTILITY_FILE += get_var.c
 UTILITY_FILE += ft_strndup.c
 UTILITY_FILE += ft_arraydel.c

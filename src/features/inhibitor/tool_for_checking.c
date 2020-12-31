@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tool_for_checking.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/04 06:21:11 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/05 05:46:13 by tango            ###   ########.fr       */
+/*   Updated: 2020/12/31 18:23:50 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+// need to improve this
 int	is_open_dquote(char *input, int level, char *quote)
 {
 	int matched;
@@ -21,7 +22,7 @@ int	is_open_dquote(char *input, int level, char *quote)
 	matched = 0;
 	while (input[i] && *quote == '\0')
 	{
-		if (input[i] == '"' || input[i] == '\'')
+		if ((input[i] == '"' || input[i] == '\'') && is_real_quote(input, i))		
 		{
 			matched++;
 			*quote = input[i];
@@ -30,7 +31,7 @@ int	is_open_dquote(char *input, int level, char *quote)
 	}
 	while (input[i])
 	{
-		if (input[i] == *quote)
+		if ((input[i] == *quote) && is_real_quote(input, i))		
 			matched++;
 		i++;
 	}
@@ -39,13 +40,20 @@ int	is_open_dquote(char *input, int level, char *quote)
 	return (((matched % 2) == 0) ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 
-int	input_contain_dquote(char *input)
+int is_open_back_slash(char *input)
 {
 	int i;
+	int matches;
 
-	i = -1;
-	while (input[++i])
-		if (input[i] == '"')
-			return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	if (input == NULL)
+		return (0);
+	i = ft_strlen(input) - 2;
+	matches = 0;
+	if (input[i] == '\\')
+	{
+		matches = 1;
+		while (--i >= 0 && input[i] == '\\')
+			matches++;
+	}
+	return (matches % 2) == 1 ? 1 : 0;
 }
