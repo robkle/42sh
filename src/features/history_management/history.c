@@ -82,13 +82,13 @@ char		*ft_process_history(t_l *l)
 	if (l->line)
 	{
 		if (ft_hist_exp(l))
-			ft_printf("\n%s", l->line);
+			ft_printf("%s", l->line);
 	}
 	if (!ft_check_cont(l->line))
 	{
 		if (g_shell.history->tmp)
 			free(g_shell.history->tmp);
-		g_shell.history->tmp = ft_strdup(l->line);
+		g_shell.history->tmp = ft_strsub(l->line, 0, ft_strlen(l->line) - 1);
 	}
 	return (l->line);
 }
