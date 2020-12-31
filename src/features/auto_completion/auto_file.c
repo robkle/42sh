@@ -96,6 +96,7 @@ void        auto_file(t_l *l)
 	if (access(l->auto_com.full_path, F_OK) || \
 		access(l->auto_com.full_path, X_OK))
 		auto_reset(&l->auto_com);
+//	else if (l->auto_com.)
 	else
 		return (auto_file_open_path(l));
 }

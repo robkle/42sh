@@ -82,12 +82,14 @@ void			prune_list_for_multiple_files(t_auto *auto_com)
 			}
 			else
 			{
-				auto_com->list = p_list;
-				return ;
+				//auto_com->list = p_list;
+				//return ;
+				break ;
 			}
 			p_list = temp_list;
 		}
 	}
+	auto_com->list = p_list;
 }
 
 void			prune_list(t_auto *auto_com, size_t count)
@@ -102,10 +104,13 @@ static char		get_list_and_count(t_auto *auto_com)
 {
     size_t		count;
     DIR     	*dirp;
+	char		list_status;
 
 	dirp = opendir(auto_com->full_path);
-	auto_get_list(auto_com, dirp);
+	list_status = auto_get_list(auto_com, dirp);
 	closedir(dirp);
+	if (list_status == EXIT_FAILURE)
+		return (-1);
 	count = get_count(auto_com);
 	prune_list(auto_com, count);
 	return (count);
@@ -116,15 +121,13 @@ void		auto_file_open_path(t_l *l)
 	size_t	count;
 
 	count = get_list_and_count(&l->auto_com);
-	if (count == 0)
+	if (count <= 0)
 	{
 		ft_beep_sound();
 		return ;
 	}
 	else if (count > 1)
-	{
 		auto_cmd_file_multiple_cases(l);
-	}
     else
 		auto_file_one_case(l);
 }

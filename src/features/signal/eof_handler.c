@@ -28,12 +28,12 @@ void		eof_handler(t_l *l)
 	char	*tmp;
 	t_term	old;
 
-	if (l->type == LINE_TYPE_SINGLE)
+	if (l->phase == EDTR_PHASE_DFLT)
 	{
 		restore_term(l);
 		ft_exit(EXIT_SUCCESS);
 	}
-	else if (l->type == LINE_TYPE_DQUOTE)
+	else if (l->phase == EDTR_PHASE_DQUOT)
 	{
 		ft_dprintf(2, "\n%s: unexpected EOF while looking for matching `\"\'\n", SHELL_NAME);
 		tmp = ft_strjoin(l->line, "\"");

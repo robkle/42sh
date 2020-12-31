@@ -65,7 +65,6 @@ static void			parse_key_arrow(char t[], t_l *l)
 void				ft_get_line(t_l *l)
 {
 	char			tmp[BUFF_LINE_EDITION];
-
 //	int				debug = 0;
 
 	init_term(l);
@@ -75,12 +74,15 @@ void				ft_get_line(t_l *l)
 		if (!(g_shell.signal_indicator == SIGINT))
 	//	if (debug == 0)
 			read(0, tmp, sizeof(tmp));
-		if (g_shell.signal_indicator == SIGINT)
-	//	if (debug == 1)
+		if (g_shell.signal_indicator == SIGINT && l->phase == EDTR_PHASE_DFLT)
+//		if (debug == 1)
 		{
-			post_sigint(l);
+			default_post_sigint(l);
 			continue ;
 		}
+//		else if (debug == 1 && l->phase == EDTR_PHASE_DQUOT)
+		else if (g_shell.signal_indicator == SIGINT && l->phase == EDTR_PHASE_DQUOT)
+			return ;
 		else if (g_shell.signal_indicator == SIGWINCH)
 		{
 			post_sigwinch(l);

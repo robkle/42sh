@@ -197,11 +197,18 @@ typedef struct stat     t_stat;
 
 typedef enum
 {
-	CLIP_SAVE,
+	CLIP_SAVE = 0,
 	CLIP_TAKE,
-	CLIP_DELT,
+	CLIP_DELT
 }	t_clipping_options;
 
+typedef enum
+{
+	EDTR_PHASE_DFLT = 0,
+	EDTR_PHASE_DQUOT,
+	EDTR_PHASE_HEREDOC,
+	EDTR_PHASE_AUTO
+}	t_editor_phase;
 
 typedef struct			s_l
 {
@@ -214,11 +221,11 @@ typedef struct			s_l
 	int					y;
 	int					down;
 	int					pmpt;
-	int					type;
 	int					eof_flag;
 	char				*rev_sr;
 	int					rs;
 	int					rs_i;
+	char				phase;
 	t_auto				auto_com;
 }						t_l;
 

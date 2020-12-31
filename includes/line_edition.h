@@ -15,12 +15,7 @@
 # include "struct.h"
 
 # define LEFT "#4"
-
 # define BUFF_LINE_EDITION 8
-# define LINE_TYPE_SINGLE 0
-# define LINE_TYPE_DQUOTE 1
-# define LINE_TYPE_HEREDOC 2
-
 # define ERR_EOF 1
 
 # define INIT "\033[0m"

@@ -176,6 +176,7 @@ ALIAS := $(addprefix $(ALIAS_DIR)/,$(ALIAS_FILE))
 SIGNAL_DIR := $(FEATURES_DIR)/signal
 SIGNAL_FILE += sig_handler.c
 SIGNAL_FILE += eof_handler.c
+SIGNAL_FILE += post_signals.c
 SIGNAL := $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_FILE))
 # Expansion
 EXPANSION_DIR := $(FEATURES_DIR)/expansion

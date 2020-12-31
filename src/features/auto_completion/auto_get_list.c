@@ -28,7 +28,7 @@ void			create_list(t_auto *auto_com, char filename[])
 		auto_add_list_on_spot(auto_com, node);
 }
 
-void            auto_get_list(t_auto *auto_com, DIR *dirp)
+char            auto_get_list(t_auto *auto_com, DIR *dirp)
 {
     t_dirent    *dir;
     size_t      target_len;
@@ -43,6 +43,8 @@ void            auto_get_list(t_auto *auto_com, DIR *dirp)
 		{
 			if (ft_strequ(dir->d_name, auto_com->target_str))
 				identical = TRUE;
+			if (ft_strlen(auto_com->full_path) + ft_strlen(dir->d_name) + 1 > PATH_MAX)
+				return (EXIT_FAILURE);
 			if (auto_is_dir(auto_com->full_path, dir->d_name))
                 ft_strcat(dir->d_name, "/");
 			create_list(auto_com, dir->d_name);
@@ -51,4 +53,5 @@ void            auto_get_list(t_auto *auto_com, DIR *dirp)
     }
 	if (identical == FALSE)
 		delete_status_completed(&auto_com->status);
+	return (EXIT_SUCCESS);
 }

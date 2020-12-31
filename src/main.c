@@ -45,21 +45,26 @@ void		ft_execute(char *input)
 	}
 }
 
-static char		*get_input(int level, int count_pmpt, char *quote)
+static char		*get_input(int level, int count_pmpt, char *quote, char phase)
 {
 	t_l			l;
+	//int debug = 0;
 
 	ft_memset(&l, 0, sizeof(t_l));
-	if (level != 1)
-		l.type = LINE_TYPE_DQUOTE;
 	l.pmpt = count_pmpt;
+	l.phase = phase;
 	ft_get_line(&l);
+	if (g_shell.signal_indicator == SIGINT && l.phase == EDTR_PHASE_DQUOT)
+//	if (debug == 1 && l.phase == EDTR_PHASE_DQUOT)
+		return (ft_strsub(quote, 0, 1));
 	if (is_open_dquote(l.line, level, quote))
 	{
 		ft_putstr("dquote> ");
 		l.line = ft_strjoin_and_free_string1(l.line, "\n");
-		l.line = 
-			ft_strjoin_and_free_2strings(l.line, get_input((int)2, 8, quote));
+		l.line = ft_strjoin_and_free_2strings(l.line, \
+					get_input((int)2, 8, quote, EDTR_PHASE_DQUOT));
+		if (level == 1 && g_shell.signal_indicator == SIGINT)
+			return (dquote_post_sigint(&l));
 	}
 	return (ft_process_history(&l));
 }
@@ -72,13 +77,12 @@ static int		shell(void)
 	while (1)
 	{
 		do_job_notification();
-        if (!(g_shell.signal_indicator & SIGINT))
+        if (!(g_shell.signal_indicator == SIGINT))
 			get_prompt();
-		//g_status = 0;
 		quote = '\0';
-		line = get_input(1, 2, &quote);
-		line = ft_strjoin_and_free_string1(line, "\n");
-		//get_next_line(STDOUT_FILENO, &line);
+		line = get_input(1, 2, &quote, EDTR_PHASE_DFLT);
+		if (line == NULL)
+			continue ;
 		if (!iseof_in_line(line))
 			ft_execute(line);
 		free(line);
@@ -112,8 +116,9 @@ int				init_shell(char **envp)
 	}
 	sig_controller(PARENT);
 	g_shell.shell_pgid = getpgrp();
-	if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
-		return (EXIT_FAILURE);
+
+	// if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
+	// 	return (EXIT_FAILURE);
 	ft_tcsetpgrp(STDIN_FILENO, g_shell.shell_pgid);
 	tcgetattr(STDIN_FILENO, &g_shell.shell_tmode);
 	/*
