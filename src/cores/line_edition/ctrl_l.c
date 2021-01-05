@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 01:37:15 by tango             #+#    #+#             */
-/*   Updated: 2020/12/27 16:47:34 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/03 15:42:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int					paste(t_l *l, char raw_clip[], int clip_len, char *autocom_clip)
 	else if (raw_clip)
 		clip = get_clip_external(raw_clip);
 	else if (!(clip = clipboard(NULL, CLIP_TAKE)))
-		return (1);
+		return (EXIT_SUCCESS);
 	clip_len = ft_strlen(clip);
 	i = l->x + (l->y * l->co) - l->pmpt;
 	paste_apply_screen(l, clip, i);
@@ -66,5 +66,5 @@ int					paste(t_l *l, char raw_clip[], int clip_len, char *autocom_clip)
 	if (l->starting_row < (l->nb + l->pmpt + clip_len) / l->co)
 		wind_up_cursor(l, clip_len);
 	paste_background(l, clip_len);
-	return (1);
+	return (EXIT_SUCCESS);
 }

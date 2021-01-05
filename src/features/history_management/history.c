@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/26 13:47:05 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 15:57:41 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,13 @@ char		*ft_process_history(t_l *l)
 	}
 	return (l->line);
 }
+
+// char	*ft_process_history(char *input)
+// {
+// 	if (ft_hist_exp(l))
+// 		ft_printf("%s", l->line);
+// 	return (l->line);
+// }
 
 void		delete_save_history(void)
 {

@@ -1,0 +1,138 @@
+int shell()
+{
+	t_token *token_lst;
+
+	while ("shell is interactive")
+	{
+		job_notification...
+		print_prompt...
+		if (get_user_token(&token_lst) == EXIT_FAILLURE)
+			continue ;
+		populating into AST tree...
+		delete token...
+		if (find_heredoc == EXIT_FAILLURE)
+		{
+			delete AST tree...
+			continue ;
+		}
+		execute AST tree ...
+		delete AST tree
+	}
+}
+
+int get_user_token()
+{
+	char *whole_cmd;
+	char *cmd;
+	t_token *token_lst;
+	int lexer_and_parser_ret;
+	int ret;
+
+	whole_cmd = NULL;
+	While("getting user command")
+	{
+		cmd = get_command(EDITOR_COMMAND)
+		if (cmd == NULL)
+		{
+			ret = EXIT_FAILLURE;
+			break ;
+		}
+		whole_cmd = join_2_strings(whole_cmd, cmd);
+		lexer_and_parser_ret = lexer_and_parser(cmd, &token_lst);
+		if (lexer_and_parser == LEXER_SUCESS)
+		{
+			ret = EXIT_SUCCESS;
+			break ;
+		}
+		else if (lexer_and_parser == LEXER_FAILURE)
+		{
+			ret = EXIT_FAILLURE;
+			break ;
+		}
+	}
+	if (whole_cmd)
+		append_history...
+	return (ret);
+}
+
+char *get_command(t_editor *phase)
+{
+	char *cmd;
+	char *single_line;
+
+	while("getting command)
+	{
+		single_line = ft_get_line(phase)
+		if (single_line == NULL)
+			return (NULL)
+		else
+			cmd = join_2_strings(cmd, single_line);
+		if (phase == EDITOR_COMMAND || phase == EDITOR_STOP)
+			break ;
+	}
+	return (cmd);
+}
+
+t_lexer_return_type lexer_and_parser(char *cmd, t_token **token_lst)
+{
+	int i;
+	int parser_ret;
+
+	i = -1;
+	while (cmd[++i])
+	{
+		lexing_token...
+		alias_substitution && history_expansion...
+		ret = parser;
+		if (ret == EXIT_FAILLURE)
+			return LEXER_FAILURE;
+	}
+	if (current_token == && or ||...)
+		return LEXER_CONTINUE;
+	return LEXER_SUCESS;
+} 
+
+
+
+
+
+// if (*phase == EDTR_PHASE_HEREDOC)
+	// {
+	// 	/*
+	// 	** Heredoc editing loop
+	// 	** 	1. Print prompt str
+	// 	**	2. get single line
+	// 	**		if single line == NULL -> error -> ctrl-C => will be treated like 	**		normal error
+	// 	**		if single line return EOF or the word => free single input and break
+	// 	**		the loop, then return the current string, since we initialize current
+	// 	**		string = 0
+	// 	*/
+	// 	while ("heredoc editting")
+	// 	{
+	// 		print_prompt_str(*phase);
+	// 		single_input = NULL;
+	// 		if ((single_input = ft_get_line(*phase)) == NULL)
+	// 		{
+	// 			free(user_input);
+	// 			return (NULL);
+	// 		}
+	// 		else if (ft_strequ(single_input, CTRL_D_KEY) || (ft_strlen(word) == ft_strlen(single_input) - 1 && ft_strnequ(word, single_input, ft_strlen(word))))
+	// 		{
+	// 			free(single_input);
+	// 			break ;
+	// 		}
+	// 		user_input = ft_strjoin_and_free_2strings(user_input, single_input);
+	// 	}
+	// }
+	// else
+
+
+shell is runing -> ask for user input [ lexer - parser]
+
+fix ft_get_line
+fix auto_completion
+fix history_search
+fix lexer
+
+
+lexing -> alias_substitution + history_expansion

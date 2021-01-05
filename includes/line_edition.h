@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 17:09:19 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 19:02:40 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,7 @@
 # include "struct.h"
 
 # define LEFT "#4"
-
 # define BUFF_LINE_EDITION 8
-# define LINE_TYPE_SINGLE 0
-# define LINE_TYPE_DQUOTE 1
-# define LINE_TYPE_HEREDOC 2
-
 # define ERR_EOF 1
 
 # define INIT "\033[0m"
@@ -35,35 +30,60 @@
 # define TMGT "\033[95m"
 # define SKYB "\033[96m"
 
+# define BACKSLASH_KEY "\x7F"
+# define CUT_KEY "\v"
+# define HOME_KEY "\033[H"
+# define END_KEY "\033[F"
+# define PASTE_KEY "\f"
+# define UP_ARROW_KEY "\033[A"
+# define DOWN_ARROW_KEY "\033[B"
+# define LEFT_ARROW_KEY "\033[D"
+# define RIGHT_ARROW_KEY "\033[C"
+# define CTRL_UP_KEY "\x1b[1;5A"
+# define CTRL_DOWN_KEY "\x1b[1;5B"
+# define CTRL_LEFT_KEY "\x1b[1;5D"
+# define CTRL_RIGHT_KEY "\x1b[1;5C"
+# define ENTER_KEY "\n"
 
-void	ft_get_line(t_l *l);
+# define CTRL_C_KEY "\x03"
+# define CTRL_D_KEY "\x04"
+
+# define TAB_KEY "\t"
+// # define CTRL_R_KEY "" history search add later
+// # define ESC_KEY "" add later history search
+// # define DELETE_KEY "" add later
+
+// void	ft_get_line(t_l *l);
+
+char	*ft_get_line(t_phase *phase, int prompt_len);
+
+int parse_key(char buf[BUFF_LINE_EDITION], t_l *line_edition);
 
 /*
 ** Available keys
 */
 
-void	up_down(t_l *l, char t[]);
-void	right_key(t_l *l);
-void	left_key(t_l *l);
-int		bs_key(t_l *l);
-void	add_key(char t[], t_l *l);
-int		home_key(t_l *l);
-int		end_key(t_l *l);
-int		ctrl_k(t_l *l, int y_dec);
-int		ctrl_l(t_l *l, int clip_len, int i);
-void	ctrl_left(t_l *l, int y_dec);
-void	ctrl_right(t_l *l);
-void	ctrl_up(t_l *l);
-void	ctrl_down(t_l *l);
-void	carriage_return_key(t_l *l);
+int	up_down(t_l *l, char t[]);
+int	right_key(t_l *l);
+int	left_key(t_l *l);
+int	bs_key(t_l *l);
+int	home_key(t_l *l);
+int	end_key(t_l *l);
+int	ctrl_k(t_l *l, int y_dec);
+int	ctrl_l(t_l *l, int clip_len, int i);
+int	ctrl_left(t_l *l, int y_dec);
+int	ctrl_right(t_l *l);
+int	ctrl_up(t_l *l);
+int	ctrl_down(t_l *l);
+// void	carriage_return_key(t_l *l);
 int						auto_complete(t_l *l);
 
 /*
 ** Term_attr
 */
 
-void	init_term(t_l *l);
-t_term	get_set_default_term(t_term *t);
+void	init_term(void);
+// t_term	get_set_default_term(t_term *t);
 void	restore_term(t_l *l);
 void	get_new_term_cursor(t_l *l);
 
@@ -71,8 +91,7 @@ void	get_new_term_cursor(t_l *l);
 /*
 ** add key
 */
-
-void				add_key(char t[], t_l *l);
+int	add_key(char t[], t_l *l);
 
 /*
 ** Copy & Paste

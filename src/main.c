@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/31 14:58:43 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 18:58:42 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static char		**set_env(char **sample)
 	return (env);
 }
 
+/*
 void		ft_execute(char *input)
 {
 	t_token		*token_lst;
@@ -44,69 +45,185 @@ void		ft_execute(char *input)
 		clear_token(token_lst);
 	}
 }
+*/
+/* Working
+*/
 
-static char		*get_input(int level, int count_pmpt, char *quote)
+/*
+** Ther will be 2 ouputs of a string
+**	string end with \n and string end with EOF
+*/
+
+t_phase analyzing_phase(char *str, t_phase phase)
 {
-	t_l			l;
+	int i = -1;
+	int len = ft_strlen(str) - 1; 
 
-	ft_memset(&l, 0, sizeof(t_l));
-	if (level != 1)
-		l.type = LINE_TYPE_DQUOTE;
-	l.pmpt = count_pmpt;
-	ft_get_line(&l);
-	if (is_open_dquote(l.line, level, quote))
+	while (++i < len)
 	{
-		int len = 0;
+		if (phase == PHASE_BACKSLASH)
+		{
+			phase = PHASE_CMD;
+			continue;
+		}
+		if (str[i] == '"' && is_real_quote(str, i))
+		{
+			if (phase == PHASE_DQUOTE)
+				phase = PHASE_CMD;
+			else if (phase == PHASE_CMD)
+				phase = PHASE_DQUOTE;
+		}
+		else if (str[i] == '\'' && is_real_quote(str, i))
+		{
+			if (phase == PHASE_QUOTE)
+				phase = PHASE_CMD;
+			else if (phase == PHASE_CMD)
+				phase = PHASE_QUOTE;
+		}
+		else if (str[i] == '\\')
+		{
+			if (phase == PHASE_CMD)
+				phase = PHASE_BACKSLASH;
+		}
+	}
+	return (phase);
+}
 
-		if (*quote == '"')
-		{
-			ft_putstr("dquote> ");
-			len = 8;
-		}
-		else if (*quote == '\'')
-		{
-			ft_putstr("quote> ");
-			len = 7;
-		}
-		l.line = 
-			ft_strjoin_and_free_2strings(l.line, get_input((int)2, len, quote));
-	}
-	else if (is_open_back_slash(l.line))
+int print_phase(t_phase phase)
+{
+	if (phase == PHASE_BACKSLASH)
+		return (ft_printf("> "));
+	else if (phase == PHASE_QUOTE)
+		return (ft_printf("quote> "));
+	else if (phase == PHASE_DQUOTE)
+		return (ft_printf("dquote> "));
+	else if (phase == PHASE_CMDSUBST)
+		return (ft_printf("cmdsubst> "));
+	// add more here if you need
+	return (0);
+}
+
+int print_prompt(t_lex_value lex_value)
+{
+	if (lex_value == LEX_CMD)
+		return (ft_printf("> "));
+	else if (lex_value == LEX_CMDAND)
+		return (ft_printf("cmdand> "));
+	else if (lex_value == LEX_CMDOR)
+		return (ft_printf("cmdor> "));
+	else if (lex_value == LEX_PIPE)
+		return (ft_printf("pipe> "));
+	// add more here if you need
+	return (0);
+}
+
+/*
+** function get_command
+**	@phase : the starting phase of the editing
+*/
+
+char *get_command(t_lex_value lex_value)
+{
+	t_phase phase;
+	char *cmd;
+	char *line;
+	int prompt_len;
+
+	cmd = ft_strnew(0);
+	phase = PHASE_CMD;
+	prompt_len = print_prompt(lex_value);
+	while ("command editting")
 	{
-		ft_putstr("> ");
-		// delete the linebreak from userinput
-		// char *temp;
-		// temp = get_input(1, 2, "\0");
-		char *temp = ft_strndup(l.line, ft_strlen(l.line) - 2);
-		char *temp2 = l.line;
-		l.line = temp;
-		free(temp2);
-		l.line = ft_strjoin_and_free_2strings(l.line, get_input(1, 2, "\0"));
+		if ((line = ft_get_line(&phase, prompt_len)) == NULL)
+		{
+			free(cmd);
+			return (NULL);
+		}
+		if (phase != PHASE_STOP)
+			phase = analyzing_phase(line, phase);
+		cmd = ft_strjoin_and_free_2strings(cmd, line);
+		if (phase == PHASE_CMD || phase == PHASE_STOP)
+			break ;
+		prompt_len = print_phase(phase);
 	}
-	return (ft_process_history(&l));
+	return (cmd);
+}
+
+int get_user_token(t_token **tk_lst)
+{
+	char *whole_cmd;
+	char *cmd;
+	int ret;
+	t_lex_value lex_value;
+
+	whole_cmd = NULL;
+	ret = EXIT_SUCCESS;
+	lex_value = LEX_CMD;
+	while ("user is editing")
+	{
+		if ((cmd = get_command(lex_value)) == NULL)
+		{
+			ret = EXIT_FAILURE;
+			break ;
+		}
+		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst);
+		whole_cmd = ft_strjoin_and_free_2strings(whole_cmd, cmd);
+		if (lex_value == LEX_SUCCESS || lex_value == LEX_FAILURE)
+		{
+			ret = lex_value;
+			break ;
+		}
+	}
+	// if (whole_cmd)
+		// we append history
+	return (ret);
 }
 
 static int		shell(void)
 {
-	char *line;
-	char quote;
+	t_token *tk_lst;
+	t_astnode *ast;
 
-	while (1)
+	while ("shell is interactive")
 	{
+		tk_lst = NULL; // need to have a reset maybe
+		ast = NULL; // temp place
+		g_shell.signal_indicator = 0;
 		do_job_notification();
-        if (!(g_shell.signal_indicator & SIGINT))
-			get_prompt();
-		//g_status = 0;
-		quote = '\0';
-		line = get_input(1, 2, &quote);
-		//get_next_line(STDOUT_FILENO, &line);
-		if (!iseof_in_line(line))
-			ft_execute(line);
-		free(line);
-		append_history();
+		print_info();
+		if ((get_user_token(&tk_lst)) == LEX_FAILURE)
+		{
+			clear_token(tk_lst);
+			continue ;
+		}
+		print_token(tk_lst);
+		if ((ast = semantic_analysis(tk_lst)) == NULL)
+			continue ;
+		// if (find_heredoc(ast) == EXIT_FAILURE)
+			// continue ;
+		executor(ast);
 	}
 	return (0);
 }
+
+// static int		shell(void)
+// {
+// 	char *line;
+// 	// char quote;
+
+// 	while (1)
+// 	{
+// 		do_job_notification();
+// 		get_prompt();
+// 		if ((line = get_user_input(EDTR_PHASE_DFLT, NULL)) == NULL)
+// 			continue ;
+// 		// history expansion
+// 		ft_execute(line);
+// 		free(line);
+// 		// append_history();
+// 	}
+// 	return (0);
+// }
 
 /* working */
 /*
@@ -125,38 +242,39 @@ int				init_shell(char **envp)
 		return (EXIT_FAILURE);
 	while (ft_tcgetpgrp(g_shell.shell_terminal) != \
 			(g_shell.shell_pgid = getpgrp()))
-		kill (-g_shell.shell_pgid, SIGTTIN);	
-	if (!(getenv("TERM")))
+		kill (-g_shell.shell_pgid, SIGTTIN);
+	/*
+	** init environment variable
+	*/
+	g_shell.env = set_env(envp);	
+	if (!(ft_getenv("TERM")))
 	{
 		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
 		return (EXIT_FAILURE);
 	}
 	sig_controller(PARENT);
 	g_shell.shell_pgid = getpgrp();
-	if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
-		return (EXIT_FAILURE);
+
+	// if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
+	// 	return (EXIT_FAILURE);
 	ft_tcsetpgrp(STDIN_FILENO, g_shell.shell_pgid);
 	tcgetattr(STDIN_FILENO, &g_shell.shell_tmode);
 	/*
-	** init environment variable
-	*/
-	g_shell.env = set_env(envp);
-	/*
 	** init history
 	*/
-	g_shell.history = (t_history*)malloc(sizeof(t_history));
-	g_shell.history->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 2));
-	g_shell.history->tmp = NULL;
-	ft_bzero(g_shell.history->savedfile, 256);
-	getcwd(g_shell.history->savedfile, 256);
-	ft_strcat(g_shell.history->savedfile, "/.history");
-	get_history(0);
+	// g_shell.history = (t_history*)malloc(sizeof(t_history));
+	// g_shell.history->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 2));
+	// g_shell.history->tmp = NULL;
+	// ft_bzero(g_shell.history->savedfile, 256);
+	// getcwd(g_shell.history->savedfile, 256);
+	// ft_strcat(g_shell.history->savedfile, "/.history");
+	// get_history(0);
 	/*
 	** init alias
 	*/
-	g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
-	g_shell.alias[0] = NULL;
-	g_shell.last_alias = NULL;
+	// g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
+	// g_shell.alias[0] = NULL;
+	// g_shell.last_alias = NULL;
 	/*
 	** promp stuff here
 	*/

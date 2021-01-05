@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   carriage_return.c                                  :+:      :+:    :+:   */
+/*   auto_lstdel_strdel.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/02 15:29:56 by tango             #+#    #+#             */
-/*   Updated: 2021/01/01 22:47:27 by dthan            ###   ########.fr       */
+/*   Created: 2020/10/01 23:26:06 by marvin            #+#    #+#             */
+/*   Updated: 2020/12/27 17:49:39 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		carriage_return_key(t_l *l)
+void		auto_lstdel_strdel(t_list **alst)
 {
-/*	if (l->line)
-	{
-		if (ft_hist_exp(l))
-			ft_printf("\n%s", l->line);
-	}
-	append_history(l);*/
-	if (l->rs)
-		ft_reverse_search_reset(l);
-	if (l->line == NULL)
-		l->line = ft_strnew(2);
-	l->line = ft_strjoin_and_free_string1(l->line, "\n");
-	up_down(l, NULL);
-	restore_term(l);
-	auto_reset(&l->auto_com);
-}
+	t_list	*p_lst;
+	t_list	*temp_lst;
+	char	*copy_str;
 
-/* working
-*/
+	p_lst = *alst;
+	while (p_lst)
+	{
+		copy_str = (char*)p_lst->content;
+		ft_strdel(&copy_str);
+		temp_lst = p_lst;
+		p_lst = p_lst->next;
+		free(temp_lst);
+	}
+	*alst = NULL;
+}
 

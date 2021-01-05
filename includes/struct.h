@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 20:43:10 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 16:52:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,18 +150,27 @@ typedef enum
 
 typedef enum
 {
-	AUTO_STAT_NEW_POS = (1 << 0), // o
-	//AUTO_STAT_COMMAND = (1 << 1),
-	//AUTO_STAT_ROOT = (1 << 10),
-	//AUTO_STAT_OPEN = (1 << 2), // o
-	//AUTO_STAT_WORD_IN_PATH = (1 << 3), // o
-	//AUTO_STAT_OTHER_POSSIBILITY = (1 << 4),
-	AUTO_STAT_COMPLETED = (1 << 5),
-	AUTO_STAT_DIR = (1 << 6),
-	//AUTO_STAT_TYPED_UPTO = (1 << 7),
-	AUTO_STAT_LIST = (1 << 8),
-	AUTO_STAT_OVER_TERM_SIZE = (1 << 9)
+	AUTO_STAT_NEW_POS = (1 << 0),
+	AUTO_STAT_COMPLETED = (1 << 1),
+	AUTO_STAT_DIR = (1 << 2),
+	AUTO_STAT_LIST = (1 << 3),
+	AUTO_STAT_OVER_TERM_SIZE = (1 << 4)
 }   t_auto_com_stat;
+
+/*
+** struct auto
+**	t_list			*list					: list of the options
+**	size_t			largest_content_size	:
+**	void			*largest_content		:
+**	size_t			count_list				: number of item in list
+**	char			cwd[]					: current working dir
+**	char			full_path[]				:
+**	char			*typed_str				:
+**	char			*target_str				:
+**	char			*path_env				:
+**	long			status					:
+*/
+
 
 typedef struct			s_auto
 {
@@ -197,29 +206,65 @@ typedef struct stat     t_stat;
 
 typedef enum
 {
-	CLIP_SAVE,
+	CLIP_SAVE = 0,
 	CLIP_TAKE,
-	CLIP_DELT,
+	CLIP_DELT
 }	t_clipping_options;
 
+typedef enum
+{
+	PHASE_CMD = 0,
+	PHASE_DQUOTE,
+	PHASE_QUOTE,
+	PHASE_BACKSLASH,
+	PHASE_CMDSUBST,
+	PHASE_STOP
+}	t_phase;
+
+typedef enum
+{
+	LEX_SUCCESS = 0,
+	LEX_FAILURE,
+	LEX_CMD,
+	LEX_CMDAND,
+	LEX_CMDOR,
+	LEX_PIPE,
+}	t_lex_value;
+
+/*
+** Line edition struct:
+** 	char 	*line		: the line
+**	int		co			: number of column in a line
+**	int		starting_row: total_row - current_row
+**	int		total_row	: number of line on screen or page
+**	int		nb			: number of char in the line
+**	int		x			: x cursor position
+**	int		y			: y cursor position
+**	int		pmpt		: length of prompt
+**	char	*rev_sr		:
+**	int		rs			:
+**	int		rs_i		:
+**	char	phase		:
+**	t_auto	auto_com	:
+*/
 
 typedef struct			s_l
 {
 	char				*line;
-	int					co;
-	int					starting_row;
-	int					total_row;
 	int					nb;
+	int					co;
+	int					total_row;
+	int					starting_row;
+	int					pmpt;
 	int					x;
 	int					y;
-	int					down;
-	int					pmpt;
-	int					type;
-	int					eof_flag;
+	// int					down; // sanitized 
+	// int					eof_flag; // sanitized
 	char				*rev_sr;
 	int					rs;
 	int					rs_i;
-	t_auto				auto_com;
+	char				phase;
+	t_auto				auto_com; // delete this later
 }						t_l;
 
 typedef struct termios	t_term;

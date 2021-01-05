@@ -3,25 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   term_attr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:14:04 by ihwang            #+#    #+#             */
-/*   Updated: 2020/10/01 14:13:30 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/01/05 16:45:28 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void				restore_term(t_l *l)
-{
-	t_term			old;
+// old
+// void				restore_term(t_l *l)
+// {
+// 	t_term			old;
 
-	if (l->line == NULL)
-		add_key("\n", l);
+// 	if (l->line == NULL)
+// 		add_key("\n", l);
+// 	end_key(l);
+// 	apply_termcap_str("do", 0, 0);
+// 	old = get_set_default_term(NULL);
+// 	tcsetattr(0, TCSANOW, &old);
+// }
+
+// new
+void restore_term(t_l *l)
+{
 	end_key(l);
 	apply_termcap_str("do", 0, 0);
-	old = get_set_default_term(NULL);
-	tcsetattr(0, TCSANOW, &old);
+	tcsetattr(0, TCSANOW, &g_shell.shell_tmode);
 }
 
 t_term				get_set_default_term(t_term *t)
@@ -33,25 +42,24 @@ t_term				get_set_default_term(t_term *t)
 	return (old);
 }
 
-void				init_term(t_l *l)
-{
-	t_term			t;
+/*
+** init term - changed to cooked mode
+**	We turn off canonical mode + echo mode + ctrl-c and ctrl-z signal
+**	We set the VMIN and VTIME which are timeout for read()
+**		VMIN = the minimum value of bytes of input neede before read()
+**		VTIME = the maximum value of time to wait before read() return
+*/
 
-	l->x = l->pmpt;
-	tcgetattr(0, &t);
-	get_set_default_term(&t);
-	t.c_lflag &= ~(ICANON | ECHO);
-	t.c_cc[VMIN] = 1;
-	t.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSANOW, &t);
-	if (!(tgetent(NULL, getenv("TERM"))))
-	{
-		ft_putstr_fd("Environment variable 'TERM' not set \n", 2);
-		ft_exit(EXIT_FAILURE);
-	}
-	l->co = tgetnum("co");
-	l->total_row = tgetnum("li");
-	l->starting_row = l->total_row - get_current_row();
-	ft_memset(&l->auto_com, 0, sizeof(t_auto));
-	//l->auto_com = (t_auto*)ft_memalloc(sizeof(t_auto));
+void	init_term(void)
+{
+	t_term	raw;
+
+	tcgetattr(0, &raw);
+	// raw.c_lflag &= ~(ICANON | ECHO | ISIG);
+	raw.c_lflag &= ~(ICANON | ECHO);
+	// raw.c_cc[VMIN] = 1;
+	// raw.c_cc[VTIME] = 0;
+	raw.c_cc[VMIN] = 0;
+	raw.c_cc[VTIME] = 1;
+	tcsetattr(0, TCSANOW, &raw);
 }

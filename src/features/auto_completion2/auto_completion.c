@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 17:13:51 by marvin            #+#    #+#             */
-/*   Updated: 2021/01/05 19:10:53 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/02 18:29:23 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,59 +50,33 @@ void        auto_reset(t_auto *auto_com)
 	auto_com->status = 0;
 }
 
-void init_auto_completion_struct(t_auto *auto_com)
-{
-	ft_bzero(auto_com, sizeof(t_auto));
-	auto_com->list = NULL;
-	auto_com->count_list = 0;
-	auto_com->largest_content_size = 0;
-	auto_com->largest_content = NULL;
-	// auto_com->cwd
-	// auto_com->full_path
-	auto_com->typed_str = NULL;
-	auto_com->target_str = NULL;
-	auto_com->path_env = NULL;
-	auto_com->status = 0;
-}
-
-// old
-int         auto_complete(t_l *l)
+int         auto_complete(t_l *l, t_editor_phase *phase)
 {
 	int		stat;
+	t_auto	auto_com;
+	t_editor_phase saved_pharse;
 
-	if (l->auto_com.status & AUTO_STAT_NEW_POS)
-        auto_reset(&l->auto_com);
-	delete_status_new_pos(&l->auto_com.status);
-	if (l->line == NULL)
-		l->line = ft_strnew(0);
-    if ((stat = auto_is_command(l)) == TRUE)
-		auto_command(l);
-    else if (stat == AUTO_COMPLETION)
-		return (AUTO_COMPLETION);
+	saved_pharse = *phase;
+	*phase = EDTR_PHASE_AUTO;
+
+	ft_bzero(&auto_com, sizeof(t_auto));
+	auto_com.status |= AUTO_STAT_NEW_POS;
+
+
+	// where auto comple tion work
+    if ((auto_is_command(l)) == TRUE)
+		auto_command(l, &auto_com, phase); // need to inject *phase here
 	else
-        auto_file(l);
-    delete_status_new_pos(&l->auto_com.status);
-    return (AUTO_COMPLETION);
-}
+        auto_file(l); // need to inject *phase here
 
-// new
-int         auto_complete(t_l *l)
-{
-	t_auto auto_com;
-	int		stat;
 
-	init_auto_completion_struct(&auto_com);
-	if (l->auto_com.status & AUTO_STAT_NEW_POS)
-        auto_reset(&l->auto_com);
-	delete_status_new_pos(&l->auto_com.status);
-	if (l->line == NULL)
-		l->line = ft_strnew(0);
-    if ((stat = auto_is_command(l)) == TRUE)
-		auto_command(l);
-    else if (stat == AUTO_COMPLETION)
-		return (AUTO_COMPLETION);
-	else
-        auto_file(l);
-    delete_status_new_pos(&l->auto_com.status);
-    return (AUTO_COMPLETION);
+	//delete for memory leaks
+	auto_lstdel_strdel(auto_com.list);
+	if (auto_com.target_str)
+		free(auto_com.target_str);
+	if (auto_com.typed_str)
+		free(auto_com.typed_str);
+	if (*phase != EDTR_STOP)
+		*phase = saved_pharse;
+	return (1);
 }

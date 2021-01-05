@@ -6,18 +6,18 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/18 18:17:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 15:52:42 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
+/*
 static char			*prompt_heredoc(char *end_word)
 {
 	t_l				l;
 
 	ft_memset(&l, 0, sizeof(t_l));
-	l.type = LINE_TYPE_HEREDOC;
+	// l.phase = EDTR_PHASE_HEREDOC;
 	l.pmpt = 9;
 	ft_putstr("heredoc> ");
 	ft_get_line(&l);
@@ -91,3 +91,4 @@ void				clear_heredoc(t_heredoc *heredoc)
 		free(container);
 	}
 }
+*/

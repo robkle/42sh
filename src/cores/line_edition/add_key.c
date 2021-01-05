@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:11:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 16:46:41 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/03 16:01:36 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void			insert_char(char t[], t_l *l)
 	store_cursor_position(l);
 }
 
-void				add_key(char t[], t_l *l)
+int				add_key(char t[], t_l *l)
 {
 	if (l->rs)
 		ft_reverse_search_add(t, l);
@@ -88,4 +88,5 @@ void				add_key(char t[], t_l *l)
 		else
 			append_char(t, l);
 	}
+	return EXIT_SUCCESS;
 }

@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   carriage_return.c                                  :+:      :+:    :+:   */
+/*   auto_is_dir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/02 15:29:56 by tango             #+#    #+#             */
-/*   Updated: 2021/01/01 22:47:27 by dthan            ###   ########.fr       */
+/*   Created: 2020/09/27 14:58:41 by marvin            #+#    #+#             */
+/*   Updated: 2020/12/27 17:49:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		carriage_return_key(t_l *l)
+char        auto_is_dir(char *path, char *filename)
 {
-/*	if (l->line)
-	{
-		if (ft_hist_exp(l))
-			ft_printf("\n%s", l->line);
-	}
-	append_history(l);*/
-	if (l->rs)
-		ft_reverse_search_reset(l);
-	if (l->line == NULL)
-		l->line = ft_strnew(2);
-	l->line = ft_strjoin_and_free_string1(l->line, "\n");
-	up_down(l, NULL);
-	restore_term(l);
-	auto_reset(&l->auto_com);
-}
+    t_stat  sb;
+    char    full_path[PATH_MAX];
 
-/* working
-*/
+	if (!path || !filename)
+		return (FALSE);
+    ft_strcpy(full_path, path);
+	if (full_path[ft_strlen(full_path) - 1] != '/')
+    	ft_strcat(full_path, "/");
+    ft_strcat(full_path, filename);
+	stat(full_path, &sb);
+    if (sb.st_mode & S_IFDIR)
+        return (TRUE);
+    else
+        return (FALSE);
+}
 

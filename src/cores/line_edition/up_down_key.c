@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/23 12:19:09 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/03 15:57:08 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,34 +47,31 @@ static void			up_down_key_apply_statuses(t_l *l)
 	int				starting_row_from_top;
 	int				new_starting_row;
 
-	//l->nb = ft_strlen(l->line); // replaced by ft_count_rows
-	//line_rows = (l->nb + l->pmpt) // replaced by ft_count_rows
-	line_rows = ft_count_rows(l);//NEW
+	line_rows = ft_count_rows(l);
 	new_starting_row = l->starting_row;
 	if (l->starting_row < line_rows)
 		new_starting_row = line_rows;
 	starting_row_from_top = l->total_row - l->starting_row;
-	i = get_current_row() - starting_row_from_top;//ft in term_attr.c
+	i = get_current_row() - starting_row_from_top;
 	while (i-- > 0)
 		apply_termcap_str("up", 0, 0);
 	apply_termcap_str("ch", 0, l->pmpt);
 	apply_termcap_str("cd", 0, 0);
-	//l->y = (l->nb + l->pmpt)// replaced by ft_count_rows
-	//l->x = (l->nb + l->pmpt) % l->co;// replaced by ft_count_rows
 	l->starting_row = new_starting_row;
 	ft_putstr(l->line);
 	if (l->x == 0)
 		ft_putchar('\n');
 }
 
-static void			up_key(t_l *l)
+int			up_key(t_l *l)
 {
 	if (g_shell.history->curr == 0 || g_shell.history->hst == 0) 
-		return ;
+		return (EXIT_SUCCESS);
 	g_shell.history->hst--;
 	ft_strdel(&l->line);
 	l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);
 	up_down_key_apply_statuses(l);
+	return (EXIT_SUCCESS);
 }
 
 static void			down_key(t_l *l, char *first)
@@ -89,7 +86,7 @@ static void			down_key(t_l *l, char *first)
 	up_down_key_apply_statuses(l);
 }
 
-void				up_down(t_l *l, char t[])
+int		up_down(t_l *l, char t[]) // need to separate later
 {
 	static char		*tmp;
 
@@ -105,4 +102,5 @@ void				up_down(t_l *l, char t[])
 	}
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
 		down_key(l, tmp);
+	return (EXIT_SUCCESS);
 }

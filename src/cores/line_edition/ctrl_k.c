@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:18:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 16:47:26 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/02 23:45:59 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ int					cutting(t_l *l, int y_dec)
 	curr = i;
 	while (i >= 0)
 	{
-		if (!l->line)
-			return (1);
+		if (!l->line) // need to check this
+			// return (1);
+			return (EXIT_SUCCESS);
 		if ((ft_iswhite(l->line[i ? i - 1 : 0]) && !ft_iswhite(l->line[i]) &&
 		!ft_iswhite(l->line[curr])) || (i == 0 && !ft_iswhite(l->line[curr])))
 		{
@@ -72,5 +73,6 @@ int					cutting(t_l *l, int y_dec)
 		(i + l->pmpt) % l->co == 0 ? y_dec++ : 0;
 		i--;
 	}
-	return (1);
+	// return (1);
+	return (EXIT_SUCCESS);
 }

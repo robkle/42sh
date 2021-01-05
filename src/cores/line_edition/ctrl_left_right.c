@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_left_right.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:15:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/06 05:02:21 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/01/04 19:21:13 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void			move_cursor_right(t_l *l, int y_inc, int i)
 	l->x = (i + l->pmpt) % l->co;
 }
 
-void				ctrl_right(t_l *l)
+int				ctrl_right(t_l *l)
 {
 	int				i;
 	int				y_inc;
@@ -45,6 +45,7 @@ void				ctrl_right(t_l *l)
 		((i + l->pmpt) % l->co == l->co - 1) ? y_inc++ : 0;
 		i++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 static void			ctrl_left_for_zero(t_l *l, int y_dec)
@@ -68,14 +69,14 @@ static void			move_cursor_left(t_l *l, int y_dec, int i, int curr)
 	l->x = (i + l->pmpt) % l->co;
 }
 
-void				ctrl_left(t_l *l, int y_dec)
+int				ctrl_left(t_l *l, int y_dec)
 {
 	int				i;
 	int				curr;
 	char			*curr_address;
 
-	if (!l->line)
-		return ;
+	if (l->nb == 0)
+		return EXIT_SUCCESS;
 	i = l->x + (l->y * l->co) - l->pmpt;
 	curr = i;
 	curr_address = &l->line[i];
@@ -93,4 +94,5 @@ void				ctrl_left(t_l *l, int y_dec)
 			y_dec++;
 		i--;
 	}
+	return EXIT_SUCCESS;
 }

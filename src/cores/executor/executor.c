@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/18 18:17:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 15:53:13 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void			clear_ast(t_astnode *ast)
 
 void	executor(t_astnode *ast)
 {
-	t_heredoc *heredoclist;
+	// t_heredoc *heredoclist;
 
-	heredoclist = NULL;
+	// heredoclist = NULL;
 	printBinaryTree(ast);
-	find_heredoc(ast);
-	heredoclist = g_shell.first_heredoc;
+	// find_heredoc(ast);
+	// heredoclist = g_shell.first_heredoc;
 	execute_complete_command(ast);
-	clear_heredoc(heredoclist);
+	// clear_heredoc(heredoclist);
 	clear_ast(ast);
 }

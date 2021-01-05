@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/12/31 00:26:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 15:49:36 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,21 @@ t_shell     g_shell;
 **	Lexer
 */
 
-t_token					*lexer_and_parser(char *input);
+// t_token					*lexer_and_parser(char *input);
+t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst);
+
 /*
 **	Parser
 */
 
-t_astnode				*syntax_analysis(t_token *token);
+int			syntax_analysis(t_token *curr, t_token *prev);
+// t_astnode				*syntax_analysis(t_token *token);
+
+/*
+** Semantic
+*/
+
+t_astnode				*semantic_analysis(t_token *token);
 
 /*
 ** Prompt
@@ -90,5 +99,9 @@ size_t					get_prompt(void);
 */
 
 void					executor(t_astnode *ast);
+
+
+// new
+void	print_info(void);
 
 #endif

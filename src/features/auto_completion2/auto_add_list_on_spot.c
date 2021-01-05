@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   carriage_return.c                                  :+:      :+:    :+:   */
+/*   auto_add_list_on_spot.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/02 15:29:56 by tango             #+#    #+#             */
-/*   Updated: 2021/01/01 22:47:27 by dthan            ###   ########.fr       */
+/*   Created: 2020/10/14 23:33:41 by marvin            #+#    #+#             */
+/*   Updated: 2020/12/27 17:48:31 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		carriage_return_key(t_l *l)
+void			auto_add_list_on_spot(t_auto *auto_com, t_list *node)
 {
-/*	if (l->line)
+	t_list		*prev;
+	t_list		*list;
+
+	prev = NULL;
+	list = auto_com->list;
+	while (list)
 	{
-		if (ft_hist_exp(l))
-			ft_printf("\n%s", l->line);
+		if (ft_strcmp((char*)list->content, (char*)node->content) > 0)
+		{
+			node->next = list;
+			if (prev)
+				prev->next = node;
+			else
+				auto_com->list = node;
+			return ;
+		}
+		prev = list;
+		if (list->next)
+			list = list->next;
+		else
+		{
+			list->next = node;
+			return ;
+		}
 	}
-	append_history(l);*/
-	if (l->rs)
-		ft_reverse_search_reset(l);
-	if (l->line == NULL)
-		l->line = ft_strnew(2);
-	l->line = ft_strjoin_and_free_string1(l->line, "\n");
-	up_down(l, NULL);
-	restore_term(l);
-	auto_reset(&l->auto_com);
 }
-
-/* working
-*/
-

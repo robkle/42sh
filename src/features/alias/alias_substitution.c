@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by vgrankul          #+#    #+#             */
-/*   Updated: 2020/12/26 11:45:03 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 16:11:12 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,32 @@ char	*is_alias(char *str)
 	return (NULL);
 }
 
+// int		alias_substitution(t_token *current_token,
+// t_token **prev_token, t_token **token_lst)
+// {
+// 	char	*alias_substr;
+
+// 	alias_substr = NULL;
+// 	if (g_shell.last_alias != NULL &&
+// 	ft_strcmp(g_shell.last_alias, current_token->data) == 0)
+// 		return (0);
+// 	if ((*prev_token) == NULL || ((*prev_token) != NULL &&
+// 	is_control_op_not_newline((*prev_token)->type) == 1))
+// 	{
+// 		if (g_shell.last_alias != NULL)
+// 			free(g_shell.last_alias);
+// 		g_shell.last_alias = NULL;
+// 		if ((alias_substr = is_alias(current_token->data)) != NULL)
+// 		{
+// 			update_tokens_with_alias(current_token,
+// 			prev_token, token_lst, alias_substr);
+// 			return (1);
+// 		}
+// 	}
+// 	return (0);
+// }
+
+// new
 int		alias_substitution(t_token *current_token,
 t_token **prev_token, t_token **token_lst)
 {

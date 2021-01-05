@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/25 19:03:15 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 16:21:43 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int			ft_exit(int opt)
 	/*
 	** history part
 	*/
-	append_history();
-	delete_save_history();
-	ft_arraydel(g_shell.history->hist);
-	free(g_shell.history);
+	// append_history();
+	// delete_save_history();
+	// ft_arraydel(g_shell.history->hist);
+	// free(g_shell.history);
 	/*
 	** delete enviroment
 	*/

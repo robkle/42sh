@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 13:24:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/30 06:12:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 15:51:46 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static	t_astnode	*build_ast(t_token *token)
 	return (complete_command(&token));
 }
 
-t_astnode			*syntax_analysis(t_token *token)
+t_astnode			*semantic_analysis(t_token *token)
 {
 	t_astnode		*abstract_syntax_tree;
 
