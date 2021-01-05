@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 19:58:39 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 00:44:32 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		is_unsupported_tokens(t_token_type type);
 int		is_control_op_not_newline(t_token_type type);
 int		is_redirect_op(t_token_type type);
 int		is_made_of_digits(char *data);
-int		alias_substitution(t_token *current_token, t_token **prev_token, t_token **token_lst);
 int		parser(t_token *curr, t_token *prev);
 void	add_token_into_token_list(t_token **token_lst, t_token *new);
 void	clear_token(t_token *token);

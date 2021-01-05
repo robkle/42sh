@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/05 16:52:37 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 19:21:56 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ typedef struct			s_l
 	int					rs;
 	int					rs_i;
 	char				phase;
-	t_auto				auto_com; // delete this later
+	// t_auto				auto_com; // delete this later
 }						t_l;
 
 typedef struct termios	t_term;

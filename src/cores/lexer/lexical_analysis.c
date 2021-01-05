@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/05 18:54:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 00:45:41 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,11 @@ t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst)
 		}
 		else
 			current_token = get_non_operator_token(cmd, &i);
-		// if (current_token->type == TOKEN_WORD && is_alias(current_token))
-			// alias_substitution();
+		if (current_token->type == TOKEN_WORD && is_alias(current_token->data, prev_token))
+		{
+			alias_substitution(current_token, tk_lst);
+			continue ;
+		}
 		// same with history expansion
 		if (syntax_analysis(current_token, prev_token) == EXIT_FAILURE)
 			return (LEX_FAILURE);

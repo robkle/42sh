@@ -94,8 +94,6 @@ t_lexer_return_type lexer_and_parser(char *cmd, t_token **token_lst)
 
 
 
-
-
 // if (*phase == EDTR_PHASE_HEREDOC)
 	// {
 	// 	/*
@@ -136,3 +134,75 @@ fix lexer
 
 
 lexing -> alias_substitution + history_expansion
+
+
+new auto completion structure
+when user putting tab
+check auto command or autofile
+
+int auto_completion(t_l *line_edition)
+{
+	t_auto auto;
+
+	if (auto_command)
+		return (auto_command);
+	return (auto_file);
+}
+
+For example in auto command:
+check possibilities
+if (possibilities > 1)
+{
+	if (being able to print the list in the available space + space for the line editing)
+	{
+		print the list
+		print the new prompt
+		change value in t_line_edition according to the new position of the command line
+	}
+	else
+	{
+		ask for printing the possibilities list
+		if (y)
+		{
+			browsing throw the list
+			{
+				when in the list
+				{
+					when user hit enter or ' ' => continue pushing the list
+					when user hit 'q' =>
+					{
+						print the old prompt + the line
+						change value in t_line_edition according to the new position of the command line
+					}
+					when user hit ctrl-c => Return EXIT_FAILLURE;
+				}
+				when reach the end list
+				{
+					print the old prompt + the line
+					change value in t_line_edition according to the new position of the command line
+				}
+			}
+		}
+		else if (n)
+		{
+			print the old prompt + the line
+			change value in t_line_edition according to the new position of the command line
+		}
+		else if (signal ctrl-c)
+			do sth to return EXIT_FAILLURE so that the circle start again
+	}
+	return (EXIT_SUCCESS);
+}
+else if (possibilities == 1)
+{
+	if (command is completed)
+		add space at the end
+	else
+		complete the command and add one space at the end
+	return (EXIT_SUCCESS);
+}
+else if (possibilities == 0)
+{
+	do nothing
+	return (EXIT_SUCCESS);
+}

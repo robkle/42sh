@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/05 19:11:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 21:53:04 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int parse_key(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 	if (is_line_edition_key(buf))
 		return (parse_line_edition_key(buf, line_edition));
 	// else if (is_feature_key(buf))
-	// 	return (parse_feature_key());
+		// return (parse_feature_key());
 	else if (buf[0] && buf[1] == '\0' && ft_isprint(buf[0]))
 		return (add_key(buf, line_edition));
 	return (EXIT_SUCCESS);
@@ -201,7 +201,7 @@ char	*ft_get_line(t_phase *phase, int prompt_len)
 	init_line_edition(&line_edition, prompt_len);
 	while (read(STDIN_FILENO, buf, sizeof(buf)) != -1)
 	{
-		if (g_shell.signal_indicator != 0)
+		if (g_shell.signal_indicator == SIGINT)
 		{
 			free(line_edition.line);
 			line_edition.line = NULL;

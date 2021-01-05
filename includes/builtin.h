@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 19:57:47 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 01:02:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ int		ft_fg_child();
 */
 int		ft_alias(t_process *c);
 int		ft_unalias(t_process *c);
+int		is_alias(char *str, t_token *prev_token);
+void	alias_substitution(t_token *current_token, t_token **token_lst);
+char	*find_alias_str(char *str);
 /*
 ** End Alias built-in
 */

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 17:13:51 by marvin            #+#    #+#             */
-/*   Updated: 2021/01/05 19:10:53 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 19:33:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,9 @@ void init_auto_completion_struct(t_auto *auto_com)
 // old
 int         auto_complete(t_l *l)
 {
+	static char sticky;
 	int		stat;
 
-	if (l->auto_com.status & AUTO_STAT_NEW_POS)
-        auto_reset(&l->auto_com);
-	delete_status_new_pos(&l->auto_com.status);
-	if (l->line == NULL)
-		l->line = ft_strnew(0);
     if ((stat = auto_is_command(l)) == TRUE)
 		auto_command(l);
     else if (stat == AUTO_COMPLETION)
@@ -92,11 +88,6 @@ int         auto_complete(t_l *l)
 	int		stat;
 
 	init_auto_completion_struct(&auto_com);
-	if (l->auto_com.status & AUTO_STAT_NEW_POS)
-        auto_reset(&l->auto_com);
-	delete_status_new_pos(&l->auto_com.status);
-	if (l->line == NULL)
-		l->line = ft_strnew(0);
     if ((stat = auto_is_command(l)) == TRUE)
 		auto_command(l);
     else if (stat == AUTO_COMPLETION)

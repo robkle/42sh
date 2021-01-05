@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/05 18:58:42 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 00:27:24 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,10 @@ char *get_command(t_lex_value lex_value)
 		cmd = ft_strjoin_and_free_2strings(cmd, line);
 		if (phase == PHASE_CMD || phase == PHASE_STOP)
 			break ;
+		// if phase = phase back slash delete the \n at the end
 		prompt_len = print_phase(phase);
+		if (phase == PHASE_BACKSLASH)
+			phase = PHASE_CMD;
 	}
 	return (cmd);
 }
@@ -272,9 +275,9 @@ int				init_shell(char **envp)
 	/*
 	** init alias
 	*/
-	// g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
-	// g_shell.alias[0] = NULL;
-	// g_shell.last_alias = NULL;
+	g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
+	g_shell.alias[0] = NULL;
+	g_shell.last_alias = NULL;
 	/*
 	** promp stuff here
 	*/
