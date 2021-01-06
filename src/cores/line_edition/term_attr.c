@@ -57,9 +57,7 @@ void	init_term(void)
 	tcgetattr(0, &raw);
 	// raw.c_lflag &= ~(ICANON | ECHO | ISIG);
 	raw.c_lflag &= ~(ICANON | ECHO);
-	// raw.c_cc[VMIN] = 1;
-	// raw.c_cc[VTIME] = 0;
-	raw.c_cc[VMIN] = 0;
-	raw.c_cc[VTIME] = 1;
+	raw.c_cc[VMIN] = 1;
+	raw.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSANOW, &raw);
 }

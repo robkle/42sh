@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_lstdel_strdel.c                               :+:      :+:    :+:   */
+/*   ft_lstdel_strdel.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-void		auto_lstdel_strdel(t_list **alst)
+void		ft_lstdel_strdel(t_list **alst)
 {
 	t_list	*p_lst;
 	t_list	*temp_lst;

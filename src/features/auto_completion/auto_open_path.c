@@ -116,19 +116,19 @@ static char		get_list_and_count(t_auto *auto_com)
 	return (count);
 }
 
-void		auto_file_open_path(t_l *l)
+int			auto_file_open_path(t_auto *auto_com)
 {
 	size_t	count;
 
-	count = get_list_and_count(&l->auto_com);
+	count = get_list_and_count(auto_com);
 	if (count <= 0)
 	{
 		ft_beep_sound();
-		return ;
+		return (clear_auto_struct(auto_com));
 	}
 	else if (count > 1)
-		auto_cmd_file_multiple_cases(l);
+		return (auto_cmd_file_multiple_cases(auto_com));
     else
-		auto_file_one_case(l);
+		return (auto_file_one_case(auto_com));
 }
 

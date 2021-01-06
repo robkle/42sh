@@ -103,5 +103,6 @@ void					executor(t_astnode *ast);
 
 // new
 void	print_info(void);
+int		print_phase(t_phase phase);
 
 #endif

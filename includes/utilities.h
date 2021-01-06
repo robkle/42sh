@@ -47,5 +47,6 @@ int ft_tcsetpgrp (int fd, pid_t pgrp_id);
 pid_t ft_tcgetpgrp (int fd);
 int		ft_isspace(int c);
 void	ft_arraydel(char **string_array);
+void	ft_lstdel_strdel(t_list **alst);
 
 #endif

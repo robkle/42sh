@@ -79,7 +79,6 @@ int parse_line_edition_key(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 	return (parse_line_edition_key2(buf, line_edition));
 }
 
-/*
 int is_feature_key(char buf[BUFF_LINE_EDITION])
 {
 	if (ft_strequ(buf, TAB_KEY)) // add history search later
@@ -95,7 +94,7 @@ int parse_feature_key(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 		// return (history_search(line_edition));
 	return (EXIT_FAILURE);
 }
-*/
+
 /*
 ** parse_key
 **	@buf			: the buffer from read()
@@ -131,8 +130,8 @@ int parse_key(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 	// else
 	if (is_line_edition_key(buf))
 		return (parse_line_edition_key(buf, line_edition));
-	// else if (is_feature_key(buf))
-		// return (parse_feature_key());
+	else if (is_feature_key(buf))
+		return (parse_feature_key(buf, line_edition));
 	else if (buf[0] && buf[1] == '\0' && ft_isprint(buf[0]))
 		return (add_key(buf, line_edition));
 	return (EXIT_SUCCESS);
