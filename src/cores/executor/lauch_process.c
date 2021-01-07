@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 01:05:13 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 00:27:42 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int lauch_process(t_process *p)
 		return (make_child_binary(p));
 	else if (p->av[0][0] != '.' && p->av[0][0] != '/')
 		ft_dprintf(2, "%s: %s: command not found\n", SHELL_NAME, p->av[0]);
-	return (EXIT_FAILURE);
+	return (127);
 }
 
 void lauch_in_child_process(t_job *j, t_process *p)

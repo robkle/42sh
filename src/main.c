@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/07 19:24:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 20:59:33 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,10 @@ int				init_shell(char **envp)
 	*/
 	g_shell.first_heredoc = NULL;
 	g_shell.heredoc_lst = NULL;
+	/*
+	** exit status
+	*/
+	g_shell.exit_status = 1;
 	return (EXIT_SUCCESS);
 }
 

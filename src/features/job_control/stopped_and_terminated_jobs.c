@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/18 18:20:27 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 01:07:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,15 @@ int mark_process_status_helper(t_process *first_process, pid_t pid, int status)
 			{
 				ft_putchar('\n');
 				p_ptr->stopped = 1;
+				g_shell.exit_status = 128 + WSTOPSIG(status);
 			}
 			else
 			{
 				p_ptr->completed = 1;
-				if (WIFSIGNALED(status)) //here will be signal controller
-					ft_printf("Killed: %d\n", WTERMSIG(status));
+				if (WIFEXITED(status))
+					g_shell.exit_status = WEXITSTATUS(status);
+				else if (WIFSIGNALED(status)) //here will be signal controller
+					g_shell.exit_status = 128 + WTERMSIG(status);
 			}
 			return (0);
 		}

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/01/07 19:19:28 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 00:27:33 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct			s_shell
 	t_history			*history;
 	t_alias				**alias;
 	char				*last_alias;
+	unsigned char		exit_status;
 }                       t_shell;
 
 t_shell     g_shell;
