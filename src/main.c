@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/07 04:54:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 05:06:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,8 @@ int get_user_token(t_token **tk_lst)
 		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst);
 		if (lex_value != LEX_FAILURE)
 			whole_cmd = ft_strjoin_and_free_2strings(whole_cmd, cmd);
+		else
+			free(cmd);
 		if (lex_value == LEX_SUCCESS || lex_value == LEX_FAILURE)
 		{
 			ret = lex_value;
