@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 06:30:22 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/31 17:43:52 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 20:04:12 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void jump_quote(char *input, int *i, char quote_type)
+int jump_quote(char *input, int *i, char quote_type)
 {
 	(*i)++;
 	while (input[*i])
@@ -21,4 +21,7 @@ void jump_quote(char *input, int *i, char quote_type)
 			break;
 		(*i)++;
 	}
+	if (input[*i] == '\0')
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

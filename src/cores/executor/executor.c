@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/05 15:53:13 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 13:52:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	executor(t_astnode *ast)
 	// heredoclist = g_shell.first_heredoc;
 	execute_complete_command(ast);
 	// clear_heredoc(heredoclist);
-	clear_ast(ast);
+	// clear_ast(ast);
 }

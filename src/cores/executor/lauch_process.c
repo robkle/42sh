@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/06 00:49:38 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 01:05:13 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,8 @@ int is_execute_on_parent_process(int foreground, char *cmd_name)
 		ft_strequ(cmd_name, "unsetenv") ||
 		ft_strequ(cmd_name, "jobs") ||
 		ft_strequ(cmd_name, "fg") ||
-		// ft_strequ(cmd_name, "bg") ||
-		ft_strequ(cmd_name, "bg"))
-		// ft_strequ(cmd_name, "fc"))
+		ft_strequ(cmd_name, "bg") ||
+		ft_strequ(cmd_name, "fc"))
 		return (1);
 	return (0);
 }
@@ -168,8 +167,8 @@ int lauch_process_which_can_change_shell(t_process *p)
 		return (ft_bg(p));
 	else if (ft_strequ(p->av[0], "jobs"))
 		return (ft_jobs(p));
-	// else if (ft_strequ(p->av[0], "fc"))
-	// 	return (ft_fc(p));
+	else if (ft_strequ(p->av[0], "fc"))
+		return (ft_fc(p));
 	return (EXIT_FAILURE);
 }
 

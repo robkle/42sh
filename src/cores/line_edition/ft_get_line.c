@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/05 21:53:04 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 01:08:29 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,13 +176,13 @@ void init_line_edition(t_l *line_edition, int prompt_len)
 **		yet, but it could be useful in the future
 */
 
-void prepare_breaking_loop(char buf[BUFF_LINE_EDITION], t_l *line_edition, t_phase *phase)
+void prepare_breaking_loop(char buf[BUFF_LINE_EDITION], t_l *line_edition, t_phase *phase, t_lex_value lex_value)
 {
 	if (ft_strequ(buf, ENTER_KEY))
 		line_edition->line = ft_strjoin_and_free_string1(line_edition->line, "\n");
 	else if (ft_strequ(buf, CTRL_D_KEY))
 	{
-		if (*phase == PHASE_CMD)
+		if (*phase == PHASE_CMD && lex_value == LEX_CMD)
 			ft_exit(EXIT_SUCCESS);
 		line_edition->line = ft_strjoin_and_free_string1(line_edition->line, "\x04");
 		*phase = PHASE_STOP;
@@ -190,7 +190,7 @@ void prepare_breaking_loop(char buf[BUFF_LINE_EDITION], t_l *line_edition, t_pha
 }
 
 
-char	*ft_get_line(t_phase *phase, int prompt_len)
+char	*ft_get_line(t_phase *phase, int prompt_len, t_lex_value lex_value)
 {
 	t_l line_edition;
 	char buf[BUFF_LINE_EDITION];
@@ -209,7 +209,7 @@ char	*ft_get_line(t_phase *phase, int prompt_len)
 		}
 		if (ft_strequ(buf, ENTER_KEY) || (ft_strequ(buf, CTRL_D_KEY) && line_edition.nb == 0))
 		{
-			prepare_breaking_loop(buf, &line_edition, phase);
+			prepare_breaking_loop(buf, &line_edition, phase, lex_value);
 			break ;
 		}
 		else if (parse_key(buf, &line_edition) == EXIT_FAILURE)

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 17:13:51 by marvin            #+#    #+#             */
-/*   Updated: 2021/01/02 18:29:23 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 15:35:48 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void        auto_reset(t_auto *auto_com)
 	auto_com->status = 0;
 }
 
-int         auto_complete(t_l *l, t_editor_phase *phase)
+int         auto_complete(t_l *l)
 {
 	int		stat;
 	t_auto	auto_com;

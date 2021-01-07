@@ -206,3 +206,12 @@ else if (possibilities == 0)
 	do nothing
 	return (EXIT_SUCCESS);
 }
+
+
+
+
+HISTORY EXPANSION
+when reading the cmd
+if (single_quote)
+	jump
+

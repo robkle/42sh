@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/01/05 15:49:36 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 04:12:34 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct			s_shell
     struct termios      shell_tmode;
 	t_job				*first_job;
 	t_heredoc			*first_heredoc;
+	t_heredoc			*heredoc_lst;
 	t_history			*history;
 	t_alias				**alias;
 	char				*last_alias;
@@ -74,7 +75,8 @@ t_shell     g_shell;
 
 // t_token					*lexer_and_parser(char *input);
 t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst);
-
+int get_user_token(t_token **tk_lst);
+char *get_command(t_lex_value lex_value);
 /*
 **	Parser
 */

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 04:00:14 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 12:15:16 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 19:07:27 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char			*ft_process_history(t_l *l);
 ** History expansion
 */
 
-int				ft_hist_exp(t_l *l);
+int				ft_hist_exp(char **line);
 int				ft_check_cont(char *buffer);
 
 /* 

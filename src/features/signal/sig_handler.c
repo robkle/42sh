@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 04:00:37 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/27 17:44:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 01:13:05 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ void		sig_controller(int option)
 {
 	if (option == PARENT)
 	{
-		signal (SIGSTOP, SIG_IGN);
-    	signal (SIGTSTP, SIG_IGN);
-    	signal (SIGTTIN, SIG_IGN);
-    	signal (SIGTTOU, SIG_IGN);
-    	signal (SIGCHLD, SIG_DFL);
+		signal(SIGSTOP, SIG_IGN);
+    	signal(SIGTSTP, SIG_IGN);
+    	signal(SIGTTIN, SIG_IGN);
+    	signal(SIGTTOU, SIG_IGN);
+    	signal(SIGCHLD, SIG_DFL);
 		signal(SIGPIPE, SIG_IGN);
     	// signal (SIGCHLD, SIG_IGN);
 		signal(SIGINT, sig_int_handler);
@@ -47,7 +47,6 @@ void		sig_controller(int option)
 	}
 	else if (option == CHILD)
 	{
-		// for debug
 		int i;
 		i = 1;
 		while (i < 32)

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/05 19:21:56 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 02:35:29 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef enum
 	TOKEN_LESSGREAT, // <>  // not support
 	TOKEN_DLESSDASH, // <<- // not support
 	TOKEN_CLOBBER, // >|  // not support
+	TOKEN_EOF, //eof only
+	TOKEN_BROKEN, // a string with quote contain eof, and quote is not closed
 }	t_token_type;
 
 typedef struct			s_token
@@ -218,7 +220,8 @@ typedef enum
 	PHASE_QUOTE,
 	PHASE_BACKSLASH,
 	PHASE_CMDSUBST,
-	PHASE_STOP
+	PHASE_STOP,
+	PHASE_HEREDOC // temp
 }	t_phase;
 
 typedef enum
@@ -229,6 +232,7 @@ typedef enum
 	LEX_CMDAND,
 	LEX_CMDOR,
 	LEX_PIPE,
+	LEX_HEREDOC,
 }	t_lex_value;
 
 /*

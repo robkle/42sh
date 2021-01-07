@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/05 15:57:41 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 01:21:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void append_history_realloc(void)
 	i = -1;
 	while (++i < g_shell.history->curr)
 		tmp[i] = ft_strdup(g_shell.history->hist[i]);
-	tmp[i++] = ft_strdup(g_shell.history->tmp);
+	tmp[i++] = ft_strndup(g_shell.history->tmp, ft_strlen(g_shell.history->tmp) - 1);
 	g_shell.history->curr = i;
 	tmp[i++] = ft_strnew(0);
 	tmp[i] = NULL;
@@ -66,17 +66,18 @@ void		append_history(void)
 	if (g_shell.history->curr < g_shell.history->hstsize)
 	{
 		free(g_shell.history->hist[g_shell.history->curr]);
-		g_shell.history->hist[g_shell.history->curr++] = ft_strdup(g_shell.history->tmp);
+		g_shell.history->hist[g_shell.history->curr++] = ft_strndup(g_shell.history->tmp, ft_strlen(g_shell.history->tmp)- 1);
 		g_shell.history->hist[g_shell.history->curr] = ft_strnew(0);
 		g_shell.history->hist[g_shell.history->curr + 1] = NULL;
 	}
 	else
 		append_history_realloc();
 	g_shell.history->hst = g_shell.history->curr;
-	free(g_shell.history->tmp);
-	g_shell.history->tmp = NULL;
+	// free(g_shell.history->tmp);
+	// g_shell.history->tmp = NULL;
 }
 
+/*
 char		*ft_process_history(t_l *l)
 {
 	if (l->line)
@@ -92,7 +93,7 @@ char		*ft_process_history(t_l *l)
 	}
 	return (l->line);
 }
-
+*/
 // char	*ft_process_history(char *input)
 // {
 // 	if (ft_hist_exp(l))

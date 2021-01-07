@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/06 00:27:24 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 04:16:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,16 @@ char *get_command(t_lex_value lex_value)
 	prompt_len = print_prompt(lex_value);
 	while ("command editting")
 	{
-		if ((line = ft_get_line(&phase, prompt_len)) == NULL)
+		if ((line = ft_get_line(&phase, prompt_len, lex_value)) == NULL)
 		{
 			free(cmd);
 			return (NULL);
 		}
 		if (phase != PHASE_STOP)
 			phase = analyzing_phase(line, phase);
+		// history expansion
+		if (ft_hist_exp(&line))
+			ft_printf("%s", line);
 		cmd = ft_strjoin_and_free_2strings(cmd, line);
 		if (phase == PHASE_CMD || phase == PHASE_STOP)
 			break ;
@@ -170,16 +173,32 @@ int get_user_token(t_token **tk_lst)
 			break ;
 		}
 		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst);
-		whole_cmd = ft_strjoin_and_free_2strings(whole_cmd, cmd);
+		if (lex_value != LEX_FAILURE)
+			whole_cmd = ft_strjoin_and_free_2strings(whole_cmd, cmd);
 		if (lex_value == LEX_SUCCESS || lex_value == LEX_FAILURE)
 		{
 			ret = lex_value;
 			break ;
 		}
 	}
-	// if (whole_cmd)
-		// we append history
+	if (whole_cmd)
+		g_shell.history->tmp = whole_cmd;
 	return (ret);
+}
+
+void reset_value(t_token **tk_lst, t_astnode **ast)
+{
+	(*tk_lst != NULL) ? clear_token(*tk_lst) : 0;
+	(*ast != NULL) ? clear_ast(*ast) : 0;
+	(g_shell.heredoc_lst != NULL) ? clear_heredoc(g_shell.heredoc_lst) : 0;
+	append_history();
+	(g_shell.history->tmp != NULL) ? free(g_shell.history->tmp) : 0;
+	*tk_lst = NULL;
+	*ast = NULL;
+	g_shell.heredoc_lst = NULL;
+	g_shell.first_heredoc = NULL;
+	g_shell.history->tmp = NULL;
+	g_shell.signal_indicator = 0;
 }
 
 static int		shell(void)
@@ -187,23 +206,21 @@ static int		shell(void)
 	t_token *tk_lst;
 	t_astnode *ast;
 
+	tk_lst = NULL;
+	ast = NULL;
 	while ("shell is interactive")
 	{
-		tk_lst = NULL; // need to have a reset maybe
-		ast = NULL; // temp place
-		g_shell.signal_indicator = 0;
+		reset_value(&tk_lst, &ast);
 		do_job_notification();
 		print_info();
-		if ((get_user_token(&tk_lst)) == LEX_FAILURE)
-		{
-			clear_token(tk_lst);
+		if ((get_user_token(&tk_lst)) == EXIT_FAILURE)
 			continue ;
-		}
 		print_token(tk_lst);
 		if ((ast = semantic_analysis(tk_lst)) == NULL)
 			continue ;
-		// if (find_heredoc(ast) == EXIT_FAILURE)
-			// continue ;
+		if (find_heredoc(ast) == EXIT_FAILURE)
+			continue ;
+		g_shell.first_heredoc = g_shell.heredoc_lst;
 		executor(ast);
 	}
 	return (0);
@@ -265,13 +282,13 @@ int				init_shell(char **envp)
 	/*
 	** init history
 	*/
-	// g_shell.history = (t_history*)malloc(sizeof(t_history));
-	// g_shell.history->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 2));
-	// g_shell.history->tmp = NULL;
-	// ft_bzero(g_shell.history->savedfile, 256);
-	// getcwd(g_shell.history->savedfile, 256);
-	// ft_strcat(g_shell.history->savedfile, "/.history");
-	// get_history(0);
+	g_shell.history = (t_history*)malloc(sizeof(t_history));
+	g_shell.history->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 2));
+	g_shell.history->tmp = NULL;
+	ft_bzero(g_shell.history->savedfile, 256);
+	getcwd(g_shell.history->savedfile, 256);
+	ft_strcat(g_shell.history->savedfile, "/.history");
+	get_history(0);
 	/*
 	** init alias
 	*/
@@ -282,6 +299,11 @@ int				init_shell(char **envp)
 	** promp stuff here
 	*/
 	g_shell.signal_indicator = 0;
+	/*
+	** heredoc stuff
+	*/
+	g_shell.first_heredoc = NULL;
+	g_shell.heredoc_lst = NULL;
 	return (EXIT_SUCCESS);
 }
 

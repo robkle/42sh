@@ -6,11 +6,39 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/05 15:52:42 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 04:12:59 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+char *get_heredoc(char *end_word)
+{
+	t_phase phase;
+	char *heredoc;
+	char *line;
+	int prompt_len;
+
+	heredoc = ft_strnew(0);
+	phase = PHASE_HEREDOC;
+	while ("getting heredoc")
+	{
+		prompt_len = ft_printf("heredoc> ");
+		if ((line = ft_get_line(&phase, prompt_len, LEX_HEREDOC)) == NULL)
+		{
+			free(heredoc);
+			return (NULL);
+		}
+		if (phase == PHASE_STOP || ft_strnequ(line, end_word, ft_strlen(end_word)))
+		{
+			free(line);
+			break ;
+		}
+		heredoc = ft_strjoin_and_free_2strings(heredoc, line);
+	}
+	return (heredoc);
+}
+
 /*
 static char			*prompt_heredoc(char *end_word)
 {
@@ -33,6 +61,7 @@ static char			*prompt_heredoc(char *end_word)
 	}
 	return (l.line);
 }
+*/
 
 static void			add_heredoc_into_list(t_heredoc *node, t_heredoc **list)
 {
@@ -46,37 +75,41 @@ static void			add_heredoc_into_list(t_heredoc *node, t_heredoc **list)
 	ptr->next = node;
 }
 
-static void			apply_heredoc(t_astnode *here_end)
+static int			apply_heredoc(t_astnode *here_end)
 {
 	char 	*current_heredoc;
 	t_heredoc	*node;
 
-	current_heredoc = prompt_heredoc(here_end->data);
+	if ((current_heredoc = get_heredoc(here_end->data)) == NULL)
+		return (EXIT_FAILURE);
 	node = ft_memalloc(sizeof(t_heredoc));
 	node->doc = current_heredoc;
 	node->next = NULL;
 	if (g_shell.first_heredoc == NULL)
 		g_shell.first_heredoc = node;
 	else
-		add_heredoc_into_list(node, &g_shell.first_heredoc);
+		add_heredoc_into_list(node, &g_shell.heredoc_lst);
+	return (EXIT_SUCCESS);
 }
 
-void				find_heredoc(t_astnode *ast)
+int				find_heredoc(t_astnode *ast)
 {
 	if (ast->type == AST_complete_command)
-		find_heredoc(ast->left);
+		return (find_heredoc(ast->left));
 	else if (ast->type == AST_list || ast->type == AST_and_or || \
 			ast->type == AST_pipe_sequence || ast->type == AST_cmd_suffix)
 	{
-		find_heredoc(ast->left);
-		find_heredoc(ast->right);
+		if (find_heredoc(ast->left) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		return (find_heredoc(ast->right));
 	}
 	else if (ast->type == AST_simple_command)
-		find_heredoc(ast->right);
+		return (find_heredoc(ast->right));
 	else if (ast->type == AST_io_redirect)
-		find_heredoc(ast->left);
+		return (find_heredoc(ast->left));
 	else if (ast->type == AST_io_here && ft_strequ(ast->data, "<<"))
-		apply_heredoc(ast->left);
+		return (apply_heredoc(ast->left));
+	return (EXIT_SUCCESS);
 }
 
 void				clear_heredoc(t_heredoc *heredoc)
@@ -91,4 +124,3 @@ void				clear_heredoc(t_heredoc *heredoc)
 		free(container);
 	}
 }
-*/

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:51:17 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/31 17:41:26 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 20:45:33 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ t_token	*get_non_operator_token(char *input, int *i)
 	while (input[*i] && !is_metacharacter(input[*i]) && (input[*i] != '\n'))
 	{
 		if ((input[*i] == '"' || input[*i] == '\'') && is_real_quote(input, *i))
-			jump_quote(input, i, input[*i]);
+		{
+			if (jump_quote(input, i, input[*i]) == EXIT_FAILURE)
+				return (non_operator_token(ft_strndup(&input[head], 1), TOKEN_BROKEN));
+		}
 		else if (input[*i] == '\\')
 			(*i)++;
 		(*i)++;
@@ -40,5 +43,7 @@ t_token	*get_non_operator_token(char *input, int *i)
 	str = ft_strndup(&input[head], *i - head);
 	if (input[*i] && is_made_of_digits(str) && (input[*i] == '<' || input[*i] == '>'))
 		return (non_operator_token(str, TOKEN_IO_NUMBER));
+	if (ft_strequ(str, EOF_VALUE))
+		return (non_operator_token(str, TOKEN_EOF));
 	return (non_operator_token(str, TOKEN_WORD));
 }

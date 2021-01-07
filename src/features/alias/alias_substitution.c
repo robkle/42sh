@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by vgrankul          #+#    #+#             */
-/*   Updated: 2021/01/06 01:03:39 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 17:45:22 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,79 @@ int	is_alias(char *str, t_token *prev_token)
 // }
 
 // new
-void	alias_substitution(t_token *current_token, t_token **tk_lst)
+
+int token_stream_length(t_token *lst)
 {
-	lexical_analysis_and_syntax_analysis(find_alias_str(current_token->data), tk_lst);
-	free(current_token->data);
-	free(current_token);
+	int ct;
+
+	ct = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		ct++;
+	}
+	return (ct);
+}
+
+t_token *find_current_token_in_new_stream(t_token *tk_lst)
+{
+	t_token *current_tk;
+
+	if (tk_lst == NULL)
+		return (NULL);
+	while (tk_lst)
+	{
+		current_tk = tk_lst;
+		tk_lst = tk_lst->next;
+	}
+	return (current_tk);
+}
+
+t_token *find_prev_token_in_new_stream(t_token *tk_lst)
+{
+	t_token *prev_tk;
+
+	if (tk_lst == NULL || tk_lst->next == NULL)
+		return (NULL);
+	while (tk_lst->next)
+	{
+		prev_tk = tk_lst;
+		tk_lst = tk_lst->next;
+	}
+	return (prev_tk);
+}
+
+void	alias_substitution(t_token **current_token, t_token **prev_token, t_token **tk_lst)
+{
+	t_token *new_stream;
+	t_token *prev_token_temp;
+	t_token *current_token_temp;
+
+	new_stream = NULL;
+	prev_token_temp = *current_token;
+	current_token_temp = *prev_token;
+	lexical_analysis_and_syntax_analysis(find_alias_str((*current_token)->data), &new_stream);
+	if (new_stream != NULL)
+	{
+		if (token_stream_length(new_stream) > 1)
+		{
+			current_token_temp = find_current_token_in_new_stream(new_stream);
+			prev_token_temp = find_prev_token_in_new_stream(new_stream);
+			clear_token(*current_token);
+			clear_token(*prev_token);
+			*current_token = current_token_temp;
+			*prev_token = prev_token_temp;
+		}
+		else if (token_stream_length(new_stream) == 1)
+		{
+			clear_token(*current_token);
+			*current_token = current_token_temp;
+		}
+		add_token_into_token_list(tk_lst, new_stream);
+	}
+	else
+	{
+		clear_token(*current_token);
+		*current_token = NULL;
+	}
 }

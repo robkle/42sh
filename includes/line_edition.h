@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/05 19:02:40 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 20:46:57 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 
 # define CTRL_C_KEY "\x03"
 # define CTRL_D_KEY "\x04"
+# define EOF_VALUE "\x04"
 
 # define TAB_KEY "\t"
 // # define CTRL_R_KEY "" history search add later
@@ -55,7 +56,7 @@
 
 // void	ft_get_line(t_l *l);
 
-char	*ft_get_line(t_phase *phase, int prompt_len);
+char	*ft_get_line(t_phase *phase, int prompt_len, t_lex_value lex_value);
 
 int parse_key(char buf[BUFF_LINE_EDITION], t_l *line_edition);
 

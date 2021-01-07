@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/06 00:45:41 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/06 20:45:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,17 @@ static int	redirect_ops_issue(t_token *curr, t_token *prev)
 
 int			syntax_analysis(t_token *curr, t_token *prev)
 {
+	if (curr->type == TOKEN_EOF)
+	{
+		ft_dprintf(2, "%s: syntax error: unexpected end of file\n", SHELL_NAME);
+		return (EXIT_FAILURE);
+	}
+	if (curr->type == TOKEN_BROKEN)
+	{
+		ft_dprintf(2, "%s: unexpected EOF while looking for matching `%s'\n", SHELL_NAME, curr->data);
+		ft_dprintf(2, "%s: syntax error: unexpected end of file\n", SHELL_NAME);
+		return (EXIT_FAILURE);	
+	}
 	if (is_unsupported_tokens(curr->type))
 	{
 		ft_dprintf(2, "%s: Unsupported token `%s`\n", "42sh", curr->data); // need to change value
@@ -115,7 +126,7 @@ t_lex_value lex_continue_or_not(t_token *pre_token)
 	return (LEX_SUCCESS);
 }
 
-t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst)
+t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst)
 {
 	t_token		*current_token;
 	t_token		*prev_token;
@@ -143,16 +154,18 @@ t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst)
 			current_token = get_non_operator_token(cmd, &i);
 		if (current_token->type == TOKEN_WORD && is_alias(current_token->data, prev_token))
 		{
-			alias_substitution(current_token, tk_lst);
-			continue ;
+			alias_substitution(&current_token, &prev_token, tk_lst);
+			if (current_token == NULL)
+				continue ;
 		}
-		// same with history expansion
+		else if (current_token->type != TOKEN_NEWLINE)
+			add_token_into_token_list(tk_lst, current_token);
 		if (syntax_analysis(current_token, prev_token) == EXIT_FAILURE)
 			return (LEX_FAILURE);
 		if (current_token->type == TOKEN_NEWLINE)
-			continue ;
-		add_token_into_token_list(tk_lst, current_token);
-		prev_token = current_token;
+			clear_token(current_token);
+		else
+			prev_token = current_token;
 	}
 	return (lex_continue_or_not(prev_token));
 }
