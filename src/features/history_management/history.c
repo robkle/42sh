@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/07 01:21:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 05:17:17 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void		append_history(void)
 	if (g_shell.history->curr < g_shell.history->hstsize)
 	{
 		free(g_shell.history->hist[g_shell.history->curr]);
-		g_shell.history->hist[g_shell.history->curr++] = ft_strndup(g_shell.history->tmp, ft_strlen(g_shell.history->tmp)- 1);
+		if (g_shell.history->tmp[ft_strlen(g_shell.history->tmp) - 1] == '\n')
+			g_shell.history->hist[g_shell.history->curr++] = ft_strndup(g_shell.history->tmp, ft_strlen(g_shell.history->tmp)- 1);
+		else
+			g_shell.history->hist[g_shell.history->curr++] = ft_strdup(g_shell.history->tmp);
 		g_shell.history->hist[g_shell.history->curr] = ft_strnew(0);
 		g_shell.history->hist[g_shell.history->curr + 1] = NULL;
 	}
