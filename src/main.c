@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/07 05:52:16 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 19:24:59 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,35 +89,6 @@ t_phase analyzing_phase(char *str, t_phase phase)
 	return (phase);
 }
 
-int print_phase(t_phase phase)
-{
-	// if (phase == PHASE_BACKSLASH)
-	if (phase == PHASE_BACKSLASH || phase == PHASE_CMD)
-		return (ft_printf("> "));
-	else if (phase == PHASE_QUOTE)
-		return (ft_printf("quote> "));
-	else if (phase == PHASE_DQUOTE)
-		return (ft_printf("dquote> "));
-	else if (phase == PHASE_CMDSUBST)
-		return (ft_printf("cmdsubst> "));
-	// add more here if you need
-	return (0);
-}
-
-int print_prompt(t_lex_value lex_value)
-{
-	if (lex_value == LEX_CMD)
-		return (ft_printf("> "));
-	else if (lex_value == LEX_CMDAND)
-		return (ft_printf("cmdand> "));
-	else if (lex_value == LEX_CMDOR)
-		return (ft_printf("cmdor> "));
-	else if (lex_value == LEX_PIPE)
-		return (ft_printf("pipe> "));
-	// add more here if you need
-	return (0);
-}
-
 /*
 ** function get_command
 **	@phase : the starting phase of the editing
@@ -128,14 +99,14 @@ char *get_command(t_lex_value lex_value)
 	t_phase phase;
 	char *cmd;
 	char *line;
-	int prompt_len;
+	t_prompt prompt_type;
 
 	cmd = ft_strnew(0);
 	phase = PHASE_CMD;
-	prompt_len = print_prompt(lex_value);
+	prompt_type = choose_prompt_type(lex_value, 0);
 	while ("command editting")
 	{
-		if ((line = ft_get_line(&phase, prompt_len, lex_value)) == NULL)
+		if ((line = ft_get_line(&phase, prompt_type, lex_value)) == NULL)
 		{
 			free(cmd);
 			return (NULL);
@@ -149,9 +120,12 @@ char *get_command(t_lex_value lex_value)
 		if (phase == PHASE_CMD || phase == PHASE_STOP)
 			break ;
 		// if phase = phase back slash delete the \n at the end
-		prompt_len = print_phase(phase);
+		prompt_type = choose_prompt_type(0, phase);
 		if (phase == PHASE_BACKSLASH)
+		{
+			cmd = delete_line_feed_at_the_end_of_the_cmd_string(cmd);
 			phase = PHASE_CMD;
+		}
 	}
 	return (cmd);
 }
@@ -229,25 +203,6 @@ static int		shell(void)
 	return (0);
 }
 
-// static int		shell(void)
-// {
-// 	char *line;
-// 	// char quote;
-
-// 	while (1)
-// 	{
-// 		do_job_notification();
-// 		get_prompt();
-// 		if ((line = get_user_input(EDTR_PHASE_DFLT, NULL)) == NULL)
-// 			continue ;
-// 		// history expansion
-// 		ft_execute(line);
-// 		free(line);
-// 		// append_history();
-// 	}
-// 	return (0);
-// }
-
 /* working */
 /*
 ** @ init shell: for interactive shell only, non-interactive will be exited
@@ -275,11 +230,12 @@ int				init_shell(char **envp)
 		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
 		return (EXIT_FAILURE);
 	}
+	/* signal */
 	sig_controller(PARENT);
+	/* job control */
 	g_shell.shell_pgid = getpgrp();
-
-	// if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
-	// 	return (EXIT_FAILURE);
+	if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
+		return (EXIT_FAILURE);
 	ft_tcsetpgrp(STDIN_FILENO, g_shell.shell_pgid);
 	tcgetattr(STDIN_FILENO, &g_shell.shell_tmode);
 	/*

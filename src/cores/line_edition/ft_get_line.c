@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/07 01:08:29 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 19:00:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int parse_key(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 	return (EXIT_SUCCESS);
 }
 
-void init_line_edition(t_l *line_edition, int prompt_len)
+void init_line_edition(t_l *line_edition, t_prompt prompt_type)
 {
 	tgetent(NULL, ft_getenv("TERM"));
 	ft_bzero(line_edition, sizeof(t_l));
@@ -146,9 +146,10 @@ void init_line_edition(t_l *line_edition, int prompt_len)
 	line_edition->co = tgetnum("co");
 	line_edition->total_row = tgetnum("li");
 	line_edition->starting_row = line_edition->total_row - get_current_row();
-	line_edition->pmpt = prompt_len;
+	line_edition->pmpt = prompt_len(prompt_type);
 	line_edition->x = line_edition->pmpt;
 	line_edition->y = 0;
+	line_edition->promp_type = prompt_type;
 	// ft_bzero(&line_edition->auto_com, sizeof(t_auto)); // delete this later
 }
 
@@ -189,15 +190,16 @@ void prepare_breaking_loop(char buf[BUFF_LINE_EDITION], t_l *line_edition, t_pha
 }
 
 
-char	*ft_get_line(t_phase *phase, int prompt_len, t_lex_value lex_value)
+char	*ft_get_line(t_phase *phase, t_prompt prompt_type, t_lex_value lex_value)
 {
 	t_l line_edition;
 	char buf[BUFF_LINE_EDITION];
 	char *ret;
 
+	print_prompt(prompt_type);
 	ft_bzero(buf, sizeof(buf));
 	init_term();
-	init_line_edition(&line_edition, prompt_len);
+	init_line_edition(&line_edition, prompt_type);
 	while (read(STDIN_FILENO, buf, sizeof(buf)) != -1)
 	{
 		if (g_shell.signal_indicator == SIGINT)

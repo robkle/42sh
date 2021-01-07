@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/06 20:46:57 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 18:44:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 
 // void	ft_get_line(t_l *l);
 
-char	*ft_get_line(t_phase *phase, int prompt_len, t_lex_value lex_value);
+char	*ft_get_line(t_phase *phase, t_prompt prompt_type, t_lex_value lex_value);
 
 int parse_key(char buf[BUFF_LINE_EDITION], t_l *line_edition);
 

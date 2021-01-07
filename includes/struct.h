@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 02:35:29 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 19:00:18 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,19 @@ typedef enum
 
 typedef enum
 {
+	PROMPT_CMD = 0,
+	PROMPT_CMD_AND,
+	PROMPT_CMD_OR,
+	PROMPT_PIPE,
+	PROMPT_HEREDOC,
+	PROMPT_DQUOTE,
+	PROMPT_QUOTE,
+	PROMPT_BACKSLASH,
+	PROMPR_CMDSUBST
+} t_prompt;
+
+typedef enum
+{
 	PHASE_CMD = 0,
 	PHASE_DQUOTE,
 	PHASE_QUOTE,
@@ -200,12 +213,13 @@ typedef struct			s_l
 	int					pmpt;
 	int					x;
 	int					y;
+	t_prompt			promp_type;
+	char				phase;
 	// int					down; // sanitized 
 	// int					eof_flag; // sanitized
 	char				*rev_sr;
 	int					rs;
 	int					rs_i;
-	char				phase;
 	// t_auto				auto_com; // delete this later
 }						t_l;
 

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 17:12:19 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/31 18:17:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 19:24:00 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,15 @@ int is_real_quote(char *str, int i)
 	if (ct % 2 == 0)
 		return (1);
 	return (0);
+}
+
+char *delete_line_feed_at_the_end_of_the_cmd_string(char *cmd)
+{
+	char *new;
+
+	if (cmd == NULL)
+		return NULL;
+	new = ft_strndup(cmd, ft_strlen(cmd) - 1);
+	free (cmd);
+	return (new);	
 }

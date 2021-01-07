@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:50:11 by marvin            #+#    #+#             */
-/*   Updated: 2021/01/05 16:10:48 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 19:04:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void restore_line_edition(t_auto *auto_com)
 	if (g_shell.signal_indicator != SIGINT)
 	{
 		print_info();
-		print_phase(auto_com->editor->phase);
+		print_prompt(auto_com->editor->promp_type);
 	}
 	ft_putstr(editor->line);
 	apply_termcap_str("cm", editor->x, editor->y + get_current_row() - 1);

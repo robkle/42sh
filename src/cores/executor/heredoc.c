@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 04:59:20 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 18:52:08 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ char *get_heredoc(char *end_word)
 	t_phase phase;
 	char *heredoc;
 	char *line;
-	int prompt_len;
+	t_prompt prompt_type;
 	char end_word_with_enter[256];
 
 	heredoc = ft_strnew(0);
 	phase = PHASE_HEREDOC;
+	prompt_type = PROMPT_HEREDOC;
 	ft_bzero(&end_word_with_enter, 256);
 	ft_strcpy(end_word_with_enter, end_word);
 	ft_strcat(end_word_with_enter, "\n");
 	while ("getting heredoc")
 	{
-		prompt_len = ft_printf("heredoc> ");
-		if ((line = ft_get_line(&phase, prompt_len, LEX_HEREDOC)) == NULL)
+		if ((line = ft_get_line(&phase, prompt_type, LEX_HEREDOC)) == NULL)
 		{
 			free(heredoc);
 			return (NULL);
