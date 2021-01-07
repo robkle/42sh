@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 17:55:41 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 00:58:06 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 05:53:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,10 @@ int ft_fc_get_user_token(t_token **tk_lst, char *first_str)
 	cmd = ft_strdup(first_str);
 	while ("user is editing")
 	{
-		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst);
-		if (lex_value != LEX_FAILURE)
+		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value);
+		if (lex_value == LEX_FAILURE || ft_strequ(cmd, ENTER_KEY))
+			free(cmd);
+		else
 			whole_cmd = ft_strjoin_and_free_2strings(whole_cmd, cmd);
 		if (lex_value == LEX_SUCCESS || lex_value == LEX_FAILURE)
 		{

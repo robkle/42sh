@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/06 20:45:01 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 05:32:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,12 @@ t_token		*lexer_and_parser(char *input)
 */
 // working
 
-t_lex_value lex_continue_or_not(t_token *pre_token)
+t_lex_value lex_continue_or_not(t_token *pre_token, t_lex_value lex_value)
 {
-	if (!pre_token)
+	if (!pre_token && lex_value == LEX_CMD)
 		return (LEX_SUCCESS);
+	if (!pre_token && lex_value != LEX_CMD)
+		return (lex_value);
 	if (pre_token->type == TOKEN_AND_IF)
 		return (LEX_CMDAND);
 	else if (pre_token->type == TOKEN_OR_IF)
@@ -126,7 +128,7 @@ t_lex_value lex_continue_or_not(t_token *pre_token)
 	return (LEX_SUCCESS);
 }
 
-t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst)
+t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value)
 {
 	t_token		*current_token;
 	t_token		*prev_token;
@@ -167,5 +169,5 @@ t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst)
 		else
 			prev_token = current_token;
 	}
-	return (lex_continue_or_not(prev_token));
+	return (lex_continue_or_not(prev_token, lex_value));
 }
