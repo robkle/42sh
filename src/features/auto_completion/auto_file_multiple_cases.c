@@ -61,25 +61,27 @@ char		is_partially_completed(t_auto *auto_com, size_t *printable_char_len)
 	return (!(*printable_char_len > 0));
 }
 
-void		auto_complete_upto(size_t len, t_l *l)
+int		auto_complete_upto(size_t len, t_auto *auto_com)
 {
 	char	*target_for_printing;
 	char	*largest_str;
 
-	largest_str = (char*)l->auto_com.largest_content;
+	largest_str = (char*)auto_com->largest_content;
 	target_for_printing = ft_strsub(largest_str, \
-			(int)ft_strlen(l->auto_com.target_str), len);
-    paste(l, NULL, 0, target_for_printing);
-	delete_status_new_pos(&l->auto_com.status);
+			(int)ft_strlen(auto_com->target_str), len);
+    paste(auto_com->editor, NULL, 0, target_for_printing);
+	delete_status_new_pos(&auto_com->status);
 	ft_strdel(&target_for_printing);
+	return (clear_auto_struct(auto_com));
 }
 
-void		auto_cmd_file_multiple_cases(t_l *l)
+int		auto_cmd_file_multiple_cases(t_auto *auto_com)
 {
 	size_t	print_char_len;
 
-	if (is_partially_completed(&l->auto_com, &print_char_len))
-		auto_print_list(l);
-	else if (l->auto_com.target_str[0] != '\0')
-		auto_complete_upto(print_char_len, l);
+	if (is_partially_completed(auto_com, &print_char_len))
+		return (auto_print_list(auto_com));
+	else if (auto_com->target_str[0] != '\0')
+		return (auto_complete_upto(print_char_len, auto_com));
+	return (clear_auto_struct(auto_com));
 }

@@ -91,7 +91,8 @@ t_phase analyzing_phase(char *str, t_phase phase)
 
 int print_phase(t_phase phase)
 {
-	if (phase == PHASE_BACKSLASH)
+	// if (phase == PHASE_BACKSLASH)
+	if (phase == PHASE_BACKSLASH || phase == PHASE_CMD)
 		return (ft_printf("> "));
 	else if (phase == PHASE_QUOTE)
 		return (ft_printf("quote> "));

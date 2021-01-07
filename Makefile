@@ -195,7 +195,7 @@ INHIBITOR := $(addprefix $(INHIBITOR_DIR)/,$(INHIBITOR_FILE))
 AUTO_COMPLETION_DIR := $(FEATURES_DIR)/auto_completion
 AUTO_COMPLETION_FILE += auto_status.c
 AUTO_COMPLETION_FILE += auto_completion.c
-AUTO_COMPLETION_FILE += auto_dir.c
+#AUTO_COMPLETION_FILE += auto_dir.c
 AUTO_COMPLETION_FILE += auto_file.c
 AUTO_COMPLETION_FILE += auto_is_dir.c
 AUTO_COMPLETION_FILE += auto_file_one_case.c
@@ -204,7 +204,7 @@ AUTO_COMPLETION_FILE += auto_open_path.c
 AUTO_COMPLETION_FILE += auto_make_list.c
 AUTO_COMPLETION_FILE += auto_print_list.c
 AUTO_COMPLETION_FILE += auto_get_list.c
-AUTO_COMPLETION_FILE += auto_lstdel_strdel.c
+#AUTO_COMPLETION_FILE += auto_lstdel_strdel.c
 AUTO_COMPLETION_FILE += auto_command.c
 AUTO_COMPLETION_FILE += auto_add_one_extra_char.c
 AUTO_COMPLETION_FILE += auto_add_list_on_spot.c
@@ -216,7 +216,7 @@ FEATURES += $(JOB_CONTROL)
 FEATURES += $(ALIAS)
 FEATURES += $(SIGNAL)
 FEATURES += $(EXPANSION)
-# FEATURES += $(AUTO_COMPLETION)
+FEATURES += $(AUTO_COMPLETION)
 FEATURES += $(INHIBITOR)
 ########################### Create utility_FILE files ##############################
 UTILITY_DIR := src/utility
@@ -239,7 +239,9 @@ UTILITY_FILE += ft_strbuilder.c
 UTILITY_FILE += ft_strbuilder_char.c
 UTILITY_FILE += ft_tcsetpgrp.c
 UTILITY_FILE += ft_tcgetpgrp.c
+UTILITY_FILE += ft_lstdel_strdel.c
 UTILITY := $(addprefix $(UTILITY_DIR)/,$(UTILITY_FILE))
+
 ############################ SUM-UP SOURCE FILES ##############################
 SRC := src/main.c
 SRC += $(UTILITY)

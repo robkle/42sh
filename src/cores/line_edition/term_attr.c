@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:14:04 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/06 18:55:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 04:40:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,5 @@ void	init_term(void)
 	raw.c_lflag &= ~(ICANON | ECHO);
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;
-	// raw.c_cc[VMIN] = 0;
-	// raw.c_cc[VTIME] = 1;
 	tcsetattr(0, TCSANOW, &raw);
 }
