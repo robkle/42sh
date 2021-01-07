@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 04:12:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 04:59:20 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@ char *get_heredoc(char *end_word)
 	char *heredoc;
 	char *line;
 	int prompt_len;
+	char end_word_with_enter[256];
 
 	heredoc = ft_strnew(0);
 	phase = PHASE_HEREDOC;
+	ft_bzero(&end_word_with_enter, 256);
+	ft_strcpy(end_word_with_enter, end_word);
+	ft_strcat(end_word_with_enter, "\n");
 	while ("getting heredoc")
 	{
 		prompt_len = ft_printf("heredoc> ");
@@ -29,7 +33,7 @@ char *get_heredoc(char *end_word)
 			free(heredoc);
 			return (NULL);
 		}
-		if (phase == PHASE_STOP || ft_strnequ(line, end_word, ft_strlen(end_word)))
+		if (phase == PHASE_STOP || ft_strequ(line, end_word_with_enter))
 		{
 			free(line);
 			break ;
@@ -86,7 +90,7 @@ static int			apply_heredoc(t_astnode *here_end)
 	node->doc = current_heredoc;
 	node->next = NULL;
 	if (g_shell.first_heredoc == NULL)
-		g_shell.first_heredoc = node;
+		g_shell.heredoc_lst = node;
 	else
 		add_heredoc_into_list(node, &g_shell.heredoc_lst);
 	return (EXIT_SUCCESS);
