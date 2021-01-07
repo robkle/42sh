@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/08 01:07:01 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 01:26:30 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,31 @@ void update_status(void)
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 }
 
+// void wait_for_job(t_job *j, int opt)
+// {
+// 	int pid;
+// 	int status;
+
+// 	pid = waitpid(-j->pgid, &status, opt);
+// 	while(!mark_process_status(j, pid, status) && !job_is_stopped(j) &&!job_is_completed(j))
+// 		pid = waitpid(-j->pgid, &status, opt);
+// }
+
 void wait_for_job(t_job *j, int opt)
 {
-	int pid;
 	int status;
+	t_process *p_ptr;
 
-	pid = waitpid(-j->pgid, &status, opt);
-	while(!mark_process_status(j, pid, status) && !job_is_stopped(j) &&!job_is_completed(j))
-		pid = waitpid(-j->pgid, &status, opt);
+	p_ptr = j->first_process;
+	while (!job_is_stopped(j) && !job_is_completed(j))
+	{
+		while (p_ptr)
+		{
+			waitpid(p_ptr->pid, &status, opt);
+			mark_process_status(j, p_ptr->pid, status);
+			p_ptr = p_ptr->next;
+		}
+	}
 }
 
 void format_job_info(t_job *j, const char *status, int opt)

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 05:32:09 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 01:41:51 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,33 @@ int			syntax_analysis(t_token *curr, t_token *prev)
 	if (curr->type == TOKEN_EOF)
 	{
 		ft_dprintf(2, "%s: syntax error: unexpected end of file\n", SHELL_NAME);
+		g_shell.exit_status = 258;
 		return (EXIT_FAILURE);
 	}
 	if (curr->type == TOKEN_BROKEN)
 	{
 		ft_dprintf(2, "%s: unexpected EOF while looking for matching `%s'\n", SHELL_NAME, curr->data);
 		ft_dprintf(2, "%s: syntax error: unexpected end of file\n", SHELL_NAME);
+		g_shell.exit_status = 258;
 		return (EXIT_FAILURE);	
 	}
 	if (is_unsupported_tokens(curr->type))
 	{
 		ft_dprintf(2, "%s: Unsupported token `%s`\n", "42sh", curr->data); // need to change value
+		g_shell.exit_status = 258;
 		return (EXIT_FAILURE);
 	}
 	if (!prev && is_redirect_op(curr->type))
 	{
 		ft_dprintf(2, "%s: Unsupported cmd_prefix\n", "42sh"); // need to change value
+		g_shell.exit_status = 258;
 		return (EXIT_FAILURE);
 	}
 	if (control_ops_issue(curr, prev) || \
 		redirect_ops_issue(curr, prev))
 	{
 		ft_dprintf(2, "%s: syntax error near unexpected token `%s'\n", "42sh", curr->data);
+		g_shell.exit_status = 258;
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
