@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 04:00:37 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 19:42:00 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 01:37:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	sig_int_handler(int sig)
 {
 	(void)sig;
 	g_shell.signal_indicator = SIGINT;
+	g_shell.exit_status = 1;
 	ioctl(1, TIOCSTI, "");
 }
 

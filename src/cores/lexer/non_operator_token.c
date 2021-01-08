@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:51:17 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/06 20:45:33 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 03:49:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,20 @@ t_token	*get_non_operator_token(char *input, int *i)
 	head = *i;
 	while (input[*i] && !is_metacharacter(input[*i]) && (input[*i] != '\n'))
 	{
-		if ((input[*i] == '"' || input[*i] == '\'') && is_real_quote(input, *i))
+		if (input[*i] == '"' && is_real_quote(input, *i))
 		{
 			if (jump_quote(input, i, input[*i]) == EXIT_FAILURE)
-				return (non_operator_token(ft_strndup(&input[head], 1), TOKEN_BROKEN));
+				return (non_operator_token(ft_strdup("\""), TOKEN_BROKEN));
+		}
+		else if (input[*i] == '\'' && is_real_quote(input, *i))
+		{
+			if (jump_quote(input, i, input[*i]) == EXIT_FAILURE)
+				return (non_operator_token(ft_strdup("\'"), TOKEN_BROKEN));
+		}
+		else if (input[*i] == '{' && is_real_parameter_expansion(input, *i))
+		{
+			if (jump_parameter(input, i) == EXIT_FAILURE)
+				return (non_operator_token(ft_strdup("{"), TOKEN_BROKEN));
 		}
 		else if (input[*i] == '\\')
 			(*i)++;

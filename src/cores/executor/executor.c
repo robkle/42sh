@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/06 13:52:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 02:33:14 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	executor(t_astnode *ast)
 	// t_heredoc *heredoclist;
 
 	// heredoclist = NULL;
-	printBinaryTree(ast);
 	// find_heredoc(ast);
 	// heredoclist = g_shell.first_heredoc;
 	execute_complete_command(ast);

@@ -184,6 +184,7 @@ EXPANSION_FILE += handle_expansion.c
 EXPANSION_FILE += ansi_c.c
 EXPANSION_FILE += octal_value.c
 EXPANSION_FILE += hex_value.c
+EXPANSION_FILE += parameter_expansion_utilities.c
 EXPANSION := $(addprefix $(EXPANSION_DIR)/,$(EXPANSION_FILE))
 # Inhibitor
 INHIBITOR_DIR := $(FEATURES_DIR)/inhibitor

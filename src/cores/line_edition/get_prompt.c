@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:30:45 by tango             #+#    #+#             */
-/*   Updated: 2021/01/07 19:14:10 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 21:00:36 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	print_info(void)
 	print_42sh_usr();
 	print_cwd();
 	ft_putstr(PMPT_INIT);
+	ft_printf("[%d]", g_shell.exit_status);
 	ft_putchar('\n');
 }
 

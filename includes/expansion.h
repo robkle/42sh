@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 13:07:00 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/30 14:29:37 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 03:37:00 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,8 @@ int is_ansi_c_quoting(char *str);
 
 int quote_removal(t_process *p);
 int handle_expansion(t_process *p);
+
+int jump_parameter(char *input, int *i);
+int is_real_parameter_expansion(char *str, int i);
 
 #endif

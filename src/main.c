@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/07 19:24:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/08 03:28:14 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,39 +54,48 @@ void		ft_execute(char *input)
 **	string end with \n and string end with EOF
 */
 
-t_phase analyzing_phase(char *str, t_phase phase)
+void analyzing_phase(char *str, t_phase phase[], int *stack_pos)
 {
 	int i = -1;
 	int len = ft_strlen(str) - 1; 
 
 	while (++i < len)
 	{
-		if (phase == PHASE_BACKSLASH)
+		if (phase[*stack_pos] == PHASE_CMDSUBST)
 		{
-			phase = PHASE_CMD;
+			if (str[i] == '}')
+				phase[(*stack_pos)--] = PHASE_CMD;
+			else if (str[i] == '{')
+				phase[++(*stack_pos)] = PHASE_CMDSUBST;
+			continue;
+		}
+		if (phase[*stack_pos] == PHASE_BACKSLASH)
+		{
+			phase[*stack_pos] = PHASE_CMD;
 			continue;
 		}
 		if (str[i] == '"' && is_real_quote(str, i))
 		{
-			if (phase == PHASE_DQUOTE)
-				phase = PHASE_CMD;
-			else if (phase == PHASE_CMD)
-				phase = PHASE_DQUOTE;
+			if (phase[*stack_pos] == PHASE_DQUOTE)
+				phase[*stack_pos] = PHASE_CMD;
+			else if (phase[*stack_pos] == PHASE_CMD)
+				phase[*stack_pos] = PHASE_DQUOTE;
 		}
 		else if (str[i] == '\'' && is_real_quote(str, i))
 		{
-			if (phase == PHASE_QUOTE)
-				phase = PHASE_CMD;
-			else if (phase == PHASE_CMD)
-				phase = PHASE_QUOTE;
+			if (phase[*stack_pos] == PHASE_QUOTE)
+				phase[*stack_pos] = PHASE_CMD;
+			else if (phase[*stack_pos] == PHASE_CMD)
+				phase[*stack_pos] = PHASE_QUOTE;
 		}
 		else if (str[i] == '\\')
 		{
-			if (phase == PHASE_CMD)
-				phase = PHASE_BACKSLASH;
+			if (phase[*stack_pos] == PHASE_CMD)
+				phase[*stack_pos] = PHASE_BACKSLASH;
 		}
+		else if (phase[*stack_pos] == PHASE_CMD && str[i] == '{' && is_real_parameter_expansion(str, i))
+			phase[++(*stack_pos)] = PHASE_CMDSUBST;
 	}
-	return (phase);
 }
 
 /*
@@ -96,36 +105,40 @@ t_phase analyzing_phase(char *str, t_phase phase)
 
 char *get_command(t_lex_value lex_value)
 {
-	t_phase phase;
+	t_phase phase[20];
+	int i;
 	char *cmd;
 	char *line;
 	t_prompt prompt_type;
 
+	i = 0;
 	cmd = ft_strnew(0);
-	phase = PHASE_CMD;
+	phase[i] = PHASE_CMD;
 	prompt_type = choose_prompt_type(lex_value, 0);
 	while ("command editting")
 	{
-		if ((line = ft_get_line(&phase, prompt_type, lex_value)) == NULL)
+		if ((line = ft_get_line(&phase[i], prompt_type, lex_value)) == NULL)
 		{
 			free(cmd);
 			return (NULL);
 		}
-		if (phase != PHASE_STOP)
-			phase = analyzing_phase(line, phase);
+		if (phase[i] != PHASE_STOP)
+			analyzing_phase(line, phase, &i);
 		// history expansion
 		if (ft_hist_exp(&line))
 			ft_printf("%s", line);
 		cmd = ft_strjoin_and_free_2strings(cmd, line);
-		if (phase == PHASE_CMD || phase == PHASE_STOP)
+		if (phase[i] == PHASE_CMD || phase[i] == PHASE_STOP)
 			break ;
 		// if phase = phase back slash delete the \n at the end
-		prompt_type = choose_prompt_type(0, phase);
-		if (phase == PHASE_BACKSLASH)
+		prompt_type = choose_prompt_type(0, phase[i]);
+		if (phase[i] == PHASE_BACKSLASH)
 		{
 			cmd = delete_line_feed_at_the_end_of_the_cmd_string(cmd);
-			phase = PHASE_CMD;
+			phase[i] = PHASE_CMD;
 		}
+		if (phase[i] == PHASE_CMDSUBST)
+			cmd = delete_line_feed_at_the_end_of_the_cmd_string(cmd);
 	}
 	return (cmd);
 }
@@ -198,6 +211,7 @@ static int		shell(void)
 		if (find_heredoc(ast) == EXIT_FAILURE)
 			continue ;
 		g_shell.first_heredoc = g_shell.heredoc_lst;
+		// printBinaryTree(ast);
 		executor(ast);
 	}
 	return (0);
@@ -263,6 +277,10 @@ int				init_shell(char **envp)
 	*/
 	g_shell.first_heredoc = NULL;
 	g_shell.heredoc_lst = NULL;
+	/*
+	** exit status
+	*/
+	g_shell.exit_status = 1;
 	return (EXIT_SUCCESS);
 }
 
