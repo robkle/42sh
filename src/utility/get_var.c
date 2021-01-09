@@ -13,6 +13,11 @@
 //#include "shell.h"
 #include "utilities.h"
 
+/*
+** This function is deprecated.
+** Use ft_getenv or ft_getvar depending on your need.
+*/
+
 char		*get_var(char *name, char **lst_var, int keyval)
 {
 	int		i;

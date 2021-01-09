@@ -137,7 +137,7 @@ BUILT_IN_FILE += ft_echo.c
 BUILT_IN_FILE += ft_env.c
 BUILT_IN_FILE += ft_pwd.c
 BUILT_IN_FILE += ft_cd.c
-BUILT_IN_FILE += ft_cd_utilities/ft_cd_pathfinder.c
+#BUILT_IN_FILE += ft_cd_utilities/ft_cd_pathfinder.c
 BUILT_IN_FILE += ft_cd_utilities/access.c
 BUILT_IN_FILE += ft_setenv.c
 BUILT_IN_FILE += ft_unsetenv.c
@@ -225,11 +225,13 @@ UTILITY_FILE += jump_quote.c
 UTILITY_FILE += ft_strncpm.c
 UTILITY_FILE += ft_strnequ.c
 UTILITY_FILE += ft_getenv.c
+UTILITY_FILE += ft_getvar.c
 UTILITY_FILE += ft_swap_int.c
 UTILITY_FILE += ft_strbuilder.c
 UTILITY_FILE += ft_strbuilder_char.c
 UTILITY_FILE += ft_tcsetpgrp.c
 UTILITY_FILE += ft_tcgetpgrp.c
+UTILITY_FILE += handle_builtin_opts.c
 UTILITY := $(addprefix $(UTILITY_DIR)/,$(UTILITY_FILE))
 ############################ SUM-UP SOURCE FILES ##############################
 SRC := src/main.c
@@ -254,7 +256,7 @@ lftprintf:
 	@cd $(FT_RPINTF_DIR) && $(MAKE) -s
 
 $(OBJ_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $(OBJ_DIR)/$(notdir $@)
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $(OBJ_DIR)/$(notdir $@)
 
 $(PROGRAM): $(OBJECTS)
 	@$(CC) $(CFLAGS) $(addprefix $(OBJ_DIR)/, $(notdir $(OBJECTS))) $(LIB) -o $@

@@ -111,8 +111,11 @@ int				init_shell(char **envp)
 	}
 	sig_controller(PARENT);
 	g_shell.shell_pgid = getpgrp();
-	if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
-		return (EXIT_FAILURE);
+
+//////////////////////
+	// if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
+	// 	return (EXIT_FAILURE);
+/////////////////////
 	ft_tcsetpgrp(STDIN_FILENO, g_shell.shell_pgid);
 	tcgetattr(STDIN_FILENO, &g_shell.shell_tmode);
 	/*

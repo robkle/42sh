@@ -136,31 +136,6 @@ typedef struct          s_job
 }                       t_job;
 
 /*
-**======================================builtin options (temporary by ihwang)===============================
-*/
-
-# define BUILTIN_CD_OPT_SET "PL"
-//# define BUILTIN_CD_MINUS_HIPHEN '-'
-# define BUILTIN_NO_OPT 0
-# define BUILTIN_INVALID_OPT -1
-
-typedef enum
-{
-	BUILTIN_CD_OPT_P = (1 << 0),
-	BUILTIN_CD_OPT_L = (1 << 1)
-}					t_cd_opts;
-
-typedef struct		s_builtin_options
-{
-	char			*opt_set; //
-	char			opt_len;
-	unsigned int	operand_count;
-	unsigned int	opt_apply;
-	char			invalid_opt;
-}					t_opt;
-
-
-/*
 ** Auto completion
 */
 
@@ -268,6 +243,39 @@ typedef struct	s_history
 	int			hstsize;
 	char		savedfile[256];
 }				t_history;
+
+/*
+**======================================builtin options (temporary by ihwang)===============================
+*/
+
+# define BUILTIN_CD_OPT_SET "PL"
+//# define BUILTIN_CD_MINUS_HIPHEN '-'
+# define BUILTIN_NO_OPT (unsigned int)0
+# define BUILTIN_INVALID_OPT (unsigned int) -1
+
+typedef enum
+{
+	BUILTIN_CD_OPT_P = (1 << 0),
+	BUILTIN_CD_OPT_L = (1 << 1)
+}					t_cd_opts;
+
+typedef struct		s_builtin_options
+{
+	char			*opt_set; //
+	char			set_len;
+	unsigned int	operand_count;
+	unsigned long	applied;
+	char			invalid_opt;
+}					t_opt;
+
+typedef struct		s_cd
+{
+	char			*directory;
+	char			*curpath;
+	char			*prev_curpath;
+	char			print_info;
+	t_opt			opt;
+}					t_cd;
 
 /*
 ** Alias struct

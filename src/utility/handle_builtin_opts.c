@@ -15,8 +15,8 @@
 void		init_opt(t_opt *opt, const char *opt_set)
 {
 	ft_bzero(opt, sizeof(t_opt));
-	opt->opt_set = opt_set;
-	opt->opt_len = (char)ft_strlen(opt_set);
+	opt->opt_set = (char*)opt_set;
+	opt->set_len = (char)ft_strlen(opt_set);
 }
 
 
@@ -25,18 +25,18 @@ static void	add_option(t_opt *opt, char ch)
 	int		i;
 
 	i = 0;
-	while (i < opt->opt_len)
+	while (i < opt->set_len)
 	{
 		if (ch == opt->opt_set[i])
 		{
-			opt->opt_apply |= 1 << i;
+			opt->applied |= 1 << i;
 			return ;
 		}
 		++i;
 	}
 }
 
-void		check_builtin_options(char **av, t_opt *opt)
+void		check_builtin_opts(char **av, t_opt *opt)
 {
 	int		i;
 	int		j;
@@ -52,7 +52,7 @@ void		check_builtin_options(char **av, t_opt *opt)
 		{
 			if (ft_strchr(opt->opt_set, av[i][j]) == NULL)
 			{
-				opt->opt_apply = BUILTIN_INVALID_OPT;
+				opt->applied = BUILTIN_INVALID_OPT;
 				opt->invalid_opt = av[i][j];
 				return ;
 			}
@@ -63,4 +63,3 @@ void		check_builtin_options(char **av, t_opt *opt)
 		++i;
 	}
 }
-
