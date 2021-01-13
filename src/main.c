@@ -125,7 +125,7 @@ char *get_command(t_lex_value lex_value)
 		if (phase[i] != PHASE_STOP)
 			analyzing_phase(line, phase, &i);
 		// history expansion
-		if (ft_hist_exp(&line))
+		if (ft_hist_exp(&line, prompt_type))
 			ft_printf("%s", line);
 		cmd = ft_strjoin_and_free_2strings(cmd, line);
 		if (phase[i] == PHASE_CMD || phase[i] == PHASE_STOP)

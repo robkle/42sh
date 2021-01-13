@@ -46,7 +46,7 @@ char			*ft_process_history(t_l *l);
 ** History expansion
 */
 
-int				ft_hist_exp(char **line);
+int				ft_hist_exp(char **line, t_prompt pr);
 int				ft_check_cont(char *buffer);
 
 /* 

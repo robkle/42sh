@@ -104,7 +104,7 @@ static void		ft_split_exp(char **exp_split, char *str)
 	}
 }
 
-int		ft_hist_exp(char **line)
+int		ft_hist_exp(char **line, t_prompt pr)
 {
 	char *str;
 	int		i;
@@ -119,15 +119,15 @@ int		ft_hist_exp(char **line)
 	{
 		if (str[i] == 39)
 			q = !q ? 1 : 0;
-		if (str[i] == '!' && str[i + 1] && str[i + 1] != '=' && \
-			str[i + 1] != '(' && !ft_isspace(str[i + 1]) && !q)
+		if (!q && str[i] == '!' && str[i + 1] && str[i + 1] != '=' && \
+			str[i + 1] != '(' && !ft_isspace(str[i + 1]) && pr != PROMPT_QUOTE)
 		{
 			split[0] = ft_strsub(str, 0, i);
 			split[1] = ft_strdup(&str[i]);
 			ft_split_exp(exp_split, split[1]);
 			if (!ft_expand_exp(line, split, exp_split))
 				return (0);
-			ft_hist_exp(line);
+			ft_hist_exp(line, pr);
 			return (1);
 		}
 	}
