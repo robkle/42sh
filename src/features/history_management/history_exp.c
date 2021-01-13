@@ -108,18 +108,19 @@ int		ft_hist_exp(char **line)
 {
 	char *str;
 	int		i;
+	int		q;
 	char	*split[2];
 	char	*exp_split[2];
 
+	q = 0;
 	i = -1;
 	str = *line;
 	while (str[++i])
 	{
-		if (str[i] == '!' && \
-			str[i + 1] && \
-			str[i + 1] != '=' &&\
-			str[i + 1] != '(' && \
-			!ft_isspace(str[i + 1]))
+		if (str[i] == 39)
+			q = !q ? 1 : 0;
+		if (str[i] == '!' && str[i + 1] && str[i + 1] != '=' && \
+			str[i + 1] != '(' && !ft_isspace(str[i + 1]) && !q)
 		{
 			split[0] = ft_strsub(str, 0, i);
 			split[1] = ft_strdup(&str[i]);

@@ -38,7 +38,7 @@ int is_line_edition_key(char buf[BUFF_LINE_EDITION])
 		ft_strequ(buf, DOWN_ARROW_KEY) || ft_strequ(buf, LEFT_ARROW_KEY) ||
 		ft_strequ(buf, RIGHT_ARROW_KEY) || ft_strequ(buf, CTRL_UP_KEY) ||
 		ft_strequ(buf, CTRL_DOWN_KEY) || ft_strequ(buf, CTRL_RIGHT_KEY) ||
-		ft_strequ(buf, CTRL_LEFT_KEY) ||
+		ft_strequ(buf, CTRL_LEFT_KEY) || ft_strequ(buf, ESC_KEY) ||
 		(ft_strlen(buf) > 1 && ft_isprint(buf[0])))
 		return (1);
 	return (0);
@@ -58,6 +58,8 @@ int parse_line_edition_key2(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 		return (ctrl_right(line_edition));
 	else if (ft_strequ(buf, CTRL_LEFT_KEY))
 		return (ctrl_left(line_edition, 0));
+	else if (ft_strequ(buf, ESC_KEY) && line_edition->rs)
+		return(ft_reverse_search_reset(line_edition));//NEW
 	else if (ft_strlen(buf) > 1 && ft_isprint(buf[0]))
 		return (paste(line_edition, buf, 0, NULL));
 	return (EXIT_SUCCESS);
@@ -83,6 +85,8 @@ int is_feature_key(char buf[BUFF_LINE_EDITION])
 {
 	if (ft_strequ(buf, TAB_KEY)) // add history search later
 		return (1);
+	else if (ft_strequ(buf, CTRL_R_KEY)) //rklein
+		return (1);
 	return (0);
 }
 
@@ -90,8 +94,8 @@ int parse_feature_key(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 {
 	if (ft_strequ(buf, TAB_KEY))
 		return (auto_complete(line_edition));
-	// else if (ft_strequ(buf, CTRL_R_KEY))
-		// return (history_search(line_edition));
+	else if (ft_strequ(buf, CTRL_R_KEY))
+		return (ft_reverse_search(line_edition));
 	return (EXIT_FAILURE);
 }
 
@@ -150,6 +154,7 @@ void init_line_edition(t_l *line_edition, t_prompt prompt_type)
 	line_edition->x = line_edition->pmpt;
 	line_edition->y = 0;
 	line_edition->promp_type = prompt_type;
+	line_edition->rs = 0;
 	// ft_bzero(&line_edition->auto_com, sizeof(t_auto)); // delete this later
 }
 
@@ -183,7 +188,10 @@ void prepare_breaking_loop(char buf[BUFF_LINE_EDITION], t_l *line_edition, t_pha
 	else if (ft_strequ(buf, CTRL_D_KEY))
 	{
 		if (*phase == PHASE_CMD && lex_value == LEX_CMD)
+		{
+			restore_term(line_edition);//NEW
 			ft_exit(EXIT_SUCCESS);
+		}
 		line_edition->line = ft_strjoin_and_free_string1(line_edition->line, "\x04");
 		*phase = PHASE_STOP;
 	}
@@ -204,10 +212,14 @@ char	*ft_get_line(t_phase *phase, t_prompt prompt_type, t_lex_value lex_value)
 	{
 		if (g_shell.signal_indicator == SIGINT)
 		{
+			if (line_edition.rs)//NEW
+				ft_reverse_search_reset(&line_edition);//NEW
 			free(line_edition.line);
 			line_edition.line = NULL;
 			break ;
 		}
+		if (line_edition.rs && (ft_strequ(buf, ENTER_KEY) || ft_strequ(buf, CTRL_D_KEY)))
+			ft_reverse_search_reset(&line_edition);
 		if (ft_strequ(buf, ENTER_KEY) || (ft_strequ(buf, CTRL_D_KEY) && line_edition.nb == 0))
 		{
 			prepare_breaking_loop(buf, &line_edition, phase, lex_value);

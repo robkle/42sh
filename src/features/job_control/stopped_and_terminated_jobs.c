@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shell.h"
+#include "shell.h"
 #include <errno.h> //using errno here need to check
 
 int job_is_stopped(t_job *j)

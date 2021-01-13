@@ -30,10 +30,10 @@ int			ft_exit(int opt)
 	/*
 	** history part
 	*/
-	// append_history();
-	// delete_save_history();
-	// ft_arraydel(g_shell.history->hist);
-	// free(g_shell.history);
+	append_history();
+	delete_save_history();
+	ft_arraydel(g_shell.history->hist);
+	free(g_shell.history);
 	/*
 	** delete enviroment
 	*/

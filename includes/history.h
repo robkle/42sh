@@ -53,10 +53,10 @@ int				ft_check_cont(char *buffer);
 ** Reverse history search
 */
 
-void			ft_reverse_search(t_l *l);
+int				ft_reverse_search(t_l *l);
 void			ft_reverse_search_add(char t[], t_l *l);
 void			ft_reverse_search_bs(t_l *l);
-void			ft_reverse_search_reset(t_l *l);
+int				ft_reverse_search_reset(t_l *l);
 void			ft_reverse_search_clear(t_l *l);
 
 

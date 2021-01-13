@@ -90,7 +90,7 @@ void		ft_reverse_search_add(char t[], t_l *l)
 	ft_putstr(g_shell.history->hist[g_shell.history->hst]);
 }
 
-void	ft_reverse_search(t_l *l)
+int		ft_reverse_search(t_l *l)
 {
 	if (!l->rs)
 	{
@@ -110,4 +110,5 @@ void	ft_reverse_search(t_l *l)
 	ft_reverse_search_clear(l);
 	ft_putstr(l->rev_sr);
 	ft_putstr(g_shell.history->hist[g_shell.history->hst]);
+	return EXIT_SUCCESS;
 }

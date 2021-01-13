@@ -57,14 +57,14 @@ void			ft_reverse_search_clear(t_l *l)
 	l->starting_row = new_starting_row;
 }
 	
-void	ft_reverse_search_reset(t_l *l)
+int		ft_reverse_search_reset(t_l *l)
 {
 	free(l->rev_sr);
 	l->rs = 0;
 	free(l->line);
 	l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);
 	ft_reverse_search_clear(l);
-	ft_putstr("> ");//THIS DOESN'T SEEM TO STAY WITH ARROWS
+	print_prompt(l->promp_type);
 	ft_putstr(l->line);
-	home_key(l);	
+	return (home_key(l));	
 }
