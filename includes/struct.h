@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/12 20:11:31 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 13:36:34 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,8 @@ typedef enum
 	PROMPT_DQUOTE,
 	PROMPT_QUOTE,
 	PROMPT_BACKSLASH,
-	PROMPR_CMDSUBST
+	PROMPT_CMDSUBST,
+	PROMPT_BRACEPARAM
 } t_prompt;
 
 typedef enum
@@ -172,6 +173,7 @@ typedef enum
 	PHASE_QUOTE,
 	PHASE_BACKSLASH,
 	PHASE_CMDSUBST,
+	PHASE_BRACEPARAM,
 	PHASE_STOP,
 	PHASE_HEREDOC // temp
 }	t_phase;

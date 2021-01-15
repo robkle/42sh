@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 13:07:00 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/08 03:37:00 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 13:59:52 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int handle_expansion(t_process *p);
 
 int jump_parameter(char *input, int *i);
 int is_real_parameter_expansion(char *str, int i);
+int is_real_dolar_sign(char *str, int i);
+
 
 #endif

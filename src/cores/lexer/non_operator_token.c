@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:51:17 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/09 03:21:24 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 14:41:47 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@ t_token	*get_non_operator_token(char *input, int *i)
 {
 	int head;
 	char *str;
+	char temp[2];
 
 	head = *i;
+	ft_bzero(temp, 2);
 	while (input[*i] && !is_metacharacter(input[*i]) && (input[*i] != '\n'))
 	{
-		if (input[*i] == '"' && is_real_quote(input, *i))
+		if ((input[*i] == '"' || input[*i] == '\'') && is_real_quote(input, *i))
 		{
+			temp[0] = input[*i];
 			if (jump_quote(input, i, input[*i]) == EXIT_FAILURE)
-				return (non_operator_token(ft_strdup("\""), TOKEN_BROKEN));
+				return (non_operator_token(ft_strdup(temp), TOKEN_BROKEN));
 		}
-		else if (input[*i] == '\'' && is_real_quote(input, *i))
+		else if (input[*i] == '$' && is_real_dolar_sign(input, *i) && input[*i + 1] && (input[*i + 1] == '{' || input[*i + 1] == '('))
 		{
-			if (jump_quote(input, i, input[*i]) == EXIT_FAILURE)
-				return (non_operator_token(ft_strdup("\'"), TOKEN_BROKEN));
-		}
-		else if (input[*i] == '{' && is_real_parameter_expansion(input, *i))
-		{
-			if (jump_parameter(input, i) == EXIT_FAILURE)
-				return (non_operator_token(ft_strdup("{"), TOKEN_BROKEN));
+			temp[0] = input[*i + 1];
+			return ((jump_parameter(input, i) == EXIT_FAILURE)
+				? non_operator_token(ft_strdup(temp), TOKEN_BROKEN)
+				: non_operator_token(ft_strndup(&input[head], ++(*i) - head), TOKEN_WORD));
 		}
 		else if (input[*i] == '\\')
 			(*i)++;

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:30:45 by tango             #+#    #+#             */
-/*   Updated: 2021/01/07 21:00:36 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 13:40:52 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,10 @@ void print_prompt(t_prompt prompt_type)
 		ft_putstr("quote> ");
 	else if (prompt_type == PROMPT_BACKSLASH)
 		ft_putstr("> ");
-	else if (prompt_type == PROMPR_CMDSUBST)
+	else if (prompt_type == PROMPT_CMDSUBST)
 		ft_putstr("cmdsubst> ");
+	else if (prompt_type == PROMPT_BRACEPARAM)
+		ft_putstr("braceparam> ");
 }
 
 int prompt_len(t_prompt prompt_type)
@@ -102,8 +104,10 @@ int prompt_len(t_prompt prompt_type)
 		return (ft_strlen("quote> "));
 	else if (prompt_type == PROMPT_BACKSLASH)
 		return (ft_strlen("> "));
-	else if (prompt_type == PROMPR_CMDSUBST)
+	else if (prompt_type == PROMPT_CMDSUBST)
 		return (ft_strlen("cmdsubst> "));
+	else if (prompt_type == PROMPT_BRACEPARAM)
+		return (ft_strlen("braceparam> "));
 	return (ft_strlen("> "));
 }
 
@@ -132,7 +136,9 @@ t_prompt choose_prompt_type(t_lex_value lex, t_phase phase)
 		else if (phase == PHASE_BACKSLASH)
 			return (PROMPT_BACKSLASH);
 		else if (phase == PHASE_CMDSUBST)
-			return (PROMPR_CMDSUBST);
+			return (PROMPT_CMDSUBST);
+		else if (phase == PHASE_BRACEPARAM)
+			return (PROMPT_BRACEPARAM);
 		return (PROMPT_CMD);
 	}
 }

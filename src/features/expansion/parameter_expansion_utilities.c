@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:24:07 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/08 03:36:45 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 14:19:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,28 @@
 
 int jump_parameter(char *input, int *i)
 {
-	char stack[10];
-	int pos_stack;
+	int stack;
+	char type;
+	char rev_type;
 
-	ft_bzero(stack, 10);
-	pos_stack = 0;
-	stack[pos_stack++] = '{';
-	(*i)++;
-	while (input[*i])
+	type = input[++(*i)];
+	rev_type = (type == '{') ? '}' : ')';
+	stack = 1;
+	while (input[++(*i)])
 	{
-		if (input[*i] == '{')
-			stack[pos_stack++] = '{';
-		else if (input[*i] == '}')
-			stack[--pos_stack] = '\0';
-		if (pos_stack == 0 && stack[pos_stack] == '\0')
+		if (input[*i] == type)
+			stack++;
+		else if (input[*i] == rev_type)
+			stack--;
+		if (stack == 0)
 			break ;
-		(*i)++;
 	}
 	if (input[*i] == '\0')
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-static int is_real_dolar_sign(char *str, int i)
+int is_real_dolar_sign(char *str, int i)
 {
 	int ct;
 
@@ -60,3 +59,14 @@ int is_real_parameter_expansion(char *str, int i)
 		return (1);
 	return (0);
 }
+
+// int is_real_parameter_expansion(char *str, int i)
+// {
+// 	if (i == 0)
+// 		return (1);
+// 	if (str[--i] != '$')
+// 		return (0);
+// 	if (is_real_dolar_sign(str, i))
+// 		return (1);
+// 	return (0);
+// }

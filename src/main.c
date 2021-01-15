@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/12 22:15:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 14:20:55 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,18 @@ void analyzing_phase(char *str, t_phase phase[], int *stack_pos)
 	{
 		if (phase[*stack_pos] == PHASE_CMDSUBST)
 		{
+			if (str[i] == ')')
+				phase[(*stack_pos)--] = PHASE_CMD;
+			else if (str[i] == '(')
+				phase[++(*stack_pos)] = PHASE_CMDSUBST;
+			continue;
+		}
+		if (phase[*stack_pos] == PHASE_BRACEPARAM)
+		{
 			if (str[i] == '}')
 				phase[(*stack_pos)--] = PHASE_CMD;
 			else if (str[i] == '{')
-				phase[++(*stack_pos)] = PHASE_CMDSUBST;
+				phase[++(*stack_pos)] = PHASE_BRACEPARAM;
 			continue;
 		}
 		if (phase[*stack_pos] == PHASE_BACKSLASH)
@@ -74,8 +82,10 @@ void analyzing_phase(char *str, t_phase phase[], int *stack_pos)
 			if (phase[*stack_pos] == PHASE_CMD)
 				phase[*stack_pos] = PHASE_BACKSLASH;
 		}
-		else if (phase[*stack_pos] == PHASE_CMD && str[i] == '{' && is_real_parameter_expansion(str, i))
+		else if (phase[*stack_pos] == PHASE_CMD && str[i] == '(' && is_real_parameter_expansion(str, i))
 			phase[++(*stack_pos)] = PHASE_CMDSUBST;
+		else if (phase[*stack_pos] == PHASE_CMD && str[i] == '{' && is_real_parameter_expansion(str, i))
+			phase[++(*stack_pos)] = PHASE_BRACEPARAM;
 	}
 }
 
@@ -118,7 +128,7 @@ char *get_command(t_lex_value lex_value)
 			cmd = delete_line_feed_at_the_end_of_the_cmd_string(cmd);
 			phase[i] = PHASE_CMD;
 		}
-		if (phase[i] == PHASE_CMDSUBST) // debug
+		if (phase[i] == PHASE_CMDSUBST || phase[i] == PHASE_BRACEPARAM) // debug
 			cmd = delete_line_feed_at_the_end_of_the_cmd_string(cmd);
 	}
 	return (cmd);

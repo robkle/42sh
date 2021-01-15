@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/15 10:10:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 13:11:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int parse_line_edition_key2(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 		return (up_down(line_edition, buf));
 	else if (ft_strequ(buf, RIGHT_ARROW_KEY))
 		return (right_key(line_edition));
+	else if (ft_strequ(buf, LEFT_ARROW_KEY))
+		return (left_key(line_edition));
 	else if (ft_strequ(buf, CTRL_UP_KEY))
 		return (ctrl_up(line_edition));
 	else if (ft_strequ(buf, CTRL_DOWN_KEY))
@@ -59,7 +61,7 @@ int parse_line_edition_key2(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 	else if (ft_strequ(buf, CTRL_LEFT_KEY))
 		return (ctrl_left(line_edition, 0));
 	else if (ft_strequ(buf, ESC_KEY) && line_edition->rs)
-		return(ft_reverse_search_reset(line_edition));//NEW
+		return (ft_reverse_search_reset(line_edition));//NEW
 	else if (ft_strlen(buf) > 1 && ft_isprint(buf[0]))
 		return (paste(line_edition, buf, 0, NULL));
 	return (EXIT_SUCCESS);
@@ -155,7 +157,6 @@ void init_line_edition(t_l *line_edition, t_prompt prompt_type)
 	line_edition->y = 0;
 	line_edition->promp_type = prompt_type;
 	line_edition->rs = 0;
-	// ft_bzero(&line_edition->auto_com, sizeof(t_auto)); // delete this later
 }
 
 /*
@@ -210,10 +211,6 @@ char	*ft_get_line(t_phase *phase, t_prompt prompt_type, t_lex_value lex_value)
 	init_line_edition(&line_edition, prompt_type);
 	while (read(STDIN_FILENO, buf, sizeof(buf)) != -1)
 	{
-		if (ft_strequ(buf, RIGHT_ARROW_KEY))
-		{
-			ft_printf("Here");
-		}
 		if (g_shell.signal_indicator == SIGINT)
 		{
 			if (line_edition.rs)//NEW
