@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   word.c                                             :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 09:17:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/09 01:49:50 by dthan            ###   ########.fr       */
+/*   Created: 2021/01/15 10:51:57 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/15 11:13:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_astnode		*word(t_token **token)
+int ft_unset(int ac, char **av)
 {
-	t_astnode	*node;
+	int i;
 
-	if (*token == NULL)
-		return (NULL);
-	if ((*token)->type != TOKEN_WORD)
-		return (NULL);
-	node = build_node(AST_WORD);
-	node->data = ft_strdup((*token)->data);
-	node->left = NULL;
-	node->right = NULL;
-	*token = (*token)->next;
-	return (node);
+	(void)ac;
+	i = 0;
+	while (av[++i])
+		if(is_intern_var(av[i]))
+			delete_intern_var(av[i]);
+	return (EXIT_SUCCESS);
 }

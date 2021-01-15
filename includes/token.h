@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/06 00:44:32 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/09 03:21:05 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	print_token(t_token *token); //debug
 t_token	*get_non_operator_token(char *input, int *i);
 t_token *non_operator_token(char *data, t_token_type type);
 t_token	*get_operator_token(char *input, int *i);
-
+int is_assignment_token(char *str, t_token *prev_token);
 #endif

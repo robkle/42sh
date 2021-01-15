@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/01/08 02:30:23 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 09:44:14 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # include "auto_completion.h"
 # include "handle_signal.h"
 # include "inhibitor.h"
+# include "intern_and_environment_var.h"
 
 # define F_TYPE_MASK 0170000
 # define KEY 1
@@ -52,7 +53,7 @@
 typedef struct			s_shell
 {
 	char				**env;
-	char				**var;
+	t_var				**intern_var;
 	char				signal_indicator;
 	char				shell_terminal;
 	char				interactive_shell;

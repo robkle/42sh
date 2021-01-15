@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/07 19:00:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 10:10:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,10 @@ char	*ft_get_line(t_phase *phase, t_prompt prompt_type, t_lex_value lex_value)
 	init_line_edition(&line_edition, prompt_type);
 	while (read(STDIN_FILENO, buf, sizeof(buf)) != -1)
 	{
+		if (ft_strequ(buf, RIGHT_ARROW_KEY))
+		{
+			ft_printf("Here");
+		}
 		if (g_shell.signal_indicator == SIGINT)
 		{
 			free(line_edition.line);

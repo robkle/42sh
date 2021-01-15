@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/08 00:27:42 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 13:01:36 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,18 @@ static void set_process_group_id(t_job *j, pid_t pid)
 
 int is_builtin(char *cmd_name)
 {
-	if (ft_strequ(cmd_name, "exit") || \
-		ft_strequ(cmd_name, "cd") || \
-		ft_strequ(cmd_name, "pwd") || \
-		ft_strequ(cmd_name, "env") || \
-		ft_strequ(cmd_name, "setenv") || \
-		ft_strequ(cmd_name, "unsetenv") || \
-		ft_strequ(cmd_name, "jobs") || \
-		ft_strequ(cmd_name, "fg") || \
-		ft_strequ(cmd_name, "bg") || \
-		ft_strequ(cmd_name, "echo"))
+	if (ft_strequ(cmd_name, "exit") ||
+		ft_strequ(cmd_name, "cd") ||
+		ft_strequ(cmd_name, "pwd") ||
+		ft_strequ(cmd_name, "env") ||
+		ft_strequ(cmd_name, "setenv") ||
+		ft_strequ(cmd_name, "unsetenv") ||
+		ft_strequ(cmd_name, "jobs") ||
+		ft_strequ(cmd_name, "fg") ||
+		ft_strequ(cmd_name, "bg") ||
+		ft_strequ(cmd_name, "echo") ||
+		ft_strequ(cmd_name, "set") ||
+		ft_strequ(cmd_name, "unset"))
 		return (1);
 	return (0);
 }
@@ -84,6 +86,10 @@ int exec_builtin(t_process *p)
 	// 	return (ft_hash(p));
 	else if (ft_strequ(p->av[0], "echo"))
 		return (ft_echo(p));
+	else if (ft_strequ(p->av[0], "set"))
+		return (ft_set());
+	else if (ft_strequ(p->av[0], "unset"))
+		return (ft_unset(p->ac, p->av));
 	return (EXIT_FAILURE);
 }
 
@@ -122,17 +128,6 @@ int is_execute_on_parent_process(int foreground, char *cmd_name)
 {
 	if (!foreground)
 		return (0);
-	// if (ft_strequ(cmd_name, "exit") || 
-	// 	ft_strequ(cmd_name, "alias") || 
-	// 	ft_strequ(cmd_name, "unalias") || 
-	// 	ft_strequ(cmd_name, "cd") || 
-	// 	ft_strequ(cmd_name, "setenv") || 
-	// 	ft_strequ(cmd_name, "unsetenv") || 
-	// 	ft_strequ(cmd_name, "jobs") || 
-	// 	ft_strequ(cmd_name, "fg") || 
-	// 	ft_strequ(cmd_name, "bg") || 
-	// 	ft_strequ(cmd_name, "fc"))
-	// 	return (1);
 	if (ft_strequ(cmd_name, "exit") ||
 		ft_strequ(cmd_name, "alias") ||
 		ft_strequ(cmd_name, "unalias") ||
@@ -142,7 +137,10 @@ int is_execute_on_parent_process(int foreground, char *cmd_name)
 		ft_strequ(cmd_name, "jobs") ||
 		ft_strequ(cmd_name, "fg") ||
 		ft_strequ(cmd_name, "bg") ||
-		ft_strequ(cmd_name, "fc"))
+		ft_strequ(cmd_name, "fc") ||
+		ft_strequ(cmd_name, "export") ||
+		ft_strequ(cmd_name, "set") ||
+		ft_strequ(cmd_name, "unset"))
 		return (1);
 	return (0);
 }
@@ -169,6 +167,12 @@ int lauch_process_which_can_change_shell(t_process *p)
 		return (ft_jobs(p));
 	else if (ft_strequ(p->av[0], "fc"))
 		return (ft_fc(p));
+	else if (ft_strequ(p->av[0], "export"))
+		return (ft_export(p->ac, p->av));
+	else if (ft_strequ(p->av[0], "set"))
+		return (ft_set());
+	else if (ft_strequ(p->av[0], "unset"))
+		return (ft_unset(p->ac, p->av));
 	return (EXIT_FAILURE);
 }
 
@@ -199,8 +203,8 @@ int lauch_in_parent_process(t_process *p)
 	(p->stdin != 0) ? std[SAVED_STDIN] = dup(STDIN_FILENO) : 0;
 	(p->stdout != 1) ? std[SAVED_STDOUT] = dup(STDOUT_FILENO) : 0;
 	(p->stderr != 2) ? std[SAVED_STDERR] = dup(STDERR_FILENO) : 0;
-	if (handle_expansion(p) == EXIT_FAILURE)
-	 	return(EXIT_FAILURE);
+	// if (handle_expansion(p) == EXIT_FAILURE)
+	//  	return(EXIT_FAILURE);
 	if (handle_redirection(p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	set_stdin_stdout_stderr_channels(p->stdin, p->stdout, p->stderr);

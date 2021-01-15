@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   word.c                                             :+:      :+:    :+:   */
+/*   execute_cmd_prefix.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 09:17:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/09 01:49:50 by dthan            ###   ########.fr       */
+/*   Created: 2021/01/09 01:51:29 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/11 22:11:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_astnode		*word(t_token **token)
+void execute_cmd_prefix(t_astnode *ast)
 {
-	t_astnode	*node;
-
-	if (*token == NULL)
-		return (NULL);
-	if ((*token)->type != TOKEN_WORD)
-		return (NULL);
-	node = build_node(AST_WORD);
-	node->data = ft_strdup((*token)->data);
-	node->left = NULL;
-	node->right = NULL;
-	*token = (*token)->next;
-	return (node);
+	if (ast->type == AST_cmd_prefix)
+	{
+		execute_assignment_word(ast->left);
+		execute_cmd_prefix(ast->right);
+	}
+	else if (ast->type == AST_ASSIGNMENT_WORD)
+		execute_assignment_word(ast);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_tool.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 07:29:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/09/06 11:15:03 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/01/09 02:47:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_astnode		*build_node(t_astnode_type type)
 	node->type = type;
 	node->left = NULL;
 	node->right = NULL;
-	node->exitcode = 0;
+	node->middle = NULL;
 	return (node);
 }
 

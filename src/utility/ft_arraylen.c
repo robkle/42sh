@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   word.c                                             :+:      :+:    :+:   */
+/*   ft_arraylen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 09:17:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/09 01:49:50 by dthan            ###   ########.fr       */
+/*   Created: 2021/01/11 21:42:53 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/11 21:43:08 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_astnode		*word(t_token **token)
+int ft_arraylen(char **array)
 {
-	t_astnode	*node;
+	int ct;
+	int i;
 
-	if (*token == NULL)
-		return (NULL);
-	if ((*token)->type != TOKEN_WORD)
-		return (NULL);
-	node = build_node(AST_WORD);
-	node->data = ft_strdup((*token)->data);
-	node->left = NULL;
-	node->right = NULL;
-	*token = (*token)->next;
-	return (node);
+	ct = 0;
+	i = -1;
+	if (array == NULL)
+		return (ct);
+	while (array[++i])
+		ct++;
+	return (ct);
 }

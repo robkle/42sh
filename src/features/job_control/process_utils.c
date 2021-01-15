@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:05:30 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/18 18:20:10 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:56:40 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int last_process_status(t_job *job)
 	t_process *p_ptr;
 
 	p_ptr = job->first_process;
+	if (p_ptr == NULL)
+		return (0);
 	while (p_ptr && p_ptr->next)
 		p_ptr = p_ptr->next;
 	return (p_ptr->status);

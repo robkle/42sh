@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 19:00:18 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/12 20:11:31 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,16 @@ typedef enum
 	AST_io_here,
 	AST_filename,
 	AST_WORD,
+	AST_ASSIGNMENT_WORD,
 }	t_astnode_type;
 
 typedef struct			s_astnode
 {
 	int					type;
-	int					exitcode; // what is this?
 	char				*data;
 	struct s_astnode	*left;
 	struct s_astnode	*right;
+	struct s_astnode	*middle;
 }						t_astnode;
 
 /*
@@ -308,6 +309,50 @@ typedef struct	s_history
 	int			hstsize;
 	char		savedfile[256];
 }				t_history;
+
+/*
+** struct for options in builtin
+*/
+
+
+
+// typedef struct		s_builtin_options
+// {
+// 	char			*opt_set;
+// 	char			set_len;
+// 	unsigned int	operand_count;
+// 	unsigned long	applied;
+// 	char			invalid_opt;
+// }					t_opt;
+
+
+
+typedef struct s_var
+{
+	char *name;
+	char *value;
+	char exported;
+} t_var;
+
+typedef struct		s_builtin_options
+{
+	char			*opt_set;
+	// char			set_len; // non need
+	// unsigned int	operand_count;
+	// unsigned long	applied;
+	int				opt;
+}					t_opt;
+
+#define BUILTIN_EXPORT_OPT_SET "p"
+#define EXPORT_OPT_P 1
+
+typedef	struct			s_export
+{
+	char			*opt_set;
+	int				opt;
+	char			synopsis;
+	char			*av[4096];
+}					t_export;
 
 /*
 ** Alias struct

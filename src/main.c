@@ -6,30 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/08 03:28:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/12 22:15:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static char		**set_env(char **sample)
-{
-	char	**env;
-	int		i;
-
-	i = -1;
-	while (sample[++i])
-		NULL;
-	env = (char**)malloc(sizeof(char*) * (i + 1));
-	i = -1;
-	while (sample[++i])
-	{
-		env[i] = (char*)malloc(sizeof(char) * PATH_MAX);
-		ft_strcpy(env[i], sample[i]);
-	}
-	env[i] = NULL;
-	return (env);
-}
 
 /*
 void		ft_execute(char *input)
@@ -137,7 +118,7 @@ char *get_command(t_lex_value lex_value)
 			cmd = delete_line_feed_at_the_end_of_the_cmd_string(cmd);
 			phase[i] = PHASE_CMD;
 		}
-		if (phase[i] == PHASE_CMDSUBST)
+		if (phase[i] == PHASE_CMDSUBST) // debug
 			cmd = delete_line_feed_at_the_end_of_the_cmd_string(cmd);
 	}
 	return (cmd);
@@ -211,7 +192,7 @@ static int		shell(void)
 		if (find_heredoc(ast) == EXIT_FAILURE)
 			continue ;
 		g_shell.first_heredoc = g_shell.heredoc_lst;
-		// printBinaryTree(ast);
+		printBinaryTree(ast);
 		executor(ast);
 	}
 	return (0);
@@ -223,6 +204,7 @@ static int		shell(void)
 **	Non-interactive shell:
 ** 		Todo: define macros for errno No.5 and NO.25 
 */
+
 int				init_shell(char **envp)
 {
 	/*
@@ -238,7 +220,8 @@ int				init_shell(char **envp)
 	/*
 	** init environment variable
 	*/
-	g_shell.env = set_env(envp);	
+	g_shell.env = set_env(envp);
+	g_shell.intern_var = set_var(envp);
 	if (!(ft_getenv("TERM")))
 	{
 		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);

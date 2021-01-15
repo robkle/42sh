@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/06 20:44:38 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 09:24:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ void	ft_swap(int *nums);
 int 	ft_lstlen(t_list *head);
 int	jump_quote(char *input, int *i, char quote_type);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
-char *ft_getenv(const char *name);
 char *ft_strbuilder(int argc, char *str, ...);
 char *ft_strbuilder_char(char *old, char c);
 int ft_tcsetpgrp (int fd, pid_t pgrp_id);
 pid_t ft_tcgetpgrp (int fd);
 int		ft_isspace(int c);
-void	ft_arraydel(char **string_array);
+int ft_arraylen(char **array);
 void	ft_lstdel_strdel(t_list **alst);
 
 #endif

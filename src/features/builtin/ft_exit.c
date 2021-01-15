@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/05 16:21:43 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 11:09:30 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,18 @@ int			ft_exit(int opt)
 	/*
 	** history part
 	*/
-	// append_history();
-	// delete_save_history();
-	// ft_arraydel(g_shell.history->hist);
-	// free(g_shell.history);
+	append_history();
+	delete_save_history();
+	ft_arraydel(g_shell.history->hist);
+	free(g_shell.history);
 	/*
 	** delete enviroment
 	*/
 	delete_enviroment(g_shell.env);
+	/*
+	** delete intern var
+	*/
+	clean_table_intern_var(g_shell.intern_var);
 	/*
 	** @ delete job
 	** if there is a job in the list, first update the status of all the job

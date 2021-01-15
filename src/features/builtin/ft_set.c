@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   word.c                                             :+:      :+:    :+:   */
+/*   ft_set.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 09:17:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/09 01:49:50 by dthan            ###   ########.fr       */
+/*   Created: 2021/01/09 03:36:20 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/15 09:59:41 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_astnode		*word(t_token **token)
+int ft_set(void)
 {
-	t_astnode	*node;
+	int i;
 
-	if (*token == NULL)
-		return (NULL);
-	if ((*token)->type != TOKEN_WORD)
-		return (NULL);
-	node = build_node(AST_WORD);
-	node->data = ft_strdup((*token)->data);
-	node->left = NULL;
-	node->right = NULL;
-	*token = (*token)->next;
-	return (node);
+	i = -1;
+	while (g_shell.intern_var[++i])
+		if (g_shell.intern_var[i]->name && g_shell.intern_var[i]->value)
+			ft_printf("%s=%s\n", g_shell.intern_var[i]->name, g_shell.intern_var[i]->value);
+	return (EXIT_SUCCESS);
 }

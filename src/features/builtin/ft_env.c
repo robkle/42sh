@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:20:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/14 10:22:28 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/12 17:38:43 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ int			ft_env(void)
 
 	i = -1;
 	while (g_shell.env[++i])
-	{
-		ft_putstr(g_shell.env[i]);
-		ft_putstr("\n");
-	}
+		ft_printf("%s\n", g_shell.env[i]);
 	return (EXIT_SUCCESS);
 }

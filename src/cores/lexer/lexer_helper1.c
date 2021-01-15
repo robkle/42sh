@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/27 00:18:15 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/12 17:51:42 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,23 @@ int	is_made_of_digits(char *data)
 		if (!ft_isdigit(data[i]))
 			return (0);
 	return (1);
+}
+
+int is_assignment_token(char *str, t_token *prev_token)
+{
+	int i;
+
+	if (prev_token && !is_control_op_not_newline(prev_token->type) && prev_token->type != TOKEN_ASSIGNMENT_WORD)
+		return (0);
+	i = -1;
+	if (str[0] == '=')
+		return (0);
+	while (str[++i])
+	{
+		if ((str[i] == '"' || str[i] == '\'') && is_real_quote(str, i))
+			jump_quote(str, &i, str[i]);
+		else if (str[i] == '=')
+			return (1);
+	}
+	return (0);
 }

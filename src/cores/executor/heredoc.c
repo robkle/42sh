@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 18:52:08 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/12 00:24:14 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,15 @@ static void			add_heredoc_into_list(t_heredoc *node, t_heredoc **list)
 {
 	t_heredoc *ptr;
 
-	if (node == NULL || *list == NULL)
-		return ;
-	ptr = *list;
-	while (ptr->next)
-		ptr = ptr->next;
-	ptr->next = node;
+	if (*list == NULL)
+		*list = node;
+	else
+	{
+		ptr = *list;
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next = node;
+	}
 }
 
 static int			apply_heredoc(t_astnode *here_end)
@@ -89,19 +92,19 @@ static int			apply_heredoc(t_astnode *here_end)
 	node = ft_memalloc(sizeof(t_heredoc));
 	node->doc = current_heredoc;
 	node->next = NULL;
-	if (g_shell.first_heredoc == NULL)
-		g_shell.heredoc_lst = node;
-	else
-		add_heredoc_into_list(node, &g_shell.heredoc_lst);
+	add_heredoc_into_list(node, &g_shell.heredoc_lst);
 	return (EXIT_SUCCESS);
 }
 
 int				find_heredoc(t_astnode *ast)
 {
-	if (ast->type == AST_complete_command)
+	if (ast == NULL)
+		return (EXIT_SUCCESS);
+	else if (ast->type == AST_complete_command)
 		return (find_heredoc(ast->left));
-	else if (ast->type == AST_list || ast->type == AST_and_or || \
-			ast->type == AST_pipe_sequence || ast->type == AST_cmd_suffix)
+	else if (ast->type == AST_list ||
+			ast->type == AST_and_or ||
+			ast->type == AST_pipe_sequence)
 	{
 		if (find_heredoc(ast->left) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -109,6 +112,12 @@ int				find_heredoc(t_astnode *ast)
 	}
 	else if (ast->type == AST_simple_command)
 		return (find_heredoc(ast->right));
+	else if (ast->type == AST_cmd_suffix)
+	{
+		if (find_heredoc(ast->left) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		return (find_heredoc(ast->right));
+	}
 	else if (ast->type == AST_io_redirect)
 		return (find_heredoc(ast->left));
 	else if (ast->type == AST_io_here && ft_strequ(ast->data, "<<"))

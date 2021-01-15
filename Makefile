@@ -79,6 +79,8 @@ PARSER_FILE += AST/file_name.c
 PARSER_FILE += AST/io_here.c
 PARSER_FILE += AST/here_end.c
 PARSER_FILE += AST/word.c
+PARSER_FILE += AST/assignment_word.c
+PARSER_FILE += AST/cmd_prefix.c
 PARSER_FILE += AST/ast_tool.c
 PARSER := $(addprefix $(PARSER_DIR)/,$(PARSER_FILE))
 #Executor
@@ -99,6 +101,8 @@ EXECUTOR_FILE += execute_ast/execute_simple_command.c
 EXECUTOR_FILE += execute_ast/execute_cmd_name.c
 EXECUTOR_FILE += execute_ast/execute_cmd_suffix.c
 EXECUTOR_FILE += execute_ast/execute_io_redirect.c
+EXECUTOR_FILE += execute_ast/execute_cmd_prefix.c
+EXECUTOR_FILE += execute_ast/execute_assignment_word.c
 EXECUTOR_FILE += handle_redirect.c
 EXECUTOR_FILE += redirects_great.c
 EXECUTOR_FILE += redirects_less.c
@@ -153,6 +157,9 @@ BUILT_IN_FILE += ft_bg.c
 BUILT_IN_FILE += ft_alias.c
 BUILT_IN_FILE += ft_unalias.c
 BUILT_IN_FILE += ft_alias_utilities/ft_alias_utils.c
+BUILT_IN_FILE += ft_set.c
+BUILT_IN_FILE += ft_unset.c
+BUILT_IN_FILE += ft_export.c
 BUILT_IN := $(addprefix $(BUILT_IN_DIR)/,$(BUILT_IN_FILE))
 # Job control
 JOB_CONTROL_DIR := $(FEATURES_DIR)/job_control
@@ -210,6 +217,11 @@ AUTO_COMPLETION_FILE += auto_command.c
 AUTO_COMPLETION_FILE += auto_add_one_extra_char.c
 AUTO_COMPLETION_FILE += auto_add_list_on_spot.c
 AUTO_COMPLETION := $(addprefix $(AUTO_COMPLETION_DIR)/,$(AUTO_COMPLETION_FILE))
+# Intern var and environment var
+INTERN_ENVIRONMENT_VAR_DIR := $(FEATURES_DIR)/intern_and_environment_var
+INTERN_ENVIRONMENT_VAR_FILE += environment_var.c
+INTERN_ENVIRONMENT_VAR_FILE += internal_var.c
+INTERN_ENVIRONMENT_VAR = $(addprefix $(INTERN_ENVIRONMENT_VAR_DIR)/,$(INTERN_ENVIRONMENT_VAR_FILE))
 # SUM-UP FEATUREs
 FEATURES += $(BUILT_IN)
 FEATURES += $(HISTORY_MANAGEMENT)
@@ -219,6 +231,7 @@ FEATURES += $(SIGNAL)
 FEATURES += $(EXPANSION)
 FEATURES += $(AUTO_COMPLETION)
 FEATURES += $(INHIBITOR)
+FEATURES += $(INTERN_ENVIRONMENT_VAR)
 ########################### Create utility_FILE files ##############################
 UTILITY_DIR := src/utility
 UTILITY_FILE += get_var.c
@@ -241,6 +254,7 @@ UTILITY_FILE += ft_strbuilder_char.c
 UTILITY_FILE += ft_tcsetpgrp.c
 UTILITY_FILE += ft_tcgetpgrp.c
 UTILITY_FILE += ft_lstdel_strdel.c
+UTILITY_FILE += ft_arraylen.c
 UTILITY := $(addprefix $(UTILITY_DIR)/,$(UTILITY_FILE))
 
 ############################ SUM-UP SOURCE FILES ##############################
