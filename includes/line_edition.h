@@ -50,8 +50,8 @@
 # define EOF_VALUE "\x04"
 
 # define TAB_KEY "\t"
-// # define CTRL_R_KEY "" history search add later
-// # define ESC_KEY "" add later history search
+# define CTRL_R_KEY "\x12"
+# define ESC_KEY "\x1b"
 // # define DELETE_KEY "" add later
 
 // void	ft_get_line(t_l *l);

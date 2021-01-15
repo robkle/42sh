@@ -104,63 +104,43 @@ static void		ft_split_exp(char **exp_split, char *str)
 	}
 }
 
-int		ft_hist_exp(char **line)
+static void	ft_hist_exp_quote(char c, int *q, t_prompt pr)
+{
+	if (pr == PROMPT_QUOTE)
+		*q = 1;
+	else if (pr == PROMPT_QUOTE)
+		*q = 2;
+	else if (c == 39 && *q != 2)
+		*q = !*q ? 1 : 0;
+	else if (c == 34 && *q != 1)
+		*q = !*q ? 2 : 0;
+}		
+
+int		ft_hist_exp(char **line, t_prompt pr)
 {
 	char *str;
 	int		i;
+	int		q;
 	char	*split[2];
 	char	*exp_split[2];
 
+	q = 0;
 	i = -1;
 	str = *line;
 	while (str[++i])
 	{
-		if (str[i] == '!' && \
-			str[i + 1] && \
-			str[i + 1] != '=' &&\
-			str[i + 1] != '(' && \
-			!ft_isspace(str[i + 1]))
+		ft_hist_exp_quote(str[i], &q, pr);
+		if (!(q % 2) && str[i] == '!' && str[i + 1] && str[i + 1] != '=' && \
+			str[i + 1] != '(' && !ft_isspace(str[i + 1]))
 		{
 			split[0] = ft_strsub(str, 0, i);
 			split[1] = ft_strdup(&str[i]);
 			ft_split_exp(exp_split, split[1]);
 			if (!ft_expand_exp(line, split, exp_split))
 				return (0);
-			ft_hist_exp(line);
+			ft_hist_exp(line, pr);
 			return (1);
 		}
 	}
 	return (0);
 }
-
-/*
-int is_history_expansion(char *str)
-{
-	int		i;
-	char	*split[2];
-	char	*exp_split[2];
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '\'' && is_real_quote(str, i))
-		{
-			jump_quote(str, &i, str[i]);
-			if (str == '\0')
-				break;
-		}
-		else if (str[i] == '!' && str[i + 1] &&
-			str[i + 1] != '=' && str[i + 1] != '(' && !ft_isspace(str[i + 1]))
-		{
-			split[0] = ft_strsub(str, 0, i);
-			split[1] = ft_strdup(&str[i]);
-			ft_split_exp(exp_split, split[1]);
-			if (!ft_expand_exp(l, split, exp_split))
-				return (0);
-			ft_hist_exp(l);
-			return (1);
-		}
-	}
-	return (0);
-}
-*/
