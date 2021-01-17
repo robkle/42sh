@@ -254,4 +254,17 @@ typedef struct			s_alias
 	char *name;
 }						t_alias;
 
+/*
+** Hash struct
+*/
+
+typedef struct			s_hash
+{
+	char *name;
+	char *path;
+	int hits;
+	struct s_hash	*next;
+	struct s_hash	*prev;
+}						t_hash;
+
 #endif

@@ -53,6 +53,7 @@ int is_builtin(char *cmd_name)
 		ft_strequ(cmd_name, "jobs") || \
 		ft_strequ(cmd_name, "fg") || \
 		ft_strequ(cmd_name, "bg") || \
+		ft_strequ(cmd_name, "hash") || \
 		ft_strequ(cmd_name, "echo"))
 		return (1);
 	return (0);
@@ -84,6 +85,8 @@ int exec_builtin(t_process *p)
 	// 	return (ft_hash(p));
 	else if (ft_strequ(p->av[0], "echo"))
 		return (ft_echo(p));
+	else if (ft_strequ(p->av[0], "hash"))
+		return (ft_hash(p));
 	return (EXIT_FAILURE);
 }
 
@@ -131,6 +134,7 @@ int is_execute_on_parent_process(int foreground, char *cmd_name)
 		ft_strequ(cmd_name, "jobs") || \
 		ft_strequ(cmd_name, "fg") || \
 		ft_strequ(cmd_name, "bg") || \
+		ft_strequ(cmd_name, "hash") || \
 		ft_strequ(cmd_name, "fc"))
 		return (1);
 	return (0);
@@ -157,6 +161,8 @@ int lauch_process_which_can_change_shell(t_process *p)
 	else if (ft_strequ(p->av[0], "jobs"))
 		return (ft_jobs(p));
 	else if (ft_strequ(p->av[0], "fc"))
+		return (ft_fc(p));
+	else if (ft_strequ(p->av[0], "hash"))
 		return (ft_fc(p));
 	return (EXIT_FAILURE);
 }

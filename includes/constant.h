@@ -18,6 +18,7 @@
  * @ [READ_END = 0] and [WRITE_END = 1], using in pipe
  * @ [PARENT = 1] and [CHILD 0] mean parent process and child process
 */
+# define MAX_HASH 200
 # define MAX_ARGV 256
 # define READ_END 0
 # define WRITE_END 1

@@ -62,6 +62,7 @@ typedef struct			s_shell
 	t_history			*history;
 	t_alias				**alias;
 	char				*last_alias;
+	t_hash				**hashtable;
 }                       t_shell;
 
 t_shell     g_shell;

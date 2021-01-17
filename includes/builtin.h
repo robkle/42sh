@@ -75,6 +75,8 @@ int		ft_unalias(t_process *c);
 ** End Alias built-in
 */
 
+int     ft_hash(t_process *c);
+
 /*
 ** =============================== Utils ===================================
 */
