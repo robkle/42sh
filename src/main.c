@@ -139,9 +139,8 @@ int				init_shell(char **envp)
 	/*
 	** init hash
 	*/
-	g_shell.hashtable = (t_hash**)malloc(MAX_HASH * sizeof(t_hash*) + 1);
-	g_shell.hashtable[0] = NULL;
-
+	//g_shell.hashtable = (t_hash**)malloc(MAX_HASH * sizeof(t_hash*) + 1);
+	//g_shell.hashtable[MAX_HASH] = NULL;
 	/*
 	** promp stuff here
 	*/

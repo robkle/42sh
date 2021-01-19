@@ -75,7 +75,15 @@ int		ft_unalias(t_process *c);
 ** End Alias built-in
 */
 
+/*
+** Hash built-in
+*/
 int     ft_hash(t_process *c);
+void     add_hashentry(char *name, char *path);
+unsigned int     hash_index(char *name);
+/*
+** End Hash built-in
+*/
 
 /*
 ** =============================== Utils ===================================
@@ -83,8 +91,9 @@ int     ft_hash(t_process *c);
 
 int		is_in_path(t_process *c);
 char	*build_path(t_process *c);
-int		make_child_path(t_process *c);
+char	*make_child_path(t_process *c);
 int		make_child_binary(t_process *c);
+int     make_child_path_sub(t_process *c, char buf[]);
 int		possible_to_access_dir(t_process *c);
 int		possible_to_access_file(t_process *c);
 int		is_builtin_printing(char *comm);
@@ -94,5 +103,7 @@ int		builtins_not_printing(t_process *coms);
 char	*set_value(char *argv);
 char	*set_name(char *argv);
 void	sort_alias_list(t_alias **aliaslist);
+char	*search_path(char *name, char *path);
+char	*find_executable(char *name);
 
 #endif

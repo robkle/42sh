@@ -59,6 +59,25 @@ int is_builtin(char *cmd_name)
 	return (0);
 }
 
+char *is_in_hashtable(char *name)
+{
+	int index;
+	t_hash *tmp;
+
+	index = hash_index(name);
+	tmp = g_shell.hashtable[index];
+	while(tmp != NULL)
+	{
+		if (ft_strcmp(tmp->name, name) == 0)
+		{
+			tmp->hits++;
+			return (tmp->path);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
 int exec_builtin(t_process *p)
 {
 	if (ft_strequ(p->av[0], "exit"))
@@ -90,20 +109,38 @@ int exec_builtin(t_process *p)
 	return (EXIT_FAILURE);
 }
 
-int lauch_process(t_process *p)
+int		str_chr(char *str, int c)
 {
-	if (is_builtin(p->av[0]))
-		return (exec_builtin(p));
-	else if (is_in_path(p))
-		return (make_child_path(p));
-	else if (possible_to_access_file(p))
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int lauch_process(t_process *p, char *path)
+{
+	if (str_chr(p->av[0], '/') == 1 && possible_to_access_file(p))
 		return (make_child_binary(p));
+	else if (is_builtin(p->av[0]))
+		return (exec_builtin(p));
+	else if(path != NULL)
+		return (make_child_path_sub(p, path));
+	//else if (is_in_path(p))
+	//	return (make_child_path(p));
+	//else if (possible_to_access_file(p))
+	//	return (make_child_binary(p));
 	else if (p->av[0][0] != '.' && p->av[0][0] != '/')
 		ft_dprintf(2, "%s: %s: command not found\n", SHELL_NAME, p->av[0]);
 	return (EXIT_FAILURE);
 }
 
-void lauch_in_child_process(t_job *j, t_process *p)
+void lauch_in_child_process(t_job *j, t_process *p, char *path)
 {
 	(j->pipe_fd_closer[0]) ? close(j->pipe_fd_closer[0]) : 0;
 	(j->pipe_fd_closer[1]) ? close(j->pipe_fd_closer[1]) : 0;
@@ -118,7 +155,7 @@ void lauch_in_child_process(t_job *j, t_process *p)
 	if (j->foreground)
 		ft_tcsetpgrp(STDIN_FILENO, j->pgid);
 	sig_controller(CHILD);
-	exit(lauch_process(p));
+	exit(lauch_process(p, path));
 }
 
 int is_execute_on_parent_process(int foreground, char *cmd_name)
@@ -163,7 +200,7 @@ int lauch_process_which_can_change_shell(t_process *p)
 	else if (ft_strequ(p->av[0], "fc"))
 		return (ft_fc(p));
 	else if (ft_strequ(p->av[0], "hash"))
-		return (ft_fc(p));
+		return (ft_hash(p));
 	return (EXIT_FAILURE);
 }
 
@@ -204,13 +241,30 @@ int lauch_in_parent_process(t_process *p)
 	return (ret);
 }
 
-void fork_and_lauch_in_child_process(t_job* j, t_process *p)
+char *get_path(t_process *p)
+{
+	char *path;
+
+	path = NULL;
+	if (str_chr(p->av[0], '/') == 1)
+		return (NULL);
+	if ((path = is_in_hashtable(p->av[0])))
+		return (path);
+	else
+	{
+		if ((path = find_executable(p->av[0])) != NULL)
+			add_hashentry(p->av[0], path);
+		return (path);
+	}
+}
+
+void fork_and_lauch_in_child_process(t_job* j, t_process *p, char *path)
 {
 	pid_t pid;
 
 	pid = fork();
 	if (pid == 0)
-		lauch_in_child_process(j, p);
+		lauch_in_child_process(j, p, path);
 	else if (pid < 0)
 	{
 		ft_putstr_fd("Fork Failed\n" ,2);
@@ -222,11 +276,17 @@ void fork_and_lauch_in_child_process(t_job* j, t_process *p)
 
 void	lauch_simple_command(t_job *j, t_process *p)
 {	
+	char *path;
+
+	path = NULL;
 	if (is_execute_on_parent_process(j->foreground, p->av[0]))
 	{
 		p->status = lauch_in_parent_process(p);
 		p->completed = COMPLETED;
 	}
 	else
-		fork_and_lauch_in_child_process(j, p);
+	{
+		path = get_path(p);
+		fork_and_lauch_in_child_process(j, p, path);
+	}
 }

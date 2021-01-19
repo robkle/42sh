@@ -12,6 +12,19 @@
 
 #include "shell.h"
 
+void	destroy_arr(char **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
 void    remove_hashentries()
 {
     int i;
@@ -20,6 +33,8 @@ void    remove_hashentries()
     i = 0;
     while (g_shell.hashtable[i] != NULL)
     {
+		if (g_shell.hashtable[i])
+		{
 	    while (g_shell.hashtable[i] != NULL)
 	    {
 		    tmp = g_shell.hashtable[i];
@@ -28,10 +43,13 @@ void    remove_hashentries()
             free(tmp->path);
 		    free(tmp);
 	    }
-        free (g_shell.hashtable[i]);
+        //free (g_shell.hashtable[i]);
+		}
         i++;
     }
-    free(g_shell.hashtable);
+   // free(g_shell.hashtable);
+	//g_shell.hashtable = (t_hash**)malloc(MAX_HASH * sizeof(t_hash*) + 1);
+	//g_shell.hashtable[MAX_HASH] = NULL;
 }
 
 void    print_hashtable()
@@ -40,15 +58,18 @@ void    print_hashtable()
     t_hash *tmp;
 
     i = 0;
-    ft_printf("hits     command"); //precision ?
-    while (g_shell.hashtable[i] != NULL)
+    ft_printf("hits     command\n"); //precision ?
+    while (i < MAX_HASH)
     {
+		if (g_shell.hashtable[i])
+		{
         tmp = g_shell.hashtable[i];
-	    while (tmp->next != NULL)
+	    while (tmp != NULL)
 	    {
             ft_printf("%.4d   %s\n", tmp->hits, tmp->path);
             tmp = tmp->next;
 	    }
+		}
         i++;
     }
 }
@@ -93,7 +114,7 @@ void     add_hashentry(char *name, char *path)
     t_hash *tmp;
 
     index = hash_index(name);
-    if (new = create_hash_node(name, path, 0))
+    if ((new = create_hash_node(name, path, 0)))
     {
         tmp = g_shell.hashtable[index];
         if (g_shell.hashtable[index] == NULL)
@@ -148,7 +169,7 @@ char	*find_executable(char *name)
 	int		i;
 
 	i = 0;
-	if ((path = get_env_value("PATH", g_shell.env)))
+	if ((path = ft_getenv("PATH")))
 	{
 		if ((paths = ft_strsplit(path, ':')))
 		{
@@ -156,26 +177,29 @@ char	*find_executable(char *name)
 			{
 				if ((file_path = search_path(name, paths[i])) != NULL)
 				{
-					destroy_arr(paths);
+					//destroy_arr(paths);// en annan?
 					return (file_path);
 				}
 				i++;
 			}
 		}
-		destroy_arr(paths);
+		//destroy_arr(paths); en annan?
 	}
     //bash: hash: fs: not found
 	return (NULL);
 }
 
-int hash(t_process *c)
+int ft_hash(t_process *c)
 {
     int i;
     char *path;
 
     i = 0; //ska e böri från 1 ifall av[1] = command name.
     if (c->ac == 1)
+	{
 		print_hashtable();
+		return (0);
+	}
     if(c->ac == 2 && ft_strcmp(c->av[1], "-r") == 0)
         remove_hashentries();
     else if (c->ac != 2 && ft_strcmp(c->av[1], "-r") == 0)
@@ -187,7 +211,7 @@ int hash(t_process *c)
     {
         while (c->av[i] != NULL)
         {
-            if (path = find_executable(c->av[i])) // borde det vara om / finns i namnet check
+            if ((path = find_executable(c->av[i]))) // borde det vara om / finns i namnet check
             {
                 add_hashentry(c->av[i], path); //status som ska returnas?
                 free(path);
