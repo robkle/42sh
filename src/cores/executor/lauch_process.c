@@ -95,6 +95,8 @@ int exec_builtin(t_process *p)
 
 int lauch_process(t_process *p)
 {
+	if ((ft_arx(p)) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (is_builtin(p->av[0]))
 		return (exec_builtin(p));
 	else if (is_in_path(p))

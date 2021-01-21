@@ -30,6 +30,7 @@
 # include <stdio.h> // for perror, need to be delete when replacing the error management
 
 # include "struct.h"
+# include "arx.h"
 # include "ast.h"
 # include "token.h"
 # include "utilities.h"
