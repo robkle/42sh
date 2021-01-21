@@ -79,8 +79,11 @@ int		ft_unalias(t_process *c);
 ** Hash built-in
 */
 int     ft_hash(t_process *c);
-void     add_hashentry(char *name, char *path);
+void     add_hashentry(char *name, char *path, int hits);
 unsigned int     hash_index(char *name);
+void	remove_hashentries(void);
+t_hash			*create_hash_node(char *name, char *path, int hits);
+unsigned int	hash_index(char *name);
 /*
 ** End Hash built-in
 */
@@ -105,5 +108,6 @@ char	*set_name(char *argv);
 void	sort_alias_list(t_alias **aliaslist);
 char	*search_path(char *name, char *path);
 char	*find_executable(char *name);
+void	destroy_arr(char **arr);
 
 #endif

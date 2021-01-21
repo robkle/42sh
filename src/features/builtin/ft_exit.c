@@ -48,6 +48,11 @@ int			ft_exit(int opt)
 		update_status();
 		delete_job(g_shell.first_job, 1);
 	}
+	/*
+	** delete hashtable
+	*/
+	remove_hashentries();
+	
 	exit(opt);
 	return (EXIT_FAILURE);
 }

@@ -154,6 +154,7 @@ BUILT_IN_FILE += ft_alias.c
 BUILT_IN_FILE += ft_unalias.c
 BUILT_IN_FILE += ft_alias_utilities/ft_alias_utils.c
 BUILT_IN_FILE += ft_hash.c
+BUILT_IN_FILE += ft_hash_utilities/ft_hash_utils.c
 BUILT_IN := $(addprefix $(BUILT_IN_DIR)/,$(BUILT_IN_FILE))
 # Job control
 JOB_CONTROL_DIR := $(FEATURES_DIR)/job_control
