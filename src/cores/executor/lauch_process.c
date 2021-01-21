@@ -95,8 +95,6 @@ int exec_builtin(t_process *p)
 
 int lauch_process(t_process *p)
 {
-	if ((ft_arx(p)) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	if (is_builtin(p->av[0]))
 		return (exec_builtin(p));
 	else if (is_in_path(p))
@@ -142,7 +140,8 @@ int is_execute_on_parent_process(int foreground, char *cmd_name)
 		ft_strequ(cmd_name, "fc") ||
 		ft_strequ(cmd_name, "export") ||
 		ft_strequ(cmd_name, "set") ||
-		ft_strequ(cmd_name, "unset"))
+		ft_strequ(cmd_name, "unset") ||
+		ft_strequ(cmd_name, "echo"))
 		return (1);
 	return (0);
 }
@@ -175,6 +174,8 @@ int lauch_process_which_can_change_shell(t_process *p)
 		return (ft_set());
 	else if (ft_strequ(p->av[0], "unset"))
 		return (ft_unset(p->ac, p->av));
+	else if (ft_strequ(p->av[0], "echo"))
+		return (ft_echo(p));
 	return (EXIT_FAILURE);
 }
 
@@ -205,8 +206,8 @@ int lauch_in_parent_process(t_process *p)
 	(p->stdin != 0) ? std[SAVED_STDIN] = dup(STDIN_FILENO) : 0;
 	(p->stdout != 1) ? std[SAVED_STDOUT] = dup(STDOUT_FILENO) : 0;
 	(p->stderr != 2) ? std[SAVED_STDERR] = dup(STDERR_FILENO) : 0;
-	// if (handle_expansion(p) == EXIT_FAILURE)
-	//  	return(EXIT_FAILURE);
+	if (handle_expansion(p) == EXIT_FAILURE)
+	 	return(EXIT_FAILURE);
 	if (handle_redirection(p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	set_stdin_stdout_stderr_channels(p->stdin, p->stdout, p->stderr);
