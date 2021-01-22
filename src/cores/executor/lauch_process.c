@@ -185,12 +185,12 @@ static void reset_stdin_stdout_stderr_channels(t_process *p, int std[3])
 	}
 	if (p->stdout != 1)
 	{
-		dup2(std[SAVED_STDIN], STDOUT_FILENO);
+		dup2(std[SAVED_STDOUT], STDOUT_FILENO);
 		close(std[STDOUT_FILENO]);
 	}
 	if (p->stderr != 2)
 	{
-		dup2(std[SAVED_STDIN], STDERR_FILENO);
+		dup2(std[SAVED_STDERR], STDERR_FILENO);
 		close(std[STDERR_FILENO]);
 	}
 }
