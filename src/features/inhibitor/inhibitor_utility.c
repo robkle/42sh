@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 17:12:19 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 19:24:00 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/24 22:32:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ static int count_backslash(char range[3])
 	return (ct);
 }
 */
-int is_real_quote(char *str, int i)
-{
-	int ct;
+// int is_real_quote(char *str, int i)
+// {
+// 	int ct;
 
-	if (i == 0)
-		return (1);
-	ct = 0;
-	while (i-- >= 0 && str[i] == '\\')
-		ct++;
-	if (ct % 2 == 0)
-		return (1);
-	return (0);
-}
+// 	if (i == 0)
+// 		return (1);
+// 	ct = 0;
+// 	while (i-- >= 0 && str[i] == '\\')
+// 		ct++;
+// 	if (ct % 2 == 0)
+// 		return (1);
+// 	return (0);
+// }
 
 char *delete_line_feed_at_the_end_of_the_cmd_string(char *cmd)
 {

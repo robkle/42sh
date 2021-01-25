@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/09 03:20:42 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/23 10:26:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,52 +71,6 @@ int			syntax_analysis(t_token *curr, t_token *prev)
 	}
 	return (EXIT_SUCCESS);
 }
-
-/*
-t_token		*lexer_and_parser(char *input)
-{
-	t_token		*token_lst;
-	t_token		*current_token;
-	t_token		*prev_token;
-	int			i;
-
-	i = 0;
-	token_lst = NULL;
-	prev_token = NULL;
-	while (input[i])
-	{
-		if (input[i] == '\n')
-		{
-			current_token = non_operator_token(ft_strdup("newline"), TOKEN_NEWLINE);
-			i++;
-		}
-		else if (is_metacharacter(input[i]))
-		{
-			if (input[i] == ' ' || input[i] == '\t')
-			{
-				i++;
-				continue;
-			}
-			current_token = get_operator_token(input, &i);
-		}
-		else
-			current_token = get_non_operator_token(input, &i);
-		if (alias_substitution(current_token, &prev_token, &token_lst) != 1)
-		{
-			add_token_into_token_list(&token_lst, current_token);
-			if (!parser(current_token, prev_token))
-			{
-				clear_token(token_lst);
-				return (NULL);
-			}
-			prev_token = current_token;
-		}
-	}
-	print_token(token_lst);
-	return (token_lst);
-}
-*/
-// working
 
 t_lex_value lex_continue_or_not(t_token *pre_token, t_lex_value lex_value)
 {

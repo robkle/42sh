@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/01/15 09:44:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/23 08:51:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ char *get_command(t_lex_value lex_value);
 
 void print_prompt(t_prompt prompt_type);
 int prompt_len(t_prompt prompt_type);
+
+int is_real_character(char *str, int i); // need to move later
 
 /*
 **	Parser

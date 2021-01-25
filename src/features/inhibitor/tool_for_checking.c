@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/04 06:21:11 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/31 18:23:50 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/24 22:31:17 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_open_dquote(char *input, int level, char *quote)
 	matched = 0;
 	while (input[i] && *quote == '\0')
 	{
-		if ((input[i] == '"' || input[i] == '\'') && is_real_quote(input, i))		
+		if ((input[i] == '"' || input[i] == '\'') && is_real_character(input, i))		
 		{
 			matched++;
 			*quote = input[i];
@@ -31,7 +31,7 @@ int	is_open_dquote(char *input, int level, char *quote)
 	}
 	while (input[i])
 	{
-		if ((input[i] == *quote) && is_real_quote(input, i))		
+		if ((input[i] == *quote) && is_real_character(input, i))		
 			matched++;
 		i++;
 	}

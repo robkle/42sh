@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 06:04:39 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/08 15:16:36 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/24 23:43:12 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,103 +191,18 @@ int tilde_expansion(t_process *p)
 }
 */
 
-int is_parameter_expansion(char *str)
-{
-	int i;
+// int is_parameter_expansion(char *str)
+// {
+// 	int i;
 
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '{' && is_real_parameter_expansion(str, i))
-			return (1);
-	}
-	return (0);
-}
-
-char *replace_replace(char *target, char *needle, char *replacement)
-{
-	char buffer[1024];
-	char *tmp;
-	char *insert_point;
-	char *p;
-
-	ft_bzero(buffer, 1024);
-	tmp = target;
-	insert_point = &buffer[0];
-	while(1) {
-		p = ft_strstr(tmp, needle);
-		if (p == NULL)
-		{
-			ft_strcpy(insert_point, tmp);
-			break;
-		}
-		ft_memcpy(insert_point, tmp, p - tmp);
-		insert_point += p - tmp;
-		ft_memcpy(insert_point, replacement, ft_strlen(replacement));
-		insert_point += ft_strlen(replacement);
-		tmp = p + ft_strlen(needle);
-	}
-	return (strdup(buffer));
-}
-
-int parameter_expansion_replace_redi(t_redi *redi)
-{
-	char *temp;
-	char *replacement;
-
-	temp = redi->word;
-	replacement = ft_itoa(g_shell.exit_status);
-	redi->word = replace_replace(temp, "${?}", replacement);
-	free(replacement);
-	free(temp);
-	if (is_parameter_expansion(redi->word))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-int parameter_expansion_in_redi(t_process *p)
-{
-	t_redi *redi_ptr;
-
-	redi_ptr = p->first_redi;
-	while (redi_ptr)
-	{
-		if (is_parameter_expansion(redi_ptr->word))
-			if (parameter_expansion_replace_redi(redi_ptr) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		redi_ptr = redi_ptr->next;
-	}
-	return (EXIT_SUCCESS);
-}
-
-int parameter_expansion_replace_av(char **av, int i)
-{
-	char *temp;
-	char *replacement;
-
-	temp = av[i];
-	replacement = ft_itoa(g_shell.exit_status);
-	av[i] = replace_replace(temp, "${?}", replacement);
-	free(replacement);
-	free(temp);
-	if (is_parameter_expansion(av[i]))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-int parameter_expansion_in_av(t_process *p)
-{
-	int i;
-
-	i = -1;
-	while (p->av[++i])
-	{
-		if (is_parameter_expansion(p->av[i]))
-			if (parameter_expansion_replace_av(p->av, i) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
+// 	i = -1;
+// 	while (str[++i])
+// 	{
+// 		if (str[i] == '{' && is_real_parameter_expansion(str, i))
+// 			return (1);
+// 	}
+// 	return (0);
+// }
 
 int parameter_expansion(t_process *p)
 {

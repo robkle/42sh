@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/12 17:51:42 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/24 22:31:44 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int is_assignment_token(char *str, t_token *prev_token)
 		return (0);
 	while (str[++i])
 	{
-		if ((str[i] == '"' || str[i] == '\'') && is_real_quote(str, i))
+		if ((str[i] == '"' || str[i] == '\'') && is_real_character(str, i))
 			jump_quote(str, &i, str[i]);
 		else if (str[i] == '=')
 			return (1);
