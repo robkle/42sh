@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 09:43:57 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/30 15:01:33 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/26 18:19:20 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
  * @ [PARENT = 1] and [CHILD 0] mean parent process and child process
 */
 # include <limits.h>
+# define MAX_HASH 200
 # define MAX_ARGV 256
 # define READ_END 0
 # define WRITE_END 1

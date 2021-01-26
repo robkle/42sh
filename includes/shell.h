@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/01/25 07:39:28 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/26 18:18:57 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct			s_shell
 	t_alias				**alias;
 	char				*last_alias;
 	unsigned int		exit_status;
+	t_hash				*hashtable[MAX_HASH];
 }                       t_shell;
 
 t_shell     g_shell;

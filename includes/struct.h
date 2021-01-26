@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/26 01:56:03 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/26 18:22:46 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,5 +387,18 @@ typedef enum
 	PE_SET_BUT_NULL,
 	PE_UNSET
 }t_parameter_expansion_type;
+
+/*
+** Hash struct
+*/
+
+typedef struct			s_hash
+{
+	char *name;
+	char *path;
+	int hits;
+	struct s_hash	*next;
+	struct s_hash	*prev;
+}						t_hash;
 
 #endif

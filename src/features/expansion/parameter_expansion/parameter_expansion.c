@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:24:07 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/26 07:10:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/26 07:49:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int parameter_expansion_replace_av(char **av, int i)
 	return (EXIT_SUCCESS);
 }
 
-// reordering av
+// reordering av?
 int parameter_expansion_in_av(t_process *p)
 {
 	int i;
