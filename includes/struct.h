@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/15 13:36:34 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/26 01:56:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,5 +365,27 @@ typedef struct			s_alias
 	char *value;
 	char *name;
 }						t_alias;
+
+/*
+** Parameter expansion struct
+*/
+
+typedef struct			s_parameter_expansion
+{
+	char				**valid_delimeter;
+	char				replacement[256];
+	char				expression[256];
+	char				parameter[256];
+	char				delimeter[3];
+	char				word[256];
+	char				needle[256];
+}						t_parameter_expansion;
+
+typedef enum
+{
+	PE_SET_AND_NOT_NULL,
+	PE_SET_BUT_NULL,
+	PE_UNSET
+}t_parameter_expansion_type;
 
 #endif
