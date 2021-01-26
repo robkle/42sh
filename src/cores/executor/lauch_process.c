@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/15 13:01:36 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/26 18:18:28 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** from left to right
 */
 
-static void dup_fd_channel(int oldfd, int newfd)
+static void	dup_fd_channel(int oldfd, int newfd)
 {
 	if (oldfd != newfd)
 	{
@@ -28,21 +28,21 @@ static void dup_fd_channel(int oldfd, int newfd)
 	}
 }
 
-static void set_stdin_stdout_stderr_channels(int infd, int outfd, int errfd)
+static void	set_stdin_stdout_stderr_channels(int infd, int outfd, int errfd)
 {
 	dup_fd_channel(infd, STDIN_FILENO);
 	dup_fd_channel(outfd, STDOUT_FILENO);
 	dup_fd_channel(errfd, STDERR_FILENO);
 }
 
-static void set_process_group_id(t_job *j, pid_t pid)
+static void	set_process_group_id(t_job *j, pid_t pid)
 {
 	if (j->pgid == 0)
 		j->pgid = pid;
 	setpgid(pid, j->pgid);
 }
 
-int is_builtin(char *cmd_name)
+int	is_builtin(char *cmd_name)
 {
 	if (ft_strequ(cmd_name, "exit") ||
 		ft_strequ(cmd_name, "cd") ||
@@ -55,12 +55,32 @@ int is_builtin(char *cmd_name)
 		ft_strequ(cmd_name, "bg") ||
 		ft_strequ(cmd_name, "echo") ||
 		ft_strequ(cmd_name, "set") ||
-		ft_strequ(cmd_name, "unset"))
+		ft_strequ(cmd_name, "unset") ||
+		ft_strequ(cmd_name, "hash"))
 		return (1);
 	return (0);
 }
 
-int exec_builtin(t_process *p)
+char	*is_in_hashtable(char *name)
+{
+	int		index;
+	t_hash	*tmp;
+
+	index = hash_index(name);
+	tmp = g_shell.hashtable[index];
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(tmp->name, name) == 0)
+		{
+			tmp->hits++;
+			return (tmp->path);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+int	exec_builtin(t_process *p)
 {
 	if (ft_strequ(p->av[0], "exit"))
 		ft_exit(EXIT_SUCCESS);
@@ -90,23 +110,43 @@ int exec_builtin(t_process *p)
 		return (ft_set());
 	else if (ft_strequ(p->av[0], "unset"))
 		return (ft_unset(p->ac, p->av));
+	else if (ft_strequ(p->av[0], "hash"))
+		return (ft_hash(p));
 	return (EXIT_FAILURE);
 }
 
-int lauch_process(t_process *p)
+int	str_chr(char *str, int c)
 {
-	if (is_builtin(p->av[0]))
-		return (exec_builtin(p));
-	else if (is_in_path(p))
-		return (make_child_path(p));
-	else if (possible_to_access_file(p))
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	lauch_process(t_process *p, char *path)
+{
+	if (str_chr(p->av[0], '/') == 1 && possible_to_access_file(p))
 		return (make_child_binary(p));
+	else if (is_builtin(p->av[0]))
+		return (exec_builtin(p));
+	else if (path != NULL)
+		return (make_child_path_sub(p, path));
+	//else if (is_in_path(p))
+	//	return (make_child_path(p));
+	//else if (possible_to_access_file(p))
+	//	return (make_child_binary(p));
 	else if (p->av[0][0] != '.' && p->av[0][0] != '/')
 		ft_dprintf(2, "%s: %s: command not found\n", SHELL_NAME, p->av[0]);
 	return (127);
 }
 
-void lauch_in_child_process(t_job *j, t_process *p)
+void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 {
 	(j->pipe_fd_closer[0]) ? close(j->pipe_fd_closer[0]) : 0;
 	(j->pipe_fd_closer[1]) ? close(j->pipe_fd_closer[1]) : 0;
@@ -121,10 +161,10 @@ void lauch_in_child_process(t_job *j, t_process *p)
 	if (j->foreground)
 		ft_tcsetpgrp(STDIN_FILENO, j->pgid);
 	sig_controller(CHILD);
-	exit(lauch_process(p));
+	exit(lauch_process(p, path));
 }
 
-int is_execute_on_parent_process(int foreground, char *cmd_name)
+int	is_execute_on_parent_process(int foreground, char *cmd_name)
 {
 	if (!foreground)
 		return (0);
@@ -140,12 +180,13 @@ int is_execute_on_parent_process(int foreground, char *cmd_name)
 		ft_strequ(cmd_name, "fc") ||
 		ft_strequ(cmd_name, "export") ||
 		ft_strequ(cmd_name, "set") ||
-		ft_strequ(cmd_name, "unset"))
+		ft_strequ(cmd_name, "unset") ||
+		ft_strequ(cmd_name, "hash"))
 		return (1);
 	return (0);
 }
 
-int lauch_process_which_can_change_shell(t_process *p)
+int	lauch_process_which_can_change_shell(t_process *p)
 {
 	if (ft_strequ(p->av[0], "exit"))
 		return (ft_exit(EXIT_SUCCESS));
@@ -173,10 +214,12 @@ int lauch_process_which_can_change_shell(t_process *p)
 		return (ft_set());
 	else if (ft_strequ(p->av[0], "unset"))
 		return (ft_unset(p->ac, p->av));
+	else if (ft_strequ(p->av[0], "hash"))
+		return (ft_hash(p));
 	return (EXIT_FAILURE);
 }
 
-static void reset_stdin_stdout_stderr_channels(t_process *p, int std[3])
+static void	reset_stdin_stdout_stderr_channels(t_process *p, int std[3])
 {
 	if (p->stdin != 0)
 	{
@@ -195,7 +238,7 @@ static void reset_stdin_stdout_stderr_channels(t_process *p, int std[3])
 	}
 }
 
-int lauch_in_parent_process(t_process *p)
+int	lauch_in_parent_process(t_process *p)
 {
 	int std[3];
 	int ret;
@@ -213,13 +256,30 @@ int lauch_in_parent_process(t_process *p)
 	return (ret);
 }
 
-void fork_and_lauch_in_child_process(t_job* j, t_process *p)
+char	*get_path(t_process *p)
+{
+	char *path;
+
+	path = NULL;
+	if (str_chr(p->av[0], '/') == 1)
+		return (NULL);
+	if ((path = is_in_hashtable(p->av[0])))
+		return (path);
+	else
+	{
+		if ((path = find_executable(p->av[0])) != NULL)
+			add_hashentry(p->av[0], path, 1);
+		return (path);
+	}
+}
+
+void	fork_and_lauch_in_child_process(t_job* j, t_process *p, char *path)
 {
 	pid_t pid;
 
 	pid = fork();
 	if (pid == 0)
-		lauch_in_child_process(j, p);
+		lauch_in_child_process(j, p, path);
 	else if (pid < 0)
 	{
 		ft_putstr_fd("Fork Failed\n" ,2);
@@ -231,11 +291,17 @@ void fork_and_lauch_in_child_process(t_job* j, t_process *p)
 
 void	lauch_simple_command(t_job *j, t_process *p)
 {	
+	char *path;
+
+	path = NULL;
 	if (is_execute_on_parent_process(j->foreground, p->av[0]))
 	{
 		p->status = lauch_in_parent_process(p);
 		p->completed = COMPLETED;
 	}
 	else
-		fork_and_lauch_in_child_process(j, p);
+	{
+		path = get_path(p);
+		fork_and_lauch_in_child_process(j, p, path);
+	}
 }

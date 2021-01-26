@@ -241,6 +241,11 @@ int				init_shell(char **envp)
 	g_shell.alias[0] = NULL;
 	g_shell.last_alias = NULL;
 	/*
+	** init hash
+	*/
+	//g_shell.hashtable = (t_hash**)malloc(MAX_HASH * sizeof(t_hash*) + 1);
+	//g_shell.hashtable[MAX_HASH] = NULL;
+	/*
 	** promp stuff here
 	*/
 	g_shell.signal_indicator = 0;

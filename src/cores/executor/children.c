@@ -28,13 +28,14 @@ int	make_child_binary(t_process *p)
 	return (EXIT_FAILURE);
 }
 
-static int	make_child_path_sub(t_process *c, char buf[])
+int	make_child_path_sub(t_process *c, char *path)
 {
-	execve(buf, c->av, g_shell.env);
+	execve(path, c->av, g_shell.env);
+	free(path);
 	return (EXIT_FAILURE);
 }
 
-int			make_child_path(t_process *c)
+char			*make_child_path(t_process *c)
 {
 	char	buf[PATH_MAX];
 	char	*path;
@@ -45,12 +46,12 @@ int			make_child_path(t_process *c)
 	if (access(buf, X_OK))
 	{
 		ft_dprintf(2, "%s: %s: Permission denied\n", SHELL_NAME, buf);
-		return (EXIT_FAILURE);
+		return (NULL);
 	}
 	ft_strcat(buf, "/");
 	ft_strcat(buf, c->av[0]);
 	if (!access(buf, X_OK))
-		return (make_child_path_sub(c, buf));
+		return (ft_strdup(buf));
 	ft_dprintf(2, "%s: %s: Permission denied\n", SHELL_NAME, buf);
-	return (EXIT_FAILURE);
+	return (NULL);
 }
