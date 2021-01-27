@@ -34,7 +34,6 @@ typedef enum	e_pr
 ** arx.c
 */
 int		ft_arx(t_process *p);
-void	ft_free_lst(t_st **lst);
 
 /*
 ** base.c
@@ -73,11 +72,6 @@ void	ft_intvar(t_st *stack, char *op);
 */
 void	ft_operand(t_st **infix);
 
-/*
-** main.c
-*/
-void	ft_free_lst(t_st **lst);
-
 /* 
 ** plusminus.c 
 */
@@ -99,5 +93,14 @@ void	ft_pop_stack(t_st **stack);
 void	ft_push_lst(t_st **infix, char *op, char *type);
 void	ft_push_stack(t_st **stack, char *op, char *type);
 t_st	*ft_last_link(t_st *lst);
+
+/* 
+** utils_exp.c 
+*/
+int		ft_expansion_len(char *exp);
+char	**ft_split_arx(char *arx, int index, int len);
+char	*ft_strcombine(char **exp, char *res);
+int		ft_arx_brackets(char *exp);
+void	ft_free_lst(t_st **lst);
 
 #endif 

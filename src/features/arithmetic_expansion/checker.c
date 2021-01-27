@@ -58,7 +58,7 @@ static int	ft_operator_check(t_st *infix, t_st *begin)
 			return (0);
 		}
 		tmp = ft_skip_space(infix->next, 1);	
-		if (!tmp && infix->op[0] != 's')
+		if ((!tmp || ft_strequ(tmp->type, "clbr")) && infix->op[0] != 's')
 		{
 			ft_print_error(OPEXP, infix, begin);
 			return (0);
