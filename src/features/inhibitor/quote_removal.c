@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 13:52:13 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/31 17:59:45 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/24 22:30:50 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,89 +16,6 @@
 // backslah
 // single quote
 // double quote
-
-// int is_control_x_character(char *str)
-// {
-// 	if (str[0] == 'c')
-// 		return (1);
-// 	return (0);
-// }
-/*
-char *remove_single_quote(char *str, int *i)
-{
-	char *new;
-
-	new = ft_strnew(0);
-	while(str[++*i] != '\'')
-	{
-		if (str[*i] == '\\')
-		{
-			if (is_ansi_c_quoting(&str[*i + 1]))
-			{
-				new = ft_strbuilder_char(new, replace_ansi_c_quoting(str[*i + 1]));
-				(*i) += 1;
-			}
-			else if (is_eight_bit_character_whose_value_is_octal_value(&str[*i + 1]))
-			{
-				new = ft_strbuilder_char(new, replace_octal_value(&str[*i + 1]));
-				(*i) += 3;
-			}
-			else if (is_eight_bit_character_whose_value_is_hexadecimal_value(&str[*i + 1]))
-			{
-				new = ft_strbuilder_char(new, replace_hex_value(&str[*i + 2]));
-				(*i) += 3;
-			}
-			else
-				new = ft_strbuilder_char(new, str[*i]);
-		}
-		else
-			new = ft_strbuilder_char(new, str[*i]);
-	}
-	return (new);
-}
-
-static char *remove_quote(char *str)
-{
-	int i;
-	char *new;
-
-	if (!str)
-		return (NULL);
-	i = -1;
-	new = ft_strnew(0);
-	while (str[++i])
-	{
-		if (str[i] == '\\')
-		 	continue ;
-		else if (str[i] == '\'')
-			new = ft_strjoin_and_free_2strings(new, remove_single_quote(str, &i));
-		// else if (str[i] == '"')
-		// 	new = ft_strjoin_and_free_2strings(new, remove_double_quote(str, &i));
-		else
-			new = ft_strbuilder_char(new, str[i]);
-	}
-	free(str);
-	return (new);
-}
-*/
-// static char *remove_quote(char *str)
-// {
-// 	int i;
-// 	char *new;
-
-// 	if (!str)
-// 		return (NULL);
-// 	i = -1;
-// 	new = ft_strnew(0);
-// 	while (str[++i])
-// 	{
-// 		if (str[i] == '\'' || str[i] == '"')
-// 			continue ;
-// 		new = ft_strbuilder_char(new, str[i]);
-// 	}
-// 	free(str);
-// 	return (new);
-// }
 
 /*
 ** algorithm for removing quote
@@ -117,7 +34,7 @@ char *remove_quoting(char *str, int *i)
 	j = 0;
 	while (str[++*i])
 	{
-		if (str[*i] == quote && is_real_quote(str, *i))
+		if (str[*i] == quote && is_real_character(str, *i))
 			break ;
 		buffer[j++] = str[*i];
 	}
@@ -135,7 +52,7 @@ static char *remove_quote(char *str)
 	new = ft_strnew(0);
 	while (str[++i])
 	{
-		if ((str[i] == '\'' ||  str[i] == '"') && is_real_quote(str, i))
+		if ((str[i] == '\'' ||  str[i] == '"') && is_real_character(str, i))
 		{
 			new = ft_strjoin_and_free_2strings(new, remove_quoting(str, &i));
 			continue;

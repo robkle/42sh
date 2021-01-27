@@ -6,34 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/15 14:20:55 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/25 07:37:48 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-/*
-void		ft_execute(char *input)
-{
-	t_token		*token_lst;
-	t_astnode	*ast;
-
-	ast = NULL;
-	if ((token_lst = lexer_and_parser(input)) != NULL)
-	{
-		if ((ast = syntax_analysis(token_lst)) != NULL)
-			executor(ast);
-		clear_token(token_lst);
-	}
-}
-*/
-/* Working
-*/
-
-/*
-** Ther will be 2 ouputs of a string
-**	string end with \n and string end with EOF
-*/
 
 void analyzing_phase(char *str, t_phase phase[], int *stack_pos)
 {
@@ -42,50 +19,52 @@ void analyzing_phase(char *str, t_phase phase[], int *stack_pos)
 
 	while (++i < len)
 	{
-		if (phase[*stack_pos] == PHASE_CMDSUBST)
-		{
-			if (str[i] == ')')
-				phase[(*stack_pos)--] = PHASE_CMD;
-			else if (str[i] == '(')
-				phase[++(*stack_pos)] = PHASE_CMDSUBST;
-			continue;
-		}
-		if (phase[*stack_pos] == PHASE_BRACEPARAM)
-		{
-			if (str[i] == '}')
-				phase[(*stack_pos)--] = PHASE_CMD;
-			else if (str[i] == '{')
-				phase[++(*stack_pos)] = PHASE_BRACEPARAM;
-			continue;
-		}
 		if (phase[*stack_pos] == PHASE_BACKSLASH)
 		{
-			phase[*stack_pos] = PHASE_CMD;
+			phase[(*stack_pos)--] = 0;
 			continue;
 		}
-		if (str[i] == '"' && is_real_quote(str, i))
+		if (str[i] == '"')
 		{
-			if (phase[*stack_pos] == PHASE_DQUOTE)
-				phase[*stack_pos] = PHASE_CMD;
-			else if (phase[*stack_pos] == PHASE_CMD)
-				phase[*stack_pos] = PHASE_DQUOTE;
+			if (!is_quoting_phase(phase[(*stack_pos)]))
+				phase[++(*stack_pos)] = PHASE_DQUOTE;
+			else if (phase[*stack_pos] == PHASE_DQUOTE)
+				phase[(*stack_pos)--] = 0;
 		}
-		else if (str[i] == '\'' && is_real_quote(str, i))
+		else if (str[i] == '\'')
 		{
-			if (phase[*stack_pos] == PHASE_QUOTE)
-				phase[*stack_pos] = PHASE_CMD;
-			else if (phase[*stack_pos] == PHASE_CMD)
-				phase[*stack_pos] = PHASE_QUOTE;
+			if (!is_quoting_phase(phase[(*stack_pos)]))
+				phase[++(*stack_pos)] = PHASE_QUOTE;
+			else if (phase[*stack_pos] == PHASE_QUOTE)
+				phase[(*stack_pos)--] = 0;
 		}
 		else if (str[i] == '\\')
 		{
-			if (phase[*stack_pos] == PHASE_CMD)
-				phase[*stack_pos] = PHASE_BACKSLASH;
+			if (!is_quoting_phase(phase[(*stack_pos)]))
+				phase[++(*stack_pos)] = PHASE_BACKSLASH;
 		}
-		else if (phase[*stack_pos] == PHASE_CMD && str[i] == '(' && is_real_parameter_expansion(str, i))
-			phase[++(*stack_pos)] = PHASE_CMDSUBST;
-		else if (phase[*stack_pos] == PHASE_CMD && str[i] == '{' && is_real_parameter_expansion(str, i))
-			phase[++(*stack_pos)] = PHASE_BRACEPARAM;
+		else if (str[i] == '{')
+		{
+			if ((phase[*stack_pos] == PHASE_CMD && i > 0 && str[i - 1] == '$' && is_real_character(str, i - 1)) ||
+				(phase[*stack_pos] == PHASE_BRACEPARAM && is_real_character(str, i)))
+				phase[++(*stack_pos)] = PHASE_BRACEPARAM;
+		}
+		else if (str[i] == '(')
+		{
+			if ((phase[*stack_pos] == PHASE_CMD && i > 0 && str[i - 1] == '$' && is_real_character(str, i - 1)) ||
+				(phase[*stack_pos] == PHASE_CMDSUBST && is_real_character(str, i)))
+				phase[++(*stack_pos)] = PHASE_CMDSUBST;
+		}
+		else if (str[i] == '}')
+		{
+			if (phase[*stack_pos] == PHASE_BRACEPARAM && is_real_character(str, i))
+				phase[(*stack_pos)--] = 0;
+		}
+		else if (str[i] == ')')
+		{
+			if (phase[*stack_pos] == PHASE_CMDSUBST && is_real_character(str, i))
+				phase[(*stack_pos)--] = 0;
+		}
 	}
 }
 
@@ -104,7 +83,7 @@ char *get_command(t_lex_value lex_value)
 
 	i = 0;
 	cmd = ft_strnew(0);
-	phase[i] = PHASE_CMD;
+	phase[i++] = PHASE_CMD;
 	prompt_type = choose_prompt_type(lex_value, 0);
 	while ("command editting")
 	{
@@ -261,6 +240,11 @@ int				init_shell(char **envp)
 	g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
 	g_shell.alias[0] = NULL;
 	g_shell.last_alias = NULL;
+	/*
+	** init hash
+	*/
+	//g_shell.hashtable = (t_hash**)malloc(MAX_HASH * sizeof(t_hash*) + 1);
+	//g_shell.hashtable[MAX_HASH] = NULL;
 	/*
 	** promp stuff here
 	*/

@@ -160,6 +160,8 @@ BUILT_IN_FILE += ft_alias_utilities/ft_alias_utils.c
 BUILT_IN_FILE += ft_set.c
 BUILT_IN_FILE += ft_unset.c
 BUILT_IN_FILE += ft_export.c
+BUILT_IN_FILE += ft_hash.c
+BUILT_IN_FILE += ft_hash_utilities/ft_hash_utils.c
 BUILT_IN := $(addprefix $(BUILT_IN_DIR)/,$(BUILT_IN_FILE))
 # Job control
 JOB_CONTROL_DIR := $(FEATURES_DIR)/job_control
@@ -203,16 +205,22 @@ SIGNAL := $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_FILE))
 # Expansion
 EXPANSION_DIR := $(FEATURES_DIR)/expansion
 EXPANSION_FILE += handle_expansion.c
-EXPANSION_FILE += ansi_c.c
-EXPANSION_FILE += octal_value.c
-EXPANSION_FILE += hex_value.c
-EXPANSION_FILE += parameter_expansion_utilities.c
+PARAMETER_EXPANSION_DIR := $(EXPANSION_DIR)/parameter_expansion
+PARAMETER_EXPANSION_FILE += parameter_expansion.c
+PARAMETER_EXPANSION := $(addprefix $(PARAMETER_EXPANSION_DIR)/,$(PARAMETER_EXPANSION_FILE))
+TILDE_EXPANSION_DIR := $(EXPANSION_DIR)/tilde_expansion
+TILDE_EXPANSION_FILE += tilde_expansion.c
+TILDE_EXPANSION := $(addprefix $(TILDE_EXPANSION_DIR)/,$(TILDE_EXPANSION_FILE))
 EXPANSION := $(addprefix $(EXPANSION_DIR)/,$(EXPANSION_FILE))
+EXPANSION += $(TILDE_EXPANSION) $(PARAMETER_EXPANSION)
 # Inhibitor
 INHIBITOR_DIR := $(FEATURES_DIR)/inhibitor
 INHIBITOR_FILE += tool_for_checking.c
 INHIBITOR_FILE += inhibitor_utility.c
 INHIBITOR_FILE += quote_removal.c
+INHIBITOR_FILE += ansi_c.c
+INHIBITOR_FILE += octal_value.c
+INHIBITOR_FILE += hex_value.c
 INHIBITOR := $(addprefix $(INHIBITOR_DIR)/,$(INHIBITOR_FILE))
 # Auto-complition
 AUTO_COMPLETION_DIR := $(FEATURES_DIR)/auto_completion

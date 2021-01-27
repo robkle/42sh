@@ -120,8 +120,11 @@ void wait_for_job(t_job *j, int opt)
 	{
 		while (p_ptr)
 		{
-			waitpid(p_ptr->pid, &status, opt);
-			mark_process_status(j, p_ptr->pid, status);
+			if (p_ptr->pid != 0)
+			{
+				waitpid(p_ptr->pid, &status, opt);
+				mark_process_status(j, p_ptr->pid, status);
+			}
 			p_ptr = p_ptr->next;
 		}
 	}

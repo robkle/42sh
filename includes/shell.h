@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/01/15 09:44:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/26 18:18:57 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct			s_shell
 	t_alias				**alias;
 	char				*last_alias;
 	unsigned int		exit_status;
+	t_hash				*hashtable[MAX_HASH];
 }                       t_shell;
 
 t_shell     g_shell;
@@ -76,7 +77,6 @@ t_shell     g_shell;
 **	Lexer
 */
 
-// t_token					*lexer_and_parser(char *input);
 t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value);
 int get_user_token(t_token **tk_lst);
 char *get_command(t_lex_value lex_value);
@@ -89,7 +89,6 @@ int prompt_len(t_prompt prompt_type);
 */
 
 int			syntax_analysis(t_token *curr, t_token *prev);
-// t_astnode				*syntax_analysis(t_token *token);
 
 /*
 ** Semantic
