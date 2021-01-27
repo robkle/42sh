@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 07:00:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/26 07:09:58 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/27 08:09:33 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,30 @@ void assign_word(char parameter[256], char word[256])
 		update_intern_var(intern_var);
 	else
 		add_intern_var(intern_var);
+}
+
+void remove_smallest_or_largest_suffix_pattern(char parameter[256], char word[256], char replacement[256])
+{
+	int i;
+
+	substitute_parameter(parameter, replacement);
+	i = ft_strlen(replacement) - ft_strlen(word);
+	if (i < 0)
+		return ;
+	if (ft_strequ(&replacement[i], word))
+	{
+		while(replacement[i])
+		{
+			replacement[i] = '\0';
+			i++;
+		}
+	}
+}
+
+void remove_smallest_or_largest_prefix_pattern(char parameter[256], char word[256], char replacement[256])
+{
+	substitute_parameter(parameter, replacement);
+	if (ft_strlen(replacement) >= ft_strlen(word))
+		if (ft_strnequ(replacement, word, ft_strlen(word)))
+			ft_strcpy(replacement, &replacement[ft_strlen(word)]);
 }

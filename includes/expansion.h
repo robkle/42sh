@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 13:07:00 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/26 07:11:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/27 08:09:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ int is_parameter_expansion(char *str);
 void substitute_parameter(char parameter[256], char replacement[256]);
 void substitute_word(char word[256], char replacement[256]);
 void assign_word(char parameter[256], char word[256]);
+void remove_smallest_or_largest_suffix_pattern(char parameter[256], char word[256], char replacement[256]);
+void remove_smallest_or_largest_prefix_pattern(char parameter[256], char word[256], char replacement[256]);
 
 #endif

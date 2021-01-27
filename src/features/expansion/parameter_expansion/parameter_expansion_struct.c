@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 06:53:19 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/26 07:09:53 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/27 07:39:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,10 +207,16 @@ int complex_parameter_expansion(char replacement[256], char parameter[256], char
 		if (type == PE_SET_AND_NOT_NULL)
 			substitute_parameter(word, replacement);
 	}
-	// else if (ft_strequ(delimeter, "%"))
-	// else if (ft_strequ(delimeter, "%%"))
-	// else if (ft_strequ(delimeter, "#"))
-	// else if (ft_strequ(delimeter, "##"))
+	else if (ft_strequ(delimeter, "%") || ft_strequ(delimeter, "%%"))
+	{
+		if (type == PE_SET_AND_NOT_NULL)
+			remove_smallest_or_largest_suffix_pattern(parameter, word, replacement);
+	}
+	else if (ft_strequ(delimeter, "#") || ft_strequ(delimeter, "##"))
+	{
+		if (type == PE_SET_AND_NOT_NULL)
+			remove_smallest_or_largest_prefix_pattern(parameter, word, replacement);
+	}
 	return (EXIT_SUCCESS);
 }
 
