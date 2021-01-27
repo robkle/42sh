@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_expansion.c                                 :+:      :+:    :+:   */
+/*   parameter_expansion_struct_syntax_analysis.        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/30 06:04:39 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/27 09:13:07 by dthan            ###   ########.fr       */
+/*   Created: 2021/01/27 11:32:25 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/27 11:34:07 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int parameter_expansion(t_process *p)
+int		parameter_expansion_syntax_analysis(t_parameter_expansion *self)
 {
-	if (parameter_expansion_in_redi(p) == EXIT_FAILURE)
+	if (ft_strlen(self->expression) == 0)
 		return (EXIT_FAILURE);
-	return (parameter_expansion_in_av(p));
-}
-
-int handle_expansion(t_process *p)
-{
-	// if (!tilde_expansion(p))
-	// 	return (EXIT_FAILURE);
-	if (parameter_expansion(p) != EXIT_SUCCESS)
+	if (ft_strlen(self->parameter) == 0)
 		return (EXIT_FAILURE);
-	// if (!command_substitution())
-	// 	return (EXIT_FAILURE);
-	// if (!arithmetic_expasion())
-	// 	return (EXIT_FAILURE);
-	if (quote_removal(p) != EXIT_SUCCESS)
+	if (self->parameter[0] == '#' && ft_strlen(self->delimeter) != 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
