@@ -181,11 +181,8 @@ int	is_execute_on_parent_process(int foreground, char *cmd_name)
 		ft_strequ(cmd_name, "export") ||
 		ft_strequ(cmd_name, "set") ||
 		ft_strequ(cmd_name, "unset") ||
-<<<<<<< HEAD
-		ft_strequ(cmd_name, "echo"))
-=======
+		ft_strequ(cmd_name, "echo") ||
 		ft_strequ(cmd_name, "hash"))
->>>>>>> master
 		return (1);
 	return (0);
 }
@@ -218,13 +215,10 @@ int	lauch_process_which_can_change_shell(t_process *p)
 		return (ft_set());
 	else if (ft_strequ(p->av[0], "unset"))
 		return (ft_unset(p->ac, p->av));
-<<<<<<< HEAD
 	else if (ft_strequ(p->av[0], "echo"))
 		return (ft_echo(p));
-=======
 	else if (ft_strequ(p->av[0], "hash"))
 		return (ft_hash(p));
->>>>>>> master
 	return (EXIT_FAILURE);
 }
 

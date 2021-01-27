@@ -32,7 +32,7 @@ static int	ft_hexoct(char *op)
 	return (0);
 }
 
-static int	ft_hash(char *op)
+static int	ft_hash_sign(char *op)
 {
 	while (*op)
 	{
@@ -52,7 +52,7 @@ void	ft_operand(t_st **infix)
 	{
 		if (ft_strequ((*infix)->type, "operand"))
 		{
-			if (ft_hash((*infix)->op))
+			if (ft_hash_sign((*infix)->op))
 				ft_modify_link(*infix, NULL, "hash"); 
 			else if (ft_hexoct((*infix)->op))
 				ft_modify_link(*infix, NULL, "hexoct"); 
