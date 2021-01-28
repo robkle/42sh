@@ -27,8 +27,8 @@ int handle_expansion(t_process *p)
 		return (EXIT_FAILURE);
 	// if (!command_substitution())
 	// 	return (EXIT_FAILURE);
-	// if (!arithmetic_expasion())
-	// 	return (EXIT_FAILURE);
+	if ((ft_arx(p)) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (quote_removal(p) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

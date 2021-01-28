@@ -6,12 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/28 02:48:04 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:20:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+/* not used
 static int	is_in_path_sub(char *str, t_process *c)
 {
 	DIR			*dirp;
@@ -94,3 +95,4 @@ char		*build_path(t_process *c)
 	ft_strlst_del(&split, nb + 1);
 	return (NULL);
 }
+*/

@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/03 15:57:08 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 14:10:57 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		ft_count_rows(t_l *l)
+int			ft_count_rows(t_l *l)
 {
 	int	count;
 	int	row;
@@ -25,7 +25,7 @@ int		ft_count_rows(t_l *l)
 	i = -1;
 	while (l->line[++i])
 	{
-		if(l->line[i] == '\n')
+		if (l->line[i] == '\n')
 		{
 			row++;
 			lb = 1;
@@ -40,7 +40,7 @@ int		ft_count_rows(t_l *l)
 	return (row);
 }
 
-static void			up_down_key_apply_statuses(t_l *l)
+static void	up_down_key_apply_statuses(t_l *l)
 {
 	int				i;
 	int				line_rows;
@@ -65,7 +65,7 @@ static void			up_down_key_apply_statuses(t_l *l)
 
 int			up_key(t_l *l)
 {
-	if (g_shell.history->curr == 0 || g_shell.history->hst == 0) 
+	if (g_shell.history->curr == 0 || g_shell.history->hst == 0)
 		return (EXIT_SUCCESS);
 	g_shell.history->hst--;
 	ft_strdel(&l->line);
@@ -74,19 +74,20 @@ int			up_key(t_l *l)
 	return (EXIT_SUCCESS);
 }
 
-static void			down_key(t_l *l, char *first)
+static void	down_key(t_l *l, char *first)
 {
-	if (g_shell.history->curr == 0 || g_shell.history->hst == g_shell.history->curr)
+	if (g_shell.history->curr == 0 ||
+		g_shell.history->hst == g_shell.history->curr)
 		return ;
 	g_shell.history->hst++;
 	if (g_shell.history->hst != g_shell.history->curr)
 		l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);
 	else
-		l->line = first ? ft_strdup(first) : ft_strnew(0);	
+		l->line = first ? ft_strdup(first) : ft_strnew(0);
 	up_down_key_apply_statuses(l);
 }
 
-int		up_down(t_l *l, char t[]) // need to separate later
+int			up_down(t_l *l, char t[])
 {
 	static char		*tmp;
 
@@ -96,7 +97,8 @@ int		up_down(t_l *l, char t[]) // need to separate later
 		ft_strdel(&tmp);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'A')
 	{
-		if (g_shell.history->hst == g_shell.history->curr && l->line && ft_isprint(l->line[0]))
+		if (g_shell.history->hst == g_shell.history->curr && l->line &&
+			ft_isprint(l->line[0]))
 			tmp = ft_strdup(l->line);
 		up_key(l);
 	}

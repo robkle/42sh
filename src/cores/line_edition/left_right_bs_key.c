@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:13:02 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/05 15:56:16 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 14:02:33 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void			bs_key_str(t_l *l)
+static void	bs_key_str(t_l *l)
 {
 	int				i;
 
@@ -39,14 +39,13 @@ static void			bs_key_str(t_l *l)
 	l->nb--;
 }
 
-int					bs_key(t_l *l)
+int			bs_key(t_l *l)
 {
-	if (l->rs) // later
-		ft_reverse_search_bs(l); // later
+	if (l->rs)
+		ft_reverse_search_bs(l);
 	else
 	{
 		if (l->y == 0 && l->x == l->pmpt)
-			// return (1);
 			return (EXIT_SUCCESS);
 		if (l->x == 0 && l->y != 0)
 		{
@@ -60,11 +59,10 @@ int					bs_key(t_l *l)
 		bs_key_str(l);
 		apply_termcap_str("rc", 0, 0);
 	}
-	// return (1);
 	return (EXIT_SUCCESS);
 }
 
-int				left_key(t_l *l)
+int			left_key(t_l *l)
 {
 	if (l->rs)
 		ft_reverse_search_reset(l);
@@ -85,12 +83,12 @@ int				left_key(t_l *l)
 	return (EXIT_SUCCESS);
 }
 
-int				right_key(t_l *l)
+int			right_key(t_l *l)
 {
 	if (l->rs)
 		ft_reverse_search_reset(l);
 	if (l->x + (l->y * l->co) - l->pmpt == l->nb)
-		return EXIT_SUCCESS;
+		return (EXIT_SUCCESS);
 	if (l->x != l->co - 1)
 	{
 		apply_termcap_str("nd", 0, 0);

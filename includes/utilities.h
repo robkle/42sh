@@ -47,5 +47,7 @@ pid_t ft_tcgetpgrp (int fd);
 int		ft_isspace(int c);
 int ft_arraylen(char **array);
 void	ft_lstdel_strdel(t_list **alst);
+char			*ft_llitoa(long long n);
+long long		ft_atolli(const char *str);
 
 #endif

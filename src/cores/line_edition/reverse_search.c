@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:53 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/27 16:47:54 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 14:08:23 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void ft_reverse_search_fail(t_l *l)
+static void	ft_reverse_search_fail(t_l *l)
 {
 	char *tmp;
 
@@ -40,14 +40,14 @@ static void	ft_reverse_search_scan(t_l *l, char action)
 {
 	char	*tmp;
 	int		i;
-	
+
 	tmp = l->rev_sr[1] == 'f' ? ft_strsub(l->rev_sr, 26, l->rs_i - 26) : \
 		ft_strsub(l->rev_sr, 19, l->rs_i - 19);
 	i = action == 'r' ? g_shell.history->hst - 1 : g_shell.history->hst;
 	while (--i > -1)
 	{
 		if (ft_strstr_int(g_shell.history->hist[i], tmp))
-		{	
+		{
 			g_shell.history->hst = i;
 			if (l->rev_sr[1] == 'f')
 				ft_reverse_search_fail(l);
@@ -58,7 +58,7 @@ static void	ft_reverse_search_scan(t_l *l, char action)
 		ft_reverse_search_fail(l);
 }
 
-void	ft_reverse_search_bs(t_l *l)
+void		ft_reverse_search_bs(t_l *l)
 {
 	if ((l->rev_sr[1] != 'f' && l->rs_i == 19) ||
 		(l->rev_sr[1] == 'f' && l->rs_i == 26))
@@ -70,7 +70,8 @@ void	ft_reverse_search_bs(t_l *l)
 			ft_strlen(l->rev_sr + l->rs_i));
 		l->rev_sr[ft_strlen(l->rev_sr)] = 0;
 		if (((l->rev_sr[1] != 'f' && ft_strlen(l->rev_sr) > 22) ||
-			(l->rev_sr[1] == 'f' && ft_strlen(l->rev_sr) > 29)) && g_shell.history->hst)
+			(l->rev_sr[1] == 'f' && ft_strlen(l->rev_sr) > 29)) &&
+			g_shell.history->hst)
 			ft_reverse_search_scan(l, 'a');
 		ft_reverse_search_clear(l);
 		ft_putstr(l->rev_sr);
@@ -80,7 +81,6 @@ void	ft_reverse_search_bs(t_l *l)
 
 void		ft_reverse_search_add(char t[], t_l *l)
 {
-
 	ft_memmove(l->rev_sr + l->rs_i + 1, l->rev_sr + l->rs_i, \
 		ft_strlen(l->rev_sr + l->rs_i));
 	l->rev_sr[l->rs_i++] = t[0];
@@ -90,7 +90,7 @@ void		ft_reverse_search_add(char t[], t_l *l)
 	ft_putstr(g_shell.history->hist[g_shell.history->hst]);
 }
 
-int		ft_reverse_search(t_l *l)
+int			ft_reverse_search(t_l *l)
 {
 	if (!l->rs)
 	{
@@ -104,11 +104,11 @@ int		ft_reverse_search(t_l *l)
 	}
 	else if (ft_strlen(l->rev_sr) > 22 && l->rev_sr[1] != 'f')
 	{
-			if (g_shell.history->hst)
-				ft_reverse_search_scan(l, 'r');
+		if (g_shell.history->hst)
+			ft_reverse_search_scan(l, 'r');
 	}
 	ft_reverse_search_clear(l);
 	ft_putstr(l->rev_sr);
 	ft_putstr(g_shell.history->hist[g_shell.history->hst]);
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }

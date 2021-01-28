@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:30:45 by tango             #+#    #+#             */
-/*   Updated: 2021/01/15 13:40:52 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 14:00:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	print_42sh_usr(void)
 {
-	char 		*usr;
+	char	*usr;
 
 	ft_putstr(PMPT_MGTA);
 	ft_putstr(PMPT_BOLD);
@@ -30,8 +30,8 @@ static void	print_42sh_usr(void)
 
 static void	print_cwd(void)
 {
-	char 		pwd[PATH_MAX];
-	char 		*home;
+	char	pwd[PATH_MAX];
+	char	*home;
 
 	getcwd(pwd, PATH_MAX);
 	ft_putstr(PMPT_YELW);
@@ -53,7 +53,7 @@ static void	print_cwd(void)
 	ft_printf("]");
 }
 
-void	print_info(void)
+void		print_info(void)
 {
 	print_42sh_usr();
 	print_cwd();
@@ -62,7 +62,7 @@ void	print_info(void)
 	ft_putchar('\n');
 }
 
-void print_prompt(t_prompt prompt_type)
+void		print_prompt(t_prompt prompt_type)
 {
 	if (prompt_type == PROMPT_CMD)
 		ft_putstr("> ");
@@ -86,7 +86,7 @@ void print_prompt(t_prompt prompt_type)
 		ft_putstr("braceparam> ");
 }
 
-int prompt_len(t_prompt prompt_type)
+int			prompt_len(t_prompt prompt_type)
 {
 	if (prompt_type == PROMPT_CMD)
 		return (ft_strlen("> "));
@@ -111,34 +111,39 @@ int prompt_len(t_prompt prompt_type)
 	return (ft_strlen("> "));
 }
 
-t_prompt choose_prompt_type(t_lex_value lex, t_phase phase)
+t_prompt	choose_prompt_type_lex(t_lex_value lex)
+{
+	if (lex == LEX_CMD)
+		return (PROMPT_CMD);
+	else if (lex == LEX_CMDAND)
+		return (PROMPT_CMD_AND);
+	else if (lex == LEX_CMDOR)
+		return (PROMPT_CMD_OR);
+	else if (lex == LEX_PIPE)
+		return (PROMPT_PIPE);
+	return (PROMPT_CMD);
+}
+
+t_prompt	choose_prompt_type_phase(t_phase phase)
+{
+	if (phase == PHASE_CMD)
+		return (PROMPT_CMD);
+	else if (phase == PHASE_DQUOTE)
+		return (PROMPT_DQUOTE);
+	else if (phase == PHASE_QUOTE)
+		return (PROMPT_QUOTE);
+	else if (phase == PHASE_BACKSLASH)
+		return (PROMPT_BACKSLASH);
+	else if (phase == PHASE_CMDSUBST)
+		return (PROMPT_CMDSUBST);
+	else if (phase == PHASE_BRACEPARAM)
+		return (PROMPT_BRACEPARAM);
+	return (PROMPT_CMD);
+}
+
+t_prompt	choose_prompt_type(t_lex_value lex, t_phase phase)
 {
 	if (lex > 1)
-	{
-		if (lex == LEX_CMD)
-			return (PROMPT_CMD);
-		else if (lex == LEX_CMDAND)
-			return (PROMPT_CMD_AND);
-		else if (lex == LEX_CMDOR)
-			return (PROMPT_CMD_OR);
-		else if (lex == LEX_PIPE)
-			return (PROMPT_PIPE);
-		return (PROMPT_CMD);
-	}
-	else
-	{
-		if (phase == PHASE_CMD)
-			return (PROMPT_CMD);
-		else if (phase == PHASE_DQUOTE)
-			return (PROMPT_DQUOTE);
-		else if (phase == PHASE_QUOTE)
-			return (PROMPT_QUOTE);
-		else if (phase == PHASE_BACKSLASH)
-			return (PROMPT_BACKSLASH);
-		else if (phase == PHASE_CMDSUBST)
-			return (PROMPT_CMDSUBST);
-		else if (phase == PHASE_BRACEPARAM)
-			return (PROMPT_BRACEPARAM);
-		return (PROMPT_CMD);
-	}
+		return (choose_prompt_type_lex(lex));
+	return (choose_prompt_type_phase(phase));
 }

@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   io_here.c                                          :+:      :+:    :+:   */
+/*   ast_tool.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/02 15:46:33 by tango             #+#    #+#             */
-/*   Updated: 2020/10/27 06:37:30 by dthan            ###   ########.fr       */
+/*   Created: 2020/04/11 07:29:09 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/28 13:25:13 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_astnode		*io_here1(t_token **token)
+t_astnode	*build_node(t_astnode_type type)
 {
 	t_astnode	*node;
-	t_astnode	*childnode;
 
-	*token = (*token)->next;
-	if ((childnode = here_end(token)) == NULL)
-		return (NULL);
-	node = build_node(AST_io_here);
-	node->data = ft_strdup("<<");
-	node->left = childnode;
+	node = (t_astnode*)malloc(sizeof(t_astnode));
+	node->data = NULL;
+	node->type = type;
+	node->left = NULL;
+	node->right = NULL;
+	node->middle = NULL;
 	return (node);
 }
 
-t_astnode		*io_here(t_token **token)
+void		ft_delast(t_astnode *node)
 {
-	if (*token == NULL)
-		return (NULL);
-	if ((*token)->type == TOKEN_DLESS)		
-	 	return (io_here1(token));
-	return (NULL);
+	ft_strdel(&(node->data));
+	free(node);
+}
+
+void		clear_ast(t_astnode *ast)
+{
+	if (ast->left)
+		clear_ast(ast->left);
+	if (ast->right)
+		clear_ast(ast->right);
+	ft_delast(ast);
 }

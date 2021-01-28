@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/01/28 03:43:17 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:09:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	execute_cmd_name(t_astnode *ast, t_job *j, t_process *p);
 void	execute_cmd_suffix(t_astnode *ast, t_job *j, t_process *p);
 void	execute_io_redirect(t_astnode *ast, t_job *j, t_process *p);
 void	execute_cmd_prefix(t_astnode *ast); // tmp
-void execute_assignment_word(t_astnode *ast);
+void	execute_assignment_word(t_astnode *ast);
 
 int	find_heredoc(t_astnode *ast);
 void	clear_heredoc(t_heredoc *heredoc);
@@ -67,12 +67,21 @@ int	redirect_greatand(t_redi *redi);
 int	redirect_lessand(t_redi *redi);
 int	redirect_less(t_redi *redi);
 int	redirect_dless(t_redi *redi);
+void	set_reset_stdin_stdout_stderr_channels(int old[3]);
+
+/*
+** =========================== LAUCHING PROCESS ===============================
+*/
+
+int		lauch_simple_command(t_job *j, t_process *p);
+int		lauch_in_parent_process(t_process *p);
+void	fork_and_launch_in_child_process(t_job *j, t_process *p, char *path);
 
 /*
 ** ========================== JOB CONTROL FUNCTIONS ===========================
 */
 
-int	lauch_simple_command(t_job *j, t_process *p);
+
 void	put_job_in_foreground(t_job *job, int cont);
 void	put_job_in_background(t_job *job, int cont);
 int		mark_process_status(t_job *j, pid_t pid, int status);

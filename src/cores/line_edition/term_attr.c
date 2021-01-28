@@ -6,34 +6,20 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:14:04 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/07 04:40:26 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 14:09:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-// old
-// void				restore_term(t_l *l)
-// {
-// 	t_term			old;
-
-// 	if (l->line == NULL)
-// 		add_key("\n", l);
-// 	end_key(l);
-// 	apply_termcap_str("do", 0, 0);
-// 	old = get_set_default_term(NULL);
-// 	tcsetattr(0, TCSANOW, &old);
-// }
-
-// new
-void restore_term(t_l *l)
+void	restore_term(t_l *l)
 {
 	end_key(l);
 	apply_termcap_str("do", 0, 0);
 	tcsetattr(0, TCSANOW, &g_shell.shell_tmode);
 }
 
-t_term				get_set_default_term(t_term *t)
+t_term	get_set_default_term(t_term *t)
 {
 	static t_term	old;
 
@@ -55,7 +41,6 @@ void	init_term(void)
 	t_term	raw;
 
 	tcgetattr(0, &raw);
-	// raw.c_lflag &= ~(ICANON | ECHO | ISIG);
 	raw.c_lflag &= ~(ICANON | ECHO);
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;

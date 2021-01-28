@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:16:56 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/03 15:58:18 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:56:48 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ int				ctrl_down(t_l *l)
 		apply_termcap_str("ch", 0, l->x);
 		l->y++;
 	}
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }

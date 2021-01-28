@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:24:37 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 19:36:40 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:43:52 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@
 **            | IO_NUMBER io_here
 */
 
-t_astnode		*io_redirect1(t_token **token)
+t_astnode	*io_redirect1(t_token **token)
 {
 	t_astnode	*node;
 	t_astnode	*childnode;
 	char		*ionumber;
-	
+
 	if (*token == NULL)
 		return (NULL);
-	if (*token != NULL)
 	if ((*token)->type != TOKEN_IO_NUMBER)
 		return (NULL);
 	ionumber = (*token)->data;
@@ -40,18 +39,18 @@ t_astnode		*io_redirect1(t_token **token)
 	return (node);
 }
 
-t_astnode		*io_redirect2(t_token **token)
+t_astnode	*io_redirect2(t_token **token)
 {
 	return (io_file(token));
 }
 
-t_astnode *io_redirect3(t_token **token)
+t_astnode	*io_redirect3(t_token **token)
 {
 	t_astnode	*node;
 	t_astnode	*childnode;
 	char		*ionumber;
 
-	if(*token == NULL)
+	if (*token == NULL)
 		return (NULL);
 	if ((*token)->type != TOKEN_IO_NUMBER)
 		return (NULL);
@@ -65,12 +64,12 @@ t_astnode *io_redirect3(t_token **token)
 	return (node);
 }
 
-t_astnode *io_redirect4(t_token **token)
+t_astnode	*io_redirect4(t_token **token)
 {
 	return (io_here(token));
 }
 
-t_astnode		*io_redirect(t_token **token)
+t_astnode	*io_redirect(t_token **token)
 {
 	t_astnode	*node;
 	t_token		*reset;
@@ -83,9 +82,9 @@ t_astnode		*io_redirect(t_token **token)
 		return (node);
 	*token = reset;
 	if ((node = io_redirect3(token)) != NULL)
-	 	return (node);
+		return (node);
 	*token = reset;
 	if ((node = io_redirect4(token)) != NULL)
-	 	return (node);
+		return (node);
 	return (NULL);
 }

@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 21:28:25 by marvin            #+#    #+#             */
-/*   Updated: 2020/12/27 18:04:31 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 14:04:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void				apply_termcap_str(char *str, int x, int y)
+void	apply_termcap_str(char *str, int x, int y)
 {
 	if (!ft_strcmp(str, "ch") || !ft_strcmp(str, "cm"))
 		tputs(tgoto(tgetstr(str, NULL), x, y), 1, ft_putchar);
@@ -20,7 +20,7 @@ void				apply_termcap_str(char *str, int x, int y)
 		tputs(tgetstr(str, NULL), 1, ft_putchar);
 }
 
-size_t				get_current_row(void)
+size_t	get_current_row(void)
 {
 	int				fd_tty;
 	char			answer[16];
@@ -40,7 +40,7 @@ size_t				get_current_row(void)
 	return (ft_atoi(&answer[2]));
 }
 
-size_t				get_current_column(void)
+size_t	get_current_column(void)
 {
 	int				fd_tty;
 	char			answer[16];

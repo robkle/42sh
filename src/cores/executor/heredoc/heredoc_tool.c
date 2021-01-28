@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_analysis.c                                  :+:      :+:    :+:   */
+/*   heredoc_tool.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/12 13:24:09 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/05 15:51:46 by dthan            ###   ########.fr       */
+/*   Created: 2021/01/28 02:59:04 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/28 13:21:52 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static	t_astnode	*build_ast(t_token *token)
+void	clear_heredoc(t_heredoc *heredoc)
 {
-	return (complete_command(&token));
-}
+	t_heredoc *container;
 
-t_astnode			*semantic_analysis(t_token *token)
-{
-	t_astnode		*abstract_syntax_tree;
-
-	if ((abstract_syntax_tree = build_ast(token)) == NULL)
+	while (heredoc)
 	{
-		return (NULL);
+		container = heredoc;
+		heredoc = heredoc->next;
+		free(container->doc);
+		free(container);
 	}
-	return (abstract_syntax_tree);
 }

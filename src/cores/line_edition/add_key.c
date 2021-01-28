@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:11:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/03 16:01:36 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:49:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void			append_char(char t[], t_l *l)
+static void	append_char(char t[], t_l *l)
 {
 	char			*tmp;
 
@@ -39,7 +39,7 @@ static void			append_char(char t[], t_l *l)
 	l->nb++;
 }
 
-static void			store_cursor_position(t_l *l/*, int nb*/)
+static void	store_cursor_position(t_l *l)
 {
 	if (l->x != l->co - 1)
 		l->x++;
@@ -51,7 +51,7 @@ static void			store_cursor_position(t_l *l/*, int nb*/)
 	l->nb++;
 }
 
-static void			insert_char(char t[], t_l *l)
+static void	insert_char(char t[], t_l *l)
 {
 	char			*tmp;
 
@@ -77,7 +77,7 @@ static void			insert_char(char t[], t_l *l)
 	store_cursor_position(l);
 }
 
-int				add_key(char t[], t_l *l)
+int			add_key(char t[], t_l *l)
 {
 	if (l->rs)
 		ft_reverse_search_add(t, l);
@@ -88,5 +88,5 @@ int				add_key(char t[], t_l *l)
 		else
 			append_char(t, l);
 	}
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }

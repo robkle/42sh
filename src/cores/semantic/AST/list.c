@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 07:38:19 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 19:36:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:38:06 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_astnode		*list1(t_token **token)
 
 	if ((lnode = and_or(token)) == NULL)
 		return (NULL);
-	if (!*token || 
+	if (!*token ||
 		((*token)->type != TOKEN_APS && (*token)->type != TOKEN_SEMI))
 	{
 		clear_ast(lnode);

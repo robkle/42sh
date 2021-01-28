@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_tool.c                                         :+:      :+:    :+:   */
+/*   io_here.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 07:29:09 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/09 02:47:21 by dthan            ###   ########.fr       */
+/*   Created: 2020/08/02 15:46:33 by tango             #+#    #+#             */
+/*   Updated: 2021/01/28 13:33:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_astnode		*build_node(t_astnode_type type)
+t_astnode		*io_here1(t_token **token)
 {
 	t_astnode	*node;
+	t_astnode	*childnode;
 
-	node = (t_astnode*)malloc(sizeof(t_astnode));
-	node->data = NULL;
-	node->type = type;
-	node->left = NULL;
-	node->right = NULL;
-	node->middle = NULL;
+	*token = (*token)->next;
+	if ((childnode = here_end(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_io_here);
+	node->data = ft_strdup("<<");
+	node->left = childnode;
 	return (node);
 }
 
-void			ft_delast(t_astnode *node)
+t_astnode		*io_here(t_token **token)
 {
-	ft_strdel(&(node->data));
-	free(node);
+	if (*token == NULL)
+		return (NULL);
+	if ((*token)->type == TOKEN_DLESS)
+		return (io_here1(token));
+	return (NULL);
 }

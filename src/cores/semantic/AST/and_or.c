@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:30:42 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/28 01:07:01 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:39:28 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,9 @@
 **        	| and_or OR_IF  linebreak pipeline
 */
 
-//reminder: we need to delete every fail node, in the tree
-// most of the right node isnot free if there is sth strange happen
-// also check if it is neccessary to free right node or not
-// may need to swich the place
-
 t_astnode	*and_or2(t_token **token)
 {
-	return(pipeline(token));
+	return (pipeline(token));
 }
 
 t_astnode	*and_or1(t_token **token)

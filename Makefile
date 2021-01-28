@@ -52,45 +52,45 @@ INCLUDE			:= -Iincludes/ -Ilibft/includes/ -Ift_printf/includes/
 # library
 LIB				:= -L$(LIBFT_DIR)/ -lft -L$(FT_RPINTF_DIR)/ -lftprintf -ltermcap
 ############################ Create core files ################################
-#Lexer
-LEXER_DIR := $(CORE_DIR)/lexer
-LEXER_FILE += lexical_analysis.c
-LEXER_FILE += lexer_helper1.c
-LEXER_FILE += lexer_helper2.c
-LEXER_FILE += non_operator_token.c
-LEXER_FILE += operator_token.c
-LEXER := $(addprefix $(LEXER_DIR)/,$(LEXER_FILE))
+#Lexer & Parser
+LEXER_PARSER_DIR := $(CORE_DIR)/lexer_parser
+LEXER_PARSER_FILE += lexical_analysis.c
+LEXER_PARSER_FILE += lexer_helper1.c
+LEXER_PARSER_FILE += lexer_helper2.c
+LEXER_PARSER_FILE += non_operator_token.c
+LEXER_PARSER_FILE += operator_token.c
+LEXER_PARSER := $(addprefix $(LEXER_PARSER_DIR)/,$(LEXER_PARSER_FILE))
 #Parser
-PARSER_DIR := $(CORE_DIR)/parser
-PARSER_FILE += syntax_analysis.c
-PARSER_FILE += AST/complete_command.c
-PARSER_FILE += AST/list.c
-PARSER_FILE += AST/and_or.c
-PARSER_FILE += AST/pipeline.c
-PARSER_FILE += AST/pipe_sequence.c
-PARSER_FILE += AST/command.c
-PARSER_FILE += AST/simple_command.c
-PARSER_FILE += AST/cmd_name.c
-PARSER_FILE += AST/cmd_suffix.c
-PARSER_FILE += AST/io_redirect.c
-PARSER_FILE += AST/io_files.c
-PARSER_FILE += AST/io_file_branch.c
-PARSER_FILE += AST/file_name.c
-PARSER_FILE += AST/io_here.c
-PARSER_FILE += AST/here_end.c
-PARSER_FILE += AST/word.c
-PARSER_FILE += AST/assignment_word.c
-PARSER_FILE += AST/cmd_prefix.c
-PARSER_FILE += AST/ast_tool.c
-PARSER := $(addprefix $(PARSER_DIR)/,$(PARSER_FILE))
+SEMANTIC_DIR := $(CORE_DIR)/semantic
+SEMANTIC_FILE += syntax_analysis.c
+SEMANTIC_FILE += AST/complete_command.c
+SEMANTIC_FILE += AST/list.c
+SEMANTIC_FILE += AST/and_or.c
+SEMANTIC_FILE += AST/pipeline.c
+SEMANTIC_FILE += AST/pipe_sequence.c
+SEMANTIC_FILE += AST/command.c
+SEMANTIC_FILE += AST/simple_command.c
+SEMANTIC_FILE += AST/cmd_name.c
+SEMANTIC_FILE += AST/cmd_suffix.c
+SEMANTIC_FILE += AST/io_redirect.c
+SEMANTIC_FILE += AST/io_files.c
+SEMANTIC_FILE += AST/io_file_branch.c
+SEMANTIC_FILE += AST/file_name.c
+SEMANTIC_FILE += AST/io_here.c
+SEMANTIC_FILE += AST/here_end.c
+SEMANTIC_FILE += AST/word.c
+SEMANTIC_FILE += AST/assignment_word.c
+SEMANTIC_FILE += AST/cmd_prefix.c
+SEMANTIC_FILE += AST/ast_tool.c
+SEMANTIC := $(addprefix $(SEMANTIC_DIR)/,$(SEMANTIC_FILE))
 #Executor
 EXECUTOR_DIR := $(CORE_DIR)/executor
 EXECUTOR_FILE += print_binary_tree.c
 EXECUTOR_FILE += executor.c
 EXECUTOR_FILE += children.c
 EXECUTOR_FILE += check_path.c
-EXECUTOR_FILE += heredoc.c
-EXECUTOR_FILE += heredoc_tool.c
+EXECUTOR_FILE += heredoc/heredoc.c
+EXECUTOR_FILE += heredoc/heredoc_tool.c
 EXECUTOR_FILE += execute_ast/execute_complete_command.c
 EXECUTOR_FILE += execute_ast/execute_list.c
 EXECUTOR_FILE += execute_ast/execute_and_or.c
@@ -106,10 +106,12 @@ EXECUTOR_FILE += execute_ast/execute_cmd_suffix.c
 EXECUTOR_FILE += execute_ast/execute_io_redirect.c
 EXECUTOR_FILE += execute_ast/execute_cmd_prefix.c
 EXECUTOR_FILE += execute_ast/execute_assignment_word.c
-EXECUTOR_FILE += handle_redirect.c
-EXECUTOR_FILE += redirects_great.c
-EXECUTOR_FILE += redirects_less.c
-EXECUTOR_FILE += lauch_process.c
+EXECUTOR_FILE += redirection/handle_redirect.c
+EXECUTOR_FILE += redirection/redirects_great.c
+EXECUTOR_FILE += redirection/redirects_less.c
+EXECUTOR_FILE += lauch_process/lauch_process.c
+EXECUTOR_FILE += lauch_process/lauch_process_child_shell.c
+EXECUTOR_FILE += lauch_process/lauch_process_parent_shell.c
 EXECUTOR := $(addprefix $(EXECUTOR_DIR)/,$(EXECUTOR_FILE))
 #Line Edition
 LINE_EDITION_DIR := $(CORE_DIR)/line_edition
@@ -132,8 +134,8 @@ LINE_EDITION_FILE += line_edition_utilities.c
 LINE_EDITION_FILE += paste_background.c
 LINE_EDITION := $(addprefix $(LINE_EDITION_DIR)/,$(LINE_EDITION_FILE))
 # SUM-UP Core
-CORE += $(LEXER)
-CORE += $(PARSER)
+CORE += $(LEXER_PARSER)
+CORE += $(SEMANTIC)
 CORE += $(EXECUTOR)
 CORE += $(LINE_EDITION)
 ############################# Create feature files ############################
@@ -180,6 +182,21 @@ HISTORY_MANAGEMENT_FILE += history.c
 HISTORY_MANAGEMENT_FILE += history_exp.c
 HISTORY_MANAGEMENT_FILE += history_input_check.c
 HISTORY_MANAGEMENT := $(addprefix $(HISTORY_MANAGEMENT_DIR)/,$(HISTORY_MANAGEMENT_FILE))
+# Arithmetic Expansion
+ARITHMETIC_EXPANSION_DIR := $(FEATURES_DIR)/arithmetic_expansion
+ARITHMETIC_EXPANSION_FILE += arx.c
+ARITHMETIC_EXPANSION_FILE += base.c
+ARITHMETIC_EXPANSION_FILE += calc.c
+ARITHMETIC_EXPANSION_FILE += checker.c
+ARITHMETIC_EXPANSION_FILE += error.c
+ARITHMETIC_EXPANSION_FILE += extolst.c
+ARITHMETIC_EXPANSION_FILE += intvar.c
+ARITHMETIC_EXPANSION_FILE += operand.c
+ARITHMETIC_EXPANSION_FILE += plusminus.c
+ARITHMETIC_EXPANSION_FILE += postfix.c
+ARITHMETIC_EXPANSION_FILE += utils.c
+ARITHMETIC_EXPANSION_FILE += utils_exp.c
+ARITHMETIC_EXPANSION := $(addprefix $(ARITHMETIC_EXPANSION_DIR)/,$(ARITHMETIC_EXPANSION_FILE))
 # Alias
 ALIAS_DIR := $(FEATURES_DIR)/alias
 ALIAS_FILE += alias_substitution.c
@@ -245,6 +262,7 @@ INTERN_ENVIRONMENT_VAR = $(addprefix $(INTERN_ENVIRONMENT_VAR_DIR)/,$(INTERN_ENV
 # SUM-UP FEATUREs
 FEATURES += $(BUILT_IN)
 FEATURES += $(HISTORY_MANAGEMENT)
+FEATURES += $(ARITHMETIC_EXPANSION)
 FEATURES += $(JOB_CONTROL)
 FEATURES += $(ALIAS)
 FEATURES += $(SIGNAL)
@@ -275,6 +293,8 @@ UTILITY_FILE += ft_tcsetpgrp.c
 UTILITY_FILE += ft_tcgetpgrp.c
 UTILITY_FILE += ft_lstdel_strdel.c
 UTILITY_FILE += ft_arraylen.c
+UTILITY_FILE += ft_atolli.c
+UTILITY_FILE += ft_llitoa.c
 UTILITY := $(addprefix $(UTILITY_DIR)/,$(UTILITY_FILE))
 
 ############################ SUM-UP SOURCE FILES ##############################

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 01:23:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/09 01:50:23 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:40:10 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ t_astnode		*cmd_prefix2(t_token **token)
 
 t_astnode		*cmd_prefix(t_token **token)
 {
-	t_astnode *node;
-	t_token *reset;
-	
+	t_astnode	*node;
+	t_token		*reset;
+
 	reset = *token;
 	if ((node = cmd_prefix1(token)) != NULL)
 		return (node);

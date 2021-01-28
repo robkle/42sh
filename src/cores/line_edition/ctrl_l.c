@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 01:37:15 by tango             #+#    #+#             */
-/*   Updated: 2021/01/03 15:42:11 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:55:29 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void			paste_apply_screen(t_l *l, char *clip, int i)
+static void	paste_apply_screen(t_l *l, char *clip, int i)
 {
 	apply_termcap_str("cd", 0, 0);
 	ft_putstr(clip);
@@ -22,7 +22,7 @@ static void			paste_apply_screen(t_l *l, char *clip, int i)
 	apply_termcap_str("rc", 0, 0);
 }
 
-static void			wind_up_cursor(t_l *l, int clip_len)
+static void	wind_up_cursor(t_l *l, int clip_len)
 {
 	int				starting_row_from_top;
 	int				row_position;
@@ -40,7 +40,7 @@ static void			wind_up_cursor(t_l *l, int clip_len)
 	}
 }
 
-int					paste(t_l *l, char raw_clip[], int clip_len, char *autocom_clip)
+int			paste(t_l *l, char raw_clip[], int clip_len, char *autocom_clip)
 {
 	char			*clip;
 	char			*tmp;
