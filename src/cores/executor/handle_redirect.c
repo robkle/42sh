@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 02:26:01 by tango             #+#    #+#             */
-/*   Updated: 2020/12/18 18:17:46 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 02:48:59 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	handle_redirection(t_process *p)
 {
-	t_redi *redi_ptr;
-	int ret;
+	t_redi	*redi_ptr;
+	int		ret;
 
 	if (p->first_redi == NULL)
 		return (EXIT_SUCCESS);

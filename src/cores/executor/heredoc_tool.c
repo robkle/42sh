@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   heredoc_tool.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 03:01:14 by dthan            ###   ########.fr       */
+/*   Created: 2021/01/28 02:59:04 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/28 03:00:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	clear_ast(t_astnode *ast)
+void	clear_heredoc(t_heredoc *heredoc)
 {
-	if (ast->left)
-		clear_ast(ast->left);
-	if (ast->right)
-		clear_ast(ast->right);
-	ft_delast(ast);
-}
+	t_heredoc *container;
 
-void	executor(t_astnode *ast)
-{
-	execute_complete_command(ast);
+	while (heredoc)
+	{
+		container = heredoc;
+		heredoc = heredoc->next;
+		free(container->doc);
+		free(container);
+	}
 }

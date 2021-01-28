@@ -6,26 +6,32 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/12 00:24:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 02:59:27 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char *get_heredoc(char *end_word)
+static void	here_doc_prepare_the_end_word_with_enter(
+		char end_word_with_enter[256], char *end_word)
 {
-	t_phase phase;
-	char *heredoc;
-	char *line;
-	t_prompt prompt_type;
-	char end_word_with_enter[256];
+	ft_bzero(end_word_with_enter, 256);
+	ft_strcpy(end_word_with_enter, end_word);
+	ft_strcat(end_word_with_enter, "\n");
+}
+
+char		*get_heredoc(char *end_word)
+{
+	t_phase		phase;
+	char		*heredoc;
+	char		*line;
+	t_prompt	prompt_type;
+	char		end_word_with_enter[256];
 
 	heredoc = ft_strnew(0);
 	phase = PHASE_HEREDOC;
 	prompt_type = PROMPT_HEREDOC;
-	ft_bzero(&end_word_with_enter, 256);
-	ft_strcpy(end_word_with_enter, end_word);
-	ft_strcat(end_word_with_enter, "\n");
+	here_doc_prepare_the_end_word_with_enter(end_word_with_enter, end_word);
 	while ("getting heredoc")
 	{
 		if ((line = ft_get_line(&phase, prompt_type, LEX_HEREDOC)) == NULL)
@@ -43,31 +49,7 @@ char *get_heredoc(char *end_word)
 	return (heredoc);
 }
 
-/*
-static char			*prompt_heredoc(char *end_word)
-{
-	t_l				l;
-
-	ft_memset(&l, 0, sizeof(t_l));
-	// l.phase = EDTR_PHASE_HEREDOC;
-	l.pmpt = 9;
-	ft_putstr("heredoc> ");
-	ft_get_line(&l);
-	if (ft_strequ(l.line, end_word) || ft_strequ(l.line, "\x04"))
-	{
-		ft_strdel(&l.line);
-		return (NULL);
-	}
-	else
-	{
-		l.line = ft_strjoin_and_free_string1(l.line, "\n");
-		l.line = ft_strjoin_and_free_2strings(l.line, prompt_heredoc(end_word));
-	}
-	return (l.line);
-}
-*/
-
-static void			add_heredoc_into_list(t_heredoc *node, t_heredoc **list)
+static void	add_heredoc_into_list(t_heredoc *node, t_heredoc **list)
 {
 	t_heredoc *ptr;
 
@@ -82,9 +64,9 @@ static void			add_heredoc_into_list(t_heredoc *node, t_heredoc **list)
 	}
 }
 
-static int			apply_heredoc(t_astnode *here_end)
+static int	apply_heredoc(t_astnode *here_end)
 {
-	char 	*current_heredoc;
+	char		*current_heredoc;
 	t_heredoc	*node;
 
 	if ((current_heredoc = get_heredoc(here_end->data)) == NULL)
@@ -96,7 +78,7 @@ static int			apply_heredoc(t_astnode *here_end)
 	return (EXIT_SUCCESS);
 }
 
-int				find_heredoc(t_astnode *ast)
+int			find_heredoc(t_astnode *ast)
 {
 	if (ast == NULL)
 		return (EXIT_SUCCESS);
@@ -123,17 +105,4 @@ int				find_heredoc(t_astnode *ast)
 	else if (ast->type == AST_io_here && ft_strequ(ast->data, "<<"))
 		return (apply_heredoc(ast->left));
 	return (EXIT_SUCCESS);
-}
-
-void				clear_heredoc(t_heredoc *heredoc)
-{
-	t_heredoc *container;
-
-	while(heredoc)
-	{
-		container = heredoc;
-		heredoc = heredoc->next;
-		free(container->doc);
-		free(container);
-	}
 }

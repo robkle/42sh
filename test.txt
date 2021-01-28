@@ -1,0 +1,12 @@
+42sh
+author
+ft_printf
+HOWTO
+includes
+libft
+Makefile
+material.txt
+objects
+resource
+src
+test.txt

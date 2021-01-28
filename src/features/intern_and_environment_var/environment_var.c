@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:11:11 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/15 12:57:37 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/27 12:27:27 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int		is_eligible_to_export_to_env(t_var var)
 	return (0);
 }
 
-void update_environment_var(char *name, char *value)
+void	update_environment_var(char *name, char *value)
 {
-	int i;
-	char *str;
-	int len;
+	int		i;
+	char	*str;
+	int		len;
 
 	i = -1;
 	str = NULL;
@@ -54,19 +54,19 @@ void update_environment_var(char *name, char *value)
 			ft_strcpy(g_shell.env[i], name);
 			ft_strcat(g_shell.env[i], "=");
 			ft_strcat(g_shell.env[i], value);
-			break;
+			break ;
 		}
 	}
 }
 
-void add_environment_var(char *name, char *value)
+void	add_environment_var(char *name, char *value)
 {
-	char **new_table;
-	int size;
-	int i;
+	char	**new_table;
+	int		size;
+	int		i;
 
 	if (!name || !value)
-		return;
+		return ;
 	size = ft_arraylen(g_shell.env) + 2;
 	new_table = (char**)ft_memalloc(sizeof(char*) * size);
 	i = -1;
@@ -78,7 +78,7 @@ void add_environment_var(char *name, char *value)
 	g_shell.env = new_table;
 }
 
-void add_update_environment_var(char *name, char *value)
+void	add_update_environment_var(char *name, char *value)
 {
 	if (ft_getenv(name))
 		update_environment_var(name, value);
@@ -86,20 +86,16 @@ void add_update_environment_var(char *name, char *value)
 		add_environment_var(name, value);
 }
 
-void delete_environment_var(char *name)
+void	delete_environment_var(char *name)
 {
-	char **new_table;
-	int size;
-	int i;
-	int j;
-	int len;
+	char	**new_table;
+	int		i;
+	int		j;
+	int		len;
 
-	if (!name)
-		return;
-	size = ft_arraylen(g_shell.env);
-	if (size == 0)
+	if (!name || ft_arraylen(g_shell.env) == 0)
 		return ;
-	new_table = (char**)ft_memalloc(sizeof(char*) * size);
+	new_table = (char**)ft_memalloc(sizeof(char*) * ft_arraylen(g_shell.env));
 	i = -1;
 	j = 0;
 	len = ft_strlen(name);

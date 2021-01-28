@@ -6,17 +6,17 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 01:57:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/15 10:41:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 02:40:59 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void execute_assignment_word(t_astnode *ast)
+void	execute_assignment_word(t_astnode *ast)
 {
-	char *str;
-	t_var *intern_var;
-	t_var *ptr;
+	char	*str;
+	t_var	*intern_var;
+	t_var	*ptr;
 
 	str = ast->data;
 	intern_var = (t_var*)ft_memalloc(sizeof(t_var));

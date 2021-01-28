@@ -6,17 +6,16 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 01:52:52 by tango             #+#    #+#             */
-/*   Updated: 2020/12/26 13:04:09 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 03:04:31 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-// respectively the same as close file descriptor for great-and
-int close_file_descriptor2(t_redi *redi)
+int	close_file_descriptor2(t_redi *redi)
 {
-	int dev_null;
-	struct stat statbuf;
+	int			dev_null;
+	struct stat	statbuf;
 
 	if (redi->n && fstat(ft_atoi(redi->n), &statbuf) == -1)
 	{
@@ -32,11 +31,11 @@ int close_file_descriptor2(t_redi *redi)
 	return (EXIT_SUCCESS);
 }
 
-int duplicating_file_descriptor2(t_redi *redi)
+int	duplicating_file_descriptor2(t_redi *redi)
 {
-	int duplicated_fd;
-	int old_fd;
-	struct stat statbuf;
+	int			duplicated_fd;
+	int			old_fd;
+	struct stat	statbuf;
 
 	if (fstat(ft_atoi(redi->word), &statbuf) == -1)
 	{
@@ -52,7 +51,7 @@ int duplicating_file_descriptor2(t_redi *redi)
 	return (EXIT_SUCCESS);
 }
 
-int		redirect_lessand(t_redi *redi)
+int	redirect_lessand(t_redi *redi)
 {
 	if (ft_strequ(redi->word, "-"))
 		return (close_file_descriptor2(redi));
@@ -64,7 +63,7 @@ int		redirect_lessand(t_redi *redi)
 	return (duplicating_file_descriptor2(redi));
 }
 
-int		redirect_less(t_redi *redi)
+int	redirect_less(t_redi *redi)
 {
 	int new_fd;
 	int old_fd;
@@ -84,7 +83,7 @@ int		redirect_less(t_redi *redi)
 	return (EXIT_SUCCESS);
 }
 
-int		redirect_dless(t_redi *redi)
+int	redirect_dless(t_redi *redi)
 {
 	int fd[2];
 

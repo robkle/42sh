@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/01/09 02:21:23 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 03:43:17 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,18 @@ int	find_heredoc(t_astnode *ast);
 void	clear_heredoc(t_heredoc *heredoc);
 
 /*
+** build command for and or background process
+*/
+
+void	build_and_or_command(t_astnode *ast, t_job *j);
+void	build_pipe_sequence_command(t_astnode *ast, t_job *j);
+void	build_simple_command_command(t_astnode *ast, t_job *j);
+void	build_command_prefix_command(t_astnode *ast, t_job *j);
+void	build_command_name_command(t_astnode *ast, t_job *j);
+void	build_command_suffix_command(t_astnode *ast, t_job *j);
+void	build_command_io_redirect_command(t_astnode *ast, t_job *j);
+void	build_command_io_here_file_command(t_astnode *ast, t_job *j);
+/*
 ** ========================== REDIRECTION FUNCTIONS ===========================
 */
 
@@ -60,7 +72,7 @@ int	redirect_dless(t_redi *redi);
 ** ========================== JOB CONTROL FUNCTIONS ===========================
 */
 
-void	lauch_simple_command(t_job *j, t_process *p);
+int	lauch_simple_command(t_job *j, t_process *p);
 void	put_job_in_foreground(t_job *job, int cont);
 void	put_job_in_background(t_job *job, int cont);
 int		mark_process_status(t_job *j, pid_t pid, int status);

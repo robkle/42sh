@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/27 05:36:38 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 03:41:17 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	set_process_group_id(t_job *j, pid_t pid)
 	setpgid(pid, j->pgid);
 }
 
-int	is_builtin(char *cmd_name)
+int			is_builtin(char *cmd_name)
 {
 	if (ft_strequ(cmd_name, "exit") ||
 		ft_strequ(cmd_name, "cd") ||
@@ -61,7 +61,7 @@ int	is_builtin(char *cmd_name)
 	return (0);
 }
 
-char	*is_in_hashtable(char *name)
+char		*is_in_hashtable(char *name)
 {
 	int		index;
 	t_hash	*tmp;
@@ -80,7 +80,24 @@ char	*is_in_hashtable(char *name)
 	return (NULL);
 }
 
-int	exec_builtin(t_process *p)
+int			exec_builtin2(t_process *p)
+{
+	if (ft_strequ(p->av[0], "echo"))
+		return (ft_echo(p));
+	// else if (ft_strequ(p->av[0], "type"))
+	// 	return (ft_type(p));
+	// else if (ft_strequ(p->av[0], "hash"))
+	// 	return (ft_hash(p));
+	else if (ft_strequ(p->av[0], "set"))
+		return (ft_set());
+	else if (ft_strequ(p->av[0], "unset"))
+		return (ft_unset(p->ac, p->av));
+	else if (ft_strequ(p->av[0], "hash"))
+		return (ft_hash(p));
+	return (EXIT_FAILURE);
+}
+
+int			exec_builtin(t_process *p)
 {
 	if (ft_strequ(p->av[0], "exit"))
 		ft_exit(EXIT_SUCCESS);
@@ -100,38 +117,12 @@ int	exec_builtin(t_process *p)
 		return (ft_fg_child());
 	else if (ft_strequ(p->av[0], "bg"))
 		return (ft_bg_child());
-	// else if (ft_strequ(p->av[0], "type"))
-	// 	return (ft_type(p));
-	// else if (ft_strequ(p->av[0], "hash"))
-	// 	return (ft_hash(p));
-	else if (ft_strequ(p->av[0], "echo"))
-		return (ft_echo(p));
-	else if (ft_strequ(p->av[0], "set"))
-		return (ft_set());
-	else if (ft_strequ(p->av[0], "unset"))
-		return (ft_unset(p->ac, p->av));
-	else if (ft_strequ(p->av[0], "hash"))
-		return (ft_hash(p));
-	return (EXIT_FAILURE);
+	return (exec_builtin2(p));
 }
 
-int	str_chr(char *str, int c)
+int			lauch_process(t_process *p, char *path)
 {
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	lauch_process(t_process *p, char *path)
-{
-	if (str_chr(p->av[0], '/') == 1 && possible_to_access_file(p))
+	if (ft_strchr(p->av[0], '/') != NULL && possible_to_access_file(p))
 		return (make_child_binary(p));
 	else if (is_builtin(p->av[0]))
 		return (exec_builtin(p));
@@ -146,13 +137,13 @@ int	lauch_process(t_process *p, char *path)
 	return (127);
 }
 
-void	lauch_in_child_process(t_job *j, t_process *p, char *path)
+void		lauch_in_child_process(t_job *j, t_process *p, char *path)
 {
 	(j->pipe_fd_closer[0]) ? close(j->pipe_fd_closer[0]) : 0;
 	(j->pipe_fd_closer[1]) ? close(j->pipe_fd_closer[1]) : 0;
 	//handle_expansions
 	if (handle_expansion(p) == EXIT_FAILURE)
-	 	exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	//handle_assignments
 	set_stdin_stdout_stderr_channels(p->stdin, p->stdout, p->stderr);
 	if (handle_redirection(p) == EXIT_FAILURE)
@@ -164,7 +155,7 @@ void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 	exit(lauch_process(p, path));
 }
 
-int	is_execute_on_parent_process(int foreground, char *cmd_name)
+int			is_execute_on_parent_process(int foreground, char *cmd_name)
 {
 	if (!foreground)
 		return (0);
@@ -186,7 +177,24 @@ int	is_execute_on_parent_process(int foreground, char *cmd_name)
 	return (0);
 }
 
-int	lauch_process_which_can_change_shell(t_process *p)
+int			lauch_process_which_can_change_shell2(t_process *p)
+{
+	if (ft_strequ(p->av[0], "jobs"))
+		return (ft_jobs(p));
+	else if (ft_strequ(p->av[0], "fc"))
+		return (ft_fc(p));
+	else if (ft_strequ(p->av[0], "export"))
+		return (ft_export(p->ac, p->av));
+	else if (ft_strequ(p->av[0], "set"))
+		return (ft_set());
+	else if (ft_strequ(p->av[0], "unset"))
+		return (ft_unset(p->ac, p->av));
+	else if (ft_strequ(p->av[0], "hash"))
+		return (ft_hash(p));
+	return (EXIT_FAILURE);
+}
+
+int			lauch_process_which_can_change_shell(t_process *p)
 {
 	if (ft_strequ(p->av[0], "exit"))
 		return (ft_exit(EXIT_SUCCESS));
@@ -204,19 +212,7 @@ int	lauch_process_which_can_change_shell(t_process *p)
 		return (ft_fg(p));
 	else if (ft_strequ(p->av[0], "bg"))
 		return (ft_bg(p));
-	else if (ft_strequ(p->av[0], "jobs"))
-		return (ft_jobs(p));
-	else if (ft_strequ(p->av[0], "fc"))
-		return (ft_fc(p));
-	else if (ft_strequ(p->av[0], "export"))
-		return (ft_export(p->ac, p->av));
-	else if (ft_strequ(p->av[0], "set"))
-		return (ft_set());
-	else if (ft_strequ(p->av[0], "unset"))
-		return (ft_unset(p->ac, p->av));
-	else if (ft_strequ(p->av[0], "hash"))
-		return (ft_hash(p));
-	return (EXIT_FAILURE);
+	return (lauch_process_which_can_change_shell2(p));
 }
 
 static void	reset_stdin_stdout_stderr_channels(t_process *p, int std[3])
@@ -238,7 +234,7 @@ static void	reset_stdin_stdout_stderr_channels(t_process *p, int std[3])
 	}
 }
 
-int	lauch_in_parent_process(t_process *p)
+int			lauch_in_parent_process(t_process *p)
 {
 	int std[3];
 	int ret;
@@ -256,12 +252,12 @@ int	lauch_in_parent_process(t_process *p)
 	return (ret);
 }
 
-char	*get_path(t_process *p)
+char		*get_path(t_process *p)
 {
 	char *path;
 
 	path = NULL;
-	if (str_chr(p->av[0], '/') == 1)
+	if (ft_strchr(p->av[0], '/'))
 		return (NULL);
 	if ((path = is_in_hashtable(p->av[0])))
 		return (path);
@@ -273,7 +269,7 @@ char	*get_path(t_process *p)
 	}
 }
 
-void	fork_and_lauch_in_child_process(t_job* j, t_process *p, char *path)
+void		fork_and_lauch_in_child_process(t_job *j, t_process *p, char *path)
 {
 	pid_t pid;
 
@@ -282,26 +278,28 @@ void	fork_and_lauch_in_child_process(t_job* j, t_process *p, char *path)
 		lauch_in_child_process(j, p, path);
 	else if (pid < 0)
 	{
-		ft_putstr_fd("Fork Failed\n" ,2);
+		ft_putstr_fd("Fork failed at laching child process\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	p->pid = pid;
 	set_process_group_id(j, pid);
 }
 
-void	lauch_simple_command(t_job *j, t_process *p)
-{	
+int		lauch_simple_command(t_job *j, t_process *p)
+{
 	char *path;
 
 	path = NULL;
+	// expansion
+	if (handle_expansion(p) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (is_execute_on_parent_process(j->foreground, p->av[0]))
 	{
 		p->status = lauch_in_parent_process(p);
 		p->completed = COMPLETED;
+		return (p->status);
 	}
-	else
-	{
-		path = get_path(p);
-		fork_and_lauch_in_child_process(j, p, path);
-	}
+	path = get_path(p);
+	fork_and_lauch_in_child_process(j, p, path);
+	return (g_shell.exit_status);
 }

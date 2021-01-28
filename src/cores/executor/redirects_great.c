@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 01:52:52 by tango             #+#    #+#             */
-/*   Updated: 2020/12/26 13:03:34 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 03:03:31 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		redirect_great(t_redi *redi)
+int	redirect_great(t_redi *redi)
 {
 	int new_fd;
 	int old_fd;
@@ -23,16 +23,16 @@ int		redirect_great(t_redi *redi)
 	old_fd = open(redi->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (old_fd == -1)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: no such file or directory: %s\n", \
+		ft_dprintf(STDERR_FILENO, "%s: no such file or directory: %s\n",
 			SHELL_NAME, redi->word);
-			return (EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	dup2(old_fd, new_fd);
 	close(old_fd);
 	return (EXIT_SUCCESS);
 }
 
-int		redirect_dgreat(t_redi *redi)
+int	redirect_dgreat(t_redi *redi)
 {
 	int new_fd;
 	int old_fd;
@@ -43,7 +43,7 @@ int		redirect_dgreat(t_redi *redi)
 	old_fd = open(redi->word, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (old_fd == -1)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: no such file or directory: %s\n", \
+		ft_dprintf(STDERR_FILENO, "%s: no such file or directory: %s\n",
 			SHELL_NAME, redi->word);
 		return (EXIT_FAILURE);
 	}
@@ -52,7 +52,7 @@ int		redirect_dgreat(t_redi *redi)
 	return (EXIT_SUCCESS);
 }
 
-int redirecting_stdout_and_stderr(t_redi *redi)
+int	redirecting_stdout_and_stderr(t_redi *redi)
 {
 	int old_fd;
 
@@ -64,7 +64,7 @@ int redirecting_stdout_and_stderr(t_redi *redi)
 	old_fd = open(redi->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (old_fd == -1)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: no such file or directory: %s\n", 
+		ft_dprintf(STDERR_FILENO, "%s: no such file or directory: %s\n",
 			SHELL_NAME, redi->word);
 		return (EXIT_FAILURE);
 	}
@@ -74,11 +74,11 @@ int redirecting_stdout_and_stderr(t_redi *redi)
 	return (EXIT_SUCCESS);
 }
 
-int duplicating_file_descriptor(t_redi *redi)
+int	duplicating_file_descriptor(t_redi *redi)
 {
-	int duplicated_fd;
-	int old_fd;
-	struct stat statbuf;
+	int			duplicated_fd;
+	int			old_fd;
+	struct stat	statbuf;
 
 	if (fstat(ft_atoi(redi->word), &statbuf) == -1)
 	{
@@ -94,10 +94,10 @@ int duplicating_file_descriptor(t_redi *redi)
 	return (EXIT_SUCCESS);
 }
 
-int close_file_descriptor(t_redi *redi)
+int	close_file_descriptor(t_redi *redi)
 {
-	int dev_null;
-	struct stat statbuf;
+	int			dev_null;
+	struct stat	statbuf;
 
 	if (redi->n && fstat(ft_atoi(redi->n), &statbuf) == -1)
 	{
@@ -113,7 +113,7 @@ int close_file_descriptor(t_redi *redi)
 	return (EXIT_SUCCESS);
 }
 
-int		redirect_greatand(t_redi *redi)
+int	redirect_greatand(t_redi *redi)
 {
 	if (ft_strequ(redi->word, "-"))
 		return (close_file_descriptor(redi));
