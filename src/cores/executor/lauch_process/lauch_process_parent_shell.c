@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 13:08:58 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 15:29:38 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static int	lauch_process_which_can_change_shell(t_process *p)
 		return (ft_fg(p));
 	else if (ft_strequ(p->av[0], "bg"))
 		return (ft_bg(p));
+	else if (ft_strequ(p->av[0], "echo"))
+		return (ft_echo(p));
 	return (lauch_process_which_can_change_shell2(p));
 }
 
