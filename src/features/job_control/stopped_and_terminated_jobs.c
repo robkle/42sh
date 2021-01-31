@@ -6,19 +6,18 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/08 01:26:30 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 17:39:13 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include <errno.h> //using errno here need to check
 
-int job_is_stopped(t_job *j)
+int		job_is_stopped(t_job *j)
 {
 	t_process *p_ptr;
 
 	p_ptr = j->first_process;
-	while(p_ptr)
+	while (p_ptr)
 	{
 		if (!p_ptr->completed && !p_ptr->stopped)
 			return (0);
@@ -27,12 +26,12 @@ int job_is_stopped(t_job *j)
 	return (1);
 }
 
-int job_is_completed(t_job *j)
+int		job_is_completed(t_job *j)
 {
 	t_process *p_ptr;
 
 	p_ptr = j->first_process;
-	while(p_ptr)
+	while (p_ptr)
 	{
 		if (!p_ptr->completed)
 			return (0);
@@ -41,12 +40,14 @@ int job_is_completed(t_job *j)
 	return (1);
 }
 
-int mark_process_status_helper(t_process *first_process, pid_t pid, int status)
+int		mark_process_status_helper(
+	t_process *first_process, pid_t pid, int status)
 {
 	t_process *p_ptr;
 
 	p_ptr = first_process;
-	while (p_ptr) {
+	while (p_ptr)
+	{
 		if (p_ptr->pid == pid)
 		{
 			p_ptr->status = status;
@@ -61,7 +62,7 @@ int mark_process_status_helper(t_process *first_process, pid_t pid, int status)
 				p_ptr->completed = 1;
 				if (WIFEXITED(status))
 					g_shell.exit_status = WEXITSTATUS(status);
-				else if (WIFSIGNALED(status)) //here will be signal controller
+				else if (WIFSIGNALED(status))
 					g_shell.exit_status = 128 + WTERMSIG(status);
 			}
 			return (0);
@@ -71,10 +72,10 @@ int mark_process_status_helper(t_process *first_process, pid_t pid, int status)
 	return (1);
 }
 
-int mark_process_status(t_job *j, pid_t pid, int status)
+int		mark_process_status(t_job *j, pid_t pid, int status)
 {
-	t_job *j_ptr;
-	int ret;
+	t_job	*j_ptr;
+	int		ret;
 
 	if (pid > 0)
 	{
@@ -85,35 +86,25 @@ int mark_process_status(t_job *j, pid_t pid, int status)
 			if (ret == 0)
 				return (0);
 			j_ptr = j_ptr->next;
-		}	
+		}
 	}
 	return (1);
 }
 
-void update_status(void)
+void	update_status(void)
 {
-	int status;
-	pid_t pid;
+	int		status;
+	pid_t	pid;
 
 	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 	while (!mark_process_status(g_shell.first_job, pid, status))
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 }
 
-// void wait_for_job(t_job *j, int opt)
-// {
-// 	int pid;
-// 	int status;
-
-// 	pid = waitpid(-j->pgid, &status, opt);
-// 	while(!mark_process_status(j, pid, status) && !job_is_stopped(j) &&!job_is_completed(j))
-// 		pid = waitpid(-j->pgid, &status, opt);
-// }
-
-void wait_for_job(t_job *j, int opt)
+void	wait_for_job(t_job *j, int opt)
 {
-	int status;
-	t_process *p_ptr;
+	int			status;
+	t_process	*p_ptr;
 
 	p_ptr = j->first_process;
 	while (!job_is_stopped(j) && !job_is_completed(j))
@@ -130,7 +121,17 @@ void wait_for_job(t_job *j, int opt)
 	}
 }
 
-void format_job_info(t_job *j, const char *status, int opt)
+int		is_the_current_job(t_job *j)
+{
+	t_job *current_job;
+
+	current_job = find_the_current_job();
+	if (j == NULL || current_job == NULL)
+		return (0);
+	return (current_job == j);
+}
+
+void	format_job_info(t_job *j, const char *status, int opt)
 {
 	ft_printf("[%d]", j->id);
 	if (is_the_current_job(j))
@@ -150,8 +151,7 @@ void	do_job_notification(void)
 	t_job *j;
 	t_job *jlast;
 	t_job *jnext;
-	
-	/* Updated status information for child processes */
+
 	if (g_shell.first_job == NULL)
 		return ;
 	update_status();

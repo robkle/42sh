@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_llitoa.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/28 16:16:46 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/28 16:17:07 by dthan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
-static void		ft_init_str(char *str, size_t n_size)
+static void				ft_init_str(char *str, size_t n_size)
 {
 	size_t		i;
 
@@ -26,7 +38,7 @@ static unsigned long	ft_numlen(long long nb)
 	return (len);
 }
 
-char			*ft_llitoa(long long n)
+char					*ft_llitoa(long long n)
 {
 	size_t		i;
 	size_t		n_size;

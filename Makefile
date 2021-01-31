@@ -171,7 +171,9 @@ BUILT_IN := $(addprefix $(BUILT_IN_DIR)/,$(BUILT_IN_FILE))
 # Job control
 JOB_CONTROL_DIR := $(FEATURES_DIR)/job_control
 JOB_CONTROL_FILE += job_utils.c
+JOB_CONTROL_FILE += create_delete_job_tools.c
 JOB_CONTROL_FILE += process_utils.c
+JOB_CONTROL_FILE += delete_process_tools.c
 JOB_CONTROL_FILE += foreground_and_background.c
 JOB_CONTROL_FILE += stopped_and_terminated_jobs.c
 JOB_CONTROL_FILE += continuing_stopped_jobs.c
@@ -277,12 +279,10 @@ UTILITY_FILE += ft_strndup.c
 UTILITY_FILE += ft_arraydel.c
 UTILITY_FILE += ft_strjoin_and_free.c
 UTILITY_FILE += increment_shell_level.c
-UTILITY_FILE += ft_num_check.c
 UTILITY_FILE += ft_strchr_int.c
 UTILITY_FILE += ft_swap.c
 UTILITY_FILE += ft_strstr_int.c
 UTILITY_FILE += ft_lstlen.c
-UTILITY_FILE += jump_quote.c
 UTILITY_FILE += ft_strncpm.c
 UTILITY_FILE += ft_strnequ.c
 UTILITY_FILE += ft_getenv.c
@@ -295,6 +295,7 @@ UTILITY_FILE += ft_lstdel_strdel.c
 UTILITY_FILE += ft_arraylen.c
 UTILITY_FILE += ft_atolli.c
 UTILITY_FILE += ft_llitoa.c
+UTILITY_FILE += is_number_str.c
 UTILITY := $(addprefix $(UTILITY_DIR)/,$(UTILITY_FILE))
 
 ############################ SUM-UP SOURCE FILES ##############################

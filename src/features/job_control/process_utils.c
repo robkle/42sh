@@ -6,16 +6,16 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:05:30 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/12 03:56:40 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 16:39:29 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void put_to_plist(t_process *new_process, t_process **first_process)
+static void	put_to_plist(t_process *new_process, t_process **first_process)
 {
 	t_process *p_ptr;
-	
+
 	if (*first_process == NULL)
 		*first_process = new_process;
 	else
@@ -46,7 +46,7 @@ t_process	*create_process(t_job *j)
 	return (process);
 }
 
-int last_process_status(t_job *job)
+int			last_process_status(t_job *job)
 {
 	t_process *p_ptr;
 

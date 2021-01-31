@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 21:42:53 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/11 21:43:08 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 16:15:44 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int ft_arraylen(char **array)
+int	ft_arraylen(char **array)
 {
 	int ct;
 	int i;

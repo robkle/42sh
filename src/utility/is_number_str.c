@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jump_quote.c                                       :+:      :+:    :+:   */
+/*   is_number_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/30 06:30:22 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/23 10:18:55 by dthan            ###   ########.fr       */
+/*   Created: 2021/01/28 17:33:37 by dthan             #+#    #+#             */
+/*   Updated: 2021/01/28 17:34:27 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-int jump_quote(char *input, int *i, char quote_type)
+int	is_number_str(char *str)
 {
-	if (quote_type == '\\')
-		(*i)++;
-	else if (quote_type == '"' || quote_type == '\'')
-	{
-		(*i)++;
-		while (input[*i])
-		{
-			if (input[*i] == quote_type && is_real_character(input, *i))
-				break;
-			(*i)++;
-		}
-	}
-	if (input[*i] == '\0')
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	int i;
+
+	i = -1;
+	if (str == NULL)
+		return (0);
+	while (str[++i])
+		if (!ft_isdigit(str[i]))
+			return (0);
+	return (1);
 }

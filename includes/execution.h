@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/01/28 13:09:19 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 17:39:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,10 @@ void	update_status(void);
 void	wait_for_job(t_job *j, int opt);
 void	format_job_info(t_job *j, const char *status, int opt);
 void	do_job_notification(void);
-void	mark_job_as_running(t_job *j);
-void	continue_job(t_job *j, int foreground);
+
+void change_running_state(t_job *j);
+int continue_the_suspended_job(t_job *j);
+
 int		ft_tcsetpgrp(int fd, pid_t pgrp_id);
 pid_t	ft_tcgetpgrp(int fd);
 
@@ -112,15 +114,15 @@ int last_process_status(t_job *job);
 /* job */
 t_job	*create_job(int foreground, int forked);
 void	delete_job(t_job *j, char option);
+
 void put_to_list_job(t_job *newjob);
 t_job *is_valid_job_id(char *str);
 t_job *find_job(pid_t pgid);
 void print_job_background(t_job *job_node);
-int is_the_current_job(t_job* j);
 int is_the_last_job(t_job *j);
 t_job *find_the_last_job();
 t_job *find_the_current_job();
 /* process */
 t_process	*create_process(t_job *j);
-
+void	delete_process(t_job *j);
 #endif

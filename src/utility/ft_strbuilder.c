@@ -6,16 +6,16 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 18:10:12 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/25 18:10:33 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 16:20:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char *ft_strbuilder(int argc, char *str, ...)
+char	*ft_strbuilder(int argc, char *str, ...)
 {
-	va_list ap;
-	int i;
+	va_list	ap;
+	int		i;
 
 	i = 0;
 	va_start(ap, str);
