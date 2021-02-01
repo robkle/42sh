@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   postfix.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 10:54:56 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/01 12:27:49 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
-int	ft_operator_str(char *op)
+int			ft_operator_str(char *op)
 {
 	if (ft_strequ(op, "(") || ft_strequ(op, ")"))
 		return (1);
@@ -72,18 +84,18 @@ static void	ft_op_to_postfix(t_st *infix, t_st **stack, t_st **postfix)
 		ft_push_lst(postfix, (*stack)->op, (*stack)->type);
 		ft_pop_stack(stack);
 	}
-	if (ft_strequ(infix->op,")"))
+	if (ft_strequ(infix->op, ")"))
 		ft_pop_stack(stack);
 	else
 		ft_push_stack(stack, infix->op, infix->type);
 }
 
-void	ft_itop_lst(t_st *infix, t_st **postfix)
+void		ft_itop_lst(t_st *infix, t_st **postfix)
 {
 	t_st	*stack;
-	
+
 	stack = NULL;
-	while (infix)	
+	while (infix)
 	{
 		if (!ft_operator_str(infix->op) && !ft_strequ(infix->type, "space"))
 			ft_push_lst(postfix, infix->op, infix->type);

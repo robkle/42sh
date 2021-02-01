@@ -1,68 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plusminus.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 10:54:39 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/01 19:37:05 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
-t_st	*ft_skip_space(t_st *link, const int move)
-{
-	while (link && ft_strequ(link->type, "space"))
-		link = move ? link->next : link->prev;
-	return (link);
-}	
-
-static int	ft_isunary(t_st *infix)
-{
-	t_st *tmp;
-
-	tmp = ft_skip_space(infix->prev, 0);
-	if (!tmp)
-		return (1);
-	if (ft_strequ(tmp->type, "operator") && !ft_strequ(tmp->op, "s++") && \
-	!ft_strequ(tmp->op, "s--"))
-		return (1);
-	return (0);
-}
-
-static int	ft_issuf(t_st *infix)
-{
-	t_st	*tmp1;
-	t_st	*tmp2;
-	
-	tmp1 = ft_skip_space(infix->prev, 0);
-	if (ft_strlen(infix->op) >= 2)
-	{
-		if ((ft_strnequ(infix->op, "++", 2) || \
-		ft_strnequ(infix->op, "--", 2)) && tmp1)
-		{
-			if (ft_strequ(tmp1->type, "intvar"))
-			{
-				tmp2 = ft_skip_space(tmp1->prev, 0);
-				if (!tmp2 || (!ft_strequ(tmp2->op, "p++") && \
-				!ft_strequ(tmp2->op, "p--")))
-					return (1);
-			}
-		}
-	}
-	return (0);
-}
-
-static int	ft_ispre(t_st *infix)
-{
-	int		i;
-	t_st	*tmp;
-
-	i = ft_strlen(infix->op);
-	tmp = ft_skip_space(infix->next, 1);
-	if (i >= 2)
-	{
-		if ((ft_strequ(&infix->op[i - 2], "++") || \
-		ft_strequ(&infix->op[i - 2], "--")) && tmp)
-		{
-			if (ft_strequ(tmp->type, "intvar"))
-				return (1);
-		}
-	}
-	return (0);
-}
-
-static void ft_pm_addnew(t_st *infix, char *op, char *type)
+static void	ft_pm_addnew(t_st *infix, char *op, char *type)
 {
 	t_st	*new;
 
@@ -89,7 +39,7 @@ static void ft_pm_addnew(t_st *infix, char *op, char *type)
 static void	ft_pm_split(t_st *infix, char *spec, int size)
 {
 	char	*split[2];
-	
+
 	if (ft_strequ(spec, "s"))
 	{
 		split[0] = ft_strjoin(spec, ft_strsub(infix->op, 0, 2));
@@ -126,12 +76,11 @@ static void	ft_pm_create(t_st *infix, char *spec)
 		str = ft_strjoin(spec, infix->op);
 		ft_modify_link(infix, str, "operator");
 	}
-
 	else
 		ft_pm_split(infix, spec, size);
 }
 
-void	ft_plusminus(t_st **infix)
+void		ft_plusminus(t_st **infix)
 {
 	t_st	*begin;
 

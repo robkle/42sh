@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 10:44:09 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/01 19:47:15 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 static int	ft_operand_check(t_st *infix, t_st *begin)
 {
 	t_st	*tmp;
+
 	tmp = infix->prev;
 	while (tmp)
 	{
@@ -16,24 +29,8 @@ static int	ft_operand_check(t_st *infix, t_st *begin)
 		}
 		if (ft_strequ(tmp->type, "operator") && tmp->op[0] != '(' && \
 		tmp->op[0] != 'u' && tmp->op[0] != 'p')
-			break;
+			break ;
 		tmp = tmp->prev;
-	}
-	return (1);
-}
-
-static int	ft_pref_suf_check(t_st *infix, t_st *begin)
-{
-	t_st	*tmp;
-	
-	tmp = ft_skip_space(infix->prev, 0);
-	if (infix->op[0] == 'p' && tmp)
-	{
-		if (!ft_strequ(tmp->type, "operator"))
-		{
-			ft_print_error(SNERR, infix, begin);
-			return (0);
-		}
 	}
 	return (1);
 }
@@ -52,12 +49,12 @@ static int	ft_operator_check(t_st *infix, t_st *begin)
 		tmp = ft_skip_space(infix->prev, 0);
 		if ((!tmp || (tmp && ft_strequ(tmp->type, "operator") && \
 		tmp->op[0] != 's')) && infix->op[0] != 'p' && infix->op[0] != 'u' && \
-		infix->op[0] != '(')	
+		infix->op[0] != '(')
 		{
 			ft_print_error(OPEXP, infix, begin);
 			return (0);
 		}
-		tmp = ft_skip_space(infix->next, 1);	
+		tmp = ft_skip_space(infix->next, 1);
 		if ((!tmp || ft_strequ(tmp->type, "clbr")) && infix->op[0] != 's')
 		{
 			ft_print_error(OPEXP, infix, begin);
@@ -79,7 +76,8 @@ static int	ft_error_check(t_st *infix, t_st *begin)
 		if (!ft_operator_check(infix, begin))
 			return (0);
 	}
-	else if (!ft_strequ(infix->type, "clbr") && !ft_strequ(infix->type, "space"))
+	else if (!ft_strequ(infix->type, "clbr") && \
+	!ft_strequ(infix->type, "space"))
 	{
 		if (!ft_operand_check(infix, begin))
 			return (0);
@@ -108,7 +106,7 @@ static t_st	*ft_error_scan(t_st *infix)
 	return (begin);
 }
 
-t_st	*ft_infix_checker(t_st *infix)
+t_st		*ft_infix_checker(t_st *infix)
 {
 	t_st	*begin;
 

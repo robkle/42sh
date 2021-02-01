@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calc.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 10:43:39 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/01 19:54:50 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 static char	*ft_calculate(long long left, long long right, char *op)
@@ -53,12 +65,11 @@ long long	ft_calc(t_st *postfix)
 		if (!ft_strequ(postfix->type, "operator"))
 			ft_push_stack(&stack, postfix->op, postfix->type);
 		else if (ft_strequ(postfix->op, "u+") || ft_strequ(postfix->op, "u-"))
-		{
-			if (ft_strequ(postfix->op, "u-"))
-				stack->op = ft_llitoa(-1 * (ft_atolli(stack->op)));
-		}
-		else if(ft_strequ(postfix->op, "p++") || ft_strequ(postfix->op, "p--") \
-		|| ft_strequ(postfix->op, "s++") || ft_strequ(postfix->op, "s--"))
+			stack->op = ft_strequ(postfix->op, "u-") ? \
+			ft_llitoa(-1 * (ft_atolli(stack->op))) : stack->op;
+		else if (ft_strequ(postfix->op, "p++") || \
+		ft_strequ(postfix->op, "p--") || ft_strequ(postfix->op, "s++") || \
+		ft_strequ(postfix->op, "s--"))
 			ft_intvar(stack, postfix->op);
 		else
 			ft_calc_pop(&stack, postfix->op);

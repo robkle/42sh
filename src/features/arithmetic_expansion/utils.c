@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 10:55:05 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/01 11:39:02 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 void	ft_modify_link(t_st *infix, char *op, char *type)
@@ -73,7 +85,7 @@ void	ft_push_stack(t_st **stack, char *op, char *type)
 		(*stack)->next = NULL;
 	}
 	else
-	{ 
+	{
 		tmp = malloc(sizeof(t_st));
 		tmp->op = ft_strdup(op);
 		tmp->type = ft_strdup(type);
@@ -85,10 +97,10 @@ void	ft_push_stack(t_st **stack, char *op, char *type)
 void	ft_pop_stack(t_st **stack)
 {
 	t_st	*tmp;
-	
+
 	tmp = (*stack)->next;
 	free((*stack)->op);
 	free((*stack)->type);
 	free(*stack);
 	*stack = tmp;
-}	
+}

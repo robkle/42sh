@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extolst.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 10:48:20 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/01 12:41:44 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
-int	ft_operator(char c)
+int			ft_operator(char c)
 {
-	char *ops;
+	char	*ops;
 
 	ops = "+-*/%()<>!=&|";
 	if (ft_strchr(ops, c))
@@ -15,7 +27,7 @@ static void	ft_op_parse(char *exp, int *i, char op[])
 	if (exp[*i] == '+' || exp[*i] == '-')
 	{
 		while (exp[*i] == '+' || exp[*i] == '-')
-		{	
+		{
 			ft_strncat(op, &exp[*i], 1);
 			*i += 1;
 		}
@@ -42,7 +54,7 @@ static void	ft_write_to_lst(t_st **infix, char arr[])
 	ft_bzero(arr, ft_strlen(arr));
 }
 
-t_st	*ft_extolst(char *exp)
+t_st		*ft_extolst(char *exp)
 {
 	t_st	*infix;
 	char	buf[13];
@@ -64,7 +76,7 @@ t_st	*ft_extolst(char *exp)
 			ft_strncat(op, &exp[i], 1);
 		if (op[0])
 			ft_write_to_lst(&infix, op);
-		if (buf[0] && !(ft_isalnum(exp[i + 1]) || exp [i + 1] == '_' || \
+		if (buf[0] && !(ft_isalnum(exp[i + 1]) || exp[i + 1] == '_' || \
 		exp[i + 1] == '#' || exp[i + 1] == '@'))
 			ft_write_to_lst(&infix, buf);
 	}

@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   base.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 10:43:24 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/01 11:57:56 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 static int	ft_atoi_base(t_st *infix, char *value, int base, int calc)
 {
 	int				i;
 	long long int	res;
-	
+
 	res = 0;
 	if (value && *value)
 	{
@@ -15,8 +27,8 @@ static int	ft_atoi_base(t_st *infix, char *value, int base, int calc)
 			{
 				if (BVALS[i] == *value)
 				{
-					res	= base * res + i;
-					break;
+					res = base * res + i;
+					break ;
 				}
 			}
 			if (i == base)
@@ -37,24 +49,24 @@ static int	ft_hash_exp(t_st *infix, t_st *begin, int calc)
 	split = ft_strsplit(infix->op, '#');
 	base = ft_atoi(split[0]);
 	if ((base < 2 || base > 64) && !calc)
-	{	
+	{
 		ft_print_error(INVBA, infix, begin);
-		//free(split);
+		ft_arraydel(split);
 		return (0);
 	}
 	if ((ft_strchr(infix->op, '#') != ft_strrchr(infix->op, '#')) && !calc)
 	{
 		ft_print_error(INVNU, infix, begin);
-		//free(split);
+		ft_arraydel(split);
 		return (0);
 	}
 	if (!ft_atoi_base(infix, split[1], base, calc) && !calc)
 	{
 		ft_print_error(VTGFB, infix, begin);
-		//free(split)
+		ft_arraydel(split);
 		return (0);
 	}
-	//free(split)
+	ft_arraydel(split);
 	return (1);
 }
 
@@ -87,15 +99,15 @@ static int	ft_hexoct_exp(t_st *infix, t_st *begin, int calc)
 	return (1);
 }
 
-int	ft_base(t_st *infix, t_st *begin, int calc)
+int			ft_base(t_st *infix, t_st *begin, int calc)
 {
 	if (ft_strequ(infix->type, "hash"))
 	{
 		if (infix->op[0] == '#' && !calc)
-		{	
+		{
 			ft_print_error(OPEXP, infix, begin);
 			return (0);
-		}	
+		}
 		if (!ft_hash_exp(infix, begin, calc))
 			return (0);
 	}
@@ -107,7 +119,7 @@ int	ft_base(t_st *infix, t_st *begin, int calc)
 	return (1);
 }
 
-void	ft_base_calc(t_st *infix)
+void		ft_base_calc(t_st *infix)
 {
 	while (infix)
 	{

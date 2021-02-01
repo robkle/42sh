@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_exp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 10:55:14 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/01 12:02:39 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
-int	ft_expansion_len(char *exp)
+int		ft_expansion_len(char *exp)
 {
 	int	i;
-	
+
 	if (ft_strnequ(exp, "$((", 3))
 		return (ft_arx_brackets(exp));
 	else if (ft_isalpha(exp[1]) || exp[1] == '_')
@@ -22,7 +34,7 @@ char	**ft_split_arx(char *arx, int index, int len)
 
 	exp = (char **)malloc(sizeof(char *) * 4);
 	exp[0] = ft_strsub(arx, 0, index);
-	exp[1] = ft_strsub(arx, index, len);//strip brackets here
+	exp[1] = ft_strsub(arx, index, len);
 	exp[2] = ft_strdup(&arx[index + len]);
 	exp[3] = NULL;
 	return (exp);
@@ -45,10 +57,10 @@ char	*ft_strcombine(char **exp, char *res)
 	return (arx);
 }
 
-int	ft_arx_brackets(char *exp)
+int		ft_arx_brackets(char *exp)
 {
 	char	stack[1024];
-	int 	i;
+	int		i;
 	int		j;
 
 	i = 2;
@@ -73,7 +85,8 @@ int	ft_arx_brackets(char *exp)
 
 void	ft_free_lst(t_st **lst)
 {
-	t_st *tmp;
+	t_st	*tmp;
+
 	while (*lst)
 	{
 		tmp = (*lst)->next;

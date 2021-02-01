@@ -76,7 +76,6 @@ void	ft_operand(t_st **infix);
 ** plusminus.c 
 */
 void	ft_plusminus(t_st **infix);
-t_st	*ft_skip_space(t_st *link, const int move);
 
 /* 
 ** postfix.c 
@@ -102,5 +101,14 @@ char	**ft_split_arx(char *arx, int index, int len);
 char	*ft_strcombine(char **exp, char *res);
 int		ft_arx_brackets(char *exp);
 void	ft_free_lst(t_st **lst);
+
+/*
+** utils_pm.c
+*/
+t_st	*ft_skip_space(t_st *link, const int move);
+int		ft_isunary(t_st *infix);
+int		ft_issuf(t_st *infix);
+int		ft_ispre(t_st *infix);
+int		ft_pref_suf_check(t_st *infix, t_st *begin);
 
 #endif 

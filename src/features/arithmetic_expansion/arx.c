@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arx.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/01 10:43:04 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/01 12:16:36 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 static int	ft_calc_exp(char *exp, long long int *res)
@@ -42,16 +54,16 @@ static int	ft_expand_arx(char *arx, long long int *res)
 		}
 	}
 	free(arx);
-	return(1);
+	return (1);
 }
 
-int	ft_arx(t_process *p)
+int			ft_arx(t_process *p)
 {
 	int					i;
 	int					len;
 	long long int		res;
 	char				*tmp;
-	
+
 	i = -1;
 	while (p->av[++i])
 	{
