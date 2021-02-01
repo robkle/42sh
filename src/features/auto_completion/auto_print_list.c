@@ -12,10 +12,10 @@
 
 #include "shell.h"
 
-void auto_read_input(char first, char second, char buf[])
+void auto_read_input(char yes, char no, char buf[])
 {
 	while ((read(STDIN_FILENO, buf, sizeof(BUFF_LINE_EDITION))) > 1 ||
-		   (buf[0] != first && buf[0] != second))
+		   (buf[0] != yes && buf[0] != no))
 	{
 		if (g_shell.signal_indicator == SIGINT)
 		//if (1)

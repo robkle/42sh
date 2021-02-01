@@ -10,6 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** Builtin option handling interfaces
+** 1. void init_opt(t_opt *opt, const char *opt_set);
+** 2. check_builtin_opts(char **av, t_opt *opt);
+*/
+
+/*
+** void init_opt(t_opt *opt, const char *opt_set);
+** 
+** Description
+** init_opt initializes the t_opt struct with the given set of options.
+** the second parameter *opt_set is a string made up of option chracters
+** for a command you would like to implement
+** (e.g. #define BUILTIN_CD_OPT_SET "PL", cd command has -P and -L options)
+**
+** Return value
+** None
+*/
+
+/*
+** void check_builtin_opts(char **av, t_opt *opt)
+**
+** Description
+** check_builtin_opts takes 
+**
+**
+*/
+
 #include "shell.h"
 
 void		init_opt(t_opt *opt, const char *opt_set)

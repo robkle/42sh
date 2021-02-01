@@ -198,9 +198,10 @@ char step_b(char *curpath)
 			if ((check_access(curpath)) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			pos_prcding_comp = get_pos_prcding_comp(curpath, i);
-			curpath[i + 1] = '\0';
-			curpath[i + 2] = '\0';
-			curpath[i + 3] = '\0';
+            ft_strcpy(&curpath[i + 1], "\0\0\0");
+			// curpath[i + 1] = '\0';
+			// curpath[i + 2] = '\0';
+			// curpath[i + 3] = '\0';
 			if (i + 3 < len)
 				ft_strcpy(&curpath[i + 1], &(curpath[i + 3]));
 			len = ft_strlen(curpath);
