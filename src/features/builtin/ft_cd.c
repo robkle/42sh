@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/02/02 17:47:21 by ihwang           ###   ########.fr       */
-=======
-/*   Updated: 2020/12/27 17:25:49 by dthan            ###   ########.fr       */
->>>>>>> 5e5e5ca71f9dd1b4a60dcd8b4b25c2da857ba47e
+/*   Updated: 2021/02/02 22:52:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-<<<<<<< HEAD
 /*
 ** Refer to the CD section in the POSIX standard document if you need to analyze this function
 ** link: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cd.html
@@ -66,63 +61,11 @@ static char	get_directory(t_process *c, t_cd *cd, t_opt *opt)
 	}
 	else if (c->av[opt->operand_count + 1] != NULL)
 		cd->directory = c->av[opt->operand_count + 1];
-=======
-static int	cd_no_arg(void)
-{
-	char	*var_pwd;
-	char	pwd[PATH_MAX];
-	char	*home;
-	char	*old;
-
-	if (!(home = get_var("HOME", g_shell.env, VAL)))
-	{
-		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
-	if ((getcwd(pwd, PATH_MAX)) == NULL)
-		return (EXIT_FAILURE);
-	if ((old = get_var("OLDPWD", g_shell.env, VAL)))
-		ft_strcpy(old, pwd);
-	if ((var_pwd = get_var("PWD", g_shell.env, VAL)))
-		ft_strcpy(pwd, home);
-	if ((chdir(home)) == -1)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-static int	cd_exchange(void)
-{
-	char	pwd[PATH_MAX];
-	char	*old;
-	char	*var_pwd;
-	char	*temp;
-
-	if ((temp = (char*)malloc(PATH_MAX)) == NULL)
-		return (EXIT_FAILURE);
-	temp[0] = '\0';
-	if ((old = get_var("OLDPWD", g_shell.env, VAL)))
-	{
-		getcwd(pwd, PATH_MAX);
-		ft_strcpy(temp, pwd);
-		if ((var_pwd = get_var("PWD", g_shell.env, VAL)))
-			ft_strcpy(var_pwd, old);
-		ft_strcpy(pwd, old);
-		chdir(pwd);
-		ft_strcpy(old, temp);
-	}
-	else
-	{
-		ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
-	ft_strdel(&temp);
->>>>>>> 5e5e5ca71f9dd1b4a60dcd8b4b25c2da857ba47e
 	return (EXIT_SUCCESS);
 }
 
 int			ft_cd(t_process *c)
 {
-<<<<<<< HEAD
 	t_opt	opt;
 	t_cd	cd;
 
@@ -144,12 +87,4 @@ int			ft_cd(t_process *c)
 		return (ft_cd_get_curpath_from_dir(&cd));
 	else
 		return (ft_cd_search_cdpath(&cd));
-=======
-	if (c->ac == 1)
-		return (cd_no_arg());
-	else if (ft_strequ(c->av[1], "-"))
-		return (cd_exchange());
-	else
-		return (ft_cd_pathfinder(c));
->>>>>>> 5e5e5ca71f9dd1b4a60dcd8b4b25c2da857ba47e
 }
