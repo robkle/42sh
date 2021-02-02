@@ -86,4 +86,11 @@ void					remove_smallest_or_largest_suffix_pattern(
 void					remove_smallest_or_largest_prefix_pattern(
 	char parameter[256], char word[256], char replacement[256]);
 
+
+/*
+** tilde expansion
+*/
+
+int tilde_expansion(t_process *p);
+
 #endif

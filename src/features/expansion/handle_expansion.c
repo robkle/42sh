@@ -21,8 +21,8 @@ int parameter_expansion(t_process *p)
 
 int handle_expansion(t_process *p)
 {
-	// if (!tilde_expansion(p))
-	// 	return (EXIT_FAILURE);
+	if (tilde_expansion(p) != EXIT_SUCCESS)
+	 	return (EXIT_FAILURE);
 	if (parameter_expansion(p) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	// if (!command_substitution())
