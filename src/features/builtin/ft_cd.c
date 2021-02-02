@@ -6,14 +6,30 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/02 22:52:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/02 23:53:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 /*
-** Refer to the CD section in the POSIX standard document if you need to analyze this function
+** Summary
+**
+** The main parts of ft_cd function are stored in builtin/ft_cd_utilities directory.
+** Their main logics are fully dedicated to the POSIX standard document.
+** Look into the link down below if you need to investigate how it works.
+**
+** The behaviours of ft_cd are described in 10 steps by the document, and
+** the steps from 1 to 4 are compressed and stored in
+** 'int ft_cd(t_process *c)' function which is the starting point of this function.
+** I commented the rest of the steps in each file in the 'ft_cd_utilities' directory,
+** so you can find them with running this command in the directory or its parent
+** directories for instance,
+**
+** $ greb -Rl step5
+**
+** Replace the number at the end of the command with your choice to refer to.
+**
 ** link: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cd.html
 */
 
