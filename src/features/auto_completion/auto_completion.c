@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 17:13:51 by marvin            #+#    #+#             */
-/*   Updated: 2020/12/27 17:48:19 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/05 19:33:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,60 @@ int				auto_is_command(t_l *l)
 		return (FALSE);
 }
 
-void        auto_reset(t_auto *auto_com)
+// void        auto_reset(t_auto *auto_com)
+// {
+// 	ft_lstdel_strdel(&auto_com->list);
+//     ft_strdel(&auto_com->target_str);
+//     ft_strdel(&auto_com->typed_str);
+// 	ft_memset(auto_com->cwd, 0, PATH_MAX);
+// 	ft_memset(auto_com->full_path, 0, PATH_MAX);
+// 	auto_com->count_list = 0;
+// 	auto_com->largest_content_size = 0;
+// 	auto_com->status = 0;
+// }
+
+void init_auto_completion_struct(t_auto *auto_com, t_l *l)
 {
-	auto_lstdel_strdel(&auto_com->list);
+	ft_bzero(auto_com, sizeof(t_auto));
+	auto_com->editor = l;
+}
+
+// old
+// int         auto_complete(t_l *l)
+// {
+// 	static char sticky;
+// 	int		stat;
+
+//     if ((stat = auto_is_command(l)) == TRUE)
+// 		auto_command(l);
+//     else if (stat == AUTO_COMPLETION)
+// 		return (AUTO_COMPLETION);
+// 	else
+//         auto_file(l);
+//     delete_status_new_pos(&l->auto_com.status);
+//     return (AUTO_COMPLETION);
+// }
+
+// new
+
+int			clear_auto_struct(t_auto *auto_com)
+{
+	ft_lstdel_strdel(&auto_com->list);
     ft_strdel(&auto_com->target_str);
     ft_strdel(&auto_com->typed_str);
-	ft_memset(auto_com->cwd, 0, PATH_MAX);
-	ft_memset(auto_com->full_path, 0, PATH_MAX);
-	auto_com->count_list = 0;
-	auto_com->largest_content_size = 0;
-	auto_com->status = 0;
+	if (g_shell.signal_indicator == SIGINT)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int         auto_complete(t_l *l)
 {
+	t_auto auto_com;
 	int		stat;
 
-	if (l->auto_com.status & AUTO_STAT_NEW_POS)
-        auto_reset(&l->auto_com);
-	delete_status_new_pos(&l->auto_com.status);
-	if (l->line == NULL)
-		l->line = ft_strnew(0);
+	ft_bzero(&auto_com, sizeof(t_auto));
+	auto_com.editor = l;
     if ((stat = auto_is_command(l)) == TRUE)
-		auto_command(l);
-    else if (stat == AUTO_COMPLETION)
-		return (AUTO_COMPLETION);
-	else
-        auto_file(l);
-    delete_status_new_pos(&l->auto_com.status);
-    return (AUTO_COMPLETION);
+		return (auto_command(&auto_com));
+	return (auto_file(&auto_com));
 }

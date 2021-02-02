@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:18:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 16:47:26 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:55:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void			edit_line(t_l *l, int i, int j)
+static void	edit_line(t_l *l, int i, int j)
 {
 	char			*tmp;
 
@@ -23,7 +23,7 @@ static void			edit_line(t_l *l, int i, int j)
 	l->line = tmp;
 }
 
-static void			apply_to_screen(t_l *l, int i, int j, int y_dec)
+static void	apply_to_screen(t_l *l, int i, int j, int y_dec)
 {
 	if (l->x < l->x + (l->y * l->co) - l->pmpt - i)
 	{
@@ -40,14 +40,14 @@ static void			apply_to_screen(t_l *l, int i, int j, int y_dec)
 	l->nb -= (j - i);
 }
 
-static void			clip_edit_apply(t_l *l, int i, int j, int y_dec)
+static void	clip_edit_apply(t_l *l, int i, int j, int y_dec)
 {
 	cutting_clipping(l, i, j);
 	edit_line(l, i, j);
 	apply_to_screen(l, i, j, y_dec);
 }
 
-int					cutting(t_l *l, int y_dec)
+int			cutting(t_l *l, int y_dec)
 {
 	int				curr;
 	int				i;
@@ -57,8 +57,8 @@ int					cutting(t_l *l, int y_dec)
 	curr = i;
 	while (i >= 0)
 	{
-		if (!l->line)
-			return (1);
+		if (ft_strlen(l->line) == 0)
+			return (EXIT_SUCCESS);
 		if ((ft_iswhite(l->line[i ? i - 1 : 0]) && !ft_iswhite(l->line[i]) &&
 		!ft_iswhite(l->line[curr])) || (i == 0 && !ft_iswhite(l->line[curr])))
 		{
@@ -72,5 +72,5 @@ int					cutting(t_l *l, int y_dec)
 		(i + l->pmpt) % l->co == 0 ? y_dec++ : 0;
 		i--;
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }

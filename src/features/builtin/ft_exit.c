@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/25 19:03:15 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/15 11:09:30 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ int			ft_exit(int opt)
 	*/
 	delete_enviroment(g_shell.env);
 	/*
+	** delete intern var
+	*/
+	clean_table_intern_var(g_shell.intern_var);
+	/*
 	** @ delete job
 	** if there is a job in the list, first update the status of all the job
 	** then delete it, and sending the option 1, to unstop the stopped process
@@ -48,6 +52,11 @@ int			ft_exit(int opt)
 		update_status();
 		delete_job(g_shell.first_job, 1);
 	}
+	/*
+	** delete hashtable
+	*/
+	remove_hashentries();
+	
 	exit(opt);
 	return (EXIT_FAILURE);
 }

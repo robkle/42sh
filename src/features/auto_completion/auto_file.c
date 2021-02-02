@@ -76,26 +76,25 @@ char		*auto_get_target_str(t_auto *auto_com)
 		return (ft_strdup(auto_com->typed_str));
 }
 
-void		get_basic_info(t_l *l)
+void		get_basic_info(t_auto *auto_com)
 {
-	if (!l->auto_com.cwd[0])
-		getcwd(l->auto_com.cwd, PATH_MAX);
- 	if (l->auto_com.typed_str)
-		ft_strdel(&l->auto_com.typed_str);
-	l->auto_com.typed_str = auto_get_typed_str(l);
-	if (!l->auto_com.full_path[0])
-		get_full_path(&l->auto_com);
-	if (l->auto_com.target_str)
-		ft_strdel(&l->auto_com.target_str);
-	l->auto_com.target_str = auto_get_target_str(&l->auto_com);
+	if (!auto_com->cwd[0])
+		getcwd(auto_com->cwd, PATH_MAX);
+ 	if (auto_com->typed_str)
+		ft_strdel(&auto_com->typed_str);
+	auto_com->typed_str = auto_get_typed_str(auto_com->editor);
+	if (!auto_com->full_path[0])
+		get_full_path(auto_com);
+	if (auto_com->target_str)
+		ft_strdel(&auto_com->target_str);
+	auto_com->target_str = auto_get_target_str(auto_com);
 }
 
-void        auto_file(t_l *l)
+int			auto_file(t_auto *auto_com)
 {
-	get_basic_info(l);
-	if (access(l->auto_com.full_path, F_OK) || \
-		access(l->auto_com.full_path, X_OK))
-		auto_reset(&l->auto_com);
-	else
-		return (auto_file_open_path(l));
+	get_basic_info(auto_com);
+	if (access(auto_com->full_path, F_OK) || \
+		access(auto_com->full_path, X_OK))
+		return (clear_auto_struct(auto_com));
+	return (auto_file_open_path(auto_com));
 }

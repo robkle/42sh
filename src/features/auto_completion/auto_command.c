@@ -95,7 +95,10 @@ void			get_cmd_list(t_auto *auto_com)
 
 	head = 0;
 	tail = 0;
-	auto_com->path_env[105] = 0;
+//	auto_com->path_env[105] = 0;
+	auto_com->path_env = ft_getenv("PATH");
+	if (auto_com->path_env == NULL)
+		return ;
 	path_env_len = ft_strlen(auto_com->path_env);
 	while (tail < path_env_len)
 	{
@@ -105,32 +108,29 @@ void			get_cmd_list(t_auto *auto_com)
 	}
 }
 
-static void		get_basic_info(t_l *l)
+static void		get_basic_info(t_auto *auto_com)
 {
-	l->auto_com.path_env = get_var("PATH", g_shell.env, VAL);
-	if (l->auto_com.typed_str)
-		ft_strdel(&l->auto_com.typed_str);
-	l->auto_com.typed_str = auto_get_typed_str(l);
-	if (l->auto_com.target_str)
-		ft_strdel(&l->auto_com.target_str);
-	l->auto_com.target_str = auto_get_target_str(&l->auto_com);
+	auto_com->path_env = ft_getenv("PATH");
+	if (auto_com->typed_str)
+		ft_strdel(&auto_com->typed_str);
+	auto_com->typed_str = auto_get_typed_str(auto_com->editor);
+	if (auto_com->target_str)
+		ft_strdel(&auto_com->target_str);
+	auto_com->target_str = auto_get_target_str(auto_com);
 }
 
-void		auto_command(t_l *l)
+int		auto_command(t_auto *auto_com)
 {
-	get_basic_info(l);
-	get_cmd_list(&l->auto_com);
-	l->auto_com.count_list = get_count(&l->auto_com);
-	if (l->auto_com.count_list == 0)
+	get_basic_info(auto_com);
+	get_cmd_list(auto_com);
+	auto_com->count_list = get_count(auto_com);
+	if (auto_com->count_list == 0)
 	{
 		ft_beep_sound();
-		return ;
+		return (clear_auto_struct(auto_com));
 	}
-	else if (l->auto_com.count_list > 1)
-		auto_cmd_file_multiple_cases(l);
+	else if (auto_com->count_list > 1)
+		return (auto_cmd_file_multiple_cases(auto_com));
 	else
-	{
-		auto_complete_cmd_file(l);
-		auto_add_one_extra_char(l, ' ');
-	}
+		return (auto_complete_cmd_file(auto_com));
 }

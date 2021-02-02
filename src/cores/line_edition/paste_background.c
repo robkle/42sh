@@ -6,23 +6,23 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 03:36:24 by marvin            #+#    #+#             */
-/*   Updated: 2020/12/27 18:03:32 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 14:05:14 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void			unify_space(char *clip)
+static void	unify_space(char *clip)
 {
 	while (*clip)
 	{
-		if (*clip == '\n' || *clip == '\t')		
+		if (*clip == '\n' || *clip == '\t')
 			*clip = ' ';
 		++clip;
 	}
 }
 
-char				*get_clip_external(char raw_clip[])
+char		*get_clip_external(char raw_clip[])
 {
 	char			*clip;
 	char			*temp;
@@ -47,7 +47,7 @@ char				*get_clip_external(char raw_clip[])
 	return (clip);
 }
 
-void				paste_background(t_l *l, int clip_len)
+void		paste_background(t_l *l, int clip_len)
 {
 	l->y += (l->x + clip_len) / l->co;
 	l->x = (l->x + clip_len) % l->co;

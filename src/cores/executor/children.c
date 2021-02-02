@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/26 13:01:00 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:19:29 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	make_child_binary(t_process *p)
+int		make_child_binary(t_process *p)
 {
 	t_stat	sb;
 	char	buf[PATH_MAX];
@@ -28,13 +28,15 @@ int	make_child_binary(t_process *p)
 	return (EXIT_FAILURE);
 }
 
-static int	make_child_path_sub(t_process *c, char buf[])
+int		make_child_path_sub(t_process *c, char *path)
 {
-	execve(buf, c->av, g_shell.env);
+	execve(path, c->av, g_shell.env);
+	free(path);
 	return (EXIT_FAILURE);
 }
 
-int			make_child_path(t_process *c)
+/* not used
+char	*make_child_path(t_process *c)
 {
 	char	buf[PATH_MAX];
 	char	*path;
@@ -45,12 +47,13 @@ int			make_child_path(t_process *c)
 	if (access(buf, X_OK))
 	{
 		ft_dprintf(2, "%s: %s: Permission denied\n", SHELL_NAME, buf);
-		return (EXIT_FAILURE);
+		return (NULL);
 	}
 	ft_strcat(buf, "/");
 	ft_strcat(buf, c->av[0]);
 	if (!access(buf, X_OK))
-		return (make_child_path_sub(c, buf));
+		return (ft_strdup(buf));
 	ft_dprintf(2, "%s: %s: Permission denied\n", SHELL_NAME, buf);
-	return (EXIT_FAILURE);
+	return (NULL);
 }
+*/

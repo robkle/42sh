@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 17:55:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/25 18:20:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 05:53:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,68 @@ void fc_cleanup(char *editor, char **block)
 		free(block[LAST]);
 	if (block[REPLACE])
 		free(block[REPLACE]);
+}
+
+int ft_fc_get_user_token(t_token **tk_lst, char *first_str)
+{
+	char *whole_cmd;
+	char *cmd;
+	int ret;
+	t_lex_value lex_value;
+
+	whole_cmd = NULL;
+	ret = EXIT_SUCCESS;
+	lex_value = LEX_CMD;
+	cmd = ft_strdup(first_str);
+	while ("user is editing")
+	{
+		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value);
+		if (lex_value == LEX_FAILURE || ft_strequ(cmd, ENTER_KEY))
+			free(cmd);
+		else
+			whole_cmd = ft_strjoin_and_free_2strings(whole_cmd, cmd);
+		if (lex_value == LEX_SUCCESS || lex_value == LEX_FAILURE)
+		{
+			ret = lex_value;
+			break ;
+		}
+		if ((cmd = get_command(lex_value)) == NULL)
+		{
+			ret = EXIT_FAILURE;
+			break ;
+		}
+	}
+	if (whole_cmd)
+	{
+		if (g_shell.history->tmp)
+			free(g_shell.history->tmp);
+		g_shell.history->tmp = whole_cmd;
+	}
+	return (ret);
+}
+
+void ft_fc_execute_clean_up(t_token *tk_lst, t_astnode *ast)
+{
+	if (tk_lst)
+		clear_token(tk_lst);
+	if (ast)
+		clear_ast(ast);
+}
+
+void ft_fc_execute(char *cmd)
+{
+	t_token *tk_lst;
+	t_astnode *ast;
+
+	tk_lst = NULL;
+	ast = NULL;
+	if (ft_fc_get_user_token(&tk_lst, cmd) == EXIT_FAILURE)
+		return (ft_fc_execute_clean_up(tk_lst, ast));
+	print_token(tk_lst);
+	if ((ast = semantic_analysis(tk_lst)) == NULL)
+		return (ft_fc_execute_clean_up(tk_lst, ast));
+	// if (find_heredoc(ast) == EXIT_FAILURE)
+		// continue ;
+	executor(ast);
+	return (ft_fc_execute_clean_up(tk_lst, ast));
 }

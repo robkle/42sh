@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 13:43:48 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/23 19:16:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 00:58:28 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,9 +173,9 @@ int fc_s_op(char *replace, char *first)
 		}
 	}
 	ft_printf("%s\n", cmd);
-	ft_execute(cmd);
 	if (g_shell.history->tmp)
 		free(g_shell.history->tmp);
 	g_shell.history->tmp = cmd;
+	ft_fc_execute(cmd);
 	return (EXIT_SUCCESS);
 }

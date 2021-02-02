@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   home_end_key.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:10:13 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:43:07 by tango            ###   ########.fr       */
+/*   Updated: 2021/01/03 15:42:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int					home_key(t_l *l)
 	apply_termcap_str("ch", 0, l->pmpt);
 	l->x = l->pmpt;
 	l->y = 0;
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 int					end_key(t_l *l)
@@ -40,5 +40,5 @@ int					end_key(t_l *l)
 	while (i--)
 		apply_termcap_str("do", 0, 0);
 	apply_termcap_str("ch", 0, l->x);
-	return (1);
+	return (EXIT_SUCCESS);
 }

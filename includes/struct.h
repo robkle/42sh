@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/28 23:05:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/02 18:18:48 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef enum
 	TOKEN_LESSGREAT, // <>  // not support
 	TOKEN_DLESSDASH, // <<- // not support
 	TOKEN_CLOBBER, // >|  // not support
+	TOKEN_EOF, //eof only
+	TOKEN_BROKEN, // a string with quote contain eof, and quote is not closed
 }	t_token_type;
 
 typedef struct			s_token
@@ -70,15 +72,16 @@ typedef enum
 	AST_io_here,
 	AST_filename,
 	AST_WORD,
+	AST_ASSIGNMENT_WORD,
 }	t_astnode_type;
 
 typedef struct			s_astnode
 {
 	int					type;
-	int					exitcode; // what is this?
 	char				*data;
 	struct s_astnode	*left;
 	struct s_astnode	*right;
+	struct s_astnode	*middle;
 }						t_astnode;
 
 /*
@@ -135,6 +138,96 @@ typedef struct          s_job
 	struct s_job		*next;
 }                       t_job;
 
+typedef struct dirent   t_dirent;
+typedef struct stat     t_stat;
+
+/*
+** Line Edit struct
+*/
+
+typedef enum
+{
+	CLIP_SAVE = 0,
+	CLIP_TAKE,
+	CLIP_DELT
+}	t_clipping_options;
+
+typedef enum
+{
+	PROMPT_CMD = 0,
+	PROMPT_CMD_AND,
+	PROMPT_CMD_OR,
+	PROMPT_PIPE,
+	PROMPT_HEREDOC,
+	PROMPT_DQUOTE,
+	PROMPT_QUOTE,
+	PROMPT_BACKSLASH,
+	PROMPT_CMDSUBST,
+	PROMPT_BRACEPARAM
+} t_prompt;
+
+typedef enum
+{
+	PHASE_CMD = 0,
+	PHASE_DQUOTE,
+	PHASE_QUOTE,
+	PHASE_BACKSLASH,
+	PHASE_CMDSUBST,
+	PHASE_BRACEPARAM,
+	PHASE_STOP,
+	PHASE_HEREDOC // temp
+}	t_phase;
+
+typedef enum
+{
+	LEX_SUCCESS = 0,
+	LEX_FAILURE,
+	LEX_CMD,
+	LEX_CMDAND,
+	LEX_CMDOR,
+	LEX_PIPE,
+	LEX_HEREDOC,
+}	t_lex_value;
+
+/*
+** Line edition struct:
+** 	char 	*line		: the line
+**	int		co			: number of column in a line
+**	int		starting_row: total_row - current_row
+**	int		total_row	: number of line on screen or page
+**	int		nb			: number of char in the line
+**	int		x			: x cursor position
+**	int		y			: y cursor position
+**	int		pmpt		: length of prompt
+**	char	*rev_sr		:
+**	int		rs			:
+**	int		rs_i		:
+**	char	phase		:
+**	t_auto	auto_com	:
+*/
+
+typedef struct			s_l
+{
+	char				*line;
+	int					nb;
+	int					co;
+	int					total_row;
+	int					starting_row;
+	int					pmpt;
+	int					x;
+	int					y;
+	t_prompt			promp_type;
+	char				phase;
+	// int					down; // sanitized 
+	// int					eof_flag; // sanitized
+	char				*rev_sr;
+	int					rs;
+	int					rs_i;
+	// t_auto				auto_com; // delete this later
+}						t_l;
+
+typedef struct termios	t_term;
+
 /*
 ** Auto completion
 */
@@ -150,18 +243,27 @@ typedef enum
 
 typedef enum
 {
-	AUTO_STAT_NEW_POS = (1 << 0), // o
-	//AUTO_STAT_COMMAND = (1 << 1),
-	//AUTO_STAT_ROOT = (1 << 10),
-	//AUTO_STAT_OPEN = (1 << 2), // o
-	//AUTO_STAT_WORD_IN_PATH = (1 << 3), // o
-	//AUTO_STAT_OTHER_POSSIBILITY = (1 << 4),
-	AUTO_STAT_COMPLETED = (1 << 5),
-	AUTO_STAT_DIR = (1 << 6),
-	//AUTO_STAT_TYPED_UPTO = (1 << 7),
-	AUTO_STAT_LIST = (1 << 8),
-	AUTO_STAT_OVER_TERM_SIZE = (1 << 9)
+	AUTO_STAT_NEW_POS = (1 << 0),
+	AUTO_STAT_COMPLETED = (1 << 1),
+	AUTO_STAT_DIR = (1 << 2),
+	AUTO_STAT_LIST = (1 << 3),
+	AUTO_STAT_OVER_TERM_SIZE = (1 << 4)
 }   t_auto_com_stat;
+
+/*
+** struct auto
+**	t_list			*list					: list of the options
+**	size_t			largest_content_size	:
+**	void			*largest_content		:
+**	size_t			count_list				: number of item in list
+**	char			cwd[]					: current working dir
+**	char			full_path[]				:
+**	char			*typed_str				:
+**	char			*target_str				:
+**	char			*path_env				:
+**	long			status					:
+*/
+
 
 typedef struct			s_auto
 {
@@ -175,6 +277,7 @@ typedef struct			s_auto
     char                *target_str;
 	char				*path_env;
 	long				status;
+	t_l					*editor;
 }						t_auto;
 
 typedef struct			s_auto_grid
@@ -188,41 +291,6 @@ typedef struct			s_auto_grid
 	size_t			    filled_col_count;
 }						t_auto_grid;
 
-typedef struct dirent   t_dirent;
-typedef struct stat     t_stat;
-
-/*
-** Line Edit struct
-*/
-
-typedef enum
-{
-	CLIP_SAVE,
-	CLIP_TAKE,
-	CLIP_DELT,
-}	t_clipping_options;
-
-
-typedef struct			s_l
-{
-	char				*line;
-	int					co;
-	int					starting_row;
-	int					total_row;
-	int					nb;
-	int					x;
-	int					y;
-	int					down;
-	int					pmpt;
-	int					type;
-	int					eof_flag;
-	char				*rev_sr;
-	int					rs;
-	int					rs_i;
-	t_auto				auto_com;
-}						t_l;
-
-typedef struct termios	t_term;
 
 /*
 **  History struct
@@ -245,28 +313,55 @@ typedef struct	s_history
 }				t_history;
 
 /*
-**======================================builtin options (temporary by ihwang)===============================
+** struct for options in builtin
+*/
+
+# define BUILTIN_NO_OPT (unsigned int) 0
+# define BUILTIN_INVALID_OPT (unsigned int) -1
+
+typedef struct		s_builtin_options
+{
+	char			*opt_set;
+	char			set_len;
+	unsigned int	operand_count;
+	unsigned long	applied;
+	char			invalid_opt;
+	int				opt;
+}					t_opt;
+
+typedef struct s_var
+{
+	char *name;
+	char *value;
+	char exported;
+} t_var;
+
+/*
+** export struct
+*/
+
+#define BUILTIN_EXPORT_OPT_SET "p"
+#define EXPORT_OPT_P 1
+
+typedef	struct			s_export
+{
+	char			*opt_set;
+	int				opt;
+	char			synopsis;
+	char			*av[4096];
+}					t_export;
+
+/*
+** cd struct
 */
 
 # define BUILTIN_CD_OPT_SET "PL"
-//# define BUILTIN_CD_MINUS_HIPHEN '-'
-# define BUILTIN_NO_OPT (unsigned int)0
-# define BUILTIN_INVALID_OPT (unsigned int) -1
 
 typedef enum
 {
 	BUILTIN_CD_OPT_P = (1 << 0),
 	BUILTIN_CD_OPT_L = (1 << 1)
 }					t_cd_opts;
-
-typedef struct		s_builtin_options
-{
-	char			*opt_set; //
-	char			set_len;
-	unsigned int	operand_count;
-	unsigned long	applied;
-	char			invalid_opt;
-}					t_opt;
 
 typedef struct		s_cd
 {
@@ -278,6 +373,18 @@ typedef struct		s_cd
 }					t_cd;
 
 /*
+** pwd struct
+*/
+
+# define BUILTIN_PWD_OPT_SET BUILTIN_CD_OPT_SET
+
+typedef enum
+{
+    BUILTIN_PWD_OPT_P = BUILTIN_CD_OPT_P,
+    BUILTIN_PWD_OPT_L = BUILTIN_CD_OPT_L
+}       t_pwd_opts;
+
+/*
 ** Alias struct
 */
 
@@ -286,5 +393,40 @@ typedef struct			s_alias
 	char *value;
 	char *name;
 }						t_alias;
+
+/*
+** Parameter expansion struct
+*/
+
+typedef struct			s_parameter_expansion
+{
+	char				**valid_delimeter;
+	char				replacement[256];
+	char				expression[256];
+	char				parameter[256];
+	char				delimeter[3];
+	char				word[256];
+	char				needle[256];
+}						t_parameter_expansion;
+
+typedef enum
+{
+	PE_SET_AND_NOT_NULL,
+	PE_SET_BUT_NULL,
+	PE_UNSET
+}t_parameter_expansion_type;
+
+/*
+** Hash struct
+*/
+
+typedef struct			s_hash
+{
+	char *name;
+	char *path;
+	int hits;
+	struct s_hash	*next;
+	struct s_hash	*prev;
+}						t_hash;
 
 #endif

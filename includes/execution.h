@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2020/12/26 19:58:18 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 17:39:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,24 @@ void	execute_simple_command(t_astnode *ast, t_job *job);
 void	execute_cmd_name(t_astnode *ast, t_job *j, t_process *p);
 void	execute_cmd_suffix(t_astnode *ast, t_job *j, t_process *p);
 void	execute_io_redirect(t_astnode *ast, t_job *j, t_process *p);
-void	find_heredoc(t_astnode *ast);
+void	execute_cmd_prefix(t_astnode *ast); // tmp
+void	execute_assignment_word(t_astnode *ast);
+
+int	find_heredoc(t_astnode *ast);
 void	clear_heredoc(t_heredoc *heredoc);
 
+/*
+** build command for and or background process
+*/
+
+void	build_and_or_command(t_astnode *ast, t_job *j);
+void	build_pipe_sequence_command(t_astnode *ast, t_job *j);
+void	build_simple_command_command(t_astnode *ast, t_job *j);
+void	build_command_prefix_command(t_astnode *ast, t_job *j);
+void	build_command_name_command(t_astnode *ast, t_job *j);
+void	build_command_suffix_command(t_astnode *ast, t_job *j);
+void	build_command_io_redirect_command(t_astnode *ast, t_job *j);
+void	build_command_io_here_file_command(t_astnode *ast, t_job *j);
 /*
 ** ========================== REDIRECTION FUNCTIONS ===========================
 */
@@ -52,12 +67,21 @@ int	redirect_greatand(t_redi *redi);
 int	redirect_lessand(t_redi *redi);
 int	redirect_less(t_redi *redi);
 int	redirect_dless(t_redi *redi);
+void	set_reset_stdin_stdout_stderr_channels(int old[3]);
+
+/*
+** =========================== LAUCHING PROCESS ===============================
+*/
+
+int		lauch_simple_command(t_job *j, t_process *p);
+int		lauch_in_parent_process(t_process *p);
+void	fork_and_launch_in_child_process(t_job *j, t_process *p, char *path);
 
 /*
 ** ========================== JOB CONTROL FUNCTIONS ===========================
 */
 
-void	lauch_simple_command(t_job *j, t_process *p);
+
 void	put_job_in_foreground(t_job *job, int cont);
 void	put_job_in_background(t_job *job, int cont);
 int		mark_process_status(t_job *j, pid_t pid, int status);
@@ -65,8 +89,10 @@ void	update_status(void);
 void	wait_for_job(t_job *j, int opt);
 void	format_job_info(t_job *j, const char *status, int opt);
 void	do_job_notification(void);
-void	mark_job_as_running(t_job *j);
-void	continue_job(t_job *j, int foreground);
+
+void change_running_state(t_job *j);
+int continue_the_suspended_job(t_job *j);
+
 int		ft_tcsetpgrp(int fd, pid_t pgrp_id);
 pid_t	ft_tcgetpgrp(int fd);
 
@@ -88,15 +114,15 @@ int last_process_status(t_job *job);
 /* job */
 t_job	*create_job(int foreground, int forked);
 void	delete_job(t_job *j, char option);
+
 void put_to_list_job(t_job *newjob);
 t_job *is_valid_job_id(char *str);
 t_job *find_job(pid_t pgid);
 void print_job_background(t_job *job_node);
-int is_the_current_job(t_job* j);
 int is_the_last_job(t_job *j);
 t_job *find_the_last_job();
 t_job *find_the_current_job();
 /* process */
 t_process	*create_process(t_job *j);
-
+void	delete_process(t_job *j);
 #endif

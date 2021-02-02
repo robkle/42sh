@@ -15,7 +15,8 @@
 # include "struct.h"
 
 void					sig_controller(int option);
-void					post_sigint(t_l *l);
+void					default_post_sigint(t_l *l);
+char					*dquote_post_sigint(t_l *l);
 void					post_sigwinch(t_l *l);
 int						iseof_in_line(char *line);
 void					eof_handler(t_l *l);
