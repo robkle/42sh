@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2020/12/27 18:14:33 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/26 18:18:57 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <stdio.h> // for perror, need to be delete when replacing the error management
 
 # include "struct.h"
+# include "arx.h"
 # include "ast.h"
 # include "token.h"
 # include "utilities.h"
@@ -41,6 +42,8 @@
 # include "history.h"
 # include "auto_completion.h"
 # include "handle_signal.h"
+# include "inhibitor.h"
+# include "intern_and_environment_var.h"
 
 # define F_TYPE_MASK 0170000
 # define KEY 1
@@ -51,7 +54,7 @@
 typedef struct			s_shell
 {
 	char				**env;
-	char				**var;
+	t_var				**intern_var;
 	char				signal_indicator;
 	char				shell_terminal;
 	char				interactive_shell;
@@ -59,9 +62,12 @@ typedef struct			s_shell
     struct termios      shell_tmode;
 	t_job				*first_job;
 	t_heredoc			*first_heredoc;
+	t_heredoc			*heredoc_lst;
 	t_history			*history;
 	t_alias				**alias;
 	char				*last_alias;
+	unsigned int		exit_status;
+	t_hash				*hashtable[MAX_HASH];
 }                       t_shell;
 
 t_shell     g_shell;
@@ -71,12 +77,24 @@ t_shell     g_shell;
 **	Lexer
 */
 
-t_token					*lexer_and_parser(char *input);
+t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value);
+int get_user_token(t_token **tk_lst);
+char *get_command(t_lex_value lex_value);
+
+void print_prompt(t_prompt prompt_type);
+int prompt_len(t_prompt prompt_type);
+
 /*
 **	Parser
 */
 
-t_astnode				*syntax_analysis(t_token *token);
+int			syntax_analysis(t_token *curr, t_token *prev);
+
+/*
+** Semantic
+*/
+
+t_astnode				*semantic_analysis(t_token *token);
 
 /*
 ** Prompt
@@ -90,4 +108,8 @@ size_t					get_prompt(void);
 
 void					executor(t_astnode *ast);
 
+
+// new
+void	print_info(void);
+t_prompt choose_prompt_type(t_lex_value lex, t_phase phase);
 #endif

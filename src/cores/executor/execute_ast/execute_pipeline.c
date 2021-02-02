@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:36:24 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/18 18:16:28 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 02:40:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	initialize_job_position(t_job *j)
 	}
 }
 
-int	execute_pipeline(t_astnode *ast, t_job *job)
+int		execute_pipeline(t_astnode *ast, t_job *job)
 {
 	int ret;
-	
+
 	ret = UNAVAILABLE_STATUS;
 	execute_pipe_sequence(ast, job);
 	initialize_job_position(job);

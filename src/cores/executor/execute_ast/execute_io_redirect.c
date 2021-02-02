@@ -6,16 +6,16 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 06:04:12 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/18 18:16:00 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 02:39:38 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void put_to_redi_list(t_redi *new_redi, t_redi **first_redi)
+void	put_to_redi_list(t_redi *new_redi, t_redi **first_redi)
 {
 	t_redi *redi_ptr;
-	
+
 	if (*first_redi == NULL)
 		*first_redi = new_redi;
 	else
@@ -38,14 +38,14 @@ t_redi	*create_redi(void)
 	return (redi);
 }
 
-void execute_io_file(t_astnode *ast, t_job *j, t_redi *redi)
+void	execute_io_file(t_astnode *ast, t_job *j, t_redi *redi)
 {
 	redi->op = ft_strdup(ast->data);
 	redi->word = ft_strdup(ast->left->data);
 	job_command_builder(3, j, redi->op, " ", redi->word);
 }
 
-void execute_io_here(t_astnode *ast, t_job *j, t_redi *redi)
+void	execute_io_here(t_astnode *ast, t_job *j, t_redi *redi)
 {
 	redi->op = ft_strdup(ast->data);
 	if (g_shell.first_heredoc->doc)

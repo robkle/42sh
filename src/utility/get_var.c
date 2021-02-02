@@ -6,19 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 14:49:46 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/26 19:41:37 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 16:24:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "shell.h"
-#include "utilities.h"
+#include "shell.h"
 
-/*
-** This function is deprecated.
-** Use ft_getenv or ft_getvar depending on your need.
-*/
-
-char		*get_var(char *name, char **lst_var, int keyval)
+char	*get_var(char *name, char **lst_var, int keyval)
 {
 	int		i;
 	int		len;

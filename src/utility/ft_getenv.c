@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 17:40:20 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/25 17:41:37 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 16:24:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char *ft_getenv(const char *name)
+char	*ft_getenv(const char *name)
 {
 	int i;
 	int len;

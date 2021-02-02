@@ -6,15 +6,16 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 18:10:57 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:20:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+/* not used
 static int	is_in_path_sub(char *str, t_process *c)
 {
-	DIR		*dirp;
+	DIR			*dirp;
 	t_dirent	*dir;
 
 	if ((dirp = opendir(str)))
@@ -44,7 +45,7 @@ static char	**check_path(t_process *c)
 		return (NULL);
 }
 
-int		is_in_path(t_process *c)
+int			is_in_path(t_process *c)
 {
 	int		i;
 	int		nb;
@@ -94,3 +95,4 @@ char		*build_path(t_process *c)
 	ft_strlst_del(&split, nb + 1);
 	return (NULL);
 }
+*/

@@ -6,24 +6,19 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:50:11 by marvin            #+#    #+#             */
-/*   Updated: 2020/12/27 17:50:46 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/07 19:04:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void auto_read_input(char yes, char no, char buf[])
+void auto_read_input(const char *input_set, char buf[])
 {
 	while ((read(STDIN_FILENO, buf, sizeof(BUFF_LINE_EDITION))) > 1 ||
-		   (buf[0] != yes && buf[0] != no))
+		   (!ft_strchr(input_set, buf[0])))
 	{
 		if (g_shell.signal_indicator == SIGINT)
 		//if (1)
-		{
-			g_shell.signal_indicator = 0;
-			break;
-		}
-		if (buf[0] == 'q')
 			break;
 		ft_beep_sound();
 		ft_bzero(buf, sizeof(BUFF_LINE_EDITION));
@@ -58,11 +53,14 @@ size_t get_file_count(t_list *list)
 	return (ret);
 }
 
-void get_grid_vars(t_l *l, t_auto_grid *grd)
+void get_grid_vars(t_auto *auto_com, t_auto_grid *grd)
 {
-	grd->longest_col_len = get_longest_col_len(l->auto_com.list);
-	grd->file_count = get_file_count(l->auto_com.list);
-	grd->col_count = (size_t)(l->co / grd->longest_col_len);
+	t_l *edtr;
+
+	edtr = auto_com->editor;
+	grd->longest_col_len = get_longest_col_len(auto_com->list);
+	grd->file_count = get_file_count(auto_com->list);
+	grd->col_count = (size_t)(edtr->co / grd->longest_col_len);
 	if (grd->col_count == 0)
 		grd->col_count += 1;
 	grd->start_row = get_current_row() - 1;
@@ -76,10 +74,10 @@ void get_grid_vars(t_l *l, t_auto_grid *grd)
 		grd->end_row = grd->file_count / grd->col_count + grd->start_row;
 		grd->filled_col_count = grd->col_count;
 	}
-	if (grd->end_row > (size_t)l->total_row - 1)
+	if (grd->end_row > (size_t)edtr->total_row - 1)
 	{
-		grd->start_row = grd->start_row - (grd->end_row - (l->total_row - 1));
-		grd->end_row = grd->end_row - (grd->end_row - (l->total_row - 1));
+		grd->start_row = grd->start_row - (grd->end_row - (edtr->total_row - 1));
+		grd->end_row = grd->end_row - (grd->end_row - (edtr->total_row - 1));
 	}
 }
 
@@ -100,25 +98,29 @@ void print_each(
 		apply_termcap_str("do", 0, 0);
 }
 
-void restore_line_edition(t_l *l)
+void restore_line_edition(t_auto *auto_com)
 {
-	auto_reset(&l->auto_com);
-	if (!(l->auto_com.status & AUTO_STAT_OVER_TERM_SIZE))
-		ft_putchar('\n');
-	get_prompt();
-	ft_putstr(l->line);
-	apply_termcap_str("cm", l->x, l->y + get_current_row() - 1);
-	l->starting_row = l->total_row - get_current_row() - 1;
+	t_l *editor;
+
+	editor = auto_com->editor;
+	if (g_shell.signal_indicator != SIGINT)
+	{
+		print_info();
+		print_prompt(auto_com->editor->promp_type);
+	}
+	ft_putstr(editor->line);
+	apply_termcap_str("cm", editor->x, editor->y + get_current_row() - 1);
+	editor->starting_row = editor->total_row - get_current_row() - 1;
 	ft_beep_sound();
 }
 
-void print_in_term_size(t_l *l, t_auto_grid *grid)
+int		auto_print_in_term_size(t_auto *auto_com, t_auto_grid *grid)
 {
 	size_t col;
 	size_t row;
 	t_list *p_list;
 
-	p_list = l->auto_com.list;
+	p_list = auto_com->list;
 	row = grid->start_row;
 	col = 0;
 	while (p_list)
@@ -127,7 +129,8 @@ void print_in_term_size(t_l *l, t_auto_grid *grid)
 		p_list = p_list->next;
 	}
 	apply_termcap_str("cm", 0, grid->end_row);
-	restore_line_edition(l);
+	restore_line_edition(auto_com);
+	return (clear_auto_struct(auto_com));
 }
 
 t_list *get_midnode(t_auto *auto_com, size_t midindex)
@@ -148,7 +151,7 @@ t_list *get_midnode(t_auto *auto_com, size_t midindex)
 void wait_for_space_or_carrage_return(char *buf)
 {
 	ft_putstr("--More--");
-	auto_read_input('\n', ' ', buf);
+	auto_read_input("\n q", buf);
 }
 
 void fill_screen_with_single_column(t_list **list, int total_row)
@@ -170,14 +173,16 @@ void fill_one_line(t_list **head)
 	*head = (*head)->next;
 }
 
-void print_in_one_column(t_l *l)
+int		auto_print_in_one_column(t_auto *auto_com)
 {
 	t_list *head;
 	char buf[BUFF_LINE_EDITION];
+	t_l *editor;
 
-	head = l->auto_com.list;
+	editor = auto_com->editor;
+	head = auto_com->list;
 	ft_putchar('\n');
-	fill_screen_with_single_column(&head, l->total_row - 1);
+	fill_screen_with_single_column(&head, editor->total_row - 1);
 	wait_for_space_or_carrage_return(buf);
 	while (head)
 	{
@@ -186,26 +191,32 @@ void print_in_one_column(t_l *l)
 		if (buf[0] == '\n')
 			fill_one_line(&head);
 		else if (buf[0] == ' ')
-			fill_screen_with_single_column(&head, l->total_row - 1);
-		else
-			return;
+			fill_screen_with_single_column(&head, editor->total_row - 1);
+		else if (buf[0] == 'q')
+		{
+			ft_putchar('\n');
+			return (clear_auto_struct(auto_com));
+		}
+		else if (g_shell.signal_indicator == SIGINT)
+			return (clear_auto_struct(auto_com));
 		if (head)
 			wait_for_space_or_carrage_return(buf);
 	}
-	apply_termcap_str("cm", 0, l->total_row - 1);
+	apply_termcap_str("cm", 0, editor->total_row - 1);
 	apply_termcap_str("cd", 0, 0);
+	return (clear_auto_struct(auto_com));
 }
 
 void fill_screen_with_two_columns(
-	t_list **head, t_list **midnode, t_l *l)
+	t_list **head, t_list **midnode, t_auto *auto_com)
 {
 	size_t line_count;
 	size_t total_row;
 	size_t col_size;
 
 	line_count = 0;
-	total_row = (size_t)(l->total_row - 1);
-	col_size = l->auto_com.largest_content_size + 4;
+	total_row = (size_t)(auto_com->editor->total_row - 1);
+	col_size = auto_com->largest_content_size + 4;
 	while (line_count < total_row && *head && *midnode)
 	{
 		ft_printf("%*.*s", -col_size, col_size, (char *)(*head)->content);
@@ -216,82 +227,86 @@ void fill_screen_with_two_columns(
 	}
 }
 
-void fill_one_line2(t_list **head, t_list **midnode, t_l *l)
+void fill_one_line2(t_list **head, t_list **midnode, t_auto *auto_com)
 {
 	size_t col_size;
 
-	col_size = l->auto_com.largest_content_size + 4;
+	col_size = auto_com->largest_content_size + 4;
 	ft_printf("%*.*s", -col_size, col_size, (char *)(*head)->content);
 	ft_printf("%s\n", (char *)(*midnode)->content);
 	*head = (*head)->next;
 	*midnode = (*midnode)->next;
 }
 
-void print_in_two_columns(t_l *l)
+int		auto_print_in_two_columns(t_auto *auto_com)
 {
 	t_list *head;
 	t_list *midnode;
 	char buf[BUFF_LINE_EDITION];
 
-	midnode = get_midnode(&l->auto_com, (size_t)(l->auto_com.count_list / 2));
-	head = l->auto_com.list;
+	midnode = get_midnode(auto_com, (size_t)(auto_com->count_list / 2));
+	head = auto_com->list;
 	ft_putchar('\n');
-	fill_screen_with_two_columns(&head, &midnode, l);
+	fill_screen_with_two_columns(&head, &midnode, auto_com);
 	wait_for_space_or_carrage_return(buf);
 	while (head && midnode)
 	{
 		apply_termcap_str("cm", 0, get_current_row() - 1);
 		//apply_termcap_str("cd", 0, 0);
 		if (buf[0] == '\n')
-			fill_one_line2(&head, &midnode, l);
+			fill_one_line2(&head, &midnode, auto_com);
 		else if (buf[0] == ' ')
-			fill_screen_with_two_columns(&head, &midnode, l);
-		else
-			return;
+			fill_screen_with_two_columns(&head, &midnode, auto_com);
+		else if (buf[0] == 'q')
+		{
+			ft_putchar('\n');
+			return (clear_auto_struct(auto_com));
+		}
+		else if (g_shell.signal_indicator == SIGINT)
+			return (clear_auto_struct(auto_com));
 		if (midnode)
 			wait_for_space_or_carrage_return(buf);
 		else
 			ft_printf("%s\n", (char *)head->content);
 	}
-	apply_termcap_str("cm", 0, l->total_row - 1);
+	apply_termcap_str("cm", 0, auto_com->editor->total_row - 1);
 	apply_termcap_str("cd", 0, 0);
+	return (clear_auto_struct(auto_com));
 }
 
-void print_over_term_size(t_l *l)
+int		auto_print_over_term_size(t_auto *auto_com)
 {
 	char *count;
 	char buf[BUFF_LINE_EDITION];
 
-	set_status_over_term_size(&l->auto_com.status);
-	count = ft_itoa(l->auto_com.count_list);
+	set_status_over_term_size(&auto_com->status);
+	count = ft_itoa(auto_com->count_list);
 	ft_printf("Display all %s possibilities? (y or n)", count);
 	ft_strdel(&count);
 	ft_bzero(buf, sizeof(BUFF_LINE_EDITION));
-	auto_read_input('y', 'n', buf);
+	auto_read_input("yn", buf);
 	if (buf[0] == 'y')
 	{
-		if (l->auto_com.largest_content_size + 10 > (size_t)l->co)
-			print_in_one_column(l);
+		if (auto_com->largest_content_size + 10 > (size_t)auto_com->editor->co)
+			auto_print_in_one_column(auto_com);
 		else
-			print_in_two_columns(l);
+			auto_print_in_two_columns(auto_com);
 	}
 	else
-	{
-		//		read(STDIN_FILENO, buf, 1);
 		ft_putchar('\n');
-	}
-	restore_line_edition(l);
-	delete_status_over_term_size(&l->auto_com.status);
+	restore_line_edition(auto_com);
+	delete_status_over_term_size(&auto_com->status);
+	return (clear_auto_struct(auto_com));
 }
 
-void auto_print_list(t_l *l)
+int auto_print_list(t_auto *auto_com)
 {
 	t_auto_grid grid;
 
 	apply_termcap_str("do", 0, 0);
-	get_grid_vars(l, &grid);
-	if ((size_t)(grid.file_count / grid.col_count) > (size_t)l->total_row)
-		print_over_term_size(l);
+	get_grid_vars(auto_com, &grid);
+	if ((size_t)(grid.file_count / grid.col_count) > (size_t)auto_com->editor->total_row)
+		return (auto_print_over_term_size(auto_com));
 	else
-		print_in_term_size(l, &grid);
+		return (auto_print_in_term_size(auto_com, &grid));
 }

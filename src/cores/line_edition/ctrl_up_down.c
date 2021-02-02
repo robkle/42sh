@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_up_down.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:16:56 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/06 16:45:35 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/01/28 13:56:48 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void				ctrl_up(t_l *l)
+int				ctrl_up(t_l *l)
 {
 	if (l->rs)
 		ft_reverse_search_reset(l);
@@ -33,9 +33,10 @@ void				ctrl_up(t_l *l)
 		apply_termcap_str("up", 0, 0);
 		l->y--;
 	}
+	return (EXIT_SUCCESS);
 }
 
-void				ctrl_down(t_l *l)
+int				ctrl_down(t_l *l)
 {
 	if (l->rs)
 		ft_reverse_search_reset(l);
@@ -55,4 +56,5 @@ void				ctrl_down(t_l *l)
 		apply_termcap_str("ch", 0, l->x);
 		l->y++;
 	}
+	return (EXIT_SUCCESS);
 }

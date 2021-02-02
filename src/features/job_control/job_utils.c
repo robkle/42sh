@@ -6,31 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 03:29:07 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/18 18:19:41 by dthan            ###   ########.fr       */
+/*   Updated: 2021/01/28 17:39:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int get_job_id()
-{
-	int id;
-	t_job *j_ptr;
-
-	id = 1;
-	j_ptr = g_shell.first_job;
-	while(j_ptr)
-	{
-		if (id != j_ptr->id)
-			break;
-		id++;
-		j_ptr = j_ptr->next;
-	}
-	return (id);
-}
-
-
-void put_to_list_job(t_job *newjob)
+void		put_to_list_job(t_job *newjob)
 {
 	t_job *j_ptr;
 
@@ -47,98 +29,7 @@ void put_to_list_job(t_job *newjob)
 	}
 }
 
-t_job	*create_job(int foreground, int forked)
-{
-	t_job *j;
-
-	j = ft_memalloc(sizeof(t_job));
-	j->command = NULL;
-	j->pgid = 0;
-	j->notified = 0;
-	tcgetattr(STDIN_FILENO, &j->term);
-	j->first_process = NULL;
-	j->stdin = STDIN_FILENO;
-	j->stdout = STDOUT_FILENO;
-	j->stderr = STDERR_FILENO;
-	j->foreground = foreground;
-	j->forked = forked;
-	j->id = get_job_id();
-	j->pipe_fd_closer[0] = 0;
-	j->pipe_fd_closer[1] = 0;
-	j->next = NULL;
-	return (j);
-}
-
-static void delete_redi(t_process* p)
-{
-	t_redi *p_redi;
-	t_redi *temp_redi;
-
-	if (p->first_redi == NULL)
-		return ;
-	p_redi = p->first_redi;
-	while (p_redi)
-	{
-		temp_redi = p_redi;
-		p_redi = p_redi->next;
-		if (temp_redi->n)
-			free(temp_redi->n);
-		if (temp_redi->op)
-			free(temp_redi->op);
-		if (temp_redi->word)
-			free(temp_redi->word);
-		free(temp_redi);
-	}
-}
-
-static void delete_process(t_job *j)
-{
-	t_process *p_ptr;
-	t_process *temp_process;
-	int i;
-
-	if (j->first_process == NULL)
-		return ;
-	p_ptr = j->first_process;
-	while(p_ptr)
-	{
-		temp_process = p_ptr;
-		p_ptr = p_ptr->next;
-		delete_redi(temp_process);
-		i = -1;
-		while (temp_process->av[++i] && i < MAX_ARGV)
-			free(temp_process->av[i]);
-		free(temp_process->av);
-		free(temp_process);
-	}
-}
-
-void delete_job(t_job *j, char option)
-{
-	if (option && job_is_stopped(j) && !job_is_completed(j))
-	{
-		if (kill(- j->pgid, SIGCONT) < 0)
-			perror("kill (SIGCONT)"); // need to replace error string
-		kill(- j->pgid, SIGTERM);
-	}
-	delete_process(j);
-	free(j->command);
-	free(j);
-}
-
-void delete_jobs(t_job *j_ptr, char option)
-{
-	t_job *temp_job;
-
-	while (j_ptr)
-	{
-		temp_job = j_ptr;
-		j_ptr = j_ptr->next;
-		delete_job(temp_job, option);
-	}
-}
-
-t_job *find_job(pid_t pgid)
+t_job		*find_job(pid_t pgid)
 {
 	t_job *j_ptr;
 
@@ -152,10 +43,10 @@ t_job *find_job(pid_t pgid)
 	return (NULL);
 }
 
-void job_command_builder(int argc, t_job *j, ...)
+void		job_command_builder(int argc, t_job *j, ...)
 {
-	va_list ap;
-	int i;
+	va_list	ap;
+	int		i;
 
 	i = 0;
 	va_start(ap, j);
@@ -164,27 +55,10 @@ void job_command_builder(int argc, t_job *j, ...)
 	va_end(ap);
 }
 
-void print_job_background(t_job *j)
+t_job		*is_valid_job_id(char *str)
 {
-	int i;
-	t_job *j_ptr;
-
-	i = 0;
-	j_ptr = g_shell.first_job;
-	while(j_ptr)
-	{
-		i++;
-		if (j_ptr == j)
-			break ;
-		j_ptr = j_ptr->next;
-	}
-	ft_printf("[%d] %d\n", i, j->pgid);
-}
-
-t_job *is_valid_job_id(char *str)
-{
-	int job_id;
-	t_job *j_ptr;
+	int		job_id;
+	t_job	*j_ptr;
 
 	if (!is_number_str(str))
 	{
@@ -202,27 +76,14 @@ t_job *is_valid_job_id(char *str)
 			return (j_ptr);
 		j_ptr = j_ptr->next;
 	}
-	return (NULL);	
+	return (NULL);
 }
 
-int is_number_str(char *str)
+t_job	*find_the_current_job(void)
 {
-	int i;
-
-	i = -1;
-	if (str == NULL)
-		return (0);
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
-			return (0);
-	return (1);
-}
-
-t_job *find_the_current_job()
-{
-	t_job *j_ptr;
-	t_job *current_job;
-	int add;
+	t_job	*j_ptr;
+	t_job	*current_job;
+	int		add;
 
 	j_ptr = g_shell.first_job;
 	current_job = NULL;
@@ -236,25 +97,17 @@ t_job *find_the_current_job()
 		}
 		else if (!add)
 			current_job = j_ptr;
-		j_ptr = j_ptr->next;	
+		j_ptr = j_ptr->next;
 	}
 	return (current_job);
 }
 
-int is_the_current_job(t_job *j)
-{
-	t_job *current_job;
 
-	current_job = find_the_current_job();
-	if (j == NULL || current_job == NULL)
-		return (0);
-	return (current_job == j);
-}
 
-int count_nb_suspended_job()
+int		count_nb_suspended_job(void)
 {
-	int ct;
-	t_job *j_ptr;
+	int		ct;
+	t_job	*j_ptr;
 
 	j_ptr = g_shell.first_job;
 	ct = 0;
@@ -267,20 +120,19 @@ int count_nb_suspended_job()
 	return (ct);
 }
 
-t_job *find_the_last_job()
+t_job	*find_the_last_job(void)
 {
-	t_job *last_job;
-	t_job *j_ptr;
-	t_job *current_job;
+	t_job	*last_job;
+	t_job	*j_ptr;
+	t_job	*current_job;
+	int		add;
 
 	last_job = NULL;
-	int add;
-
 	add = (count_nb_suspended_job() > 1) ? 1 : 0;
 	current_job = find_the_current_job();
 	j_ptr = g_shell.first_job;
 	if (!j_ptr || !current_job)
-		return NULL;
+		return (NULL);
 	while (j_ptr)
 	{
 		if (add)
@@ -298,7 +150,7 @@ t_job *find_the_last_job()
 	return (last_job);
 }
 
-int is_the_last_job(t_job *j)
+int		is_the_last_job(t_job *j)
 {
 	t_job *last_job;
 
