@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/02/02 18:18:48 by ihwang           ###   ########.fr       */
+=======
+/*   Updated: 2021/01/26 18:22:46 by dthan            ###   ########.fr       */
+>>>>>>> 5e5e5ca71f9dd1b4a60dcd8b4b25c2da857ba47e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,12 +369,11 @@ typedef enum
 
 typedef struct		s_cd
 {
-	char			*directory;
-	char			*curpath;
-	char			*prev_curpath;
-	char			print_info;
-	t_opt			opt;
-}					t_cd;
+	char			*opt_set;
+	int				opt;
+	char			synopsis;
+	char			*av[4096];
+}					t_export;
 
 /*
 ** pwd struct
