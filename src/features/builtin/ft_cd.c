@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/02 23:53:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/03 02:21:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 ** so you can find them with running this command in the directory or its parent
 ** directories for instance,
 **
-** $ greb -Rl step5
+** $ greb -Rl step5 .
 **
-** Replace the number at the end of the command with your choice to refer to.
+** Replace the step number as you want to refer to.
 **
 ** link: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cd.html
 */

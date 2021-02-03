@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/02 22:51:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/03 02:21:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,9 +258,9 @@ typedef enum
 **	size_t			count_list				: number of item in list
 **	char			cwd[]					: current working dir
 **	char			full_path[]				:
-**	char			*typed_str				:
-**	char			*target_str				:
-**	char			*path_env				:
+**	char			*typed_str				: str which will be diagnosed to specify the target for auto_completion
+**	char			*target_str				: the extracted str from typed_str in auto_completion context
+**	char			*path_env				: 
 **	long			status					:
 */
 
