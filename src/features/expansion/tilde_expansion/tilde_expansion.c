@@ -26,13 +26,29 @@
 
 #include "shell.h"
 
+/*char  *get_login_value(char *t_prefix)
+{
+	struct stat sb;
+	char *home;
+	char *value;
+
+	home = "/home/";
+	value = ft_strjoin(home, t_prefix);
+
+	ft_printf("value %s\n", value);
+
+	if (stat(value, &sb) == -1)
+		return (NULL);
+	return (value);
+}*/
+
 char	*get_value(char *t_prefix)
 {
 	char *value;
 
 	if ((ft_strcmp(t_prefix, "~/") == 0 || ft_strcmp(t_prefix, "~") == 0) &&
 		(value = ft_getenv("HOME")) != NULL)
-		return (value);
+		return (ft_strdup(value));
 	else if (ft_strcmp(&t_prefix[1], (value = ft_getenv("LOGNAME"))) == 0)
 	{
 		if ((value = ft_getenv("HOME")) != NULL)
@@ -40,10 +56,12 @@ char	*get_value(char *t_prefix)
 	}
 	else if (ft_strcmp(t_prefix, "~+") == 0 &&
 		(value = ft_getenv("PWD")) != NULL)
-		return (value);
+		return (ft_strdup(value));
 	else if (ft_strcmp(t_prefix, "~-") == 0 &&
 		(value = ft_getenv("OLDPWD")) != NULL)
-		return (value);
+		return (ft_strdup(value));
+	//else if ((value =get_login_value(&t_prefix[1])) != NULL)
+	//	return (value);
 	return (NULL);
 }
 
@@ -86,6 +104,7 @@ int	expand_tilde(char **word)
 				free(*word);
 				(*word) = tmp;
 			}
+			free(value);
 		}
 		free (t_prefix);
 	}
@@ -98,7 +117,7 @@ int expand_assignments(char **assignment)
 	char *name;
 	char *tmp;
 	char *final;
-	char **variables; // free
+	char **variables;
 
 	i = 0;
 	tmp = NULL;
@@ -122,6 +141,7 @@ int expand_assignments(char **assignment)
 		}
 		i++;
 	}
+	destroy_arr(variables);
 	free((*assignment));
 	(*assignment) = final;
 	return EXIT_SUCCESS;
@@ -131,20 +151,24 @@ int tilde_expansion(t_process *p)
 {
 	int i;
 	int status;
+	t_redi *tmp;
 
 	i = 0;
 	status = 0;
+	tmp = p->first_redi;
 	while (p->av[i] != NULL)
 	{
 		if (p->av[i][0] == '~')
-		{
 			status = expand_tilde(&p->av[i]);
-		}
 		if (ft_strchr(p->av[i], '=') != NULL)
-		{
 			status = expand_assignments(&p->av[i]);
-		}
 		i++;
+	}	
+	while(tmp != NULL)
+	{
+		if (tmp->word != NULL && tmp->word[0] == '~')
+			status = expand_tilde(&tmp->word);
+		tmp = tmp->next;
 	}
 	return (status);
 }
