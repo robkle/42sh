@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/03 02:21:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/03 16:29:27 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -428,5 +428,16 @@ typedef struct			s_hash
 	struct s_hash	*next;
 	struct s_hash	*prev;
 }						t_hash;
+
+/*
+**	Builtin commands list
+*/
+
+typedef struct			s_builtin
+{
+	const char			*name;
+	void				*func;
+	struct s_builtin	*next;
+}						t_builtin;
 
 #endif

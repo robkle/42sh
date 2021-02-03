@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lauch_process_parent_shell.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 15:29:38 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/03 17:58:15 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	lauch_process_which_can_change_shell2(t_process *p)
 		return (ft_unset(p->ac, p->av));
 	else if (ft_strequ(p->av[0], "hash"))
 		return (ft_hash(p));
+	else if (ft_strequ(p->av[0], "type"))
+		return (ft_type(p));
 	return (EXIT_FAILURE);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/25 07:37:48 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/03 14:37:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char *get_command(t_lex_value lex_value)
 	i = 0;
 	cmd = ft_strnew(0);
 	phase[i++] = PHASE_CMD;
+	ft_bzero(phase, 20);
 	prompt_type = choose_prompt_type(lex_value, 0);
 	while ("command editting")
 	{
@@ -258,6 +259,10 @@ int				init_shell(char **envp)
 	** exit status
 	*/
 	g_shell.exit_status = 1;
+	/*
+	**	init builtin commands list
+	*/
+	g_shell.builtins = set_builtin_commands();
 	return (EXIT_SUCCESS);
 }
 

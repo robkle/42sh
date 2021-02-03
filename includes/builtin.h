@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/02 22:51:50 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/03 15:03:39 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		ft_exit(int opt);
 int		ft_cd(t_process *c);
 int		ft_setenv(t_process *c);
 int		ft_unsetenv(t_process *c);
-void	ft_type(t_process *c);
+int		ft_type(t_process *c);
 int		ft_jobs(t_process *p);
 int		ft_jobs_child(t_process *p);
 int		ft_fg(t_process *p);
@@ -110,6 +110,16 @@ unsigned int	hash_index(char *name);
 /*
 ** End Hash built-in
 */
+
+/*
+** Type built-in
+*/
+t_builtin	*set_builtin_commands(void);
+void		delete_builtin_commands(void);
+/*
+** End type built-in
+*/
+
 
 /*
 ** =============================== Utils ===================================

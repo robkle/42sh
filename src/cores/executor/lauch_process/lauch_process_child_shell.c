@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/02 22:47:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/03 17:58:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int	is_builtin(char *cmd_name)
 		ft_strequ(cmd_name, "echo") ||
 		ft_strequ(cmd_name, "set") ||
 		ft_strequ(cmd_name, "unset") ||
-		ft_strequ(cmd_name, "hash"))
+		ft_strequ(cmd_name, "hash") ||
+		ft_strequ(cmd_name, "type"))
 		return (1);
 	return (0);
 }
@@ -35,8 +36,8 @@ static int	exec_builtin2(t_process *p)
 {
 	if (ft_strequ(p->av[0], "echo"))
 		return (ft_echo(p));
-	// else if (ft_strequ(p->av[0], "type"))
-	// 	return (ft_type(p));
+	else if (ft_strequ(p->av[0], "type"))
+		return (ft_type(p));
 	else if (ft_strequ(p->av[0], "set"))
 		return (ft_set());
 	else if (ft_strequ(p->av[0], "unset"))

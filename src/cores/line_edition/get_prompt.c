@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:30:45 by tango             #+#    #+#             */
-/*   Updated: 2021/02/02 22:52:06 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/03 13:44:16 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,27 @@ static void	print_42sh_usr(void)
 
 static void	print_cwd(void)
 {
+	char	*pwd;
 	char	*home;
 
+	if ((pwd = ft_getenv("PWD")) == NULL)
+		return ;
 	ft_putstr(PMPT_YELW);
 	ft_printf("[");
 	if ((home = ft_getenv("HOME")))
 	{
-		if (ft_strequ(ft_getenv("PWD"), home))
-			ft_printf("%s", ft_getenv("PWD"));
-		else if (ft_strstr(ft_getenv("PWD"), home))
+		if (ft_strequ(pwd, home))
+			ft_printf("%s", pwd);
+		else if (ft_strstr(pwd, home))
 		{
 			ft_printf("~");
-			ft_printf("%s", ft_strstr_e(ft_getenv("PWD"), home));
+			ft_printf("%s", ft_strstr_e(pwd, home));
 		}
 		else
-			ft_printf("%s", ft_getenv("PWD"));
+			ft_printf("%s", pwd);
 	}
 	else
-		ft_printf("%s", ft_getenv("PWD"));
+		ft_printf("%s", pwd);
 	ft_printf("]");
 }
 

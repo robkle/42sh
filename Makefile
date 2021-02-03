@@ -174,6 +174,8 @@ BUILT_IN_FILE += ft_unset.c
 BUILT_IN_FILE += ft_export.c
 BUILT_IN_FILE += ft_hash.c
 BUILT_IN_FILE += ft_hash_utilities/ft_hash_utils.c
+BUILT_IN_FILE += ft_type.c
+BUILT_IN_FILE += ft_type_utilities/ft_init_builtin_commands.c
 BUILT_IN := $(addprefix $(BUILT_IN_DIR)/,$(BUILT_IN_FILE))
 # Job control
 JOB_CONTROL_DIR := $(FEATURES_DIR)/job_control
