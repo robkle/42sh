@@ -146,7 +146,7 @@ BUILT_IN_FILE += ft_echo.c
 BUILT_IN_FILE += ft_env.c
 BUILT_IN_FILE += ft_pwd.c
 BUILT_IN_FILE += ft_cd.c
-BUILT_IN_FILE += ft_cd_utilities/ft_cd_handle_builtin_opts.c
+BUILT_IN_FILE += ft_cd_utilities/ft_cd_pwd_handle_builtin_opts.c
 BUILT_IN_FILE += ft_cd_utilities/ft_cd_access.c
 BUILT_IN_FILE += ft_cd_utilities/ft_cd_append_slash_to_curpath.c
 BUILT_IN_FILE += ft_cd_utilities/ft_cd_change_dir.c
@@ -285,6 +285,7 @@ FEATURES += $(INTERN_ENVIRONMENT_VAR)
 ########################### Create utility_FILE files ##############################
 UTILITY_DIR := src/utility
 UTILITY_FILE += get_var.c
+UTILITY_FILE += ft_getcwd_logical.c
 UTILITY_FILE += ft_strndup.c
 UTILITY_FILE += ft_arraydel.c
 UTILITY_FILE += ft_strjoin_and_free.c

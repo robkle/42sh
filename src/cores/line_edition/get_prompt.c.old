@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_prompt.c                                       :+:      :+:    :+:   */
+/*   get_prompt.c.old                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:30:45 by tango             #+#    #+#             */
-/*   Updated: 2021/02/04 15:20:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/02 22:43:31 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,29 @@ static void	print_42sh_usr(void)
 	ft_printf(" ");
 }
 
-
-	// if ((pwd = ft_getenv("PWD")) == NULL)
-	// 	return ;
-
 static void	print_cwd(void)
 {
-	char	*pwd;
+	char	pwd[PATH_MAX];
 	char	*home;
-	int		free_flag;
 
-	free_flag = 0;
-	pwd = NULL;
-	if ((pwd = ft_getcwd_logical()) == NULL)
-	{
-		pwd = getcwd(NULL, 0);
-		free_flag = 1;
-	}
-	ft_printf("%s[", PMPT_YELW);
+	getcwd(pwd, PATH_MAX);
+	ft_putstr(PMPT_YELW);
+	ft_printf("[");
 	if ((home = ft_getenv("HOME")))
 	{
-		if (ft_strstr(pwd, home) && ft_strequ(pwd, home) == 0)
-			ft_printf("~%s]", ft_strstr_e(pwd, home));
+		if (ft_strequ(pwd, home))
+			ft_printf("%s", pwd);
+		else if (ft_strstr(pwd, home))
+		{
+			ft_printf("~");
+			ft_printf("%s", ft_strstr_e(pwd, home));
+		}
 		else
-			ft_printf("%s]", pwd);
+			ft_printf("%s", pwd);
 	}
 	else
-		ft_printf("%s]", pwd);
-	if (free_flag == 1)
-		free(pwd);
+		ft_printf("%s", pwd);
+	ft_printf("]");
 }
 
 void		print_info(void)
