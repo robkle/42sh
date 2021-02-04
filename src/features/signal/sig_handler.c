@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 04:00:37 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/08 01:37:11 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 19:11:20 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	sig_winch_handler(int sig)
 	if (!(tgetent(NULL, getenv("TERM"))))
 	{
 		ft_putstr_fd("Environment variable 'TERM' not set \n", 2);
-		ft_exit(EXIT_FAILURE);
+		ft_exit_internal(EXIT_FAILURE);
 	}
 	ioctl(1, TIOCSTI, "");
 }

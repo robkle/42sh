@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/28 14:29:49 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 19:39:28 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void	prepare_breaking_loop(
 		if (*phase == PHASE_CMD && lex_value == LEX_CMD)
 		{
 			restore_term(line_edition);
-			ft_exit(EXIT_SUCCESS);
+			ft_exit_internal(g_shell.exit_status);
 		}
 		line_edition->line = ft_strjoin_and_free_string1(
 			line_edition->line, "\x04");

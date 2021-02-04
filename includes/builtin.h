@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:54:46 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/04 20:00:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 int		ft_env(void);
 int		ft_pwd(t_process *p);
 int		ft_echo(t_process *c);
-int		ft_exit(int opt);
+int		ft_exit(t_process *p);
 int		ft_cd(t_process *c);
 int		ft_setenv(t_process *c);
 int		ft_unsetenv(t_process *c);
@@ -35,6 +35,12 @@ int		ft_bg_child();
 int		ft_export(int ac, char **av);
 int		ft_set(void);
 int		ft_unset(int ac, char **av);
+
+/*
+** Exit built-in
+*/
+
+int		ft_exit_internal(int opt);
 
 /*
 ** Cd built-in
