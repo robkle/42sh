@@ -3,20 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   tilde_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 07:42:54 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/25 07:42:59 by dthan            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "shell.h"
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tilde_expansion.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: vgrankul <vgrankul@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:42:54 by vgrankul          #+#    #+#             */
@@ -26,21 +12,54 @@
 
 #include "shell.h"
 
-/*char  *get_login_value(char *t_prefix)
+char	*get_specified_login_value(char *t_prefix, char *home, char *logname,
+int i)
 {
-	struct stat sb;
-	char *home;
-	char *value;
+	int			j;
+	char		*value;
+	char		*homedir;
+	struct stat	sb;
 
-	home = "/home/";
-	value = ft_strjoin(home, t_prefix);
-
-	ft_printf("value %s\n", value);
-
-	if (stat(value, &sb) == -1)
-		return (NULL);
+	j = 0;
+	value = NULL;
+	while (home[i] != '\0')
+	{
+		j = 0;
+		while (logname[j] == home[i + j])
+		{
+			if (logname[j + 1] == '\0')
+			{
+				homedir = ft_strsub(home, 0, i);
+				value = ft_strjoin(homedir, t_prefix);
+				free(homedir);
+				if (stat(value, &sb) == -1)
+				{
+					free(value);
+					return (NULL);
+				}
+			}
+			j++;
+		}
+		i++;
+	}
 	return (value);
-}*/
+}
+
+char	*get_login_value(char *t_prefix)
+{
+	char	*home;
+	char	*logname;
+	int		i;
+
+	i = 0;
+	if (ft_strcmp(t_prefix, "root") == 0)
+		return (ft_strdup("/var/root"));
+	if ((home = ft_getenv("HOME")) == NULL)
+		return (NULL);
+	if ((logname = ft_getenv("LOGNAME")) == NULL)
+		return (NULL);
+	return (get_specified_login_value(t_prefix, home, logname, i));
+}
 
 char	*get_value(char *t_prefix)
 {
@@ -52,7 +71,7 @@ char	*get_value(char *t_prefix)
 	else if (ft_strcmp(&t_prefix[1], (value = ft_getenv("LOGNAME"))) == 0)
 	{
 		if ((value = ft_getenv("HOME")) != NULL)
-			return (value);
+			return (ft_strdup(value));
 	}
 	else if (ft_strcmp(t_prefix, "~+") == 0 &&
 		(value = ft_getenv("PWD")) != NULL)
@@ -60,12 +79,10 @@ char	*get_value(char *t_prefix)
 	else if (ft_strcmp(t_prefix, "~-") == 0 &&
 		(value = ft_getenv("OLDPWD")) != NULL)
 		return (ft_strdup(value));
-	//else if ((value =get_login_value(&t_prefix[1])) != NULL)
-	//	return (value);
-	return (NULL);
+	return (value = get_login_value(&t_prefix[1]));
 }
 
-int tilde_prefix_len(char *word)
+int		tilde_prefix_len(char *word)
 {
 	int i;
 
@@ -86,7 +103,7 @@ int tilde_prefix_len(char *word)
 	return (i);
 }
 
-int	expand_tilde(char **word)
+int		expand_tilde(char **word)
 {
 	int		i;
 	char	*t_prefix;
@@ -106,52 +123,61 @@ int	expand_tilde(char **word)
 			}
 			free(value);
 		}
-		free (t_prefix);
+		free(t_prefix);
 	}
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
 
-int expand_assignments(char **assignment)
+void	expand_assignment_variables(char **final, char ***variables, char *name)
 {
-	int i;
-	char *name;
-	char *tmp;
-	char *final;
-	char **variables;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	tmp = NULL;
+	while ((*variables)[i] != NULL)
+	{
+		if ((*variables)[i][0] == '~')
+			expand_tilde(&(*variables)[i]);
+		if (i == 0)
+			(*final) = ft_strjoin(name, (*variables)[i]);
+		else
+		{
+			tmp = ft_strjoin(":", (*variables)[i]);
+			(*final) = ft_strjoin((*final), tmp);
+			free(tmp);
+		}
+		i++;
+	}
+}
+
+int		expand_assignments(char **assignment)
+{
+	int		i;
+	char	*name;
+	char	*final;
+	char	**variables;
+
+	i = 0;
 	final = NULL;
 	while ((*assignment)[i] != '\0' && (*assignment)[i] != '=')
 		i++;
 	name = ft_strsub((*assignment), 0, i + 1);
 	variables = ft_strsplit(&(*assignment)[i + 1], ':');
 	i = 0;
-	while (variables[i] != NULL)
-	{
-		if (variables[i][0] == '~')
-			expand_tilde(&variables[i]);
-		if (i == 0)
-			final = ft_strjoin(name, variables[i]);
-		else
-		{
-			tmp = ft_strjoin(":", variables[i]);
-			final = ft_strjoin(final, tmp);
-			free(tmp);
-		}
-		i++;
-	}
+	expand_assignment_variables(&final, &variables, name);
 	destroy_arr(variables);
+	free(name);
 	free((*assignment));
 	(*assignment) = final;
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
 
-int tilde_expansion(t_process *p)
+int		tilde_expansion(t_process *p)
 {
-	int i;
-	int status;
-	t_redi *tmp;
+	int		i;
+	int		status;
+	t_redi	*tmp;
 
 	i = 0;
 	status = 0;
@@ -163,8 +189,8 @@ int tilde_expansion(t_process *p)
 		if (ft_strchr(p->av[i], '=') != NULL)
 			status = expand_assignments(&p->av[i]);
 		i++;
-	}	
-	while(tmp != NULL)
+	}
+	while (tmp != NULL)
 	{
 		if (tmp->word != NULL && tmp->word[0] == '~')
 			status = expand_tilde(&tmp->word);
