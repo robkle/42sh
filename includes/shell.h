@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/02/04 15:53:44 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/04 23:40:10 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_shell     g_shell;
 **	Lexer
 */
 
-t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value);
+t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value, int on_substition);
 int get_user_token(t_token **tk_lst);
 char *get_command(t_lex_value lex_value);
 

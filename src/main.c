@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/04 20:00:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/04 23:38:58 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int get_user_token(t_token **tk_lst)
 			ret = EXIT_FAILURE;
 			break ;
 		}
-		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value);
+		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value, 0);
 		if (lex_value == LEX_FAILURE || ft_strequ(cmd, ENTER_KEY))
 			free(cmd);
 		else

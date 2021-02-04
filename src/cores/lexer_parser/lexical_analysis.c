@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/23 10:26:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 23:39:38 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_lex_value lex_continue_or_not(t_token *pre_token, t_lex_value lex_value)
 	return (LEX_SUCCESS);
 }
 
-t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value)
+t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value, int on_substition)
 {
 	t_token		*current_token;
 	t_token		*prev_token;
@@ -115,7 +115,7 @@ t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t
 			current_token = get_non_operator_token(cmd, &i);
 		if (current_token->type == TOKEN_WORD && is_assignment_token(current_token->data, prev_token))
 			current_token->type = TOKEN_ASSIGNMENT_WORD;
-		if (current_token->type == TOKEN_WORD && is_alias(current_token->data, prev_token))
+		if (!on_substition && current_token->type == TOKEN_WORD && is_alias(current_token->data, prev_token))
 		{
 			alias_substitution(&current_token, &prev_token, tk_lst);
 			if (current_token == NULL)

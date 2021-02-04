@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by vgrankul          #+#    #+#             */
-/*   Updated: 2021/01/07 05:33:57 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 23:39:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	alias_substitution(t_token **current_token, t_token **prev_token, t_token *
 	new_stream = NULL;
 	prev_token_temp = *current_token;
 	current_token_temp = *prev_token;
-	lexical_analysis_and_syntax_analysis(find_alias_str((*current_token)->data), &new_stream, LEX_CMD);
+	lexical_analysis_and_syntax_analysis(find_alias_str((*current_token)->data), &new_stream, LEX_CMD, 1);
 	if (new_stream != NULL)
 	{
 		if (token_stream_length(new_stream) > 1)
