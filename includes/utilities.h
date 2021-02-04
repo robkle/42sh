@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 17:34:31 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 15:53:12 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 # define KEY 1
 # define VAL 0
 
-
-
-
+char	*ft_getcwd_logical(void);
 int		is_made_of_digits(char *data);
 char	*ft_strjoin_and_free_string2(char *string1, char *string2);
 char	*ft_strjoin_and_free_string1(char *string1, char *string2);

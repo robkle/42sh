@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_analysis.c                                  :+:      :+:    :+:   */
+/*   auto_lstdel_strdel.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/12 13:24:09 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:48:51 by ihwang           ###   ########.fr       */
+/*   Created: 2020/10/01 23:26:06 by marvin            #+#    #+#             */
+/*   Updated: 2020/12/27 17:49:39 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static t_astnode	*build_ast(t_token *token)
+void		auto_lstdel_strdel(t_list **alst)
 {
-	return (complete_command(&token));
-}
+	t_list	*p_lst;
+	t_list	*temp_lst;
+	char	*copy_str;
 
-t_astnode			*semantic_analysis(t_token *token)
-{
-	t_astnode		*abstract_syntax_tree;
-
-	if ((abstract_syntax_tree = build_ast(token)) == NULL)
+	p_lst = *alst;
+	while (p_lst)
 	{
-		return (NULL);
+		copy_str = (char*)p_lst->content;
+		ft_strdel(&copy_str);
+		temp_lst = p_lst;
+		p_lst = p_lst->next;
+		free(temp_lst);
 	}
-	return (abstract_syntax_tree);
+	*alst = NULL;
 }
+

@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_beep_sound.c                                    :+:      :+:    :+:   */
+/*   auto_dir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/09 18:07:03 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/04 15:55:50 by ihwang           ###   ########.fr       */
+/*   Created: 2020/09/27 13:47:07 by marvin            #+#    #+#             */
+/*   Updated: 2020/12/27 17:48:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "shell.h"
 
-void		ft_beep_sound(void)
+void        auto_dir(t_l *l)
 {
-	ft_putchar('\a');
+    if (auto_is_dir(l->auto_com.full_path, l->auto_com.target_str))
+    {
+        set_status_dir(&l->auto_com.status);
+        //auto_ready_to_print(l);
+    }
 }

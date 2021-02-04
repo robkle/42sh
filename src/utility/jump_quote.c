@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_beep_sound.c                                    :+:      :+:    :+:   */
+/*   jump_quote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/09 18:07:03 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/04 15:55:50 by ihwang           ###   ########.fr       */
+/*   Created: 2020/10/30 06:30:22 by dthan             #+#    #+#             */
+/*   Updated: 2020/12/25 19:24:00 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "shell.h"
 
-void		ft_beep_sound(void)
+void jump_quote(char *input, int *i, char quote_type)
 {
-	ft_putchar('\a');
+	(*i)++;
+	while(input[*i] && input[*i] != quote_type)
+		(*i)++;
 }

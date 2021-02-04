@@ -1,0 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:libft/src/ft_beep_sound.c
+/*   ft_addchar copy.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/09 18:07:03 by ihwang            #+#    #+#             */
+/*   Updated: 2020/10/15 01:04:24 by ihwang           ###   ########.fr       */
+=======
+>>>>>>> auto_completion_builtins
+/*   file_name.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/11 10:13:47 by dthan             #+#    #+#             */
+/*   Updated: 2020/08/05 05:44:49 by tango            ###   ########.fr       */
+<<<<<<< HEAD
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "shell.h"
+
+t_astnode	*filename(t_token **token)
+{
+	return (word(token));
+=======
+>>>>>>> auto_completion_builtins:src/cores/semantic/AST/file_name.c
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/libft.h"
+
+<<<<<<< HEAD:libft/src/ft_beep_sound.c
+void		ft_beep_sound(void)
+{
+	ft_putchar('\a');
+=======
+t_astnode	*filename(t_token **token)
+{
+	return (word(token));
+>>>>>>> auto_completion_builtins:src/cores/semantic/AST/file_name.c
+>>>>>>> auto_completion_builtins
+}

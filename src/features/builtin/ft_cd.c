@@ -3,73 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 17:25:49 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/03 14:33:49 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int	cd_no_arg(void)
-{
-	char	*var_pwd;
-	char	pwd[PATH_MAX];
-	char	*home;
-	char	*old;
+/*
+** To whom may want to know about cd.
+**
+** The main parts of ft_cd function are stored in builtin/ft_cd_utilities directory.
+** Their main logics are fully dedicated to the POSIX standard document.
+** Look into the link down below if you need to investigate how it works.
+**
+** The behaviours of ft_cd are described in 10 steps by the document, and
+** the steps from 1 to 4 are compressed and stored in
+** 'int ft_cd(t_process *c)' function which is the starting point of this feature.
+** I commented the rest of the steps in each file according to its step
+** in the 'ft_cd_utilities' directory, so you can find them with running
+** this command in the directory or its parent
+** directories for instance,
+**
+** $ greb -Rl step5 .
+**
+** Replace the step number with what you want to refer to.
+**
+** link: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cd.html
+*/
 
-	if (!(home = get_var("HOME", g_shell.env, VAL)))
-	{
-		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
-	if ((getcwd(pwd, PATH_MAX)) == NULL)
-		return (EXIT_FAILURE);
-	if ((old = get_var("OLDPWD", g_shell.env, VAL)))
-		ft_strcpy(old, pwd);
-	if ((var_pwd = get_var("PWD", g_shell.env, VAL)))
-		ft_strcpy(pwd, home);
-	if ((chdir(home)) == -1)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+static char	basic_error_check(char **av, t_opt opt)
+{
+	char	status;
+
+	status = 0;
+	if (opt.applied == BUILTIN_INVALID_OPT)
+		status = ft_dprintf(2, "%s: cd: %s: invalid option", SHELL_NAME, opt.invalid_opt);
+	if (av[opt.operand_count + 2] != NULL)
+		status = ft_dprintf(2, "%s: cd: too many arguments\n", SHELL_NAME);
+	if (av[opt.operand_count + 1] == NULL && !ft_getenv("HOME")) //step1
+		status = ft_dprintf(2, "%s cd: HOME not set\n", SHELL_NAME);
+	return (status);	
 }
 
-static int	cd_exchange(void)
+static void	integrate_cd_options(t_opt *opt)
 {
-	char	pwd[PATH_MAX];
-	char	*old;
-	char	*var_pwd;
-	char	*temp;
+	opt->applied |= BUILTIN_CD_OPT_L;
+	if (opt->applied & BUILTIN_CD_OPT_P && opt->applied & BUILTIN_CD_OPT_L)
+		opt->applied = BUILTIN_CD_OPT_P;
+}
 
-	if ((temp = (char*)malloc(PATH_MAX)) == NULL)
-		return (EXIT_FAILURE);
-	temp[0] = '\0';
-	if ((old = get_var("OLDPWD", g_shell.env, VAL)))
+static char	get_directory(t_process *c, t_cd *cd, t_opt *opt)
+{
+	if (c->av[opt->operand_count + 1] == NULL)
 	{
-		getcwd(pwd, PATH_MAX);
-		ft_strcpy(temp, pwd);
-		if ((var_pwd = get_var("PWD", g_shell.env, VAL)))
-			ft_strcpy(var_pwd, old);
-		ft_strcpy(pwd, old);
-		chdir(pwd);
-		ft_strcpy(old, temp);
+		if ((ft_getenv("HOME") == NULL))
+		{
+			ft_dprintf(2, "%s: cd: HOME not set\n", SHELL_NAME);
+			return (EXIT_FAILURE);
+		}
+		cd->directory = ft_getenv("HOME");
 	}
-	else
+	else if (ft_strequ(c->av[opt->operand_count + 1], "-"))
 	{
-		ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		if ((ft_getenv("OLDPWD") == NULL))
+		{
+			ft_dprintf(2, "%s: cd: OLDPWD not set\n", SHELL_NAME);
+			return (EXIT_FAILURE);
+		}
+		cd->print_info = TRUE;
+		cd->directory = ft_getenv("OLDPWD");
 	}
-	ft_strdel(&temp);
+	else if (c->av[opt->operand_count + 1] != NULL)
+		cd->directory = c->av[opt->operand_count + 1];
 	return (EXIT_SUCCESS);
 }
 
 int			ft_cd(t_process *c)
 {
-	if (c->ac == 1)
-		return (cd_no_arg());
-	else if (ft_strequ(c->av[1], "-"))
-		return (cd_exchange());
+	t_opt	opt;
+	t_cd	cd;
+
+	ft_memset(&cd, 0, sizeof(t_cd));
+	ft_cd_pwd_init_opt(&opt, BUILTIN_CD_OPT_SET);
+	ft_cd_pwd_check_builtin_opts(c->av, &opt);
+	if (basic_error_check(c->av, opt) != 0)
+		return (EXIT_FAILURE);
+	integrate_cd_options(&opt);
+	cd.opt = opt;
+	if (get_directory(c, &cd, &opt) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (*(cd.directory) == '/') // step3
+	{
+		cd.curpath = ft_strdup(cd.directory);
+		return (ft_cd_append_slash_to_curpath(&cd));
+	}
+	else if (ft_strnstr(cd.directory, "..", 2) || ft_strnstr(cd.directory, ".", 1)) //step4
+		return (ft_cd_get_curpath_from_dir(&cd));
 	else
-		return (ft_cd_pathfinder(c));
+		return (ft_cd_search_cdpath(&cd));
 }

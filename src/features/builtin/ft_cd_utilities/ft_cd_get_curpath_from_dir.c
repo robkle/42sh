@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_beep_sound.c                                    :+:      :+:    :+:   */
+/*   ft_cd_get_curpath_from_dir.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/09 18:07:03 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/04 15:55:50 by ihwang           ###   ########.fr       */
+/*   Created: 2021/02/02 17:35:42 by ihwang            #+#    #+#             */
+/*   Updated: 2021/02/02 17:38:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "shell.h"
 
-void		ft_beep_sound(void)
+/*
+**	step6 in posix doc
+*/
+
+char		ft_cd_get_curpath_from_dir(t_cd *cd)
 {
-	ft_putchar('\a');
+	cd->curpath = ft_strdup(cd->directory);
+	return (ft_cd_append_slash_to_curpath(cd));
 }

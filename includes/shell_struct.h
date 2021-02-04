@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_beep_sound.c                                    :+:      :+:    :+:   */
+/*   shell_struct.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/09 18:07:03 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/04 15:55:50 by ihwang           ###   ########.fr       */
+/*   Created: 2020/10/11 14:49:22 by marvin            #+#    #+#             */
+/*   Updated: 2020/10/11 14:50:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#ifndef SHELL_STRUCT_H
+# define SHELL_STRUCT_H
 
-void		ft_beep_sound(void)
+# include "libft.h"
+# include <termios.h>
+
+typedef struct          s_shell
 {
-	ft_putchar('\a');
-}
+    pid_t               shell_pgid;
+    struct termios      shell_tmode;
+    t_list              *first_job;
+	int					previous_exitcode;
+    long                signal_indicator;
+    char                **env;
+    char                **var;
+}                       t_shell;
+
+#endif

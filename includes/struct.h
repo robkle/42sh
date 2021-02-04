@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/26 18:22:46 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 15:53:31 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,9 +258,9 @@ typedef enum
 **	size_t			count_list				: number of item in list
 **	char			cwd[]					: current working dir
 **	char			full_path[]				:
-**	char			*typed_str				:
-**	char			*target_str				:
-**	char			*path_env				:
+**	char			*typed_str				: str which will be diagnosed to specify the target for auto_completion
+**	char			*target_str				: the extracted str from typed_str in auto_completion context
+**	char			*path_env				: 
 **	long			status					:
 */
 
@@ -316,18 +316,18 @@ typedef struct	s_history
 ** struct for options in builtin
 */
 
+# define BUILTIN_NO_OPT (unsigned int) 0
+# define BUILTIN_INVALID_OPT (unsigned int) -1
 
-
-// typedef struct		s_builtin_options
-// {
-// 	char			*opt_set;
-// 	char			set_len;
-// 	unsigned int	operand_count;
-// 	unsigned long	applied;
-// 	char			invalid_opt;
-// }					t_opt;
-
-
+typedef struct		s_builtin_options
+{
+	char			*opt_set;
+	char			set_len;
+	unsigned int	operand_count;
+	unsigned long	applied;
+	char			invalid_opt;
+	int				opt;
+}					t_opt;
 
 typedef struct s_var
 {
@@ -336,14 +336,9 @@ typedef struct s_var
 	char exported;
 } t_var;
 
-typedef struct		s_builtin_options
-{
-	char			*opt_set;
-	// char			set_len; // non need
-	// unsigned int	operand_count;
-	// unsigned long	applied;
-	int				opt;
-}					t_opt;
+/*
+** export struct
+*/
 
 #define BUILTIN_EXPORT_OPT_SET "p"
 #define EXPORT_OPT_P 1
@@ -355,6 +350,39 @@ typedef	struct			s_export
 	char			synopsis;
 	char			*av[4096];
 }					t_export;
+
+/*
+** cd struct
+*/
+
+# define BUILTIN_CD_OPT_SET "PL"
+
+typedef enum
+{
+	BUILTIN_CD_OPT_P = (1 << 0),
+	BUILTIN_CD_OPT_L = (1 << 1)
+}					t_cd_opts;
+
+typedef struct		s_cd
+{
+	char			*directory;
+	char			*curpath;
+	char			*prev_curpath;
+	char			print_info;
+	t_opt			opt;
+}					t_cd;
+
+/*
+** pwd struct
+*/
+
+# define BUILTIN_PWD_OPT_SET BUILTIN_CD_OPT_SET
+
+typedef enum
+{
+    BUILTIN_PWD_OPT_P = BUILTIN_CD_OPT_P,
+    BUILTIN_PWD_OPT_L = BUILTIN_CD_OPT_L
+}       t_pwd_opts;
 
 /*
 ** Alias struct
@@ -400,5 +428,16 @@ typedef struct			s_hash
 	struct s_hash	*next;
 	struct s_hash	*prev;
 }						t_hash;
+
+/*
+**	Builtin commands list
+*/
+
+typedef struct			s_builtin
+{
+	const char			*name;
+	void				*func;
+	struct s_builtin	*next;
+}						t_builtin;
 
 #endif

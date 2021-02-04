@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/15 11:09:30 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 15:41:34 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ int			ft_exit(int opt)
 	** delete hashtable
 	*/
 	remove_hashentries();
+	/*
+	** delete builtin commands list
+	*/
+	delete_builtin_commands();
 	
 	exit(opt);
 	return (EXIT_FAILURE);

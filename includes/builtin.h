@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/15 11:13:39 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 15:54:46 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@
 */
 
 int		ft_env(void);
-int		ft_pwd(void);
+int		ft_pwd(t_process *p);
 int		ft_echo(t_process *c);
 int		ft_exit(int opt);
 int		ft_cd(t_process *c);
-int		ft_cd_pathfinder(t_process *c);
 int		ft_setenv(t_process *c);
 int		ft_unsetenv(t_process *c);
-void	ft_type(t_process *c);
+int		ft_type(t_process *c);
 int		ft_jobs(t_process *p);
 int		ft_jobs_child(t_process *p);
 int		ft_fg(t_process *p);
@@ -36,6 +35,24 @@ int		ft_bg_child();
 int		ft_export(int ac, char **av);
 int		ft_set(void);
 int		ft_unset(int ac, char **av);
+
+/*
+** Cd built-in
+*/
+
+# define FT_CD_NULL_LEN 1
+
+int		ft_cd_search_cdpath(t_cd *cd);
+char	ft_cd_get_curpath_from_dir(t_cd *cd);
+int		ft_cd_append_slash_to_curpath(t_cd *cd);
+int		ft_cd_prune_dotdot_dot_slash(t_cd *cd);
+int		ft_cd_compress_curpath(t_cd *cd);
+int		ft_cd_change_dir(t_cd *cd);
+
+
+/*
+** End of Cd built-in
+*/
 
 /*
 ** Fc built-in
@@ -95,6 +112,16 @@ unsigned int	hash_index(char *name);
 */
 
 /*
+** Type built-in
+*/
+t_builtin	*set_builtin_commands(void);
+void		delete_builtin_commands(void);
+/*
+** End type built-in
+*/
+
+
+/*
 ** =============================== Utils ===================================
 */
 
@@ -115,5 +142,8 @@ void	sort_alias_list(t_alias **aliaslist);
 char	*search_path(char *name, char *path);
 char	*find_executable(char *name);
 void	destroy_arr(char **arr);
+void	ft_cd_pwd_check_builtin_opts(char **av, t_opt *opt);
+void    ft_cd_pwd_init_opt(t_opt *opt, const char *opt_set);
+char	is_root_dir(char *path);
 
 #endif

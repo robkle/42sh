@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lauch_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 15:37:19 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 15:51:16 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ int		is_execute_on_parent_process(int foreground, char *cmd_name)
 		ft_strequ(cmd_name, "set") ||
 		ft_strequ(cmd_name, "unset") ||
 		ft_strequ(cmd_name, "echo") ||
-		ft_strequ(cmd_name, "hash"))
+		ft_strequ(cmd_name, "hash") ||
+		ft_strequ(cmd_name, "pwd") ||
+		ft_strequ(cmd_name, "type"))
 		return (1);
 	return (0);
 }
