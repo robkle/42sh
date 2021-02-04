@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/03 14:59:38 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/04 19:47:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static void delete_enviroment(char **env) {
 		ft_strdel(&env[i]);
 	free(env);
 }
-
-int			ft_exit(int opt)
+int			ft_exit_internal(int opt)
 {
 	/*
 	** history part
@@ -63,4 +62,11 @@ int			ft_exit(int opt)
 	
 	exit(opt);
 	return (EXIT_FAILURE);
+}
+
+int			ft_exit(t_process *p)
+{
+	if (p->ac > 1)
+		return (ft_exit_internal(ft_atoi(p->av[1])));
+	return (ft_exit_internal(g_shell.exit_status));
 }

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/03 14:37:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/04 19:11:31 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,7 @@ int				main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	if (init_shell(envp) == EXIT_FAILURE)
-		ft_exit(EXIT_FAILURE);
+		ft_exit_internal(EXIT_FAILURE);
 	increment_shlvl();
 	return (shell());
 }

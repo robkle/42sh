@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lauch_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 12:58:56 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 19:13:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int is_builtin(char *cmd_name)
 int exec_builtin(t_process *p)
 {
 	if (ft_strequ(p->av[0], "exit"))
-		ft_exit(EXIT_SUCCESS);
+		ft_exit(p);
 	else if (ft_strequ(p->av[0], "cd"))
 		return (ft_cd(p));
 	else if (ft_strequ(p->av[0], "pwd"))
@@ -139,7 +139,7 @@ int is_execute_on_parent_process(int foreground, char *cmd_name)
 int lauch_process_which_can_change_shell(t_process *p)
 {
 	if (ft_strequ(p->av[0], "exit"))
-		return (ft_exit(EXIT_SUCCESS));
+		return (ft_exit(p));
 	else if (ft_strequ(p->av[0], "alias"))
 		return (ft_alias(p));
 	else if (ft_strequ(p->av[0], "unalias"))

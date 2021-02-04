@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_and_or_bg.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 11:47:53 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 02:42:07 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/04 19:43:26 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execute_and_or_bg(t_astnode *ast)
 	else if (pid < 0)
 	{
 		ft_dprintf(2, "Fork failed at execute_and_or_bg\n");
-		ft_exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	p = create_process(j);
 	p->pid = pid;
