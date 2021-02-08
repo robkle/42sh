@@ -102,7 +102,7 @@ void	add_hashentry(char *name, char *path, int hits)
 			}
 			else
 			{
-				while (tmp != NULL)
+				while (tmp->next != NULL)
 					tmp = tmp->next;
 				tmp->next = new;
 				new->prev = tmp;

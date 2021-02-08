@@ -92,5 +92,6 @@ int		lauch_simple_command(t_job *j, t_process *p)
 	}
 	path = get_path(p);
 	fork_and_launch_in_child_process(j, p, path);
+	free (path);
 	return (g_shell.exit_status);
 }
