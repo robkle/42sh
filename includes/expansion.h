@@ -13,6 +13,8 @@
 #ifndef EXPANSION_H
 # define EXPANSION_H
 # include "struct.h"
+# include <sys/types.h>
+# include <pwd.h>
 
 char					replace_hex_value(char *str);
 int						is_eight_bit_character_whose_value_is_hexadecimal_value(
@@ -92,5 +94,7 @@ void					remove_smallest_or_largest_prefix_pattern(
 */
 
 int tilde_expansion(t_process *p);
+char	*get_login_value(char *t_prefix);
+int		tilde_prefix_len(char *word);
 
 #endif

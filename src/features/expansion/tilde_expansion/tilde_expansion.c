@@ -12,55 +12,6 @@
 
 #include "shell.h"
 
-char	*get_specified_login_value(char *t_prefix, char *home, char *logname,
-int i)
-{
-	int			j;
-	char		*value;
-	char		*homedir;
-	struct stat	sb;
-
-	j = 0;
-	value = NULL;
-	while (home[i] != '\0')
-	{
-		j = 0;
-		while (logname[j] == home[i + j])
-		{
-			if (logname[j + 1] == '\0')
-			{
-				homedir = ft_strsub(home, 0, i);
-				value = ft_strjoin(homedir, t_prefix);
-				free(homedir);
-				if (stat(value, &sb) == -1)
-				{
-					free(value);
-					return (NULL);
-				}
-			}
-			j++;
-		}
-		i++;
-	}
-	return (value);
-}
-
-char	*get_login_value(char *t_prefix)
-{
-	char	*home;
-	char	*logname;
-	int		i;
-
-	i = 0;
-	if (ft_strcmp(t_prefix, "root") == 0)
-		return (ft_strdup("/var/root"));
-	if ((home = ft_getenv("HOME")) == NULL)
-		return (NULL);
-	if ((logname = ft_getenv("LOGNAME")) == NULL)
-		return (NULL);
-	return (get_specified_login_value(t_prefix, home, logname, i));
-}
-
 char	*get_value(char *t_prefix)
 {
 	char *value;
@@ -68,11 +19,6 @@ char	*get_value(char *t_prefix)
 	if ((ft_strcmp(t_prefix, "~/") == 0 || ft_strcmp(t_prefix, "~") == 0) &&
 		(value = ft_getenv("HOME")) != NULL)
 		return (ft_strdup(value));
-	else if (ft_strcmp(&t_prefix[1], (value = ft_getenv("LOGNAME"))) == 0)
-	{
-		if ((value = ft_getenv("HOME")) != NULL)
-			return (ft_strdup(value));
-	}
 	else if (ft_strcmp(t_prefix, "~+") == 0 &&
 		(value = ft_getenv("PWD")) != NULL)
 		return (ft_strdup(value));
@@ -80,27 +26,6 @@ char	*get_value(char *t_prefix)
 		(value = ft_getenv("OLDPWD")) != NULL)
 		return (ft_strdup(value));
 	return (value = get_login_value(&t_prefix[1]));
-}
-
-int		tilde_prefix_len(char *word)
-{
-	int i;
-
-	i = 0;
-	if (word[0] == '~')
-	{
-		while (word[i] != '/' && word[i] != ':' && word[i] != '\0')
-		{
-			if (word[i] == '"' || word[i] == '\'')
-			{
-				i++;
-				while (word[i] != '\0' && (word[i] != '"' && word[i] != '\''))
-					i++;
-			}
-			i++;
-		}
-	}
-	return (i);
 }
 
 int		expand_tilde(char **word)
