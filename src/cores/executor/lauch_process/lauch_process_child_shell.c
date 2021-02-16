@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lauch_process_child_shell.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 20:01:12 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/16 20:56:45 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ static void	set_process_group_id(t_job *j, pid_t pid)
 
 static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 {
-	int old[3];
+	// int old[3];
 
-	old[0] = p->stdin;
-	old[1] = p->stdout;
-	old[2] = p->stderr;
+	// old[0] = p->stdin;
+	// old[1] = p->stdout;
+	// old[2] = p->stderr;
 	(j->pipe_fd_closer[0]) ? close(j->pipe_fd_closer[0]) : 0;
 	(j->pipe_fd_closer[1]) ? close(j->pipe_fd_closer[1]) : 0;
-	set_reset_stdin_stdout_stderr_channels(old);
+	// set_stdin_stdout_stderr_channels(old);
 	if (handle_redirection(p) == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
 	set_process_group_id(j, getpid());
@@ -113,18 +113,61 @@ static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 	exit(lauch_process(p, path));
 }
 
-void	fork_and_launch_in_child_process(t_job *j, t_process *p, char *path)
+char	*is_in_hashtable(char *name)
+{
+	int		index;
+	t_hash	*tmp;
+
+	index = hash_index(name);
+	tmp = g_shell.hashtable[index];
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(tmp->name, name) == 0)
+		{
+			tmp->hits++;
+			return (tmp->path);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+char	*get_path(t_process *p)
+{
+	char *path;
+
+	path = NULL;
+	if (ft_strchr(p->av[0], '/'))
+		return (NULL);
+	if ((path = is_in_hashtable(p->av[0])))
+		return (path);
+	else
+	{
+		if ((path = find_executable(p->av[0])) != NULL)
+		{
+			add_hashentry(p->av[0], path, 1);
+			// free(path);
+			// path = is_in_hashtable(p->av[0]);
+		}
+		return (path);
+	}
+}
+
+void	fork_and_launch_in_child_process(t_job *j, t_process *p)
 {
 	pid_t pid;
+	char *path;
 
+	path = get_path(p);
 	pid = fork();
 	if (pid == 0)
 		lauch_in_child_process(j, p, path);
 	else if (pid < 0)
 	{
-		ft_putstr_fd("Fork failed at laching child process\n", 2);
+		ft_putstr_fd("Fork failed at lauching child process\n", 2);
 		exit(EXIT_FAILURE);
 	}
+	free(path);
 	p->pid = pid;
 	set_process_group_id(j, pid);
 }

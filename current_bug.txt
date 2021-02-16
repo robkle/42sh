@@ -1,0 +1,15 @@
+1.Execute a command composed only of spaces and
+tabulations. The shell must do nothing and display the prompt again.
+Problem with autocomplition
+2. /sbin/... wrong
+eg. /sbin/shutdown
+3. Redirection at pre-fix is not implemented
+$> < /tmp/ftsh_ls_out cat -e >> /tmp/ftsh_ls_out
+$> cat /tmp/ftsh_ls_out
+{{ 2 listings of the root must appear and the second must have a $ at the end of each line }}
+4.
+$> cat <&4
+{{ Error message indicating that the file descriptor is invalid }}
+$>
+6.
+$> ls | sort -rn | cat -e

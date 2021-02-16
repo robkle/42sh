@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lauch_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:51:16 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/15 23:43:33 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,61 +37,36 @@ int		is_execute_on_parent_process(int foreground, char *cmd_name)
 	return (0);
 }
 
-char	*is_in_hashtable(char *name)
+void	prepare_saved_old_new_std(int saved[3], int old[3], t_process *p)
 {
-	int		index;
-	t_hash	*tmp;
-
-	index = hash_index(name);
-	tmp = g_shell.hashtable[index];
-	while (tmp != NULL)
-	{
-		if (ft_strcmp(tmp->name, name) == 0)
-		{
-			tmp->hits++;
-			return (tmp->path);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-char	*get_path(t_process *p)
-{
-	char *path;
-
-	path = NULL;
-	if (ft_strchr(p->av[0], '/'))
-		return (NULL);
-	if ((path = is_in_hashtable(p->av[0])))
-		return (path);
-	else
-	{
-		if ((path = find_executable(p->av[0])) != NULL)
-			add_hashentry(p->av[0], path, 1);
-		return (path);
-	}
+	saved[SAVED_STDIN] = dup(STDIN_FILENO);
+	saved[SAVED_STDOUT] = dup(STDOUT_FILENO);
+	saved[SAVED_STDERR] = dup(STDERR_FILENO);
+	old[0] = p->stdin;
+	old[1] = p->stdout;
+	old[2] = p->stderr;
 }
 
 int		lauch_simple_command(t_job *j, t_process *p)
 {
-	char *path;
+	int saved[3];
+	int old[3];
 
-	path = NULL;
 	if (handle_expansion(p) == EXIT_FAILURE)
 	{
 		p->status = EXIT_FAILURE;
 		p->completed = COMPLETED;
 		return (EXIT_FAILURE);
 	}
+	prepare_saved_old_new_std(saved, old, p);
+	set_stdin_stdout_stderr_channels(old);
 	if (is_execute_on_parent_process(j->foreground, p->av[0]))
 	{
 		p->status = lauch_in_parent_process(p);
 		p->completed = COMPLETED;
-		return (p->status);
 	}
-	path = get_path(p);
-	fork_and_launch_in_child_process(j, p, path);
-	free (path);
-	return (g_shell.exit_status);
+	else
+		fork_and_launch_in_child_process(j, p);
+	reset_stdin_stdout_stderr_channels(saved);
+	return ((p->status == NOT_COMPLETED) ? g_shell.exit_status : p->status);
 }

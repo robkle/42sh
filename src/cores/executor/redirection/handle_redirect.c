@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 02:26:01 by tango             #+#    #+#             */
-/*   Updated: 2021/01/28 13:16:48 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:30:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	set_reset_stdin_stdout_stderr_channels(int old[3])
+void	set_stdin_stdout_stderr_channels(int old[3])
 {
 	if (old[STDIN_FILENO] != STDIN_FILENO)
 	{
@@ -29,6 +29,16 @@ void	set_reset_stdin_stdout_stderr_channels(int old[3])
 		dup2(old[STDERR_FILENO], STDERR_FILENO);
 		close(old[STDERR_FILENO]);
 	}
+}
+
+void	reset_stdin_stdout_stderr_channels(int saved[3])
+{
+	dup2(saved[STDIN_FILENO], STDIN_FILENO);
+	close(saved[STDIN_FILENO]);
+	dup2(saved[STDOUT_FILENO], STDOUT_FILENO);
+	close(saved[STDOUT_FILENO]);
+	dup2(saved[STDERR_FILENO], STDERR_FILENO);
+	close(saved[STDERR_FILENO]);
 }
 
 int		handle_redirection(t_process *p)

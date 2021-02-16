@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lauch_process_parent_shell.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 20:01:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/15 23:50:20 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,21 @@ static int	lauch_process_which_can_change_shell(t_process *p)
 	return (lauch_process_which_can_change_shell2(p));
 }
 
-static void	prepare_saved_old_new_std(int saved[3], int old[3], t_process *p)
-{
-	saved[STDIN_FILENO] = STDIN_FILENO;
-	saved[STDOUT_FILENO] = STDOUT_FILENO;
-	saved[STDERR_FILENO] = STDERR_FILENO;
-	(p->stdin != 0) ? saved[SAVED_STDIN] = dup(STDIN_FILENO) : 0;
-	(p->stdout != 1) ? saved[SAVED_STDOUT] = dup(STDOUT_FILENO) : 0;
-	(p->stderr != 2) ? saved[SAVED_STDERR] = dup(STDERR_FILENO) : 0;
-	old[0] = p->stdin;
-	old[1] = p->stdout;
-	old[2] = p->stderr;
-}
-
 int			lauch_in_parent_process(t_process *p)
 {
-	int saved[3];
-	int old[3];
-	int ret;
+	// int saved[3];
+	// int old[3];
+	// int ret;
 
-	prepare_saved_old_new_std(saved, old, p);
-	set_reset_stdin_stdout_stderr_channels(old);
+	// prepare_saved_old_new_std(saved, old, p);
+	// set_stdin_stdout_stderr_channels(old);
 	if (handle_redirection(p) == EXIT_FAILURE)
+	{
+		// reset_stdin_stdout_stderr_channels(saved);
 		return (EXIT_FAILURE);
-	ret = lauch_process_which_can_change_shell(p);
-	set_reset_stdin_stdout_stderr_channels(saved);
-	return (ret);
+	}
+	// ret = lauch_process_which_can_change_shell(p);
+	// reset_stdin_stdout_stderr_channels(saved);
+	// return (ret);
+	return (lauch_process_which_can_change_shell(p));
 }
