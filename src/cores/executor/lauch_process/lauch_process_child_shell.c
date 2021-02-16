@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/16 20:56:45 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/17 01:11:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,8 @@ char	*get_path(t_process *p)
 		if ((path = find_executable(p->av[0])) != NULL)
 		{
 			add_hashentry(p->av[0], path, 1);
-			// free(path);
-			// path = is_in_hashtable(p->av[0]);
+			free(path);
+			path = is_in_hashtable(p->av[0]);
 		}
 		return (path);
 	}
@@ -167,7 +167,7 @@ void	fork_and_launch_in_child_process(t_job *j, t_process *p)
 		ft_putstr_fd("Fork failed at lauching child process\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	free(path);
+	// free(path);
 	p->pid = pid;
 	set_process_group_id(j, pid);
 }

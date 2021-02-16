@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hash.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgrankul <vgrankul@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by vgrankul          #+#    #+#             */
-/*   Updated: 2020/12/26 11:43:35 by vgrankul         ###   ########.fr       */
+/*   Updated: 2021/02/16 21:07:52 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,13 @@ int		ft_hash(t_process *c)
 		while (c->av[++i] != NULL)
 		{
 			if ((path = find_executable(c->av[i])))
+			{
 				add_hashentry(c->av[i], path, 0);
+				free(path);
+			}
 			else
 				ft_printf("hash: %s: not found\n", c->av[i]);
-			free(path);
+			// free(path);
 		}
 	}
 	return (0);
