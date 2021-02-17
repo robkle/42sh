@@ -12,6 +12,30 @@
 
 #include "shell.h"
 
+int		is_valid_alias_char(int c)
+{
+	if (c == '_' || c == '!' || c == '%' || c == ',' || c == '@'
+		|| ft_isalnum(c) == 1)
+		return (1);
+	return (0);
+}
+
+int		is_valid_alias_name(char *name)
+{
+	int i;
+
+	i = 0;
+	if ((ft_strcmp(name, "\0") == 0) || name == NULL)
+		return (-1);
+	while (name[i] != '\0')
+	{
+		if (is_valid_alias_char(name[i]) != 1)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
 char	*set_value(char *argv)
 {
 	int		i;

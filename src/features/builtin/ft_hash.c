@@ -137,7 +137,6 @@ int		ft_hash(t_process *c)
 			}
 			else
 				ft_printf("hash: %s: not found\n", c->av[i]);
-			// free(path);
 		}
 	}
 	return (0);

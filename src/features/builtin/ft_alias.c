@@ -59,6 +59,9 @@ int		set_alias(char *alias, t_alias ***aliaslist)
 	char	*alias_name;
 
 	i = 0;
+	alias_name = set_name(alias);
+	if (is_valid_alias_name(alias_name) != 0)
+		return (-1);
 	while ((*aliaslist)[i] != NULL)
 	{
 		if (ft_strcmp((*aliaslist)[i]->name,
@@ -84,7 +87,8 @@ void	print_alias(char *alias)
 	{
 		if (ft_strcmp(g_shell.alias[i]->name, alias) == 0)
 		{
-			ft_printf("alias %s='%s'\n", g_shell.alias[i]->name, g_shell.alias[i]->value);
+			ft_printf("alias %s='%s'\n", g_shell.alias[i]->name,
+				g_shell.alias[i]->value);
 			return ;
 		}
 		i++;

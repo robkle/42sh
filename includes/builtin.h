@@ -151,5 +151,6 @@ void	destroy_arr(char **arr);
 void	ft_cd_pwd_check_builtin_opts(char **av, t_opt *opt);
 void    ft_cd_pwd_init_opt(t_opt *opt, const char *opt_set);
 char	is_root_dir(char *path);
+int		is_valid_alias_name(char *name);
 
 #endif
