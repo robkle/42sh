@@ -60,7 +60,7 @@ int		set_alias(char *alias, t_alias ***aliaslist)
 
 	i = 0;
 	alias_name = set_name(alias);
-	if (is_valid_alias_name(alias_name) != 0)
+	if (is_valid_alias_name(alias_name, alias) != 0)
 		return (-1);
 	while ((*aliaslist)[i] != NULL)
 	{
