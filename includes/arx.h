@@ -36,6 +36,11 @@ typedef enum	e_pr
 int		ft_arx(t_process *p);
 
 /*
+** atoi_base.c
+*/
+int	ft_atoi_base(t_st *infix, char *value, int base, int calc);
+
+/*
 ** base.c
 */
 int		ft_base(t_st *infix, t_st *begin, int calc);

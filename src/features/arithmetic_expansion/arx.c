@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:43:04 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/01 12:16:36 by marvin           ###   ########.fr       */
+/*   Updated: 2021/02/15 18:10:42 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ static int	ft_calc_exp(char *exp, long long int *res)
 	return (1);
 }
 
+static int	ft_update_arx(char **arx, char **exp, int res)
+{
+	free(*arx);
+	*arx = ft_strcombine(exp, ft_llitoa(res));
+	return (ft_strlen(*arx));
+}
+
 static int	ft_expand_arx(char *arx, long long int *res)
 {
 	int		i;
@@ -45,11 +52,10 @@ static int	ft_expand_arx(char *arx, long long int *res)
 				if (!ft_calc_exp(exp[1], res))
 				{
 					ft_arraydel(exp);
+					free(arx);
 					return (0);
 				}
-				free(arx);
-				arx = ft_strcombine(exp, ft_llitoa(*res));
-				i = ft_strlen(arx);
+				i = ft_update_arx(&arx, exp, *res);
 			}
 		}
 	}
