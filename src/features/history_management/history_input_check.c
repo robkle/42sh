@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 10:55:32 by rklein            #+#    #+#             */
-/*   Updated: 2020/12/25 17:45:55 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/19 16:22:24 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static int	ft_quotes(int ch, int q)
 	return (ch);
 }
 
-int		ft_check_cont(char *buffer)
+int			ft_check_cont(char *buffer)
 {
 	int	i;
 	int	ch;
-		
+
 	ch = 0;
 	i = -1;
 	while (buffer[++i])

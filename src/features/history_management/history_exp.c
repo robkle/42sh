@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   history_exp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/19 14:52:30 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/06 19:08:02 by dthan            ###   ########.fr       */
+/*   Created: 2021/02/19 15:39:56 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/19 16:15:35 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int		ft_construct_exp(char **line, char *exp, char **split, char **exp_split)
+static int		ft_construct_exp(char **line, char *exp, char **split, \
+				char **exp_split)
 {
 	char	*tmp;
-	int		r;	
-	
+	int		r;
+
 	if (exp)
 	{
 		r = 1;
@@ -38,42 +39,32 @@ static int		ft_construct_exp(char **line, char *exp, char **split, char **exp_sp
 	return (r);
 }
 
-static int		ft_str_search(char *str)
-{
-	int	i;
-
-	i = g_shell.history->curr;
-	while (--i >= 0)
-	{
-		if (ft_strnequ(str, g_shell.history->hist[i], ft_strlen(str)))
-			return (i);
-	}
-	return (-1);
-}
-
 static int		ft_expand_exp(char **line, char **split, char **exp_split)
 {
 	char	*exp;
 	int		num;
-	
+
 	if (exp_split[0][1] == '!')
-		exp = g_shell.history->curr - 1 >= 0 ? ft_strdup(g_shell.history->hist[g_shell.history->curr - 1]) : NULL;
+		exp = g_shell.history->curr - 1 >= 0 ? \
+		ft_strdup(g_shell.history->hist[g_shell.history->curr - 1]) : NULL;
 	else if (ft_isdigit(exp_split[0][1]))
 	{
 		num = ft_atoi(&exp_split[0][1]);
-		exp = num <= g_shell.history->curr && num > 0 ? ft_strdup(g_shell.history->hist[num - 1]) : NULL;
+		exp = num <= g_shell.history->curr && num > 0 ? \
+		ft_strdup(g_shell.history->hist[num - 1]) : NULL;
 	}
 	else if (exp_split[0][1] == '-')
 	{
 		num = ft_atoi(&exp_split[0][2]);
-		exp = g_shell.history->curr - num >= 0 && num > 0 ? ft_strdup(g_shell.history->hist[g_shell.history->curr - num]) : NULL;
+		exp = g_shell.history->curr - num >= 0 && num > 0 ? \
+		ft_strdup(g_shell.history->hist[g_shell.history->curr - num]) : NULL;
 	}
 	else
 	{
 		num = ft_str_search(&exp_split[0][1]);
 		exp = num >= 0 ? ft_strdup(g_shell.history->hist[num]) : NULL;
 	}
-	free(*line); 
+	free(*line);
 	return (ft_construct_exp(line, exp, split, exp_split));
 }
 
@@ -89,7 +80,7 @@ static void		ft_split_exp(char **exp_split, char *str)
 	else if (str[1] == '-' || ft_isdigit(str[1]))
 	{
 		i = 2;
-		while(ft_isdigit(str[i]))
+		while (ft_isdigit(str[i]))
 			i++;
 		exp_split[0] = ft_strsub(str, 0, i);
 		exp_split[1] = ft_strdup(&str[i]);
@@ -97,28 +88,16 @@ static void		ft_split_exp(char **exp_split, char *str)
 	else
 	{
 		i = 1;
-		while (str[i] && !ft_isspace(str[i])) // be carefull with this since it is for word
+		while (str[i] && !ft_isspace(str[i]))
 			i++;
 		exp_split[0] = ft_strsub(str, 0, i);
 		exp_split[1] = ft_strdup(&str[i]);
 	}
 }
 
-static void	ft_hist_exp_quote(char c, int *q, t_prompt pr)
+int				ft_hist_exp(char **line, t_prompt pr)
 {
-	if (pr == PROMPT_QUOTE)
-		*q = 1;
-	else if (pr == PROMPT_QUOTE)
-		*q = 2;
-	else if (c == 39 && *q != 2)
-		*q = !*q ? 1 : 0;
-	else if (c == 34 && *q != 1)
-		*q = !*q ? 2 : 0;
-}		
-
-int		ft_hist_exp(char **line, t_prompt pr)
-{
-	char *str;
+	char	*str;
 	int		i;
 	int		q;
 	char	*split[2];
