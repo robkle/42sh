@@ -6,9 +6,11 @@
 /*   By: rklein <rkelin@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 16:00:03 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/19 16:15:16 by rklein           ###   ########.fr       */
+/*   Updated: 2021/02/19 16:49:25 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "shell.h"
 
 int		ft_str_search(char *str)
 {
