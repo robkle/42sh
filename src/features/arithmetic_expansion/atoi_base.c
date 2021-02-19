@@ -6,21 +6,22 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 16:14:04 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/15 16:17:03 by rklein           ###   ########.fr       */
+/*   Updated: 2021/02/19 12:27:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void ft_restolink(t_st *infix, long long int res)
+static void	ft_restolink(t_st *infix, long long int res)
 {
 	char	*tmp;
+
 	tmp = ft_llitoa(res);
 	ft_modify_link(infix, tmp, "integer");
 	free(tmp);
 }
 
-int	ft_atoi_base(t_st *infix, char *value, int base, int calc)
+int			ft_atoi_base(t_st *infix, char *value, int base, int calc)
 {
 	int				i;
 	long long int	res;
