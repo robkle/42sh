@@ -180,12 +180,15 @@ BUILT_IN := $(addprefix $(BUILT_IN_DIR)/,$(BUILT_IN_FILE))
 # Job control
 JOB_CONTROL_DIR := $(FEATURES_DIR)/job_control
 JOB_CONTROL_FILE += job_utils.c
+JOB_CONTROL_FILE += job_utils2.c
 JOB_CONTROL_FILE += create_delete_job_tools.c
 JOB_CONTROL_FILE += process_utils.c
 JOB_CONTROL_FILE += delete_process_tools.c
 JOB_CONTROL_FILE += foreground_and_background.c
 JOB_CONTROL_FILE += stopped_and_terminated_jobs.c
 JOB_CONTROL_FILE += continuing_stopped_jobs.c
+JOB_CONTROL_FILE += find_job.c
+JOB_CONTROL_FILE += print_job.c
 JOB_CONTROL := $(addprefix $(JOB_CONTROL_DIR)/,$(JOB_CONTROL_FILE))
 # History Management
 HISTORY_MANAGEMENT_DIR := $(FEATURES_DIR)/history_management

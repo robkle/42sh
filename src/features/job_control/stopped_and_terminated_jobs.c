@@ -6,38 +6,26 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 17:39:13 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/15 18:07:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		job_is_stopped(t_job *j)
+void	mark_process_status_exit(t_process *p, int status)
 {
-	t_process *p_ptr;
-
-	p_ptr = j->first_process;
-	while (p_ptr)
-	{
-		if (!p_ptr->completed && !p_ptr->stopped)
-			return (0);
-		p_ptr = p_ptr->next;
-	}
-	return (1);
+	ft_putchar('\n');
+	p->stopped = 1;
+	g_shell.exit_status = 128 + WSTOPSIG(status);
 }
 
-int		job_is_completed(t_job *j)
+void	mark_process_status_signal(t_process *p, int status)
 {
-	t_process *p_ptr;
-
-	p_ptr = j->first_process;
-	while (p_ptr)
-	{
-		if (!p_ptr->completed)
-			return (0);
-		p_ptr = p_ptr->next;
-	}
-	return (1);
+	p->completed = 1;
+	if (WIFEXITED(status))
+		g_shell.exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_shell.exit_status = 128 + WTERMSIG(status);
 }
 
 int		mark_process_status_helper(
@@ -52,19 +40,9 @@ int		mark_process_status_helper(
 		{
 			p_ptr->status = status;
 			if (WIFSTOPPED(status))
-			{
-				ft_putchar('\n');
-				p_ptr->stopped = 1;
-				g_shell.exit_status = 128 + WSTOPSIG(status);
-			}
+				mark_process_status_exit(p_ptr, status);
 			else
-			{
-				p_ptr->completed = 1;
-				if (WIFEXITED(status))
-					g_shell.exit_status = WEXITSTATUS(status);
-				else if (WIFSIGNALED(status))
-					g_shell.exit_status = 128 + WTERMSIG(status);
-			}
+				mark_process_status_signal(p_ptr, status);
 			return (0);
 		}
 		p_ptr = p_ptr->next;
@@ -89,94 +67,4 @@ int		mark_process_status(t_job *j, pid_t pid, int status)
 		}
 	}
 	return (1);
-}
-
-void	update_status(void)
-{
-	int		status;
-	pid_t	pid;
-
-	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-	while (!mark_process_status(g_shell.first_job, pid, status))
-		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-}
-
-void	wait_for_job(t_job *j, int opt)
-{
-	int			status;
-	t_process	*p_ptr;
-
-	p_ptr = j->first_process;
-	while (!job_is_stopped(j) && !job_is_completed(j))
-	{
-		while (p_ptr)
-		{
-			if (p_ptr->pid != 0)
-			{
-				waitpid(p_ptr->pid, &status, opt);
-				mark_process_status(j, p_ptr->pid, status);
-			}
-			p_ptr = p_ptr->next;
-		}
-	}
-}
-
-int		is_the_current_job(t_job *j)
-{
-	t_job *current_job;
-
-	current_job = find_the_current_job();
-	if (j == NULL || current_job == NULL)
-		return (0);
-	return (current_job == j);
-}
-
-void	format_job_info(t_job *j, const char *status, int opt)
-{
-	ft_printf("[%d]", j->id);
-	if (is_the_current_job(j))
-		ft_printf("%-3c", '+');
-	else if (is_the_last_job(j))
-		ft_printf("%-3c", '-');
-	else
-		ft_putstr("   ");
-	ft_printf("%-24s%s", status, j->command);
-	if (opt)
-		(!j->foreground) ? ft_putstr(" &") : 0;
-	ft_putchar('\n');
-}
-
-void	do_job_notification(void)
-{
-	t_job *j;
-	t_job *jlast;
-	t_job *jnext;
-
-	if (g_shell.first_job == NULL)
-		return ;
-	update_status();
-	jlast = NULL;
-	j = g_shell.first_job;
-	while (j)
-	{
-		jnext = j->next;
-		if (job_is_completed(j))
-		{
-			(!j->foreground) ? format_job_info(j, "Done", 0) : 0;
-			if (jlast)
-				jlast->next = jnext;
-			else
-				g_shell.first_job = jnext;
-			delete_job(j, 0);
-		}
-		else if (job_is_stopped(j) && !j->notified)
-		{
-			format_job_info(j, "Stopped(SIGTSTP)", 0);
-			j->notified = 1;
-			jlast = j;
-		}
-		else
-			jlast = j;
-		j = jnext;
-	}
 }

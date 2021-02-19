@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:32:25 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 15:51:07 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/15 18:57:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int		parameter_expansion_syntax_analysis_parameter(char parameter[256])
 
 	if (ft_strlen(parameter) == 0)
 		return (EXIT_FAILURE);
+	if (ft_strequ(parameter, "?"))
+		return (EXIT_SUCCESS);
 	if(parameter[0] != '#' && !ft_isalnum(parameter[0]))
 		return (EXIT_FAILURE);
 	if (parameter[1])

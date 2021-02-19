@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/01/28 17:39:19 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:29:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	redirect_greatand(t_redi *redi);
 int	redirect_lessand(t_redi *redi);
 int	redirect_less(t_redi *redi);
 int	redirect_dless(t_redi *redi);
-void	set_reset_stdin_stdout_stderr_channels(int old[3]);
+void	set_stdin_stdout_stderr_channels(int old[3]);
+void	reset_stdin_stdout_stderr_channels(int saved[3]);
 
 /*
 ** =========================== LAUCHING PROCESS ===============================
@@ -75,7 +76,7 @@ void	set_reset_stdin_stdout_stderr_channels(int old[3]);
 
 int		lauch_simple_command(t_job *j, t_process *p);
 int		lauch_in_parent_process(t_process *p);
-void	fork_and_launch_in_child_process(t_job *j, t_process *p, char *path);
+void	fork_and_launch_in_child_process(t_job *j, t_process *p);
 
 /*
 ** ========================== JOB CONTROL FUNCTIONS ===========================
@@ -120,6 +121,7 @@ t_job *is_valid_job_id(char *str);
 t_job *find_job(pid_t pgid);
 void print_job_background(t_job *job_node);
 int is_the_last_job(t_job *j);
+int		is_the_current_job(t_job *j);
 t_job *find_the_last_job();
 t_job *find_the_current_job();
 /* process */
