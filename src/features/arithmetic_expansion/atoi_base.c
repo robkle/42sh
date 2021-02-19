@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 16:14:04 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/19 12:27:14 by marvin           ###   ########.fr       */
+/*   Updated: 2021/02/19 12:45:49 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			ft_atoi_base(t_st *infix, char *value, int base, int calc)
 			i = -1;
 			while (++i < base)
 			{
-				if (BVALS[i] == *value)
+				if (BVL[i] == *value)
 				{
 					res = base * res + i;
 					break ;
