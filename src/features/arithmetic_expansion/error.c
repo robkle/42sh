@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:44:20 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/01 12:00:04 by marvin           ###   ########.fr       */
+/*   Updated: 2021/02/15 18:09:44 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_print_arx_token(t_st *lst)
 
 void		ft_print_error(int error, t_st *infix, t_st *expr)
 {
-	write(1, "arx: ", 5);
+	write(1, "42sh: ", 6);
 	ft_print_arx_token(expr);
 	if (error == INVOP)
 		write(1, ": syntax error: invalid arithmetic operator ", 44);
@@ -44,4 +44,5 @@ void		ft_print_error(int error, t_st *infix, t_st *expr)
 	write(1, "(error token is \"", 17);
 	ft_print_arx_token(infix);
 	write(1, "\")\n", 3);
+	ft_free_lst(&expr);
 }

@@ -12,6 +12,35 @@
 
 #include "shell.h"
 
+int		is_valid_alias_char(int c)
+{
+	if (c == '/' || c == '$' || c == '`' || c == '=' || c == '"' || c == '\'' || c == '\\' || is_metacharacter(c) == 1)
+	{
+		ft_printf("42sh: alias: %c: invalid alias name\n", c);
+		return (0);
+	}
+	return (1);
+}
+
+int		is_valid_alias_name(char *name, char *alias)
+{
+	int i;
+
+	i = 0;
+	if ((ft_strcmp(name, "\0") == 0) || name == NULL)
+	{
+		ft_printf("42sh: alias: %s: not found\n", alias);
+		return (-1);
+	}
+	while (name[i] != '\0')
+	{
+		if (is_valid_alias_char(name[i]) != 1)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
 char	*set_value(char *argv)
 {
 	int		i;

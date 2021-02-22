@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:54:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/01 19:37:05 by marvin           ###   ########.fr       */
+/*   Updated: 2021/02/15 11:49:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void	ft_pm_create(t_st *infix, char *spec)
 	{
 		str = ft_strjoin(spec, infix->op);
 		ft_modify_link(infix, str, "operator");
+		free(str);
 	}
 	else
 		ft_pm_split(infix, spec, size);
