@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:43:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/01 19:54:50 by marvin           ###   ########.fr       */
+/*   Updated: 2021/02/15 12:01:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static char	*ft_calculate(long long left, long long right, char *op)
 static void	ft_calc_pop(t_st **stack, char *op)
 {
 	long long	top;
+	char		*tmp;
 
 	if (ft_strequ((*stack)->type, "intvar"))
 		ft_intvar(*stack, NULL);
@@ -50,8 +51,9 @@ static void	ft_calc_pop(t_st **stack, char *op)
 	ft_pop_stack(stack);
 	if (ft_strequ((*stack)->type, "intvar"))
 		ft_intvar(*stack, NULL);
-	ft_modify_link(*stack, \
-	ft_calculate(ft_atolli((*stack)->op), top, op), "integer");
+	tmp = ft_calculate(ft_atolli((*stack)->op), top, op);
+	ft_modify_link(*stack, tmp, "integer");
+	free(tmp);
 }
 
 long long	ft_calc(t_st *postfix)

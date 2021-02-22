@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:48:20 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/01 12:41:44 by marvin           ###   ########.fr       */
+/*   Updated: 2021/02/19 12:25:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_st		*ft_extolst(char *exp)
 		if (op[0])
 			ft_write_to_lst(&infix, op);
 		if (buf[0] && !(ft_isalnum(exp[i + 1]) || exp[i + 1] == '_' || \
-		exp[i + 1] == '#' || exp[i + 1] == '@'))
+			exp[i + 1] == '#' || exp[i + 1] == '@'))
 			ft_write_to_lst(&infix, buf);
 	}
 	return (ft_infix_checker(infix));

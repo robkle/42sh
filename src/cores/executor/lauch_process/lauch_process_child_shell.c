@@ -167,7 +167,6 @@ void	fork_and_launch_in_child_process(t_job *j, t_process *p)
 		ft_putstr_fd("Fork failed at lauching child process\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	// free(path);
 	p->pid = pid;
 	set_process_group_id(j, pid);
 }

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:53 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 14:08:23 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/15 11:19:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	ft_reverse_search_scan(t_l *l, char action)
 			break ;
 		}
 	}
+	free(tmp);
 	if (i == -1 && l->rev_sr[1] != 'f')
 		ft_reverse_search_fail(l);
 }

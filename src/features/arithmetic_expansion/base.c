@@ -6,40 +6,11 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:43:24 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/01 11:57:56 by marvin           ###   ########.fr       */
+/*   Updated: 2021/02/15 16:23:08 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static int	ft_atoi_base(t_st *infix, char *value, int base, int calc)
-{
-	int				i;
-	long long int	res;
-
-	res = 0;
-	if (value && *value)
-	{
-		while (*value)
-		{
-			i = -1;
-			while (++i < base)
-			{
-				if (BVALS[i] == *value)
-				{
-					res = base * res + i;
-					break ;
-				}
-			}
-			if (i == base)
-				return (0);
-			value++;
-		}
-	}
-	if (calc)
-		ft_modify_link(infix, ft_itoa(res), "integer");
-	return (1);
-}
 
 static int	ft_hash_exp(t_st *infix, t_st *begin, int calc)
 {
