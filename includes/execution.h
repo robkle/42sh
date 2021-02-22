@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/02/15 20:29:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/22 18:36:55 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ void	execute_simple_command(t_astnode *ast, t_job *job);
 void	execute_cmd_name(t_astnode *ast, t_job *j, t_process *p);
 void	execute_cmd_suffix(t_astnode *ast, t_job *j, t_process *p);
 void	execute_io_redirect(t_astnode *ast, t_job *j, t_process *p);
-void	execute_cmd_prefix(t_astnode *ast); // tmp
+void	execute_cmd_prefix(t_astnode *ast, t_job *j, t_process *p); // tmp
 void	execute_assignment_word(t_astnode *ast);
 
 int	find_heredoc(t_astnode *ast);
 void	clear_heredoc(t_heredoc *heredoc);
+
+int is_io_redirect_parts(t_astnode *ast); // move later
 
 /*
 ** build command for and or background process

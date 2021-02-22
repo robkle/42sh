@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 06:04:12 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 02:39:38 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/22 23:39:07 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	execute_io_redirect(t_astnode *ast, t_job *j, t_process *p)
 	if (ast->type == AST_io_redirect)
 	{
 		redi->n = ft_strdup(ast->data);
-		job_command_builder(2, j, " ", redi->n);
+		job_command_builder(1, j, redi->n);
 		if (ast->left->type == AST_io_file)
 			execute_io_file(ast->left, j, redi);
 		else if (ast->left->type == AST_io_here)
@@ -70,7 +70,6 @@ void	execute_io_redirect(t_astnode *ast, t_job *j, t_process *p)
 	}
 	else
 	{
-		job_command_builder(1, j, " ");
 		if (ast->type == AST_io_file)
 			execute_io_file(ast, j, redi);
 		else if (ast->type == AST_io_here)

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/17 01:11:11 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/22 23:46:57 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ static int	exec_builtin(t_process *p)
 
 static int	lauch_process(t_process *p, char *path)
 {
+	if (p->av[0] == NULL)
+		return (EXIT_SUCCESS);
 	if (ft_strchr(p->av[0], '/') != NULL && possible_to_access_file(p))
 		return (make_child_binary(p));
 	else if (is_builtin(p->av[0]))
@@ -104,8 +106,8 @@ static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 	(j->pipe_fd_closer[0]) ? close(j->pipe_fd_closer[0]) : 0;
 	(j->pipe_fd_closer[1]) ? close(j->pipe_fd_closer[1]) : 0;
 	// set_stdin_stdout_stderr_channels(old);
-	if (handle_redirection(p) == EXIT_FAILURE)
-		exit(EXIT_FAILURE);
+	// if (handle_redirection(p) == EXIT_FAILURE)
+	// 	exit(EXIT_FAILURE);
 	set_process_group_id(j, getpid());
 	if (j->foreground)
 		ft_tcsetpgrp(STDIN_FILENO, j->pgid);
@@ -136,6 +138,8 @@ char	*get_path(t_process *p)
 {
 	char *path;
 
+	if (p->av[0] == NULL) //add
+		return (NULL);
 	path = NULL;
 	if (ft_strchr(p->av[0], '/'))
 		return (NULL);

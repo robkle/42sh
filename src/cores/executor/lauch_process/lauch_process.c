@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/15 23:43:33 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/22 23:48:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,12 @@ int		lauch_simple_command(t_job *j, t_process *p)
 	}
 	prepare_saved_old_new_std(saved, old, p);
 	set_stdin_stdout_stderr_channels(old);
-	if (is_execute_on_parent_process(j->foreground, p->av[0]))
+	if (handle_redirection(p) == EXIT_FAILURE)
+	{
+		p->status = EXIT_FAILURE;
+		p->completed = COMPLETED;
+	}
+	else if (p->av[0] && is_execute_on_parent_process(j->foreground, p->av[0]))
 	{
 		p->status = lauch_in_parent_process(p);
 		p->completed = COMPLETED;
