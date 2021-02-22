@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 11:14:52 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 02:46:36 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/22 23:39:33 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ void	execute_cmd_suffix(t_astnode *ast, t_job *j, t_process *p)
 			p->ac++;
 			p->av[p->ac - 1] = ft_strdup(ast->left->data);
 			p->av[p->ac] = NULL;
-			job_command_builder(2, j, " ", p->av[p->ac - 1]);
+			job_command_builder(1, j, p->av[p->ac - 1]);
 		}
 		else
 			execute_io_redirect(ast->left, j, p);
+		job_command_builder(1, j, " ");
 		execute_cmd_suffix(ast->right, j, p);
 	}
 	else if (ast->type == AST_WORD)
@@ -32,7 +33,7 @@ void	execute_cmd_suffix(t_astnode *ast, t_job *j, t_process *p)
 		p->ac++;
 		p->av[p->ac - 1] = ft_strdup(ast->data);
 		p->av[p->ac] = NULL;
-		job_command_builder(2, j, " ", p->av[p->ac - 1]);
+		job_command_builder(1, j, p->av[p->ac - 1]);
 	}
 	else
 		execute_io_redirect(ast, j, p);

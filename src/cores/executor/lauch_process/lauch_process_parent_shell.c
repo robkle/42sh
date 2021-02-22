@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/15 23:50:20 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/22 23:44:18 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ int			lauch_in_parent_process(t_process *p)
 
 	// prepare_saved_old_new_std(saved, old, p);
 	// set_stdin_stdout_stderr_channels(old);
-	if (handle_redirection(p) == EXIT_FAILURE)
-	{
-		// reset_stdin_stdout_stderr_channels(saved);
-		return (EXIT_FAILURE);
-	}
+	// if (handle_redirection(p) == EXIT_FAILURE)
+	// {
+	// 	// reset_stdin_stdout_stderr_channels(saved);
+	// 	return (EXIT_FAILURE);
+	// }
 	// ret = lauch_process_which_can_change_shell(p);
 	// reset_stdin_stdout_stderr_channels(saved);
 	// return (ret);

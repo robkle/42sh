@@ -52,23 +52,34 @@ void	execute_pipe_sequence(t_astnode *ast, t_job *j)
 	j->stdout = STDOUT_FILENO;
 	if (ast->type == AST_pipe_sequence)
 	{
+		// saved the stdint and out so that we can reset
 		saved[0] = j->stdin;
 		saved[1] = j->stdout;
+		// start piping
 		pipe(pipefd);
+		// stdout -> pipe write end
 		j->stdout = pipefd[WRITE_END];
+		// init pipe fd closer, at 0 when p1
+		// if 0 already is occupied, then 1 will take the place
 		if (j->pipe_fd_closer[0] == 0)
 			j->pipe_fd_closer[0] = pipefd[READ_END];
 		else
 			j->pipe_fd_closer[1] = pipefd[READ_END];
+		// processing
 		execute_command(ast->left, j);
+		// close the pipe write end
 		close(pipefd[WRITE_END]);
+		// reset pipe fd closer
 		j->pipe_fd_closer[0] = 0;
 		j->pipe_fd_closer[1] = 0;
+		// reset stdout
 		j->stdout = saved[1];
-		j->pipe_fd_closer[0] = 0;
 		job_command_builder(1, j, " | ");
+		// saved the stdin
 		j->stdin = pipefd[READ_END];
+		// pipe fd closer for write end
 		j->pipe_fd_closer[0] = pipefd[WRITE_END];
+		
 		execute_pipe_sequence(ast->right, j);
 		close(pipefd[READ_END]);
 		j->stdin = saved[0];
