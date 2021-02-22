@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:49:16 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/01 12:41:08 by marvin           ###   ########.fr       */
+/*   Updated: 2021/02/22 19:23:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_integer(char *op)
 
 static int	ft_hexoct(char *op)
 {
-	if (op[0] == '0' && (ft_isdigit(op[1]) || op[1] == 'x') && \
+	if (op[0] == '0' && (ft_isdigit(op[1]) || ft_toupper(op[1]) == 'X') && \
 	(ft_isalnum(op[2]) || !op[2]))
 		return (1);
 	return (0);

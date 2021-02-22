@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:43:24 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/15 16:23:08 by rklein           ###   ########.fr       */
+/*   Updated: 2021/02/22 19:58:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	ft_hexoct_exp(t_st *infix, t_st *begin, int calc)
 	}
 	if (!ft_atoi_base(infix, tmp, base, calc) && !calc)
 	{
-		ft_print_error(INVOP, infix, begin);
+		ft_print_error(VTGFB, infix, begin);
 		free(tmp);
 		return (0);
 	}
