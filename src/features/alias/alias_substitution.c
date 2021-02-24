@@ -142,8 +142,8 @@ void	alias_substitution(t_token **current_token, t_token **prev_token, t_token *
 	t_token *current_token_temp;
 
 	new_stream = NULL;
-	prev_token_temp = *current_token;
-	current_token_temp = *prev_token;
+	prev_token_temp = NULL;
+	current_token_temp = NULL;	
 	lexical_analysis_and_syntax_analysis(find_alias_str((*current_token)->data), &new_stream, LEX_CMD, 1);
 	if (new_stream != NULL)
 	{
@@ -151,21 +151,21 @@ void	alias_substitution(t_token **current_token, t_token **prev_token, t_token *
 		{
 			current_token_temp = find_current_token_in_new_stream(new_stream);
 			prev_token_temp = find_prev_token_in_new_stream(new_stream);
-			clear_token(*current_token);
-			clear_token(*prev_token);
-			*current_token = current_token_temp;
-			*prev_token = prev_token_temp;
+			clear_token((*current_token));
+			clear_token((*prev_token));
+			(*current_token) = current_token_temp;
+			(*prev_token) = prev_token_temp;
 		}
 		else if (token_stream_length(new_stream) == 1)
 		{
-			clear_token(*current_token);
-			*current_token = current_token_temp;
+			clear_token((*current_token));
+			*current_token = find_current_token_in_new_stream(new_stream);
 		}
 		add_token_into_token_list(tk_lst, new_stream);
 	}
 	else
 	{
-		clear_token(*current_token);
+		clear_token((*current_token));
 		*current_token = NULL;
 	}
 }

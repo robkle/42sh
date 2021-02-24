@@ -94,6 +94,7 @@ t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t
 	int			i;
 
 	i = 0;
+	prev_token = (t_token*)malloc(sizeof(t_token));
 	prev_token = NULL;
 	while (cmd[i])
 	{
