@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 01:51:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/22 23:36:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/25 06:11:34 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	execute_cmd_prefix(t_astnode *ast, t_job *j, t_process *p)
 	{
 		if (ast->left->type == AST_ASSIGNMENT_WORD)
 		{
-			if (j->foreground)
-				execute_assignment_word(ast->left);
+			execute_assignment_word(ast->left, p);
 			job_command_builder(1, j, ast->left->data);
 		}
 		else
@@ -29,8 +28,7 @@ void	execute_cmd_prefix(t_astnode *ast, t_job *j, t_process *p)
 	}
 	else if (ast->type == AST_ASSIGNMENT_WORD)
 	{
-		if (j->foreground)
-			execute_assignment_word(ast);
+		execute_assignment_word(ast, p);
 		job_command_builder(1, j, ast->data);
 	}
 	else

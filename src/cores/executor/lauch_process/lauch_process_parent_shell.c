@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/22 23:44:18 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/25 06:12:38 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,34 @@ static int	lauch_process_which_can_change_shell(t_process *p)
 	return (lauch_process_which_can_change_shell2(p));
 }
 
+int lauch_assignment_words(t_assignment *list)
+{
+	t_var *intern_var;
+	t_var *ptr_var;
+	t_assignment *ptr;
+
+	ptr = list;
+	while (ptr)
+	{
+		intern_var = (t_var*)ft_memalloc(sizeof(t_var));
+		intern_var->name = ft_strndup(ptr->data, ft_strchr(ptr->data, '=') - &ptr->data[0]);
+		intern_var->value = ft_strdup(ft_strchr(ptr->data, '=') + 1);
+		if (ft_getenv(intern_var->name))
+			intern_var->exported = 1;
+		else if ((ptr_var = ft_getvar(intern_var->name)) != NULL && ptr_var->exported == 1)
+			intern_var->exported = 1;
+		else
+			intern_var->exported = 0;
+		(is_intern_var(intern_var->name)) ? update_intern_var(intern_var) : add_intern_var(intern_var);
+	}
+	return (EXIT_SUCCESS);
+}
+
 int			lauch_in_parent_process(t_process *p)
 {
-	// int saved[3];
-	// int old[3];
-	// int ret;
-
-	// prepare_saved_old_new_std(saved, old, p);
-	// set_stdin_stdout_stderr_channels(old);
-	// if (handle_redirection(p) == EXIT_FAILURE)
-	// {
-	// 	// reset_stdin_stdout_stderr_channels(saved);
-	// 	return (EXIT_FAILURE);
-	// }
-	// ret = lauch_process_which_can_change_shell(p);
-	// reset_stdin_stdout_stderr_channels(saved);
-	// return (ret);
-	return (lauch_process_which_can_change_shell(p));
+	if (handle_redirection(p) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (p->av)
+		return (lauch_process_which_can_change_shell(p));
+	return (lauch_assignment_words(p->first_assignment));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:53:31 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/25 05:32:30 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ typedef	struct			s_redi
 	struct s_redi		*next;
 }						t_redi;
 
+typedef struct			s_assignment
+{
+	char				*data;
+	struct s_assignment	*next;
+}						t_assignment;
+
 typedef struct			s_process
 {
 	int					ac;
@@ -115,6 +121,7 @@ typedef struct			s_process
 	int					stdout;
 	int					stderr;
 	t_redi				*first_redi;
+	t_assignment		*first_assignment;
 	char				completed;
 	char				stopped;
 	int					status;
