@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/25 06:12:38 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/25 08:29:05 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int lauch_assignment_words(t_assignment *list)
 		else
 			intern_var->exported = 0;
 		(is_intern_var(intern_var->name)) ? update_intern_var(intern_var) : add_intern_var(intern_var);
+		ptr = ptr->next;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -83,7 +84,7 @@ int			lauch_in_parent_process(t_process *p)
 {
 	if (handle_redirection(p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (p->av)
+	if (p->av[0])
 		return (lauch_process_which_can_change_shell(p));
 	return (lauch_assignment_words(p->first_assignment));
 }
