@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/22 23:48:16 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/25 09:02:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,26 @@ int		is_execute_on_parent_process(int foreground, char *cmd_name)
 {
 	if (!foreground)
 		return (0);
-	if (ft_strequ(cmd_name, "exit") ||
-		ft_strequ(cmd_name, "alias") ||
-		ft_strequ(cmd_name, "unalias") ||
-		ft_strequ(cmd_name, "cd") ||
-		ft_strequ(cmd_name, "setenv") ||
-		ft_strequ(cmd_name, "unsetenv") ||
-		ft_strequ(cmd_name, "jobs") ||
-		ft_strequ(cmd_name, "fg") ||
-		ft_strequ(cmd_name, "bg") ||
-		ft_strequ(cmd_name, "fc") ||
-		ft_strequ(cmd_name, "export") ||
-		ft_strequ(cmd_name, "set") ||
-		ft_strequ(cmd_name, "unset") ||
-		ft_strequ(cmd_name, "echo") ||
-		ft_strequ(cmd_name, "hash") ||
-		ft_strequ(cmd_name, "pwd") ||
-		ft_strequ(cmd_name, "type"))
-		return (1);
-	return (0);
+	if (cmd_name &&
+		!ft_strequ(cmd_name, "exit") &&
+		!ft_strequ(cmd_name, "alias") &&
+		!ft_strequ(cmd_name, "unalias") &&
+		!ft_strequ(cmd_name, "cd") &&
+		!ft_strequ(cmd_name, "setenv") &&
+		!ft_strequ(cmd_name, "unsetenv") &&
+		!ft_strequ(cmd_name, "jobs") &&
+		!ft_strequ(cmd_name, "fg") &&
+		!ft_strequ(cmd_name, "bg") &&
+		!ft_strequ(cmd_name, "fc") &&
+		!ft_strequ(cmd_name, "export") &&
+		!ft_strequ(cmd_name, "set") &&
+		!ft_strequ(cmd_name, "unset") &&
+		!ft_strequ(cmd_name, "echo") &&
+		!ft_strequ(cmd_name, "hash") &&
+		!ft_strequ(cmd_name, "pwd") &&
+		!ft_strequ(cmd_name, "type"))
+		return (0);
+	return (1);
 }
 
 void	prepare_saved_old_new_std(int saved[3], int old[3], t_process *p)
@@ -60,12 +61,7 @@ int		lauch_simple_command(t_job *j, t_process *p)
 	}
 	prepare_saved_old_new_std(saved, old, p);
 	set_stdin_stdout_stderr_channels(old);
-	if (handle_redirection(p) == EXIT_FAILURE)
-	{
-		p->status = EXIT_FAILURE;
-		p->completed = COMPLETED;
-	}
-	else if (p->av[0] && is_execute_on_parent_process(j->foreground, p->av[0]))
+	if (is_execute_on_parent_process(j->foreground, p->av[0]))
 	{
 		p->status = lauch_in_parent_process(p);
 		p->completed = COMPLETED;

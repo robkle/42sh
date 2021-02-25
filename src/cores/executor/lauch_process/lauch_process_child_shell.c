@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/22 23:46:57 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/25 08:37:07 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,32 @@ static void	set_process_group_id(t_job *j, pid_t pid)
 	setpgid(pid, j->pgid);
 }
 
+void handle_assignment_in_child_process(t_assignment *list)
+{
+	t_assignment *ptr;
+	char *name;
+	char *value;
+
+	ptr = list;
+	while (ptr)
+	{
+		name = ft_strndup(ptr->data, ft_strchr(ptr->data, '=') - &ptr->data[0]);
+		value = ft_strdup(ft_strchr(ptr->data, '=') + 1);
+		add_update_environment_var(name, value);
+		(name) ? free(name) : 0;
+		(value) ? free(value) : 0;
+		ptr = ptr->next;
+	}
+}
+
 static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 {
-	// int old[3];
-
-	// old[0] = p->stdin;
-	// old[1] = p->stdout;
-	// old[2] = p->stderr;
 	(j->pipe_fd_closer[0]) ? close(j->pipe_fd_closer[0]) : 0;
 	(j->pipe_fd_closer[1]) ? close(j->pipe_fd_closer[1]) : 0;
-	// set_stdin_stdout_stderr_channels(old);
-	// if (handle_redirection(p) == EXIT_FAILURE)
-	// 	exit(EXIT_FAILURE);
+	if (p->first_assignment)
+		handle_assignment_in_child_process(p->first_assignment);
+	if (handle_redirection(p) == EXIT_FAILURE)
+		exit(EXIT_FAILURE);
 	set_process_group_id(j, getpid());
 	if (j->foreground)
 		ft_tcsetpgrp(STDIN_FILENO, j->pgid);

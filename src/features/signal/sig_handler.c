@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   sig_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 04:00:37 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 19:11:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/25 06:22:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	sig_int_handler(int sig)
+// static void	sig_int_handler(int sig)
+// {
+// 	(void)sig;
+// 	g_shell.signal_indicator = SIGINT;
+// 	g_shell.exit_status = 1;
+// 	ioctl(1, TIOCSTI, "");
+// }
+
+void	sig_int_handler(int sig)
 {
 	(void)sig;
 	g_shell.signal_indicator = SIGINT;
