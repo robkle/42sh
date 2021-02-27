@@ -66,7 +66,7 @@ int		remove_alias(char *alias, t_alias ***aliaslist, int count)
 		i++;
 	}
 	new[j] = NULL;
-	free((*aliaslist));
+	remove_all(aliaslist);
 	(*aliaslist) = new;
 	return (0);
 }
@@ -76,16 +76,18 @@ void	remove_all(t_alias ***aliaslist)
 	int i;
 
 	i = 0;
-	while ((*aliaslist)[i] != NULL)
+	if ((*aliaslist != NULL))
 	{
-		free((*aliaslist)[i]->name);
-		free((*aliaslist)[i]->value);
-		free((*aliaslist)[i]);
-		i++;
+		while ((*aliaslist)[i] != NULL)
+		{
+			free((*aliaslist)[i]->name);
+			free((*aliaslist)[i]->value);
+			free((*aliaslist)[i]);
+			i++;
+		}
+		free((*aliaslist));
+		(*aliaslist) = NULL;
 	}
-	free((*aliaslist));
-	(*aliaslist) = (t_alias**)malloc(sizeof(t_alias*) + 1);
-	(*aliaslist)[0] = NULL;
 }
 
 int		ft_unalias(t_process *c)

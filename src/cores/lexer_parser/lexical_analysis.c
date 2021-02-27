@@ -118,7 +118,7 @@ t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t
 			current_token->type = TOKEN_ASSIGNMENT_WORD;
 		if (!on_substition && current_token->type == TOKEN_WORD && is_alias(current_token->data, prev_token))
 		{
-			alias_substitution(&current_token, &prev_token, tk_lst);
+			alias_substitution(&current_token, &prev_token, &tk_lst);
 			if (current_token == NULL)
 				continue ;
 		}

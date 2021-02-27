@@ -48,7 +48,7 @@ int		add_alias(int count, char *alias, t_alias ***aliaslist)
 	j++;
 	new[j] = NULL;
 	sort_alias_list(new);
-	free((*aliaslist));
+	remove_all(aliaslist);
 	(*aliaslist) = new;
 	return (0);
 }
@@ -59,9 +59,7 @@ int		set_alias(char *alias, t_alias ***aliaslist)
 	char	*alias_name;
 
 	i = 0;
-	alias_name = set_name(alias);
-	if (is_valid_alias_name(alias_name, alias) != 0)
-		return (-1);
+	alias_name = NULL;
 	while ((*aliaslist)[i] != NULL)
 	{
 		if (ft_strcmp((*aliaslist)[i]->name,
@@ -103,6 +101,11 @@ int		ft_alias(t_process *c)
 
 	i = 1;
 	status = 0;
+	if (g_shell.alias == NULL)
+	{
+		g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
+		g_shell.alias[0] = NULL;
+	}
 	if (c->ac == 1)
 		print_all(g_shell.alias);
 	else
@@ -112,7 +115,11 @@ int		ft_alias(t_process *c)
 			if (ft_strcmp(c->av[i], "-p") == 0)
 				print_all(g_shell.alias);
 			else if (ft_strchr(c->av[i], '=') != NULL)
+			{
+				if (is_valid_alias_name(c->av[i]) != 0)
+					return (-1);
 				status = set_alias(c->av[i], &g_shell.alias);
+			}
 			else
 				print_alias(c->av[i]);
 			i++;

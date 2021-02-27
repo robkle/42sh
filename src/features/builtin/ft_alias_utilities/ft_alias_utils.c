@@ -22,22 +22,26 @@ int		is_valid_alias_char(int c)
 	return (1);
 }
 
-int		is_valid_alias_name(char *name, char *alias)
+int		is_valid_alias_name(char *alias)
 {
 	int i;
+	char *alias_name;
 
 	i = 0;
-	if ((ft_strcmp(name, "\0") == 0) || name == NULL)
+	alias_name = set_name(alias);
+	if ((ft_strcmp(alias_name, "\0") == 0) || alias_name == NULL)
 	{
 		ft_printf("42sh: alias: %s: not found\n", alias);
+		free(alias_name);
 		return (-1);
 	}
-	while (name[i] != '\0')
+	while (alias_name[i] != '\0')
 	{
-		if (is_valid_alias_char(name[i]) != 1)
+		if (is_valid_alias_char(alias_name[i]) != 1)
 			return (-1);
 		i++;
 	}
+	free(alias_name);
 	return (0);
 }
 
