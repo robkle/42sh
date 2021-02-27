@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/22 23:10:19 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/27 22:58:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t
 	int			i;
 
 	i = 0;
-	prev_token = (t_token*)malloc(sizeof(t_token));
+	// prev_token = (t_token*)malloc(sizeof(t_token));
 	prev_token = NULL;
 	while (cmd[i])
 	{
