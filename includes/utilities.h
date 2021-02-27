@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:53:12 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/02/27 15:24:59 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	ft_lstdel_strdel(t_list **alst);
 char			*ft_llitoa(long long n);
 long long		ft_atolli(const char *str);
 int	is_number_str(char *str);
+char	*ft_strrev(char *str);
 
 #endif

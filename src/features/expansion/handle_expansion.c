@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 06:04:39 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/27 09:13:07 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/27 20:23:08 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int parameter_expansion(t_process *p)
 {
 	if (parameter_expansion_in_redi(p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	return (parameter_expansion_in_av(p));
+	if (parameter_expansion_in_av(p) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (parameter_expansion_in_assignment(p));
 }
 
 int handle_expansion(t_process *p)

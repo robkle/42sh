@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 13:52:13 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/24 22:30:50 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/27 19:14:38 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char *remove_quoting(char *str, int *i)
 	return (ft_strdup(buffer));
 }
 
-static char *remove_quote(char *str)
+char *remove_quote(char *str)
 {
 	int i;
 	char *new;
@@ -65,7 +65,7 @@ static char *remove_quote(char *str)
 	return (new);
 }
 
-static int is_quoted(char *str)
+int is_quoted(char *str)
 {
 	int i;
 

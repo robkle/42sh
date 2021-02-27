@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:34:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/27 11:59:50 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/27 20:44:27 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int							simple_parameter_expansion(
 	}
 	else if (parameter[0] == '#')
 	{
-		temp = ft_itoa(ft_strlen(&parameter[1]));
+		temp = (ft_getvar(&parameter[1])) ? ft_itoa(ft_strlen(ft_getvar(&parameter[1])->value)) : ft_strdup("0");
 		ft_strcpy(replacement, temp);
 		free(temp);
 	}
@@ -79,9 +79,9 @@ int							complex_parameter_expansion(
 		return (parameter_expansion_colon_plus_case(word, replacement, type));
 	else if (ft_strequ(delimeter, "%") || ft_strequ(delimeter, "%%"))
 		return (parameter_expansion_percent_case(parameter, word, replacement,
-		type));
+		type, delimeter));
 	else if (ft_strequ(delimeter, "#") || ft_strequ(delimeter, "##"))
-		return (parameter_expansion_h(parameter, word, replacement, type));
+		return (parameter_expansion_h(parameter, word, replacement, type, delimeter));
 	return (EXIT_SUCCESS);
 }
 
