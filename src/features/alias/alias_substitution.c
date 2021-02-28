@@ -110,13 +110,13 @@ int token_stream_length(t_token *lst)
 	return (ct);
 }
 
-t_token *find_current_token_in_new_stream(t_token **tk_lst)
+t_token *find_current_token_in_new_stream(t_token *tk_lst)
 {
 	t_token *current_tk;
 	t_token *temp;
 
-	temp = (*tk_lst);
-	if ((*tk_lst) == NULL)
+	temp = tk_lst;
+	if (tk_lst == NULL)
 		return (NULL);
 	while (temp)
 	{
@@ -126,13 +126,13 @@ t_token *find_current_token_in_new_stream(t_token **tk_lst)
 	return (current_tk);
 }
 
-t_token *find_prev_token_in_new_stream(t_token **tk_lst)
+t_token *find_prev_token_in_new_stream(t_token *tk_lst)
 {
 	t_token *prev_tk;
 	t_token *temp;
 
-	temp = (*tk_lst);
-	if ((*tk_lst) == NULL || (*tk_lst)->next == NULL)
+	temp = tk_lst;
+	if (tk_lst == NULL || tk_lst->next == NULL)
 		return (NULL);
 	while (temp->next)
 	{
@@ -142,18 +142,21 @@ t_token *find_prev_token_in_new_stream(t_token **tk_lst)
 	return (prev_tk);
 }
 
-void	alias_substitution(t_token **current_token, t_token **prev_token, t_token ***tk_lst)
-{
+void	alias_substitution(t_token **current_token, t_token **prev_token, t_token **tk_lst)
+{	
+
 	t_token *new_stream;
 
 	new_stream = NULL;
-	lexical_analysis_and_syntax_analysis(find_alias_str((*current_token)->data), &new_stream, LEX_CMD, 1);
+	lexical_analysis_and_syntax_analysis(find_alias_str((*current_token)->data),
+	&new_stream, LEX_CMD);
+	
 	if (new_stream != NULL)
 	{
-		add_token_into_token_list((*tk_lst), new_stream);
+		add_token_into_token_list(tk_lst, new_stream);
 		if (token_stream_length(new_stream) > 1)
 		{
-			clear_token((*current_token));			
+			clear_token((*current_token));
 			(*current_token) = find_current_token_in_new_stream((*tk_lst));
 			(*prev_token) = find_prev_token_in_new_stream((*tk_lst));
 		}
@@ -161,11 +164,11 @@ void	alias_substitution(t_token **current_token, t_token **prev_token, t_token *
 		{
 			clear_token((*current_token));
 			(*current_token) = find_current_token_in_new_stream((*tk_lst));
-		}
+		}		
 	}
 	else
 	{
 		clear_token((*current_token));
 		*current_token = NULL;
-	}
+	}		
 }

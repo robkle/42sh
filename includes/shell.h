@@ -65,6 +65,7 @@ typedef struct			s_shell
 	t_heredoc			*heredoc_lst;
 	t_history			*history;
 	t_alias				**alias;
+	char				*current_alias;
 	unsigned int		exit_status;
 	t_hash				*hashtable[MAX_HASH];
 	t_builtin			*builtins;
@@ -77,7 +78,7 @@ t_shell     g_shell;
 **	Lexer
 */
 
-t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value, int on_substition);
+t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value);
 int get_user_token(t_token **tk_lst);
 char *get_command(t_lex_value lex_value);
 

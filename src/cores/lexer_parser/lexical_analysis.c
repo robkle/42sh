@@ -87,14 +87,13 @@ t_lex_value lex_continue_or_not(t_token *pre_token, t_lex_value lex_value)
 	return (LEX_SUCCESS);
 }
 
-t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value, int on_substition)
+t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value)
 {
-	t_token		*current_token;
+t_token		*current_token;
 	t_token		*prev_token;
 	int			i;
 
 	i = 0;
-	prev_token = (t_token*)malloc(sizeof(t_token));
 	prev_token = NULL;
 	while (cmd[i])
 	{
@@ -116,9 +115,12 @@ t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t
 			current_token = get_non_operator_token(cmd, &i);
 		if (current_token->type == TOKEN_WORD && is_assignment_token(current_token->data, prev_token))
 			current_token->type = TOKEN_ASSIGNMENT_WORD;
-		if (!on_substition && current_token->type == TOKEN_WORD && is_alias(current_token->data, prev_token))
+		if (current_token->type == TOKEN_WORD && is_alias(current_token->data, prev_token) == 1 &&
+		ft_strcmp(g_shell.current_alias, current_token->data) != 0)
 		{
-			alias_substitution(&current_token, &prev_token, &tk_lst);
+			free(g_shell.current_alias);
+			g_shell.current_alias = ft_strdup(current_token->data);
+			alias_substitution(&current_token, &prev_token, tk_lst);
 			if (current_token == NULL)
 				continue ;
 		}

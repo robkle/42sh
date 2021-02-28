@@ -98,7 +98,7 @@ int		ft_fg_child();
 int		ft_alias(t_process *c);
 int		ft_unalias(t_process *c);
 int		is_alias(char *str, t_token *prev_token);
-void	alias_substitution(t_token **current_token, t_token **prev_token, t_token ***tk_lst);
+void	alias_substitution(t_token **current_token, t_token **prev_token, t_token **tk_lst);
 char	*find_alias_str(char *str);
 void	remove_all(t_alias ***aliaslist);
 /*
