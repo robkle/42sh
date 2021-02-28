@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:32:25 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/27 18:28:47 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/28 14:03:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		parameter_expansion_syntax_analysis_parameter(char parameter[256])
 		return (EXIT_FAILURE);
 	if (ft_strequ(parameter, "?"))
 		return (EXIT_SUCCESS);
-	if(parameter[0] != '#' && !ft_isalpha(parameter[0]) && parameter[0] != '_')
+	if (parameter[0] != '#' && !ft_isalpha(parameter[0]) && parameter[0] != '_')
 		return (EXIT_FAILURE);
 	i = 0;
 	while (parameter[++i])
@@ -29,7 +29,8 @@ int		parameter_expansion_syntax_analysis_parameter(char parameter[256])
 	return (EXIT_SUCCESS);
 }
 
-int		parameter_expansion_syntax_analysis_delimeter(char parameter[256], char delimeter[3])
+int		parameter_expansion_syntax_analysis_delimeter(
+	char parameter[256], char delimeter[3])
 {
 	if (parameter[0] == '#' && ft_strlen(delimeter) != 0)
 		return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:24:07 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/27 20:25:02 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/28 14:02:56 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	parameter_expansion_in_redi(t_process *p)
 	return (EXIT_SUCCESS);
 }
 
-int parameter_expansion_in_assignment(t_process *p)
+int	parameter_expansion_in_assignment(t_process *p)
 {
 	t_assignment *ptr;
 

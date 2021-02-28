@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 19:22:41 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/27 19:14:23 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/28 13:30:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int	jump_quote(char *input, int *i, char quote_type);
 
 int is_quoted(char *str);
 char *remove_quote(char *str);
+char *remove_quote2(char *str);
 
 #endif

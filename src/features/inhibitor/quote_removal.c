@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 13:52:13 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/27 19:14:38 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/28 13:30:30 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,19 @@ char *remove_quote(char *str)
 	}
 	free(str);
 	return (new);
+}
+
+char *remove_quote2(char str[256])
+{
+	int i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if ((str[i] == '\'' ||  str[i] == '"' || str[i] == '\\') && is_real_character(str, i))
+			ft_strcpy(&str[i], &str[i + 1]);			
+	}
+	return (str);
 }
 
 int is_quoted(char *str)

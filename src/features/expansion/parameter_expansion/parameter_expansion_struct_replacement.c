@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:34:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/27 20:44:27 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/28 14:02:08 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int							simple_parameter_expansion(
 	char	*temp;
 	t_var	*var;
 
-	temp = NULL;
-	var = NULL;
 	if (ft_strequ("?", parameter))
 	{
 		temp = ft_itoa(g_shell.exit_status);
@@ -28,7 +26,8 @@ int							simple_parameter_expansion(
 	}
 	else if (parameter[0] == '#')
 	{
-		temp = (ft_getvar(&parameter[1])) ? ft_itoa(ft_strlen(ft_getvar(&parameter[1])->value)) : ft_strdup("0");
+		temp = (ft_getvar(&parameter[1])) ?
+		ft_itoa(ft_strlen(ft_getvar(&parameter[1])->value)) : ft_strdup("0");
 		ft_strcpy(replacement, temp);
 		free(temp);
 	}
@@ -60,28 +59,25 @@ t_parameter_expansion_type	find_parameter_replacement_type(
 }
 
 int							complex_parameter_expansion(
-	char replacement[256], char parameter[256], char delimeter[3],
-	char word[256])
+	t_parameter_expansion *self)
 {
 	t_parameter_expansion_type type;
 
-	type = find_parameter_replacement_type(parameter);
-	if (ft_strequ(delimeter, ":-"))
-		return (parameter_expansion_colon_minus_case(parameter, word,
-		replacement, type));
-	else if (ft_strequ(delimeter, ":="))
-		return (parameter_expansion_colon_equal_case(parameter, word,
-		replacement, type));
-	else if (ft_strequ(delimeter, ":?"))
-		return (parameter_expansion_colon_question_case(parameter, word,
-		replacement, type));
-	else if (ft_strequ(delimeter, ":+"))
-		return (parameter_expansion_colon_plus_case(word, replacement, type));
-	else if (ft_strequ(delimeter, "%") || ft_strequ(delimeter, "%%"))
-		return (parameter_expansion_percent_case(parameter, word, replacement,
-		type, delimeter));
-	else if (ft_strequ(delimeter, "#") || ft_strequ(delimeter, "##"))
-		return (parameter_expansion_h(parameter, word, replacement, type, delimeter));
+	type = find_parameter_replacement_type(self->parameter);
+	if (ft_strequ(self->delimeter, ":-"))
+		return (parameter_expansion_colon_minus_case(self, type));
+	else if (ft_strequ(self->delimeter, ":="))
+		return (parameter_expansion_colon_equal_case(self, type));
+	else if (ft_strequ(self->delimeter, ":?"))
+		return (parameter_expansion_colon_question_case(self, type));
+	else if (ft_strequ(self->delimeter, ":+"))
+		return (parameter_expansion_colon_plus_case(self, type));
+	else if (ft_strequ(self->delimeter, "%") ||
+			ft_strequ(self->delimeter, "%%"))
+		return (parameter_expansion_percent_case(self, type));
+	else if (ft_strequ(self->delimeter, "#") ||
+			ft_strequ(self->delimeter, "##"))
+		return (parameter_expansion_h(self, type));
 	return (EXIT_SUCCESS);
 }
 
@@ -90,6 +86,5 @@ int							parameter_expansion_struct_replacement(
 {
 	if (ft_strlen(self->delimeter) == 0)
 		return (simple_parameter_expansion(replacement, self->parameter));
-	return (complex_parameter_expansion(replacement, self->parameter,
-			self->delimeter, self->word));
+	return (complex_parameter_expansion(self));
 }
