@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:44:09 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/15 11:52:06 by marvin           ###   ########.fr       */
+/*   Updated: 2021/02/25 18:00:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,14 @@ t_st		*ft_infix_checker(t_st *infix)
 			infix->type = ft_strdup("clbr");
 		else if (ft_operator_str(infix->op))
 			infix->type = ft_strdup("operator");
-		else if (infix->op[0] == ' ' || infix->op[0] == '\t')
+		else if (infix->op[0] == ' ' || infix->op[0] == '\t' || \
+		infix->op[0] == '"')
 			infix->type = ft_strdup("space");
 		else
 			infix->type = ft_strdup("invop");
 		infix = infix->next;
 	}
+	ft_infix_format(&begin);
 	ft_operand(&begin);
 	ft_plusminus(&begin);
 	return (ft_error_scan(begin));

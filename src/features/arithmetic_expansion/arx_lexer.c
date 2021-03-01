@@ -1,0 +1,132 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arx_lexer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/25 08:36:54 by rklein            #+#    #+#             */
+/*   Updated: 2021/02/26 20:39:08 by rklein           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "shell.h"
+
+int	ft_arx_final_result(char **arx_token, long long int *res)
+{
+	int		i;
+	int		len;
+	char	*cmb;
+	
+	i = 0;
+	len = 0;
+	while (arx_token[i])
+	{
+		len += ft_strlen(arx_token[i]);
+		i++;
+	}
+	cmb = ft_memalloc(sizeof(char) * (len + 1));
+	i = 0;
+	while (arx_token[i])
+	{
+		ft_strcat(cmb, arx_token[i]);
+		i++;
+	}
+	*res = ft_atolli(cmb);
+	free(cmb);
+	ft_arraydel(arx_token);
+	return (1);
+}
+
+int	ft_arx_token_exp(char **arx_token, long long int *res)
+{
+	int				i;
+	long long int	t_res;
+	char			*tmp;
+	
+	i = -1;
+	while (arx_token[++i])
+	{
+		if (!(ft_expand_arx(ft_strdup(arx_token[i]), &t_res)))
+		{
+			ft_arraydel(arx_token);
+			return (0);
+		}
+		else
+		{
+			tmp = arx_token[i];
+			arx_token[i] = ft_llitoa(t_res);
+			free(tmp);
+		}		
+	}
+	return (ft_arx_final_result(arx_token, res));
+}
+
+int		ft_bracket_check(char *exp, int	qc)
+{
+	char	stack[1024];
+	int		q;
+	int		i;
+
+	ft_bzero(stack, 1024);
+	i = 0;
+	q = 0;
+	while (*exp)
+	{
+		if (*exp == 34)
+			q = q ? 0 : 1;
+		if ((*exp == '(' && !qc) || (*exp == '(' && (qc && !q)))
+			stack[i++] = *exp;
+		else if ((*exp == ')' && !qc) || (*exp == ')' && (qc && !q)))
+		{
+			if (i > 0 && stack[i - 1] == '(')
+				stack[--i] = '\0';
+			else
+				return (-1);
+		}
+		exp++;
+	}
+	if (stack[0])
+		return (0);
+	return (1);
+}
+
+char	**ft_expsplit(char *arx)
+{
+	char	**arx_token;
+	char	*exp;
+	char	*tmp;
+	int		i;
+	
+	arx_token =	ft_strsplit(arx, '$');
+	i = -1;
+	while (arx_token[++i])
+	{
+		exp = ft_strjoin("$", arx_token[i]);
+		tmp = arx_token[i];
+		arx_token[i] = exp;
+		free(tmp);
+	}
+	free(arx);
+	return (arx_token);
+}
+
+void	ft_arx_token_move(char **arx_token, int i)
+{
+	char	*tmp;
+
+	while (arx_token[++i])
+	{
+		if (arx_token[i + 1])
+		{
+			tmp = arx_token[i];
+			arx_token[i] = ft_strdup(arx_token[i + 1]);
+			free(tmp);
+		}
+		else
+		{
+			free(arx_token[i]);
+			arx_token[i] = NULL;
+		}
+	}
+}
