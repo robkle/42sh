@@ -319,6 +319,7 @@ UTILITY_FILE += ft_atolli.c
 UTILITY_FILE += ft_llitoa.c
 UTILITY_FILE += is_number_str.c
 UTILITY_FILE += ft_strrev.c
+UTILITY_FILE += ft_findchr.c
 UTILITY := $(addprefix $(UTILITY_DIR)/,$(UTILITY_FILE))
 
 ############################ SUM-UP SOURCE FILES ##############################
