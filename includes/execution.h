@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/02/15 20:29:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/25 06:11:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define UNAVAILABLE_STATUS 0
 # define COMPLETED_JOB 1
 # define SUSPENDED_JOB 2
+
+void	sig_int_handler(int sig); // test
 
 /*
 ** ========================== EXECUTION FUNCTIONS =============================
@@ -38,11 +40,13 @@ void	execute_simple_command(t_astnode *ast, t_job *job);
 void	execute_cmd_name(t_astnode *ast, t_job *j, t_process *p);
 void	execute_cmd_suffix(t_astnode *ast, t_job *j, t_process *p);
 void	execute_io_redirect(t_astnode *ast, t_job *j, t_process *p);
-void	execute_cmd_prefix(t_astnode *ast); // tmp
-void	execute_assignment_word(t_astnode *ast);
+void	execute_cmd_prefix(t_astnode *ast, t_job *j, t_process *p); // tmp
+void	execute_assignment_word(t_astnode *ast, t_process *p);
 
 int	find_heredoc(t_astnode *ast);
 void	clear_heredoc(t_heredoc *heredoc);
+
+int is_io_redirect_parts(t_astnode *ast); // move later
 
 /*
 ** build command for and or background process

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 01:52:52 by tango             #+#    #+#             */
-/*   Updated: 2021/01/28 03:03:31 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/25 06:13:50 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	duplicating_file_descriptor(t_redi *redi)
 	int			old_fd;
 	struct stat	statbuf;
 
-	if (fstat(ft_atoi(redi->word), &statbuf) == -1)
+	if (fstat(ft_atoi(redi->word), &statbuf) == -1 || ft_atoi(redi->word) > 2)
 	{
 		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42sh", redi->word);
 		return (EXIT_FAILURE);

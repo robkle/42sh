@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:24:07 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/27 09:30:45 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/27 20:25:02 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,22 @@ int	parameter_expansion_in_redi(t_process *p)
 				EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		redi_ptr = redi_ptr->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
+int parameter_expansion_in_assignment(t_process *p)
+{
+	t_assignment *ptr;
+
+	ptr = p->first_assignment;
+	while (ptr)
+	{
+		if (is_parameter_expansion(ptr->data))
+			if (parameter_expansion_replace_redi(&ptr->data) ==
+				EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		ptr = ptr->next;
 	}
 	return (EXIT_SUCCESS);
 }

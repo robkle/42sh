@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:05:46 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/27 12:03:00 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/27 20:44:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ int	parameter_expansion_colon_plus_case(
 	char word[256], char replacement[256], t_parameter_expansion_type type)
 {
 	if (type == PE_SET_AND_NOT_NULL)
-		substitute_parameter(word, replacement);
+		substitute_word(word, replacement);
 	return (EXIT_SUCCESS);
 }

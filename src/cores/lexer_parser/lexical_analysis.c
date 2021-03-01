@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 23:39:38 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/27 22:58:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int			syntax_analysis(t_token *curr, t_token *prev)
 		g_shell.exit_status = 258;
 		return (EXIT_FAILURE);
 	}
-	if (!prev && is_redirect_op(curr->type))
-	{
-		ft_dprintf(2, "%s: Unsupported cmd_prefix\n", "42sh"); // need to change value
-		g_shell.exit_status = 258;
-		return (EXIT_FAILURE);
-	}
+	// if (!prev && is_redirect_op(curr->type))
+	// {
+	// 	ft_dprintf(2, "%s: Unsupported cmd_prefix\n", "42sh"); // need to change value
+	// 	g_shell.exit_status = 258;
+	// 	return (EXIT_FAILURE);
+	// }
 	if (control_ops_issue(curr, prev) || \
 		redirect_ops_issue(curr, prev))
 	{
@@ -94,6 +94,7 @@ t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t
 	int			i;
 
 	i = 0;
+	// prev_token = (t_token*)malloc(sizeof(t_token));
 	prev_token = NULL;
 	while (cmd[i])
 	{

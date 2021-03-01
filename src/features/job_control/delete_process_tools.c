@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 17:27:01 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/15 18:00:05 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/25 06:08:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,24 @@ void	delete_redi(t_process *p)
 	}
 }
 
+void	delete_assignment_word_list(t_process *p)
+{
+	t_assignment *p_assignment;
+	t_assignment *temp;
+
+	if (p->first_assignment == NULL)
+		return ;
+	p_assignment = p->first_assignment;
+	while (p_assignment)
+	{
+		temp = p_assignment;
+		p_assignment = p_assignment->next;
+		if (temp->data)
+			free(temp->data);
+		free(temp);
+	}
+}
+
 void	delete_process(t_job *j)
 {
 	t_process	*p_ptr;
@@ -48,6 +66,7 @@ void	delete_process(t_job *j)
 		temp_process = p_ptr;
 		p_ptr = p_ptr->next;
 		delete_redi(temp_process);
+		delete_assignment_word_list(temp_process);
 		i = -1;
 		while (temp_process->av[++i] && i < MAX_ARGV)
 			free(temp_process->av[i]);

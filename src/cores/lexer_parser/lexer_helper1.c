@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/24 22:31:44 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/26 16:27:58 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,17 @@ int is_assignment_token(char *str, t_token *prev_token)
 
 	if (prev_token && !is_control_op_not_newline(prev_token->type) && prev_token->type != TOKEN_ASSIGNMENT_WORD)
 		return (0);
-	i = -1;
-	if (str[0] == '=')
+	i = 0;
+	if (!ft_isalpha(str[i]) && str[i] != '_')
 		return (0);
 	while (str[++i])
 	{
-		if ((str[i] == '"' || str[i] == '\'') && is_real_character(str, i))
-			jump_quote(str, &i, str[i]);
-		else if (str[i] == '=')
-			return (1);
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+		{
+			if (str[i] == '=')
+				return (1);
+			return (0);
+		}
 	}
 	return (0);
 }

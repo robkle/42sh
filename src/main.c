@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/04 23:38:58 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/25 01:37:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int get_user_token(t_token **tk_lst)
 
 void reset_value(t_token **tk_lst, t_astnode **ast)
 {
-	(*tk_lst != NULL) ? clear_token(*tk_lst) : 0;
+	(*tk_lst != NULL) ? clear_token((*tk_lst)) : 0;
 	(*ast != NULL) ? clear_ast(*ast) : 0;
 	(g_shell.heredoc_lst != NULL) ? clear_heredoc(g_shell.heredoc_lst) : 0;
 	append_history();
@@ -183,7 +183,9 @@ static int		shell(void)
 			continue ;
 		g_shell.first_heredoc = g_shell.heredoc_lst;
 		printBinaryTree(ast);
+		signal(SIGINT, SIG_DFL);
 		executor(ast);
+		signal(SIGINT, sig_int_handler);
 	}
 	return (0);
 }

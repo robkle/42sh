@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 13:07:00 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/27 12:20:27 by dthan            ###   ########.fr       */
+/*   Updated: 2021/02/27 20:25:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int						handle_expansion(t_process *p);
 
 int						parameter_expansion_in_redi(t_process *p);
 int						parameter_expansion_in_av(t_process *p);
+int parameter_expansion_in_assignment(t_process *p);
 
 /*
 ** parameter expansion struct
@@ -64,13 +65,14 @@ int						parameter_expansion_colon_plus_case(
 	char word[256], char replacement[256], t_parameter_expansion_type type);
 int						parameter_expansion_percent_case(
 	char parameter[256], char word[256], char replacement[256],
-	t_parameter_expansion_type type);
+	t_parameter_expansion_type type, char delimeter[3]);
 int						parameter_expansion_h(
 	char parameter[256], char word[256], char replacement[256],
-	t_parameter_expansion_type type);
+	t_parameter_expansion_type type, char delimeter[3]);
 /*
 ** parameter expansion tools
 */
+int parameter_expansion_for_word(char word[256]);
 
 char					*parameter_expansion_tool_replace(
 	char *target, char *needle, char *replacement);
@@ -84,9 +86,9 @@ void					substitute_word(
 void					assign_word(
 	char parameter[256], char word[256]);
 void					remove_smallest_or_largest_suffix_pattern(
-	char parameter[256], char word[256], char replacement[256]);
+	char parameter[256], char word[256], char replacement[256], char delimeter[3]);
 void					remove_smallest_or_largest_prefix_pattern(
-	char parameter[256], char word[256], char replacement[256]);
+	char parameter[256], char word[256], char replacement[256], char delimeter[3]);
 
 
 /*

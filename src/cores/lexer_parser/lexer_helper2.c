@@ -34,11 +34,11 @@ void	clear_token(t_token *token)
 {
 	t_token *temp;
 
-	while (token)
+	while (token != NULL)
 	{
-		ft_strdel(&token->data);
-		temp = token;
+		temp = token;	
 		token = token->next;
+		free(temp->data);
 		free(temp);
 	}
 }
