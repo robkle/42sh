@@ -120,7 +120,7 @@ int ft_fc_get_user_token(t_token **tk_lst, char *first_str)
 	cmd = ft_strdup(first_str);
 	while ("user is editing")
 	{
-		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value);
+		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value, 0);
 		if (lex_value == LEX_FAILURE || ft_strequ(cmd, ENTER_KEY))
 			free(cmd);
 		else

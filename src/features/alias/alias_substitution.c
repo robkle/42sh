@@ -149,8 +149,7 @@ void	alias_substitution(t_token **current_token, t_token **prev_token, t_token *
 
 	new_stream = NULL;
 	lexical_analysis_and_syntax_analysis(find_alias_str((*current_token)->data),
-	&new_stream, LEX_CMD);
-	
+	&new_stream, LEX_CMD, 1);
 	if (new_stream != NULL)
 	{
 		add_token_into_token_list(tk_lst, new_stream);

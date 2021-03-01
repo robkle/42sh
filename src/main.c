@@ -131,7 +131,7 @@ int get_user_token(t_token **tk_lst)
 			ret = EXIT_FAILURE;
 			break ;
 		}
-		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value);
+		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value, 0);
 		if (lex_value == LEX_FAILURE || ft_strequ(cmd, ENTER_KEY))
 			free(cmd);
 		else
@@ -241,7 +241,6 @@ int				init_shell(char **envp)
 	** init alias
 	*/
 	g_shell.alias = NULL;
-	g_shell.current_alias = ft_strdup("te");
 	/*
 	** init hash
 	*/

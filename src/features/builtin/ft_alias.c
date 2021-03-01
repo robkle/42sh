@@ -123,7 +123,7 @@ int		ft_alias(t_process *c)
 	{
 		if (ft_strcmp(c->av[i], "-p") == 0)
 			print_all();
-		else if (ft_strchr(c->av[i], '=') != NULL)
+		else if (ft_findchr(c->av[i], '=') == 1)
 		{
 			if (is_valid_alias_name(c->av[i]) != 0)
 				return (EXIT_FAILURE);
