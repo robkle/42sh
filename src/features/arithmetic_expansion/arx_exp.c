@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:43:04 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/26 20:50:29 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/01 10:40:04 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	ft_calc_exp(char *exp, long long int *res)
 		ft_printf("42sh: syntax error in expression\n");
 		return (0);
 	}
-	
 	infix = NULL;
 	postfix = NULL;
 	if (!(infix = ft_extolst(&exp[1])))
@@ -50,7 +49,7 @@ static int	ft_expand_arx_whole(char *arx, long long int *res)
 	return (1);
 }
 
-int	ft_expand_arx(char *arx, long long int *res)
+int			ft_expand_arx(char *arx, long long int *res)
 {
 	int		i;
 	char	**exp;

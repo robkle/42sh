@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 20:28:05 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/26 20:35:07 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/01 10:34:19 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	ft_arx_lexer(char *arx, long long int *res)
 {
 	char	**arx_token;
 	char	*exp;
-	char 	*tmp;
+	char	*tmp;
 	int		i;
-	
+
 	arx_token = ft_expsplit(arx);
 	i = -1;
 	while (arx_token[++i])
@@ -36,7 +36,7 @@ int	ft_arx_lexer(char *arx, long long int *res)
 	return (ft_arx_token_exp(arx_token, res));
 }
 
-int			ft_arx(t_process *p)
+int	ft_arx(t_process *p)
 {
 	int					i;
 	int					len;

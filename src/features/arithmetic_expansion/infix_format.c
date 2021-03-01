@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 12:25:19 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/26 16:13:10 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/01 11:04:09 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	ft_link_merging(t_st *infix)
 	t_st	*tmp;
 	char	*merge;
 	char	*tstr;
-			
+
 	merge = ft_strjoin(infix->op, infix->next->op);
 	tstr = infix->op;
 	infix->op = merge;
@@ -44,7 +44,7 @@ static void	ft_link_merge(t_st **infix)
 			*infix = begin;
 		}
 		else
-			*infix = (*infix)->next;	
+			*infix = (*infix)->next;
 	}
 	*infix = begin;
 }
@@ -53,7 +53,7 @@ static void	ft_quote_strip(t_st **infix)
 {
 	t_st	*begin;
 	t_st	*tmp;
-	
+
 	begin = *infix;
 	while (*infix)
 	{
@@ -76,10 +76,10 @@ static void	ft_quote_strip(t_st **infix)
 	*infix = begin;
 }
 
-void	ft_infix_format(t_st **infix)
+void		ft_infix_format(t_st **infix)
 {
 	t_st	*begin;
-	
+
 	begin = *infix;
 	ft_quote_strip(&begin);
 	ft_link_merge(&begin);

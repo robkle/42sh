@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 12:36:51 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/26 20:51:07 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/01 11:06:50 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef enum	e_pr
 int				ft_arx(t_process *p);
 int				ft_arx_lexer(char *arx, long long int *res);
 
-
 /*
 ** arx_exp.c
 */
@@ -63,7 +62,6 @@ int				ft_arx_token_exp(char **arx_token, long long int *res);
 int				ft_bracket_check(char *exp, int	qc);
 char			**ft_expsplit(char *arx);
 void			ft_arx_token_move(char **arx_token, int i);
-
 
 /*
 ** atoi_base.c
@@ -100,7 +98,7 @@ t_st			*ft_extolst(char *exp);
 /*
 ** infix_format.c
 */
-void		ft_infix_format(t_st **infix);
+void			ft_infix_format(t_st **infix);
 
 /*
 ** intvar.c

@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:43:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/24 15:04:31 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/01 10:30:34 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static char	*ft_calc_free(t_st **stack, char *res)
 	return (res);
 }
 
-char	*ft_calc(t_st *postfix)
+char		*ft_calc(t_st *postfix)
 {
 	t_st		*stack;
 	long long	top;

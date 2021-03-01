@@ -6,18 +6,18 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 08:36:54 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/26 20:39:08 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/01 10:29:30 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	ft_arx_final_result(char **arx_token, long long int *res)
+int		ft_arx_final_result(char **arx_token, long long int *res)
 {
 	int		i;
 	int		len;
 	char	*cmb;
-	
+
 	i = 0;
 	len = 0;
 	while (arx_token[i])
@@ -38,12 +38,12 @@ int	ft_arx_final_result(char **arx_token, long long int *res)
 	return (1);
 }
 
-int	ft_arx_token_exp(char **arx_token, long long int *res)
+int		ft_arx_token_exp(char **arx_token, long long int *res)
 {
 	int				i;
 	long long int	t_res;
 	char			*tmp;
-	
+
 	i = -1;
 	while (arx_token[++i])
 	{
@@ -57,12 +57,12 @@ int	ft_arx_token_exp(char **arx_token, long long int *res)
 			tmp = arx_token[i];
 			arx_token[i] = ft_llitoa(t_res);
 			free(tmp);
-		}		
+		}
 	}
 	return (ft_arx_final_result(arx_token, res));
 }
 
-int		ft_bracket_check(char *exp, int	qc)
+int		ft_bracket_check(char *exp, int qc)
 {
 	char	stack[1024];
 	int		q;
@@ -97,8 +97,8 @@ char	**ft_expsplit(char *arx)
 	char	*exp;
 	char	*tmp;
 	int		i;
-	
-	arx_token =	ft_strsplit(arx, '$');
+
+	arx_token = ft_strsplit(arx, '$');
 	i = -1;
 	while (arx_token[++i])
 	{
