@@ -49,5 +49,6 @@ char			*ft_llitoa(long long n);
 long long		ft_atolli(const char *str);
 int	is_number_str(char *str);
 char	*ft_strrev(char *str);
+int		ft_findchr(char *str, int c);
 
 #endif

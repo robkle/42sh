@@ -53,6 +53,10 @@ int			ft_exit_internal(int opt)
 		delete_job(g_shell.first_job, 1);
 	}
 	/*
+	** delete aliastable
+	*/
+	remove_all(&g_shell.alias);
+	/*
 	** delete hashtable
 	*/
 	remove_hashentries();

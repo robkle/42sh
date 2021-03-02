@@ -65,7 +65,6 @@ typedef struct			s_shell
 	t_heredoc			*heredoc_lst;
 	t_history			*history;
 	t_alias				**alias;
-	char				*last_alias;
 	unsigned int		exit_status;
 	t_hash				*hashtable[MAX_HASH];
 	t_builtin			*builtins;

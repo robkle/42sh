@@ -23,12 +23,15 @@ static int	look_for_alias(char *arg, char **alias)
 	int i;
 
 	i = -1;
-	while (g_shell.alias[++i])
+	if (g_shell.alias != NULL)
 	{
-		if (ft_strequ(arg, g_shell.alias[i]->name))
+		while (g_shell.alias[++i])
 		{
-			*alias = g_shell.alias[i]->value;
-			return (EXIT_SUCCESS);
+			if (ft_strequ(arg, g_shell.alias[i]->name))
+			{
+				*alias = g_shell.alias[i]->value;
+				return (EXIT_SUCCESS);
+			}
 		}
 	}
 	return (EXIT_FAILURE);

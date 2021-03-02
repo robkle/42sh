@@ -240,9 +240,7 @@ int				init_shell(char **envp)
 	/*
 	** init alias
 	*/
-	g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
-	g_shell.alias[0] = NULL;
-	g_shell.last_alias = NULL;
+	g_shell.alias = NULL;
 	/*
 	** init hash
 	*/
