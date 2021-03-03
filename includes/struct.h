@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/02 10:28:14 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/03 11:35:49 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <termios.h>
 # include "libft.h"
 
+
+# define BUFF_LINE_EDITION 8
 /*
 ** ============================== CORE STRUCT =================================
 */
@@ -215,6 +217,7 @@ typedef enum
 
 typedef struct			s_l
 {
+	char				buf[BUFF_LINE_EDITION];
 	char				*line;
 	int					nb;
 	int					co;
