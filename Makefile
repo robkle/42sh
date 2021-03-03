@@ -122,6 +122,7 @@ LINE_EDITION_FILE += ctrl_l.c
 LINE_EDITION_FILE += ctrl_left_right.c
 LINE_EDITION_FILE += ctrl_up_down.c
 LINE_EDITION_FILE += ft_get_line.c
+LINE_EDITION_FILE += parse_key.c
 LINE_EDITION_FILE += home_end_key.c
 LINE_EDITION_FILE += left_right_bs_key.c
 LINE_EDITION_FILE += reverse_search.c
