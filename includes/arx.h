@@ -6,13 +6,14 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 12:36:51 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/19 12:53:00 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/01 11:06:50 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ARX_H
 # define ARX_H
 
+# define XBUF 8
 # define INVOP 1
 # define VTGFB 2
 # define OPEXP 3
@@ -46,6 +47,21 @@ typedef enum	e_pr
 ** arx.c
 */
 int				ft_arx(t_process *p);
+int				ft_arx_lexer(char *arx, long long int *res);
+
+/*
+** arx_exp.c
+*/
+int				ft_expand_arx(char *arx, long long int *res);
+
+/*
+** arx_lexer.c
+*/
+int				ft_arx_final_result(char **arx_token, long long int *res);
+int				ft_arx_token_exp(char **arx_token, long long int *res);
+int				ft_bracket_check(char *exp, int	qc);
+char			**ft_expsplit(char *arx);
+void			ft_arx_token_move(char **arx_token, int i);
 
 /*
 ** atoi_base.c
@@ -61,7 +77,7 @@ void			ft_base_calc(t_st *infix);
 /*
 ** calc.c
 */
-long long		ft_calc(t_st *postfix);
+char			*ft_calc(t_st *postfix);
 
 /*
 ** checker.c
@@ -78,6 +94,11 @@ void			ft_print_error(int error, t_st *infix, t_st *expr);
 */
 int				ft_operator(char c);
 t_st			*ft_extolst(char *exp);
+
+/*
+** infix_format.c
+*/
+void			ft_infix_format(t_st **infix);
 
 /*
 ** intvar.c
@@ -118,6 +139,19 @@ char			**ft_split_arx(char *arx, int index, int len);
 char			*ft_strcombine(char **exp, char *res);
 int				ft_arx_brackets(char *exp);
 void			ft_free_lst(t_st **lst);
+
+/*
+** utils_exp2.c
+*/
+int				ft_update_arx(char **arx, char **exp, int res);
+int				ft_arx_free_exp(char **exp, char *arx);
+int				ft_arx_free_exp_bracket(char *arx);
+
+/*
+** utils_format.c
+*/
+void			ft_free_link(t_st *link);
+void			ft_arx_skip_link(t_st *infix);
 
 /*
 ** utils_pm.c

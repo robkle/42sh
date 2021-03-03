@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/28 14:10:57 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/02 10:35:44 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static void	down_key(t_l *l, char *first)
 		g_shell.history->hst == g_shell.history->curr)
 		return ;
 	g_shell.history->hst++;
+	ft_strdel(&l->line);
 	if (g_shell.history->hst != g_shell.history->curr)
 		l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);
 	else

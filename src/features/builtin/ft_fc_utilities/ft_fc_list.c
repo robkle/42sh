@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 18:11:36 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/23 19:15:16 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/01 12:17:03 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	fc_print(int *r_ind, int ops)
 		while (r_ind[0] > r_ind[1])
 		{
 			if (!(ops & FC_N_OP))
-				ft_printf("%d", i++);
+				ft_printf("%d", i--);
 			ft_printf("\t%s\n", g_shell.history->hist[r_ind[0]-- - 1]);
 		}
 	if (!(ops & FC_N_OP))

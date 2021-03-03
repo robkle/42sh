@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/04 20:00:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/02 11:28:18 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int			ft_exit_internal(int opt)
 	append_history();
 	delete_save_history();
 	ft_arraydel(g_shell.history->hist);
+	free(g_shell.history->tmp);
 	free(g_shell.history);
 	/*
 	** delete enviroment
@@ -51,6 +52,10 @@ int			ft_exit_internal(int opt)
 		update_status();
 		delete_job(g_shell.first_job, 1);
 	}
+	/*
+	** delete aliastable
+	*/
+	remove_all(&g_shell.alias);
 	/*
 	** delete hashtable
 	*/

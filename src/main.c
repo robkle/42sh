@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/25 01:37:16 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/01 15:11:03 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,9 +240,7 @@ int				init_shell(char **envp)
 	/*
 	** init alias
 	*/
-	g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
-	g_shell.alias[0] = NULL;
-	g_shell.last_alias = NULL;
+	g_shell.alias = NULL;
 	/*
 	** init hash
 	*/

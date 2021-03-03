@@ -100,6 +100,7 @@ int		ft_unalias(t_process *c);
 int		is_alias(char *str, t_token *prev_token);
 void	alias_substitution(t_token **current_token, t_token **prev_token, t_token **tk_lst);
 char	*find_alias_str(char *str);
+void	remove_all(t_alias ***aliaslist);
 /*
 ** End Alias built-in
 */
@@ -151,6 +152,6 @@ void	destroy_arr(char **arr);
 void	ft_cd_pwd_check_builtin_opts(char **av, t_opt *opt);
 void    ft_cd_pwd_init_opt(t_opt *opt, const char *opt_set);
 char	is_root_dir(char *path);
-int		is_valid_alias_name(char *name, char *alias);
+int		is_valid_alias_name(char *alias);
 
 #endif

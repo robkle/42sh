@@ -122,6 +122,7 @@ LINE_EDITION_FILE += ctrl_l.c
 LINE_EDITION_FILE += ctrl_left_right.c
 LINE_EDITION_FILE += ctrl_up_down.c
 LINE_EDITION_FILE += ft_get_line.c
+LINE_EDITION_FILE += parse_key.c
 LINE_EDITION_FILE += home_end_key.c
 LINE_EDITION_FILE += left_right_bs_key.c
 LINE_EDITION_FILE += reverse_search.c
@@ -200,18 +201,23 @@ HISTORY_MANAGEMENT := $(addprefix $(HISTORY_MANAGEMENT_DIR)/,$(HISTORY_MANAGEMEN
 # Arithmetic Expansion
 ARITHMETIC_EXPANSION_DIR := $(FEATURES_DIR)/arithmetic_expansion
 ARITHMETIC_EXPANSION_FILE += arx.c
+ARITHMETIC_EXPANSION_FILE += arx_exp.c
+ARITHMETIC_EXPANSION_FILE += arx_lexer.c
 ARITHMETIC_EXPANSION_FILE += atoi_base.c
 ARITHMETIC_EXPANSION_FILE += base.c
 ARITHMETIC_EXPANSION_FILE += calc.c
 ARITHMETIC_EXPANSION_FILE += checker.c
 ARITHMETIC_EXPANSION_FILE += error.c
 ARITHMETIC_EXPANSION_FILE += extolst.c
+ARITHMETIC_EXPANSION_FILE += infix_format.c
 ARITHMETIC_EXPANSION_FILE += intvar.c
 ARITHMETIC_EXPANSION_FILE += operand.c
 ARITHMETIC_EXPANSION_FILE += plusminus.c
 ARITHMETIC_EXPANSION_FILE += postfix.c
 ARITHMETIC_EXPANSION_FILE += utils.c
 ARITHMETIC_EXPANSION_FILE += utils_exp.c
+ARITHMETIC_EXPANSION_FILE += utils_exp2.c
+ARITHMETIC_EXPANSION_FILE += utils_format.c
 ARITHMETIC_EXPANSION_FILE += utils_pm.c
 ARITHMETIC_EXPANSION := $(addprefix $(ARITHMETIC_EXPANSION_DIR)/,$(ARITHMETIC_EXPANSION_FILE))
 # Alias
@@ -317,6 +323,7 @@ UTILITY_FILE += ft_atolli.c
 UTILITY_FILE += ft_llitoa.c
 UTILITY_FILE += is_number_str.c
 UTILITY_FILE += ft_strrev.c
+UTILITY_FILE += ft_findchr.c
 UTILITY := $(addprefix $(UTILITY_DIR)/,$(UTILITY_FILE))
 
 ############################ SUM-UP SOURCE FILES ##############################
