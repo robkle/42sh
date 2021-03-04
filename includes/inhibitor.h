@@ -13,12 +13,12 @@
 #ifndef INHIBITOR_H
 # define INHIBITOR_H
 
-int is_quoting_phase(t_phase cur_phase);
-int is_real_character(char *str, int i);
-char *delete_line_feed_at_the_end_of_the_cmd_string(char *cmd);
-int	jump_quote(char *input, int *i, char quote_type);
+int		is_quoting_phase(t_phase cur_phase);
+int		is_real_character(char *str, int i);
+char	*delete_line_feed_at_the_end_of_the_cmd_string(char *cmd);
+int		jump_quote(char *input, int *i, char quote_type);
 
-int is_quoted(char *str);
-char *remove_quote(char *str);
+int		is_quoted(char *str);
+char	*remove_quote(char *str);
 
 #endif

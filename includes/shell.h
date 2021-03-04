@@ -58,8 +58,8 @@ typedef struct			s_shell
 	char				signal_indicator;
 	char				shell_terminal;
 	char				interactive_shell;
-    pid_t               shell_pgid;
-    struct termios      shell_tmode;
+	pid_t				shell_pgid;
+	struct termios		shell_tmode;
 	t_job				*first_job;
 	t_heredoc			*first_heredoc;
 	t_heredoc			*heredoc_lst;
@@ -68,27 +68,28 @@ typedef struct			s_shell
 	unsigned int		exit_status;
 	t_hash				*hashtable[MAX_HASH];
 	t_builtin			*builtins;
-}                       t_shell;
+}						t_shell;
 
-t_shell     g_shell;
-
+t_shell					g_shell;
 
 /*
 **	Lexer
 */
 
-t_lex_value lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value, int on_substition);
-int get_user_token(t_token **tk_lst);
-char *get_command(t_lex_value lex_value);
+t_lex_value				lexical_analysis_and_syntax_analysis(char *cmd,
+						t_token **tk_lst, t_lex_value lex_value,
+						int on_substition);
+int						get_user_token(t_token **tk_lst);
+char					*get_command(t_lex_value lex_value);
 
-void print_prompt(t_prompt prompt_type);
-int prompt_len(t_prompt prompt_type);
+void					print_prompt(t_prompt prompt_type);
+int						prompt_len(t_prompt prompt_type);
 
 /*
 **	Parser
 */
 
-int			syntax_analysis(t_token *curr, t_token *prev);
+int						syntax_analysis(t_token *curr, t_token *prev);
 
 /*
 ** Semantic
@@ -108,8 +109,7 @@ size_t					get_prompt(void);
 
 void					executor(t_astnode *ast);
 
-
 // new
-void	print_info(void);
-t_prompt choose_prompt_type(t_lex_value lex, t_phase phase);
+void					print_info(void);
+t_prompt				choose_prompt_type(t_lex_value lex, t_phase phase);
 #endif

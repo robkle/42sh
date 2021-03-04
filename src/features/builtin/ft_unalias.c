@@ -36,7 +36,7 @@ int		find_alias(char *alias)
 	return (1);
 }
 
-int		count_arr()
+int		count_arr(void)
 {
 	int i;
 

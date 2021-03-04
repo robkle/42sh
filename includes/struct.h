@@ -16,8 +16,8 @@
 # include <termios.h>
 # include "libft.h"
 
-
 # define BUFF_LINE_EDITION 8
+
 /*
 ** ============================== CORE STRUCT =================================
 */
@@ -48,7 +48,7 @@ typedef enum
 	TOKEN_CLOBBER, // >|  // not support
 	TOKEN_EOF, //eof only
 	TOKEN_BROKEN, // a string with quote contain eof, and quote is not closed
-}	t_token_type;
+}						t_token_type;
 
 typedef struct			s_token
 {
@@ -75,7 +75,7 @@ typedef enum
 	AST_filename,
 	AST_WORD,
 	AST_ASSIGNMENT_WORD,
-}	t_astnode_type;
+}						t_astnode_type;
 
 typedef struct			s_astnode
 {
@@ -159,7 +159,7 @@ typedef enum
 	CLIP_SAVE = 0,
 	CLIP_TAKE,
 	CLIP_DELT
-}	t_clipping_options;
+}						t_clipping_options;
 
 typedef enum
 {
@@ -173,7 +173,7 @@ typedef enum
 	PROMPT_BACKSLASH,
 	PROMPT_CMDSUBST,
 	PROMPT_BRACEPARAM
-} t_prompt;
+}						t_prompt;
 
 typedef enum
 {
@@ -185,7 +185,7 @@ typedef enum
 	PHASE_BRACEPARAM,
 	PHASE_STOP,
 	PHASE_HEREDOC // temp
-}	t_phase;
+}						t_phase;
 
 typedef enum
 {
@@ -196,7 +196,7 @@ typedef enum
 	LEX_CMDOR,
 	LEX_PIPE,
 	LEX_HEREDOC,
-}	t_lex_value;
+}						t_lex_value;
 
 /*
 ** Line edition struct:
@@ -249,7 +249,7 @@ typedef enum
 	AUTO_ROLE_PRINT,
 	AUTO_ROLE_OPEN_LIST,
 	AUTO_ROLE_ERR
-}	t_auto_com_role;
+}						t_auto_com_role;
 
 typedef enum
 {
@@ -258,7 +258,7 @@ typedef enum
 	AUTO_STAT_DIR = (1 << 2),
 	AUTO_STAT_LIST = (1 << 3),
 	AUTO_STAT_OVER_TERM_SIZE = (1 << 4)
-}   t_auto_com_stat;
+}						t_auto_com_stat;
 
 /*
 ** struct auto
@@ -312,7 +312,7 @@ typedef struct			s_auto_grid
 **		int  size   : to keep track the growing max size
 */
 
-typedef struct	s_history
+typedef struct			s_history
 {
 	char		**hist;
 	char		*tmp;
@@ -320,7 +320,7 @@ typedef struct	s_history
 	int			curr;
 	int			hstsize;
 	char		savedfile[256];
-}				t_history;
+}						t_history;
 
 /*
 ** struct for options in builtin
@@ -329,7 +329,7 @@ typedef struct	s_history
 # define BUILTIN_NO_OPT (unsigned int) 0
 # define BUILTIN_INVALID_OPT (unsigned int) -1
 
-typedef struct		s_builtin_options
+typedef struct			s_builtin_options
 {
 	char			*opt_set;
 	char			set_len;
@@ -337,14 +337,14 @@ typedef struct		s_builtin_options
 	unsigned long	applied;
 	char			invalid_opt;
 	int				opt;
-}					t_opt;
+}						t_opt;
 
-typedef struct s_var
+typedef struct			s_var
 {
 	char *name;
 	char *value;
 	char exported;
-} t_var;
+}						t_var;
 
 /*
 ** export struct
@@ -359,7 +359,7 @@ typedef	struct			s_export
 	int				opt;
 	char			synopsis;
 	char			*av[4096];
-}					t_export;
+}						t_export;
 
 /*
 ** cd struct
@@ -371,16 +371,16 @@ typedef enum
 {
 	BUILTIN_CD_OPT_P = (1 << 0),
 	BUILTIN_CD_OPT_L = (1 << 1)
-}					t_cd_opts;
+}						t_cd_opts;
 
-typedef struct		s_cd
+typedef struct			s_cd
 {
 	char			*directory;
 	char			*curpath;
 	char			*prev_curpath;
 	char			print_info;
 	t_opt			opt;
-}					t_cd;
+}						t_cd;
 
 /*
 ** pwd struct
@@ -392,7 +392,7 @@ typedef enum
 {
     BUILTIN_PWD_OPT_P = BUILTIN_CD_OPT_P,
     BUILTIN_PWD_OPT_L = BUILTIN_CD_OPT_L
-}       t_pwd_opts;
+}						t_pwd_opts;
 
 /*
 ** Alias struct
@@ -424,7 +424,7 @@ typedef enum
 	PE_SET_AND_NOT_NULL,
 	PE_SET_BUT_NULL,
 	PE_UNSET
-}t_parameter_expansion_type;
+}						t_parameter_expansion_type;
 
 /*
 ** Hash struct

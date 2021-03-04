@@ -16,15 +16,15 @@
 # include "libft.h"
 # include <termios.h>
 
-typedef struct          s_shell
+typedef struct			s_shell
 {
-    pid_t               shell_pgid;
-    struct termios      shell_tmode;
-    t_list              *first_job;
+	pid_t				shell_pgid;
+	struct termios		shell_tmode;
+	t_list				*first_job;
 	int					previous_exitcode;
-    long                signal_indicator;
-    char                **env;
-    char                **var;
-}                       t_shell;
+	long				signal_indicator;
+	char				**env;
+	char				**var;
+}						t_shell;
 
 #endif
