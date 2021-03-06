@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 03:00:12 by tango             #+#    #+#             */
-/*   Updated: 2020/12/23 12:29:36 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/06 19:25:04 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	print_token(t_token *token)
 		ft_putchar('[');
 		ft_putstr(token->data);
 		ft_putstr("]->");
-		// ft_printf("%d", token->type);
 		token = token->next;
 	}
 	ft_putstr("NULL\n");
@@ -36,7 +35,7 @@ void	clear_token(t_token *token)
 
 	while (token != NULL)
 	{
-		temp = token;	
+		temp = token;
 		token = token->next;
 		free(temp->data);
 		free(temp);

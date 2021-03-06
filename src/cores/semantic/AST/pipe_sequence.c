@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:33:28 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/28 01:07:26 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/06 18:16:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ t_astnode		*pipe_sequence1(t_token **token)
 	}
 	operator = (*token)->data;
 	*token = (*token)->next;
+	if (*token && (*token)->type == TOKEN_NEWLINE)
+		linebreak(token);
 	if ((rnode = pipe_sequence(token)) == NULL)
 	{
 		clear_ast(lnode);

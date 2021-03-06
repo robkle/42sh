@@ -54,15 +54,21 @@ LIB				:= -L$(LIBFT_DIR)/ -lft -L$(FT_RPINTF_DIR)/ -lftprintf -ltermcap
 ############################ Create core files ################################
 #Lexer & Parser
 LEXER_PARSER_DIR := $(CORE_DIR)/lexer_parser
+LEXER_PARSER_FILE += tokenizing_service.c
 LEXER_PARSER_FILE += lexical_analysis.c
+LEXER_PARSER_FILE += syntax_analysis.c
 LEXER_PARSER_FILE += lexer_helper1.c
 LEXER_PARSER_FILE += lexer_helper2.c
 LEXER_PARSER_FILE += non_operator_token.c
 LEXER_PARSER_FILE += operator_token.c
+LEXER_PARSER_FILE += token_creator.c
+LEXER_PARSER_FILE += getting_user_input.c
+LEXER_PARSER_FILE += analyzing_phase.c
+LEXER_PARSER_FILE += analyzing_phase_helper.c
 LEXER_PARSER := $(addprefix $(LEXER_PARSER_DIR)/,$(LEXER_PARSER_FILE))
 #Parser
 SEMANTIC_DIR := $(CORE_DIR)/semantic
-SEMANTIC_FILE += syntax_analysis.c
+SEMANTIC_FILE += semantic_analysis.c
 SEMANTIC_FILE += AST/complete_command.c
 SEMANTIC_FILE += AST/list.c
 SEMANTIC_FILE += AST/and_or.c
@@ -82,6 +88,7 @@ SEMANTIC_FILE += AST/word.c
 SEMANTIC_FILE += AST/assignment_word.c
 SEMANTIC_FILE += AST/cmd_prefix.c
 SEMANTIC_FILE += AST/ast_tool.c
+SEMANTIC_FILE += AST/linebreak.c
 SEMANTIC := $(addprefix $(SEMANTIC_DIR)/,$(SEMANTIC_FILE))
 #Executor
 EXECUTOR_DIR := $(CORE_DIR)/executor

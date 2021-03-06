@@ -6,129 +6,61 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/27 22:58:19 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/06 19:15:46 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int	control_ops_issue(t_token *curr, t_token *prev)
+void	init_lexical_service_struct(t_lexical_service *self)
 {
-	if (!is_control_op_not_newline(curr->type))
-		return (0);
-	if (!prev)
-		return (1);
-	if (is_control_op_not_newline(prev->type))
-		return (1);
-	return (0);
+	self->i = 0;
+	self->stream = NULL;
+	self->tk = NULL;
+	self->prev_tk = NULL;
 }
 
-static int	redirect_ops_issue(t_token *curr, t_token *prev)
+int		alias_requirement(t_lexical_service self, int sub)
 {
-	if (!prev)
-		return (0);
-	if (is_redirect_op(prev->type) && \
-		(is_redirect_op(curr->type) || \
-		is_control_op_not_newline(curr->type) ||
-		curr->type == TOKEN_NEWLINE))
+	if (sub == 0 &&
+		self.tk->type == TOKEN_WORD &&
+		is_alias(self.tk->data, self.prev_tk))
 		return (1);
 	return (0);
 }
 
-int			syntax_analysis(t_token *curr, t_token *prev)
+t_token	*destroy_lexical_service_struct(t_lexical_service self)
 {
-	if (curr->type == TOKEN_EOF)
-	{
-		ft_dprintf(2, "%s: syntax error: unexpected end of file\n", SHELL_NAME);
-		g_shell.exit_status = 258;
-		return (EXIT_FAILURE);
-	}
-	if (curr->type == TOKEN_BROKEN)
-	{
-		ft_dprintf(2, "%s: unexpected EOF while looking for matching `%s'\n", SHELL_NAME, curr->data);
-		ft_dprintf(2, "%s: syntax error: unexpected end of file\n", SHELL_NAME);
-		g_shell.exit_status = 258;
-		return (EXIT_FAILURE);	
-	}
-	if (is_unsupported_tokens(curr->type))
-	{
-		ft_dprintf(2, "%s: Unsupported token `%s`\n", "42sh", curr->data); // need to change value
-		g_shell.exit_status = 258;
-		return (EXIT_FAILURE);
-	}
-	// if (!prev && is_redirect_op(curr->type))
-	// {
-	// 	ft_dprintf(2, "%s: Unsupported cmd_prefix\n", "42sh"); // need to change value
-	// 	g_shell.exit_status = 258;
-	// 	return (EXIT_FAILURE);
-	// }
-	if (control_ops_issue(curr, prev) || \
-		redirect_ops_issue(curr, prev))
-	{
-		ft_dprintf(2, "%s: syntax error near unexpected token `%s'\n", "42sh", curr->data);
-		g_shell.exit_status = 258;
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+	(self.tk) ? clear_token(self.tk) : 0;
+	(self.stream) ? clear_token(self.stream) : 0;
+	return (NULL);
 }
 
-t_lex_value lex_continue_or_not(t_token *pre_token, t_lex_value lex_value)
+t_token	*lexical_analysis_service(char *input, char *alias, int sub)
 {
-	if (!pre_token && lex_value == LEX_CMD)
-		return (LEX_SUCCESS);
-	if (!pre_token && lex_value != LEX_CMD)
-		return (lex_value);
-	if (pre_token->type == TOKEN_AND_IF)
-		return (LEX_CMDAND);
-	else if (pre_token->type == TOKEN_OR_IF)
-		return (LEX_CMDOR);
-	else if (pre_token->type == TOKEN_PIPE)
-		return (LEX_PIPE);
-	return (LEX_SUCCESS);
-}
+	t_lexical_service self;
 
-t_lex_value  lexical_analysis_and_syntax_analysis(char *cmd, t_token **tk_lst, t_lex_value lex_value, int on_substition)
-{
-	t_token		*current_token;
-	t_token		*prev_token;
-	int			i;
-
-	i = 0;
-	prev_token = NULL;
-	while (cmd[i])
+	init_lexical_service_struct(&self);
+	while (input[self.i])
 	{
-		if (cmd[i] == '\n')
+		if (input[self.i] == ' ' || input[self.i] == '\t')
 		{
-			current_token = non_operator_token(ft_strdup("newline"), TOKEN_NEWLINE);
-			i++;
+			self.i++;
+			continue;
 		}
-		else if (is_metacharacter(cmd[i]))
+		self.tk = token_creator_service(input, &(self.i), self.prev_tk);
+		if (alias_requirement(self, sub))
 		{
-			if (cmd[i] == ' ' || cmd[i] == '\t')
-			{
-				i++;
+			if (alias && ft_strequ(alias, find_alias_str(self.tk->data)))
+				return (destroy_lexical_service_struct(self));
+			alias_substitution(&(self.tk), &(self.prev_tk),
+				(alias == NULL) ? (self.tk)->data : alias);
+			if (self.tk == NULL)
 				continue;
-			}
-			current_token = get_operator_token(cmd, &i);
 		}
 		else
-			current_token = get_non_operator_token(cmd, &i);
-		if (current_token->type == TOKEN_WORD && is_assignment_token(current_token->data, prev_token))
-			current_token->type = TOKEN_ASSIGNMENT_WORD;
-		if (!on_substition && current_token->type == TOKEN_WORD && is_alias(current_token->data, prev_token))
-		{
-			alias_substitution(&current_token, &prev_token, tk_lst);
-			if (current_token == NULL)
-				continue ;
-		}
-		else if (current_token->type != TOKEN_NEWLINE)
-			add_token_into_token_list(tk_lst, current_token);
-		if (syntax_analysis(current_token, prev_token) == EXIT_FAILURE)
-			return (LEX_FAILURE);
-		if (current_token->type == TOKEN_NEWLINE)
-			clear_token(current_token);
-		else
-			prev_token = current_token;
+			self.prev_tk = self.tk;
+		add_token_into_token_list(&(self.stream), self.tk);
 	}
-	return (lex_continue_or_not(prev_token, lex_value));
+	return (self.stream);
 }

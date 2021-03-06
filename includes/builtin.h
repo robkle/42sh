@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 20:00:45 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/06 16:08:33 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ int		ft_fg_child();
 int		ft_alias(t_process *c);
 int		ft_unalias(t_process *c);
 int		is_alias(char *str, t_token *prev_token);
-void	alias_substitution(t_token **current_token, t_token **prev_token, t_token **tk_lst);
+// void	alias_substitution(t_token **current_token, t_token **prev_token, t_token **tk_lst);
+void	alias_substitution(t_token **cur_tk, t_token **prev_tk, char *prev_alias);
 char	*find_alias_str(char *str);
 void	remove_all(t_alias ***aliaslist);
 /*

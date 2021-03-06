@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/02/04 23:40:10 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/06 20:10:46 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,21 @@ void					executor(t_astnode *ast);
 // new
 void	print_info(void);
 t_prompt choose_prompt_type(t_lex_value lex, t_phase phase);
+
+
+// temp;
+t_token *tokenizing_service(void);
+t_token *lexical_analysis_service(char *input, char *alias, int sub);
+int syntax_analysis_service(t_token *token_stream);
+t_token *token_creator_service(char *input, int *i, t_token *prev_tk);
+t_token *find_prev_token_in_new_stream(t_token *tk_lst);
+t_token *find_current_token_in_new_stream(t_token *tk_lst);
+void init_token_service_struct(t_tokennizing_service *self);
+t_lex_value lexical_and_syntax_analysis(t_lex_value prev_lex_value, char *input, t_token **tk_lst);
+int is_inhibitors(char *input, int i, char ch);
+int is_expansion(char *input, int i, char ch);
+int is_open_curly_bracket_for_parameter_expansion(char *str, int i, t_phase phase[], int stack_pos);
+int is_open_parenthesis_for_arthimetic_expansion(char *str, int i, t_phase phase[], int stack_pos);
+void analyzing_phase(char *str, t_phase phase[], int *stack_pos);
+
 #endif

@@ -6,146 +6,16 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/01 15:11:03 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/06 20:20:48 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void analyzing_phase(char *str, t_phase phase[], int *stack_pos)
-{
-	int i = -1;
-	int len = ft_strlen(str) - 1; 
-
-	while (++i < len)
-	{
-		if (phase[*stack_pos] == PHASE_BACKSLASH)
-		{
-			phase[(*stack_pos)--] = 0;
-			continue;
-		}
-		if (str[i] == '"')
-		{
-			if (!is_quoting_phase(phase[(*stack_pos)]))
-				phase[++(*stack_pos)] = PHASE_DQUOTE;
-			else if (phase[*stack_pos] == PHASE_DQUOTE)
-				phase[(*stack_pos)--] = 0;
-		}
-		else if (str[i] == '\'')
-		{
-			if (!is_quoting_phase(phase[(*stack_pos)]))
-				phase[++(*stack_pos)] = PHASE_QUOTE;
-			else if (phase[*stack_pos] == PHASE_QUOTE)
-				phase[(*stack_pos)--] = 0;
-		}
-		else if (str[i] == '\\')
-		{
-			if (!is_quoting_phase(phase[(*stack_pos)]))
-				phase[++(*stack_pos)] = PHASE_BACKSLASH;
-		}
-		else if (str[i] == '{')
-		{
-			if ((phase[*stack_pos] == PHASE_CMD && i > 0 && str[i - 1] == '$' && is_real_character(str, i - 1)) ||
-				(phase[*stack_pos] == PHASE_BRACEPARAM && is_real_character(str, i)))
-				phase[++(*stack_pos)] = PHASE_BRACEPARAM;
-		}
-		else if (str[i] == '(')
-		{
-			if ((phase[*stack_pos] == PHASE_CMD && i > 0 && str[i - 1] == '$' && is_real_character(str, i - 1)) ||
-				(phase[*stack_pos] == PHASE_CMDSUBST && is_real_character(str, i)))
-				phase[++(*stack_pos)] = PHASE_CMDSUBST;
-		}
-		else if (str[i] == '}')
-		{
-			if (phase[*stack_pos] == PHASE_BRACEPARAM && is_real_character(str, i))
-				phase[(*stack_pos)--] = 0;
-		}
-		else if (str[i] == ')')
-		{
-			if (phase[*stack_pos] == PHASE_CMDSUBST && is_real_character(str, i))
-				phase[(*stack_pos)--] = 0;
-		}
-	}
-}
-
 /*
 ** function get_command
 **	@phase : the starting phase of the editing
 */
-
-char *get_command(t_lex_value lex_value)
-{
-	t_phase phase[20];
-	int i;
-	char *cmd;
-	char *line;
-	t_prompt prompt_type;
-
-	i = 0;
-	cmd = ft_strnew(0);
-	phase[i++] = PHASE_CMD;
-	ft_bzero(phase, 20);
-	prompt_type = choose_prompt_type(lex_value, 0);
-	while ("command editting")
-	{
-		if ((line = ft_get_line(&phase[i], prompt_type, lex_value)) == NULL)
-		{
-			free(cmd);
-			return (NULL);
-		}
-		if (phase[i] != PHASE_STOP)
-			analyzing_phase(line, phase, &i);
-		// history expansion
-		if (ft_hist_exp(&line, prompt_type))
-			ft_printf("%s", line);
-		cmd = ft_strjoin_and_free_2strings(cmd, line);
-		if (phase[i] == PHASE_CMD || phase[i] == PHASE_STOP)
-			break ;
-		// if phase = phase back slash delete the \n at the end
-		prompt_type = choose_prompt_type(0, phase[i]);
-		if (phase[i] == PHASE_BACKSLASH)
-		{
-			cmd = delete_line_feed_at_the_end_of_the_cmd_string(cmd);
-			phase[i] = PHASE_CMD;
-		}
-		if (phase[i] == PHASE_CMDSUBST || phase[i] == PHASE_BRACEPARAM) // debug
-			cmd = delete_line_feed_at_the_end_of_the_cmd_string(cmd);
-	}
-	return (cmd);
-}
-
-int get_user_token(t_token **tk_lst)
-{
-	char *whole_cmd;
-	char *cmd;
-	int ret;
-	t_lex_value lex_value;
-
-	whole_cmd = NULL;
-	ret = EXIT_SUCCESS;
-	lex_value = LEX_CMD;
-	while ("user is editing")
-	{
-		if ((cmd = get_command(lex_value)) == NULL)
-		{
-			ret = EXIT_FAILURE;
-			break ;
-		}
-		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value, 0);
-		if (lex_value == LEX_FAILURE || ft_strequ(cmd, ENTER_KEY))
-			free(cmd);
-		else
-			whole_cmd = ft_strjoin_and_free_2strings(whole_cmd, cmd);
-		if (lex_value == LEX_SUCCESS || lex_value == LEX_FAILURE)
-		{
-			ret = lex_value;
-			break ;
-		}
-	}
-	if (whole_cmd)
-		g_shell.history->tmp = whole_cmd;
-	return (ret);
-}
 
 void reset_value(t_token **tk_lst, t_astnode **ast)
 {
@@ -174,7 +44,7 @@ static int		shell(void)
 		reset_value(&tk_lst, &ast);
 		do_job_notification();
 		print_info();
-		if ((get_user_token(&tk_lst)) == EXIT_FAILURE)
+		if ((tk_lst = tokenizing_service()) == NULL)
 			continue ;
 		print_token(tk_lst);
 		if ((ast = semantic_analysis(tk_lst)) == NULL)

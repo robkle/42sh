@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/03 11:35:49 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/06 19:19:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -449,5 +449,30 @@ typedef struct			s_builtin
 	void				*func;
 	struct s_builtin	*next;
 }						t_builtin;
+
+
+// new
+typedef struct s_tokennizing_service // move later
+{
+	char *whole_cmd;
+	char *single_cmd;
+	int ret;
+	t_token *token_stream;
+	t_lex_value lex_value;
+}	t_tokennizing_service;
+
+typedef struct s_lexical_service
+{
+	int i;
+	t_token *stream;
+	t_token *tk;
+	t_token *prev_tk;
+}	t_lexical_service;
+
+typedef struct s_syntax_service
+{
+	t_token *cur_tk;
+	t_token *prev_tk;
+}	t_syntax_service;
 
 #endif

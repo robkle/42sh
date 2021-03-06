@@ -1,0 +1,30 @@
+Note for ft_getline
+
+Create a get_line_service which return a string of user input or NULL if sth wrong happend
+Create a read character service which return maybe a enum {FAILURE, SUCCESS, INTERUPTED}
+
+char *get_line_service(...)
+{
+	t_get_line_service *instance = malloc(...); // create instance (or using heap memory, it is up to u)
+	contructor_for_get_line_service(instance, ...); //init everything here
+	while (read_character_service(instance) == SUCCESS)
+		;
+	destruct the instance and return the collected line
+}
+
+t_read_character_service_value read_character_service(t_get_line_service *get_line_service, ... additional parameter if needed )
+{
+	char buf[BUF LINE EDITION];
+
+	read (STDIN, buf, ...);
+	if (SIGINT)
+		...
+	if (CTR-D and begining of the line)
+		...
+	if (CTR-D and not begining of the line)
+		...
+	if (ENTER key)
+		...
+	else normal key
+		...
+}

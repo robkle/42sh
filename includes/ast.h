@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:06:11 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/09 01:33:20 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/06 13:37:04 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ t_astnode	*filename(t_token **token);
 t_astnode	*io_here(t_token **token);
 t_astnode	*here_end(t_token **token);
 t_astnode	*newline_list(t_token **token);
-t_astnode	*linebreak(t_token **token);
+
+void	linebreak(t_token **token);
+
 t_astnode	*separator_op(t_token **token);
 t_astnode	*separotor(t_token **token);
 t_astnode	*sequential_sep(t_token **token);

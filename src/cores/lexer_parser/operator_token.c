@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:50:57 by dthan             #+#    #+#             */
-/*   Updated: 2020/10/27 05:35:05 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/06 19:25:33 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static t_token_type get_redirection_token_type(char *data)
+static t_token_type	get_redirection_token_type(char *data)
 {
 	if (ft_strequ(data, "<"))
 		return (TOKEN_LESS);
@@ -33,7 +33,7 @@ static t_token_type get_redirection_token_type(char *data)
 	return (TOKEN_CLOBBER);
 }
 
-static t_token_type get_token_type(char *data)
+static t_token_type	get_token_type(char *data)
 {
 	if (ft_strequ(data, ";"))
 		return (TOKEN_SEMI);
@@ -54,7 +54,7 @@ static t_token_type get_token_type(char *data)
 	return (get_redirection_token_type(data));
 }
 
-static t_token	*operator_token(char *data)
+static t_token		*operator_token(char *data)
 {
 	t_token *token;
 
@@ -65,10 +65,10 @@ static t_token	*operator_token(char *data)
 	return (token);
 }
 
-t_token	*get_operator_token(char *input, int *i)
+t_token				*get_operator_token(char *input, int *i)
 {
-	char token_recognizer[4];
-	int j;
+	char	token_recognizer[4];
+	int		j;
 
 	j = 0;
 	ft_bzero(token_recognizer, 4);
@@ -80,7 +80,7 @@ t_token	*get_operator_token(char *input, int *i)
 			if (!is_valid_operator_token(token_recognizer))
 			{
 				token_recognizer[j] = 0;
-				break;
+				break ;
 			}
 		}
 		j++;
