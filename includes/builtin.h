@@ -101,6 +101,7 @@ void			alias_substitution(t_token **current_token,
 				t_token **prev_token, t_token **tk_lst);
 char			*find_alias_str(char *str);
 void			remove_all(t_alias ***aliaslist);
+void			set_aliastable(void);
 /*
 ** End Alias built-in
 */
@@ -111,7 +112,7 @@ void			remove_all(t_alias ***aliaslist);
 int				ft_hash(t_process *c);
 void			add_hashentry(char *name, char *path, int hits);
 unsigned int	hash_index(char *name);
-void			remove_hashentries(void);
+int				remove_hashentries(void);
 t_hash			*create_hash_node(char *name, char *path, int hits);
 unsigned int	hash_index(char *name);
 /*

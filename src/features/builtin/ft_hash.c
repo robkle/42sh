@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-void	remove_hashentries(void)
+int		remove_hashentries(void)
 {
 	int		i;
 	t_hash	*tmp;
@@ -34,9 +34,10 @@ void	remove_hashentries(void)
 		}
 		i++;
 	}
+	return (EXIT_SUCCESS);
 }
 
-void	print_hashtable(void)
+int		print_hashtable(void)
 {
 	int		i;
 	int		found;
@@ -62,6 +63,7 @@ void	print_hashtable(void)
 	}
 	if (found == 0)
 		ft_printf("hash: hash table empty\n");
+	return (EXIT_SUCCESS);
 }
 
 int		exists_in_hashtable(char *name, char *path, int index)
@@ -118,26 +120,23 @@ int		ft_hash(t_process *c)
 
 	i = 0;
 	if (c->ac == 1)
-		print_hashtable();
+		return (print_hashtable());
 	else if (c->ac == 2 && ft_strcmp(c->av[1], "-r") == 0)
-		remove_hashentries();
+		return (remove_hashentries());
 	else if (c->ac != 2 && ft_strcmp(c->av[1], "-r") == 0)
 	{
 		ft_dprintf(2, "42sh: hash: invalid option\nhash usage: hash [-r]\n");
 		return (-1);
 	}
-	else
+	while (c->av[++i] != NULL)
 	{
-		while (c->av[++i] != NULL)
+		if ((path = find_executable(c->av[i])))
 		{
-			if ((path = find_executable(c->av[i])))
-			{
-				add_hashentry(c->av[i], path, 0);
-				free(path);
-			}
-			else
-				ft_printf("hash: %s: not found\n", c->av[i]);
+			add_hashentry(c->av[i], path, 0);
+			free(path);
 		}
+		else
+			ft_printf("hash: %s: not found\n", c->av[i]);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

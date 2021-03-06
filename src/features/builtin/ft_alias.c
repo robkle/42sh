@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-int		print_all()
+int		print_all(void)
 {
 	int i;
 
@@ -41,13 +41,13 @@ int		add_alias(int count, char *alias, t_alias ***aliaslist)
 		while ((*aliaslist)[j] != NULL)
 		{
 			if (!(new[j] = (t_alias*)malloc(sizeof(t_alias))))
-				return (-1);
+				return (EXIT_FAILURE);
 			new[j]->name = ft_strdup((*aliaslist)[j]->name);
 			new[j]->value = ft_strdup((*aliaslist)[j]->value);
 			j++;
 		}
 		if (!(new[j] = (t_alias*)malloc(sizeof(t_alias))))
-			return (-1);
+			return (EXIT_FAILURE);
 		new[j]->name = set_name(alias);
 		new[j]->value = set_value(alias);
 		new[++j] = NULL;
@@ -55,7 +55,7 @@ int		add_alias(int count, char *alias, t_alias ***aliaslist)
 		remove_all(aliaslist);
 		(*aliaslist) = new;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int		set_alias(char *alias, t_alias ***aliaslist)
@@ -75,7 +75,7 @@ int		set_alias(char *alias, t_alias ***aliaslist)
 				free(alias_name);
 				free((*aliaslist)[i]->value);
 				(*aliaslist)[i]->value = set_value(alias);
-				return (0);
+				return (EXIT_SUCCESS);
 			}
 			free(alias_name);
 			i++;
@@ -113,17 +113,14 @@ int		ft_alias(t_process *c)
 	i = 1;
 	status = 0;
 	if (g_shell.alias == NULL)
-	{
-		g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
-		g_shell.alias[0] = NULL;
-	}
+		set_aliastable();
 	if (c->ac == 1)
 		return (print_all());
 	while (c->av[i] != NULL)
 	{
 		if (ft_strcmp(c->av[i], "-p") == 0)
 			print_all();
-		else if (ft_findchr(c->av[i], '=') == 1)
+		else if (ft_strchr(c->av[i], '=') != NULL)
 		{
 			if (is_valid_alias_name(c->av[i]) != 0)
 				return (EXIT_FAILURE);

@@ -48,7 +48,7 @@ typedef enum
 	TOKEN_CLOBBER, // >|  // not support
 	TOKEN_EOF, //eof only
 	TOKEN_BROKEN, // a string with quote contain eof, and quote is not closed
-}						t_token_type;
+}	t_token_type;
 
 typedef struct			s_token
 {
@@ -75,7 +75,7 @@ typedef enum
 	AST_filename,
 	AST_WORD,
 	AST_ASSIGNMENT_WORD,
-}						t_astnode_type;
+}	t_astnode_type;
 
 typedef struct			s_astnode
 {
@@ -130,12 +130,12 @@ typedef struct			s_process
 	struct s_process	*next;
 }						t_process;
 
-typedef struct          s_job
+typedef struct			s_job
 {
-    char                *command;
-    pid_t               pgid;
-    char                notified;
-    struct termios      term;
+	char				*command;
+	pid_t				pgid;
+	char				notified;
+	struct termios		term;
 	t_process			*first_process;
 	int					stdin;
 	int					stdout;
@@ -145,10 +145,10 @@ typedef struct          s_job
 	int					id;
 	int					pipe_fd_closer[2];
 	struct s_job		*next;
-}                       t_job;
+}						t_job;
 
-typedef struct dirent   t_dirent;
-typedef struct stat     t_stat;
+typedef struct dirent	t_dirent;
+typedef struct stat		t_stat;
 
 /*
 ** Line Edit struct
@@ -159,7 +159,7 @@ typedef enum
 	CLIP_SAVE = 0,
 	CLIP_TAKE,
 	CLIP_DELT
-}						t_clipping_options;
+}	t_clipping_options;
 
 typedef enum
 {
@@ -173,7 +173,7 @@ typedef enum
 	PROMPT_BACKSLASH,
 	PROMPT_CMDSUBST,
 	PROMPT_BRACEPARAM
-}						t_prompt;
+}	t_prompt;
 
 typedef enum
 {
@@ -185,7 +185,7 @@ typedef enum
 	PHASE_BRACEPARAM,
 	PHASE_STOP,
 	PHASE_HEREDOC // temp
-}						t_phase;
+}	t_phase;
 
 typedef enum
 {
@@ -196,7 +196,7 @@ typedef enum
 	LEX_CMDOR,
 	LEX_PIPE,
 	LEX_HEREDOC,
-}						t_lex_value;
+}	t_lex_value;
 
 /*
 ** Line edition struct:
@@ -228,7 +228,7 @@ typedef struct			s_l
 	int					y;
 	t_prompt			promp_type;
 	char				phase;
-	// int					down; // sanitized 
+	// int					down; // sanitized
 	// int					eof_flag; // sanitized
 	char				*rev_sr;
 	int					rs;
@@ -249,7 +249,7 @@ typedef enum
 	AUTO_ROLE_PRINT,
 	AUTO_ROLE_OPEN_LIST,
 	AUTO_ROLE_ERR
-}						t_auto_com_role;
+}	t_auto_com_role;
 
 typedef enum
 {
@@ -258,7 +258,7 @@ typedef enum
 	AUTO_STAT_DIR = (1 << 2),
 	AUTO_STAT_LIST = (1 << 3),
 	AUTO_STAT_OVER_TERM_SIZE = (1 << 4)
-}						t_auto_com_stat;
+}	t_auto_com_stat;
 
 /*
 ** struct auto
@@ -268,23 +268,26 @@ typedef enum
 **	size_t			count_list				: number of item in list
 **	char			cwd[]					: current working dir
 **	char			full_path[]				:
-**	char			*typed_str				: str which will be diagnosed to specify the target for auto_completion
-**	char			*target_str				: the extracted str from typed_str in auto_completion context
-**	char			*path_env				: 
+**	char			*typed_str				: str which will be diagnosed to
+											specify the target for
+											auto_completion
+**	char			*target_str				: the extracted str from
+											typed_str in
+											auto_completion context
+**	char			*path_env				:
 **	long			status					:
 */
 
-
 typedef struct			s_auto
 {
-    t_list              *list;
+	t_list				*list;
 	size_t				largest_content_size;
 	void				*largest_content;
 	size_t				count_list;
 	char				cwd[PATH_MAX];
-    char                full_path[PATH_MAX];
+	char				full_path[PATH_MAX];
 	char				*typed_str;
-    char                *target_str;
+	char				*target_str;
 	char				*path_env;
 	long				status;
 	t_l					*editor;
@@ -296,11 +299,10 @@ typedef struct			s_auto_grid
 	size_t				term_col_len;
 	size_t				col_count;
 	size_t				file_count;
-	size_t			    start_row;
-	size_t			    end_row;
-	size_t			    filled_col_count;
+	size_t				start_row;
+	size_t				end_row;
+	size_t				filled_col_count;
 }						t_auto_grid;
-
 
 /*
 **  History struct
@@ -350,8 +352,8 @@ typedef struct			s_var
 ** export struct
 */
 
-#define BUILTIN_EXPORT_OPT_SET "p"
-#define EXPORT_OPT_P 1
+# define BUILTIN_EXPORT_OPT_SET "p"
+# define EXPORT_OPT_P 1
 
 typedef	struct			s_export
 {
@@ -371,7 +373,7 @@ typedef enum
 {
 	BUILTIN_CD_OPT_P = (1 << 0),
 	BUILTIN_CD_OPT_L = (1 << 1)
-}						t_cd_opts;
+}	t_cd_opts;
 
 typedef struct			s_cd
 {
@@ -390,9 +392,9 @@ typedef struct			s_cd
 
 typedef enum
 {
-    BUILTIN_PWD_OPT_P = BUILTIN_CD_OPT_P,
-    BUILTIN_PWD_OPT_L = BUILTIN_CD_OPT_L
-}						t_pwd_opts;
+	BUILTIN_PWD_OPT_P = BUILTIN_CD_OPT_P,
+	BUILTIN_PWD_OPT_L = BUILTIN_CD_OPT_L
+}	t_pwd_opts;
 
 /*
 ** Alias struct
@@ -424,7 +426,7 @@ typedef enum
 	PE_SET_AND_NOT_NULL,
 	PE_SET_BUT_NULL,
 	PE_UNSET
-}						t_parameter_expansion_type;
+}	t_parameter_expansion_type;
 
 /*
 ** Hash struct
@@ -432,9 +434,9 @@ typedef enum
 
 typedef struct			s_hash
 {
-	char *name;
-	char *path;
-	int hits;
+	char			*name;
+	char			*path;
+	int				hits;
 	struct s_hash	*next;
 	struct s_hash	*prev;
 }						t_hash;

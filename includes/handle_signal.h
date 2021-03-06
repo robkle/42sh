@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_INDICATOR_H
-# define SIGNAL_INDICATOR_H
+#ifndef HANDLE_SIGNAL_H
+# define HANDLE_SIGNAL_H
 # include "struct.h"
 
 void					sig_controller(int option);

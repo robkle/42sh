@@ -13,11 +13,11 @@
 #ifndef CONSTANT_H
 # define CONSTANT_H
 
-/*The constant will be added in this file for making maintaning easier
+/**The constant will be added in this file for making maintaning easier
 * @ [MAX_ARGV = 256], for inceasing the speed of the shell
 * @ [READ_END = 0] and [WRITE_END = 1], using in pipe
 * @ [PARENT = 1] and [CHILD 0] mean parent process and child process
-*/
+**/
 
 # include <limits.h>
 # define MAX_HASH 200

@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_findchr.c                                       :+:      :+:    :+:   */
+/*   ft_alias_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <vgrankul@student.hive.fi>           +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/28 16:15:55 by vgrankul          #+#    #+#             */
-/*   Updated: 2021/01/28 16:16:21 by vgrankul         ###   ########.fr       */
+/*   Created: 2020/04/15 23:35:55 by vgrankul          #+#    #+#             */
+/*   Updated: 2020/12/26 11:44:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		ft_findchr(char *str, int c)
+void	set_aliastable(void)
 {
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
+	g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
+	g_shell.alias[0] = NULL;
 }
