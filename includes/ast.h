@@ -84,6 +84,6 @@ void		clear_ast(t_astnode *ast);
 /*
 ** Debug tree
 */
-void printBinaryTree(t_astnode * t);
+void        printBinaryTree(t_astnode *t);
 
 #endif

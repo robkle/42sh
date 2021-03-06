@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/06 16:18:45 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 01:51:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define TOKEN_H
 # include "struct.h"
 
-t_token	*lexer_and_parser(char *input);
+t_token *lexer_and_parser(char *input);
 int		is_metacharacter(char chr);
 int		is_valid_operator_token(char *str);
 int		is_unsupported_tokens(t_token_type type);
@@ -28,7 +28,7 @@ void	print_token(t_token *token); //debug
 // t_token	*get_non_operator_token(char *input, int *i);
 t_token *non_operator_token(char *data, t_token_type type);
 t_token	*get_operator_token(char *input, int *i);
-int is_assignment_token(char *str, t_token *prev_token);
+int		is_assignment_token(char *str, t_token *prev_token);
 
 // new
 t_token *get_non_operator_token(char *input, int *i, t_token *prev_tk);

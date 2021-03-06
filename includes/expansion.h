@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 13:07:00 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/28 14:05:07 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 01:55:41 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 
 char					replace_hex_value(char *str);
 int						is_eight_bit_character_whose_value_is_hexadecimal_value(
-	char *str);
+						char *str);
 
 char					replace_octal_value(char *str);
 int						is_eight_bit_character_whose_value_is_octal_value(
-	char *str);
+						char *str);
 
 char					replace_ansi_c_quoting(char c);
 int						is_ansi_c_quoting(char *str);
@@ -56,17 +56,17 @@ int						parameter_expansion_struct_replacement(
 /*
 ** parameter expansion tools
 */
-int parameter_expansion_for_word(char word[256]);
+int						parameter_expansion_for_word(char word[256]);
 
 char					*parameter_expansion_tool_replace(
-	char *target, char *needle, char *replacement);
+						char *target, char *needle, char *replacement);
 int						jump_expansion(
-	char *str, int *i, char expansion_type, char temp[2]);
+						char *str, int *i, char expansion_type, char temp[2]);
 int						is_parameter_expansion(char *str);
 void					substitute_parameter(
-	char parameter[256], char replacement[256]);
+						char parameter[256], char replacement[256]);
 void					substitute_word(
-	char word[256], char replacement[256]);
+						char word[256], char replacement[256]);
 void					assign_word(
 	char parameter[256], char word[256]);
 int						parameter_expansion_for_word(char word[256]);

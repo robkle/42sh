@@ -177,6 +177,7 @@ BUILT_IN_FILE += ft_bg.c
 BUILT_IN_FILE += ft_alias.c
 BUILT_IN_FILE += ft_unalias.c
 BUILT_IN_FILE += ft_alias_utilities/ft_alias_utils.c
+BUILT_IN_FILE += ft_alias_utilities/ft_alias_utils2.c
 BUILT_IN_FILE += ft_set.c
 BUILT_IN_FILE += ft_unset.c
 BUILT_IN_FILE += ft_export.c
@@ -330,7 +331,6 @@ UTILITY_FILE += ft_atolli.c
 UTILITY_FILE += ft_llitoa.c
 UTILITY_FILE += is_number_str.c
 UTILITY_FILE += ft_strrev.c
-UTILITY_FILE += ft_findchr.c
 UTILITY := $(addprefix $(UTILITY_DIR)/,$(UTILITY_FILE))
 
 ############################ SUM-UP SOURCE FILES ##############################
