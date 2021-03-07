@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 07:38:19 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:57:25 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/07 19:02:04 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,11 @@ t_astnode		*list1(t_token **token)
 		return (NULL);
 	if (!*token ||
 		((*token)->type != TOKEN_APS && (*token)->type != TOKEN_SEMI))
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	operator = (*token)->data;
 	*token = (*token)->next;
 	if ((rnode = list(token)) == NULL)
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	node = build_node(AST_list);
 	node->left = lnode;
 	node->right = rnode;

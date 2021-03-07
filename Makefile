@@ -78,6 +78,7 @@ SEMANTIC_FILE += AST/pipeline.c
 SEMANTIC_FILE += AST/pipe_sequence.c
 SEMANTIC_FILE += AST/command.c
 SEMANTIC_FILE += AST/simple_command.c
+SEMANTIC_FILE += AST/simple_command2.c
 SEMANTIC_FILE += AST/cmd_name.c
 SEMANTIC_FILE += AST/cmd_suffix.c
 SEMANTIC_FILE += AST/io_redirect.c
