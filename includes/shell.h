@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/03/07 01:51:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 05:16:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ t_prompt 				choose_prompt_type(t_lex_value lex, t_phase phase);
 
 // temp;
 t_token *tokenizing_service(void);
-t_token *lexical_analysis_service(char *input, char *alias, int sub);
+// t_token *lexical_analysis_service(char *input, char *alias, int sub);
+t_token	*lexical_analysis_service(char *input, char *fix_alias_name, int sub);
 int syntax_analysis_service(t_token *token_stream);
 t_token *token_creator_service(char *input, int *i, t_token *prev_tk);
 t_token *find_prev_token_in_new_stream(t_token *tk_lst);
@@ -128,5 +129,8 @@ int is_expansion(char *input, int i, char ch);
 int is_open_curly_bracket_for_parameter_expansion(char *str, int i, t_phase phase[], int stack_pos);
 int is_open_parenthesis_for_arthimetic_expansion(char *str, int i, t_phase phase[], int stack_pos);
 void analyzing_phase(char *str, t_phase phase[], int *stack_pos);
+int		analyzing_pair_tokens(t_token *tk, t_token *prev_tk);
+int		is_near_unexpected_token(t_token *cur_tk, t_token *prev_tk);
+int	is_control_op(t_token_type type);
 
 #endif

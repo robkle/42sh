@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/06 19:19:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 03:32:52 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,6 @@ typedef enum
 
 typedef struct			s_l
 {
-	char				buf[BUFF_LINE_EDITION];
 	char				*line;
 	int					nb;
 	int					co;
@@ -476,5 +475,20 @@ typedef struct s_syntax_service
 	t_token *cur_tk;
 	t_token *prev_tk;
 }	t_syntax_service;
+
+typedef struct s_get_command_service
+{
+	t_phase phase[20];
+	int i;
+	char *cmd;
+	char *line;
+	t_prompt prompt_type;	
+}	t_get_command_service;
+
+typedef struct get_line_service
+{
+	t_l	line_edition;
+	char	buf[BUFF_LINE_EDITION];
+}	t_get_line_service;
 
 #endif

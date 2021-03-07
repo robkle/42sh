@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by vgrankul          #+#    #+#             */
-/*   Updated: 2021/03/06 16:12:02 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 05:15:31 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,31 +90,48 @@ t_token *find_prev_token_in_new_stream(t_token *tk_lst)
 	return (prev_tk);
 }
 
-void	alias_substitution(t_token **cur_tk, t_token **prev_tk, char *prev_alias)
+// find alias, so we can get it name and value and pass to lexical_analysis_service
+
+t_alias *find_alias2(char *str)
+{
+	int i;
+
+	i = 0;
+	while (g_shell.alias[i] != NULL)
+	{
+		if (ft_strequ(g_shell.alias[i]->name, str))
+			return (g_shell.alias[i]);
+		i++;
+	}
+	return (NULL);
+}
+
+void	alias_substitution(t_lexical_service *lex, char *fix_alias_name)
 {
 	t_token *new_stream;
-	char *alias;
+	t_alias *alias;
 
 	new_stream = NULL;
-	alias = find_alias_str((*cur_tk)->data);
-	new_stream = lexical_analysis_service(alias, (prev_alias) ? (prev_alias) : alias, (ft_strnequ((*cur_tk)->data, alias, ft_strlen((*cur_tk)->data))) ? 1 : 0);
+	alias = find_alias2(lex->tk->data);
+	new_stream = lexical_analysis_service(alias->value, fix_alias_name, (ft_strnequ(lex->tk->data , alias->value, ft_strlen(lex->tk->data))) ? 1 : 0);
 	if (new_stream != NULL)
 	{
 		if (token_stream_length(new_stream) > 1)
 		{
-			clear_token((*cur_tk));
-			(*cur_tk) = find_current_token_in_new_stream(new_stream);
-			(*prev_tk) = find_prev_token_in_new_stream(new_stream);
+			clear_token(lex->tk);
+			lex->tk = find_current_token_in_new_stream(new_stream);
+			lex->prev_tk = find_prev_token_in_new_stream(new_stream);
 		}
 		else
 		{
-			clear_token(*cur_tk);
-			*cur_tk = find_current_token_in_new_stream(new_stream);
+			clear_token(lex->tk);
+			lex->tk = find_current_token_in_new_stream(new_stream);
 		}
 	}
 	else
 	{
-		clear_token((*cur_tk));
-		*cur_tk = NULL;
+		clear_token(lex->tk);
+		lex->tk = NULL;
 	}
+	add_token_into_token_list(&(lex->stream), new_stream);
 }

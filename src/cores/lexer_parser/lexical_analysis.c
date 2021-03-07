@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/06 19:15:46 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 05:15:46 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int		alias_requirement(t_lexical_service self, int sub)
 	return (0);
 }
 
-t_token	*destroy_lexical_service_struct(t_lexical_service self)
+t_token	*alias_infinite_loop(t_lexical_service *self)
 {
-	(self.tk) ? clear_token(self.tk) : 0;
-	(self.stream) ? clear_token(self.stream) : 0;
-	return (NULL);
+	ft_dprintf(2, "%s: alias: infinite loop\n", SHELL_NAME);
+	add_token_into_token_list(&(self->stream), self->tk);
+	return (self->stream);
 }
 
-t_token	*lexical_analysis_service(char *input, char *alias, int sub)
+t_token	*lexical_analysis_service(char *input, char *fix_alias_name, int sub)
 {
 	t_lexical_service self;
 
@@ -51,12 +51,17 @@ t_token	*lexical_analysis_service(char *input, char *alias, int sub)
 		self.tk = token_creator_service(input, &(self.i), self.prev_tk);
 		if (alias_requirement(self, sub))
 		{
-			if (alias && ft_strequ(alias, find_alias_str(self.tk->data)))
-				return (destroy_lexical_service_struct(self));
-			alias_substitution(&(self.tk), &(self.prev_tk),
-				(alias == NULL) ? (self.tk)->data : alias);
-			if (self.tk == NULL)
+			if (fix_alias_name && ft_strequ(fix_alias_name, self.tk->data))
+			{
+				free(self.tk->data);
+				self.tk->data = ft_strdup(fix_alias_name);
+				self.prev_tk = self.tk;
+			}
+			else
+			{
+				alias_substitution(&self, (fix_alias_name == NULL) ? (self.tk)->data : fix_alias_name);
 				continue;
+			}
 		}
 		else
 			self.prev_tk = self.tk;

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 01:56:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 05:05:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,12 @@ int				ft_fg_child();
 /*
 ** Alias built-in
 */
-void	alias_substitution(t_token **cur_tk, t_token **prev_tk, char *prev_alias);
 
 int				ft_alias(t_process *c);
 int				ft_unalias(t_process *c);
 int				is_alias(char *str, t_token *prev_token);
-void			alias_substitution(t_token **cur_tk, t_token **prev_tk, char *prev_alias);
-
+// void			alias_substitution(t_token **cur_tk, t_token **prev_tk, char *prev_alias, t_token **tk_stream);
+void	alias_substitution(t_lexical_service *lex, char *fix_alias_name);
 // void			alias_substitution(t_token **current_token,
 				// t_token **prev_token, t_token **tk_lst);
 char			*find_alias_str(char *str);

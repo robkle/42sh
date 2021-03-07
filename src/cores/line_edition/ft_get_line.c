@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/03 11:45:34 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/07 03:32:40 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void		init_line_edition(t_l *line_edition, t_prompt prompt_type)
 	tgetent(NULL, ft_getenv("TERM"));
 	ft_bzero(line_edition, sizeof(t_l));
 	line_edition->line = ft_strnew(0);
-	ft_bzero(line_edition->buf, sizeof(line_edition->buf));
 	line_edition->nb = 0;
 	line_edition->co = tgetnum("co");
 	line_edition->total_row = tgetnum("li");
@@ -111,49 +110,76 @@ void		prepare_breaking_loop(
 	}
 }
 
-static void	ft_read_input(t_l *l, t_phase *phase, t_lex_value lex_value)
+void prepare_breaking_loop_due_to_signal(t_l *line_edition, int reverse_search_reset)
 {
-	while (read(STDIN_FILENO, l->buf, sizeof(l->buf)) != -1)
+	if (reverse_search_reset)
+	{
+		if (line_edition->rs)
+			ft_reverse_search_reset(line_edition);
+		
+	}
+	(line_edition->line) ? free(line_edition->line) : 0;
+	line_edition->line = NULL;
+}
+
+static void	ft_read_input(t_get_line_service *self, t_phase *phase, t_lex_value lex_value)
+{
+	while (read(STDIN_FILENO, self->buf, BUFF_LINE_EDITION) != -1)
 	{
 		if (g_shell.signal_indicator == SIGINT)
 		{
-			if (l->rs)
-				ft_reverse_search_reset(l);
-			ft_strdel(&l->line);
+			prepare_breaking_loop_due_to_signal(&(self->line_edition), 1);
 			break ;
 		}
-		if (l->rs && (ft_strequ(l->buf, ENTER_KEY) || \
-		ft_strequ(l->buf, CTRL_D_KEY)))
-			ft_reverse_search_reset(l);
-		if (ft_strequ(l->buf, ENTER_KEY) || \
-		(ft_strequ(l->buf, CTRL_D_KEY) && l->nb == 0))
+		if (self->line_edition.rs && (ft_strequ(self->buf, ENTER_KEY) || \
+		ft_strequ(self->buf, CTRL_D_KEY)))
+			ft_reverse_search_reset(&(self->line_edition));
+		if (ft_strequ(self->buf, ENTER_KEY) || \
+		(ft_strequ(self->buf, CTRL_D_KEY) && self->line_edition.nb == 0))
 		{
-			prepare_breaking_loop(l->buf, l, phase, lex_value);
+			prepare_breaking_loop(self->buf, &(self->line_edition), phase, lex_value);
 			break ;
 		}
-		else if (parse_key(l->buf, l) == EXIT_FAILURE)
+		else if (parse_key(self->buf, &(self->line_edition)) == EXIT_FAILURE)
 		{
-			ft_strdel(&l->line);
+			prepare_breaking_loop_due_to_signal(&(self->line_edition), 0);
 			break ;
 		}
-		ft_bzero(l->buf, sizeof(l->buf));
+		ft_bzero(self->buf, BUFF_LINE_EDITION);
 	}
 }
 
-char		*ft_get_line(
+// char		*ft_get_line(
+// 	t_phase *phase, t_prompt prompt_type, t_lex_value lex_value)
+// {
+// 	t_l		line_edition;
+
+// 	print_prompt(prompt_type);
+// 	init_term();
+// 	init_line_edition(&line_edition, prompt_type);
+// 	ft_read_input(&line_edition, phase, lex_value);
+// 	restore_term(&line_edition);
+// 	return (line_edition.line);
+// }
+
+void init_get_line_service(t_get_line_service *self, t_prompt prompt_type)
+{
+	print_prompt(prompt_type);
+	ft_bzero(self->buf, BUFF_LINE_EDITION);
+	init_term();
+	init_line_edition(&(self->line_edition), prompt_type);
+}
+
+char	*ft_get_line(
 	t_phase *phase, t_prompt prompt_type, t_lex_value lex_value)
 {
-	t_l		*line_edition;
-	char	*ret;
+	t_get_line_service instance;
 
 	print_prompt(prompt_type);
+	ft_bzero(instance.buf, BUFF_LINE_EDITION);
 	init_term();
-	line_edition = malloc(sizeof(t_l));
-	init_line_edition(line_edition, prompt_type);
-	ft_read_input(line_edition, phase, lex_value);
-	restore_term(line_edition);
-	ret = ft_strdup(line_edition->line);
-	free(line_edition->line);
-	free(line_edition);
-	return (ret);
+	init_line_edition(&(instance.line_edition), prompt_type);
+	ft_read_input(&instance, phase, lex_value);
+	restore_term(&(instance.line_edition));
+	return (instance.line_edition.line);
 }
