@@ -108,6 +108,7 @@ EXECUTOR_FILE += execute_ast/execute_and_or_bg/build_cm_string.c
 EXECUTOR_FILE += execute_ast/execute_and_or_bg/build_cm_string2.c
 EXECUTOR_FILE += execute_ast/execute_pipeline.c
 EXECUTOR_FILE += execute_ast/execute_pipe_sequence.c
+EXECUTOR_FILE += execute_ast/execute_pipe_sequence_helper.c
 EXECUTOR_FILE += execute_ast/execute_command.c
 EXECUTOR_FILE += execute_ast/execute_simple_command.c
 EXECUTOR_FILE += execute_ast/execute_cmd_name.c

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/02/25 06:11:54 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 16:22:51 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void		execute_and_or(t_astnode *ast, int foreground,
 			int forked, int noticed);
 void		execute_and_or_bg(t_astnode *ast);
 int			execute_pipeline(t_astnode *ast, t_job *job);
+void		execute_pipe_sequence_helper(
+	int pipefd[2], int saved[2], t_astnode *ast, t_job *j);
 void		execute_pipe_sequence(t_astnode *ast, t_job *job);
 void		execute_command(t_astnode *ast, t_job *job);
 void		execute_simple_command(t_astnode *ast, t_job *job);

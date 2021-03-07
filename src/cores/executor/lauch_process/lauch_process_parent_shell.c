@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/26 16:47:43 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 16:32:00 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,28 @@ static int	lauch_process_which_can_change_shell(t_process *p)
 	return (lauch_process_which_can_change_shell2(p));
 }
 
-int lauch_assignment_words(t_assignment *list)
+static int	lauch_assignment_words(t_assignment *list)
 {
-	t_var *intern_var;
-	t_var *ptr_var;
-	t_assignment *ptr;
+	t_var			*intern_var;
+	t_var			*ptr_var;
+	t_assignment	*ptr;
 
 	ptr = list;
 	while (ptr)
 	{
 		intern_var = (t_var*)ft_memalloc(sizeof(t_var));
-		intern_var->name = ft_strndup(ptr->data, ft_strchr(ptr->data, '=') - &ptr->data[0]);
+		intern_var->name =
+			ft_strndup(ptr->data, ft_strchr(ptr->data, '=') - &ptr->data[0]);
 		intern_var->value = ft_strdup(ft_strchr(ptr->data, '=') + 1);
 		if (ft_getenv(intern_var->name) || ft_strequ(intern_var->name, "PATH"))
 			intern_var->exported = 1;
-		else if ((ptr_var = ft_getvar(intern_var->name)) != NULL && ptr_var->exported == 1)
+		else if ((ptr_var = ft_getvar(intern_var->name)) != NULL &&
+			ptr_var->exported == 1)
 			intern_var->exported = 1;
 		else
 			intern_var->exported = 0;
-		(is_intern_var(intern_var->name)) ? update_intern_var(intern_var) : add_intern_var(intern_var);
+		(is_intern_var(intern_var->name)) ? update_intern_var(intern_var) :
+			add_intern_var(intern_var);
 		ptr = ptr->next;
 	}
 	return (EXIT_SUCCESS);

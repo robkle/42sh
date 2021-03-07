@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/22 23:55:32 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 16:10:51 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@ t_process	*execute_simple_command1(t_astnode *ast, t_job *j)
 
 	p = create_process(j);
 	execute_cmd_prefix(ast, j, p);
-	// if (p->first_redi == NULL)
-	// {
-	// 	free(p->av);
-	// 	free(p);
-	// 	p = NULL;
-	// }
 	return (p);
 }
 
@@ -49,7 +43,7 @@ t_process	*execute_simple_command3(t_astnode *ast, t_job *j)
 	return (p);
 }
 
-int	is_io_redirect_parts(t_astnode *ast)
+int			is_io_redirect_parts(t_astnode *ast)
 {
 	if (ast == NULL)
 		return (0);
