@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:30:42 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/06 18:16:46 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 18:59:28 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,13 @@ t_astnode	*and_or1(t_token **token)
 		return (NULL);
 	if (!*token || \
 		((*token)->type != TOKEN_AND_IF && (*token)->type != TOKEN_OR_IF))
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	operator = (*token)->data;
 	*token = (*token)->next;
 	if (*token && (*token)->type == TOKEN_NEWLINE)
 		linebreak(token);
 	if ((rnode = and_or(token)) == NULL)
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	node = build_node(AST_and_or);
 	node->left = lnode;
 	node->right = rnode;

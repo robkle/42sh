@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:49:46 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:57:43 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/07 19:05:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@
 **                | cmd_name						2
 */
 
-t_astnode		*simple_command5(t_token **token)
-{
-	return (cmd_prefix(token));
-}
-
 t_astnode		*simple_command4(t_token **token)
 {
 	t_astnode *node;
@@ -34,10 +29,7 @@ t_astnode		*simple_command4(t_token **token)
 	if ((lnode = cmd_prefix(token)) == NULL)
 		return (NULL);
 	if ((mnode = cmd_name(token)) == NULL)
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	node = build_node(AST_simple_command);
 	node->left = lnode;
 	node->middle = mnode;
@@ -59,15 +51,11 @@ t_astnode		*simple_command3(t_token **token)
 	if ((lnode = cmd_prefix(token)) == NULL)
 		return (NULL);
 	if ((mnode = cmd_name(token)) == NULL)
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	if ((rnode = cmd_suffix(token)) == NULL)
 	{
 		clear_ast(lnode);
-		clear_ast(mnode);
-		return (NULL);
+		return (clear_ast(mnode));
 	}
 	node = build_node(AST_simple_command);
 	node->left = lnode;
@@ -90,10 +78,7 @@ t_astnode		*simple_command1(t_token **token)
 	if ((mnode = cmd_name(token)) == NULL)
 		return (NULL);
 	if ((rnode = cmd_suffix(token)) == NULL)
-	{
-		clear_ast(mnode);
-		return (NULL);
-	}
+		return (clear_ast(mnode));
 	node = build_node(AST_simple_command);
 	node->middle = mnode;
 	node->right = rnode;

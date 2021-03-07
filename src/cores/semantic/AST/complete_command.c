@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   complete_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 11:17:31 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:56:54 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/07 19:01:05 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ t_astnode	*complete_command1(t_token **token)
 		return (NULL);
 	if (!*token ||
 		((*token)->type != TOKEN_APS && (*token)->type != TOKEN_SEMI))
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	operator = (*token)->data;
 	*token = (*token)->next;
 	node = build_node(AST_complete_command);

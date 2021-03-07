@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 07:29:09 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/27 23:01:24 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 19:04:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,7 @@ t_astnode	*build_node(t_astnode_type type)
 	return (node);
 }
 
-void		ft_delast(t_astnode *node)
-{
-	ft_strdel(&(node->data));
-	free(node);
-}
-
-void		clear_ast(t_astnode *ast)
+t_astnode	*clear_ast(t_astnode *ast)
 {
 	if (ast->left)
 		clear_ast(ast->left);
@@ -39,5 +33,7 @@ void		clear_ast(t_astnode *ast)
 		clear_ast(ast->middle);
 	if (ast->right)
 		clear_ast(ast->right);
-	ft_delast(ast);
+	(ast->data) ? free(ast->data) : 0;
+	free(ast);
+	return (NULL);
 }

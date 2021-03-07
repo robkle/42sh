@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/07 16:22:51 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 19:05:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		execute_pipe_sequence_helper(
 void		execute_pipe_sequence(t_astnode *ast, t_job *job);
 void		execute_command(t_astnode *ast, t_job *job);
 void		execute_simple_command(t_astnode *ast, t_job *job);
+t_astnode	*simple_command5(t_token **token);
 void		execute_cmd_name(t_astnode *ast, t_job *j, t_process *p);
 void		execute_cmd_suffix(t_astnode *ast, t_job *j, t_process *p);
 void		execute_io_redirect(t_astnode *ast, t_job *j, t_process *p);

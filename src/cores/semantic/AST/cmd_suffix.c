@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:02:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/26 19:36:07 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 19:00:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ t_astnode		*cmd_suffix1(t_token **token)
 	if ((lnode = io_redirect(token)) == NULL)
 		return (NULL);
 	if ((rnode = cmd_suffix(token)) == NULL)
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	node = build_node(AST_cmd_suffix);
 	node->left = lnode;
 	node->right = rnode;
@@ -52,10 +49,7 @@ t_astnode		*cmd_suffix3(t_token **token)
 	if ((lnode = word(token)) == NULL)
 		return (NULL);
 	if ((rnode = cmd_suffix(token)) == NULL)
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	node = build_node(AST_cmd_suffix);
 	node->left = lnode;
 	node->right = rnode;

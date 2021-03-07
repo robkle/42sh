@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:33:28 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/06 18:16:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/07 19:02:27 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,13 @@ t_astnode		*pipe_sequence1(t_token **token)
 	if ((lnode = command(token)) == NULL)
 		return (NULL);
 	if (!*token || (*token)->type != TOKEN_PIPE)
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	operator = (*token)->data;
 	*token = (*token)->next;
 	if (*token && (*token)->type == TOKEN_NEWLINE)
 		linebreak(token);
 	if ((rnode = pipe_sequence(token)) == NULL)
-	{
-		clear_ast(lnode);
-		return (NULL);
-	}
+		return (clear_ast(lnode));
 	node = build_node(AST_pipe_sequence);
 	node->data = ft_strdup(operator);
 	node->left = lnode;

@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linebreak.c                                        :+:      :+:    :+:   */
+/*   simple_command2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/06 13:30:31 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 19:04:21 by dthan            ###   ########.fr       */
+/*   Created: 2021/03/07 19:05:16 by dthan             #+#    #+#             */
+/*   Updated: 2021/03/07 19:05:32 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	linebreak(t_token **token)
+t_astnode		*simple_command5(t_token **token)
 {
-	(*token) = (*token)->next;
-	if (*token != NULL && (*token)->type == TOKEN_NEWLINE)
-		linebreak(token);
+	return (cmd_prefix(token));
 }
