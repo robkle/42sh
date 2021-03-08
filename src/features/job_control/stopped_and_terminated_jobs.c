@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/15 18:07:49 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/08 21:58:23 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	mark_process_status_signal(t_process *p, int status)
 		g_shell.exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_shell.exit_status = 128 + WTERMSIG(status);
+	// add printing signal here
 }
 
 int		mark_process_status_helper(

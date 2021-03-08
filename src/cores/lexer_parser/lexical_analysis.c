@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 05:51:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/08 21:49:43 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_lexical_service_struct(t_lexical_service *self)
 	self->stream = NULL;
 	self->tk = NULL;
 	self->prev_tk = NULL;
+	self->keep_alias_substitution = 0;
 }
 
 int		alias_requirement(t_lexical_service self, int sub)

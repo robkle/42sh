@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 02:39:04 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 17:09:56 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/08 21:56:31 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_near_unexpected_token(t_token *cur_tk, t_token *prev_tk)
 {
 	if (prev_tk == NULL)
 	{
-		if (is_control_op(cur_tk->type))
+		if (is_control_op_not_newline(cur_tk->type))
 			return (EXIT_FAILURE);
 	}
 	else
