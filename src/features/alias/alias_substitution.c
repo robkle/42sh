@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by vgrankul          #+#    #+#             */
-/*   Updated: 2021/03/09 07:59:50 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/09 20:23:59 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_alias *find_alias2(char *str)
 	return (NULL);
 }
 
-void	alias_substitution(t_lexical_service *lex, char *fix_alias_name)
+t_token	*alias_substitution(t_lexical_service *lex, char *fix_alias_name)
 {
 	t_token *new_stream;
 	t_alias *alias;
@@ -114,29 +114,15 @@ void	alias_substitution(t_lexical_service *lex, char *fix_alias_name)
 	new_stream = NULL;
 	alias = find_alias2(lex->tk->data);
 	new_stream = lexical_analysis_service(alias->value, fix_alias_name, (ft_strnequ(lex->tk->data , alias->value, ft_strlen(lex->tk->data))) ? 1 : 0);
-	if (new_stream != NULL)
-	{
-		if (token_stream_length(new_stream) > 1)
-		{
-			clear_token(lex->tk);
-			lex->tk = find_current_token_in_new_stream(new_stream);
-			lex->prev_tk = find_prev_token_in_new_stream(new_stream);
-		}
-		else
-		{
-			clear_token(lex->tk);
-			lex->tk = find_current_token_in_new_stream(new_stream);
-		}
-	}
-	else
+	if (new_stream == NULL)
 	{
 		clear_token(lex->tk);
-		lex->tk = NULL;
+		return (NULL);
 	}
-	// add_token_into_token_list(&(lex->stream), new_stream);
 	if (alias->value[ft_strlen(alias->value) - 1] == ' ' ||
 		alias->value[ft_strlen(alias->value) - 1] == '\t')
 		lex->keep_alias_substitution = 1;
 	else
 		lex->keep_alias_substitution = 0;
+	return (new_stream);
 }

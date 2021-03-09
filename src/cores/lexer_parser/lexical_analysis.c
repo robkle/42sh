@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/08 23:11:04 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/09 20:30:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ int		alias_requirement(t_lexical_service self, int sub)
 	return (0);
 }
 
-void	alias_infinite_loop(t_lexical_service *self, char *fix_alias_name)
+t_token	*alias_infinite_loop(t_lexical_service *self, char *fix_alias_name)
 {
 	free(self->tk->data);
 	self->tk->data = ft_strdup(fix_alias_name);
 	self->prev_tk = self->tk;
+	return (self->tk);
 }
 
 t_token	*lexical_analysis_service(char *input, char *fix_alias_name, int sub)
@@ -52,15 +53,17 @@ t_token	*lexical_analysis_service(char *input, char *fix_alias_name, int sub)
 		if (alias_requirement(self, sub))
 		{
 			if (fix_alias_name && ft_strequ(fix_alias_name, self.tk->data))
-				alias_infinite_loop(&self, fix_alias_name);
+				self.tk = alias_infinite_loop(&self, fix_alias_name);
 			else
-				alias_substitution(&self, (fix_alias_name == NULL) ?
+			{
+				self.tk = alias_substitution(&self, (fix_alias_name == NULL) ?
 				(self.tk)->data : fix_alias_name);
-			if (self.tk == NULL)
-				continue ;
+				if (self.tk == NULL)
+					continue ;
+			}
 		}
-		self.prev_tk = self.tk;
 		add_token_into_token_list(&(self.stream), self.tk);
+		self.prev_tk = find_current_token_in_new_stream(self.tk);
 	}
 	return (self.stream);
 }
