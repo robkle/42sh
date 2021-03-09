@@ -86,15 +86,17 @@ int		expand_assignments(char **assignment)
 	i = 0;
 	final = NULL;
 	while ((*assignment)[i] != '\0' && (*assignment)[i] != '=')
-		i++;
-	name = ft_strsub((*assignment), 0, i + 1);
+		i++;	
 	variables = ft_strsplit(&(*assignment)[i + 1], ':');
-	i = 0;
-	expand_assignment_variables(&final, &variables, name);
+	if (variables[0] != NULL)
+	{
+		name = ft_strsub((*assignment), 0, i + 1);
+		expand_assignment_variables(&final, &variables, name);		
+		free(name);
+		free((*assignment));
+		(*assignment) = final;
+	}
 	destroy_arr(variables);
-	free(name);
-	free((*assignment));
-	(*assignment) = final;
 	return (EXIT_SUCCESS);
 }
 

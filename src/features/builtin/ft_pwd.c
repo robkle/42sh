@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:22:48 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:41:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/09 12:35:54 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int				ft_pwd(t_process *p)
 	ft_cd_pwd_check_builtin_opts(p->av, &opt);
 	if (opt.applied == BUILTIN_INVALID_OPT)
 	{
-		ft_dprintf(2, "%s: pwd: %s: invalid option", SHELL_NAME, opt.invalid_opt);
+		ft_dprintf(2, "%s: pwd: %c: invalid option\n", SHELL_NAME, opt.invalid_opt);
 		return (EXIT_FAILURE);
 	}
 	integrate_options(&opt);

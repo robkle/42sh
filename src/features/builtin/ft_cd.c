@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/03 14:33:49 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/09 12:30:09 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	basic_error_check(char **av, t_opt opt)
 
 	status = 0;
 	if (opt.applied == BUILTIN_INVALID_OPT)
-		status = ft_dprintf(2, "%s: cd: %s: invalid option", SHELL_NAME, opt.invalid_opt);
+		status = ft_dprintf(2, "%s: cd: %c: invalid option\n", SHELL_NAME, opt.invalid_opt);
 	if (av[opt.operand_count + 2] != NULL)
 		status = ft_dprintf(2, "%s: cd: too many arguments\n", SHELL_NAME);
 	if (av[opt.operand_count + 1] == NULL && !ft_getenv("HOME")) //step1

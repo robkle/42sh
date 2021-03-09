@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   access.c                                           :+:      :+:    :+:   */
+/*   ft_cd_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/26 13:05:49 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/09 15:39:53 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int				possible_to_access_file(t_process *p)
 		}
 		else if (access(p->av[0], X_OK))
 		{
-			ft_dprintf(2, "%s: no such file or directory: %s\n", \
+			ft_dprintf(2, "%s: Permission denied: %s\n", \
 				SHELL_NAME, p->av[0]);
 			return (0);
 		}
