@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 03:32:52 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/08 21:49:31 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -468,6 +468,7 @@ typedef struct s_lexical_service
 	t_token *stream;
 	t_token *tk;
 	t_token *prev_tk;
+	int keep_alias_substitution;
 }	t_lexical_service;
 
 typedef struct s_syntax_service

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 05:05:15 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/08 22:54:38 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	alias_substitution(t_lexical_service *lex, char *fix_alias_name);
 // void			alias_substitution(t_token **current_token,
 				// t_token **prev_token, t_token **tk_lst);
 char			*find_alias_str(char *str);
+t_alias *find_alias2(char *str);
 void			remove_all(t_alias ***aliaslist);
 void			set_aliastable(void);
 /*
