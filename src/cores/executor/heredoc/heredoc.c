@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/09 19:13:40 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/09 19:20:50 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ static void	here_doc_prepare_end_word(
 	i = -1;
 	ft_bzero(pretty_end_word, 256);
 	ft_strcpy(pretty_end_word, end_word);
-	while (pretty_end_word[++i])
-		if (pretty_end_word[i] == '\\')
-			ft_strcpy(&pretty_end_word[i], &pretty_end_word[i + 1]);
+	if (is_quoted(pretty_end_word))
+		pretty_end_word = remove_quote2(pretty_end_word);
 	ft_strcat(pretty_end_word, "\n");
 }
 
