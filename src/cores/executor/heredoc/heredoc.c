@@ -6,18 +6,24 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 02:59:27 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/09 19:13:40 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	here_doc_prepare_the_end_word_with_enter(
-		char end_word_with_enter[256], char *end_word)
+static void	here_doc_prepare_end_word(
+		char pretty_end_word[256], char *end_word)
 {
-	ft_bzero(end_word_with_enter, 256);
-	ft_strcpy(end_word_with_enter, end_word);
-	ft_strcat(end_word_with_enter, "\n");
+	int i;
+
+	i = -1;
+	ft_bzero(pretty_end_word, 256);
+	ft_strcpy(pretty_end_word, end_word);
+	while (pretty_end_word[++i])
+		if (pretty_end_word[i] == '\\')
+			ft_strcpy(&pretty_end_word[i], &pretty_end_word[i + 1]);
+	ft_strcat(pretty_end_word, "\n");
 }
 
 char		*get_heredoc(char *end_word)
@@ -26,12 +32,12 @@ char		*get_heredoc(char *end_word)
 	char		*heredoc;
 	char		*line;
 	t_prompt	prompt_type;
-	char		end_word_with_enter[256];
+	char		pretty_end_word[256];
 
 	heredoc = ft_strnew(0);
 	phase = PHASE_HEREDOC;
 	prompt_type = PROMPT_HEREDOC;
-	here_doc_prepare_the_end_word_with_enter(end_word_with_enter, end_word);
+	here_doc_prepare_end_word(pretty_end_word, end_word);
 	while ("getting heredoc")
 	{
 		if ((line = ft_get_line(&phase, prompt_type, LEX_HEREDOC)) == NULL)
@@ -39,7 +45,7 @@ char		*get_heredoc(char *end_word)
 			free(heredoc);
 			return (NULL);
 		}
-		if (phase == PHASE_STOP || ft_strequ(line, end_word_with_enter))
+		if (phase == PHASE_STOP || ft_strequ(line, pretty_end_word))
 		{
 			free(line);
 			break ;
