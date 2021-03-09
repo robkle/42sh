@@ -6,24 +6,19 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:49:46 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/08 22:21:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/09 08:03:20 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 /*
-** simple_command : cmd_prefix cmd_word cmd_suffix		//not
-**                | cmd_prefix cmd_word					//not
-**                | cmd_prefix							//not
-**                | cmd_name cmd_suffix				1
-**                | cmd_name						2
+** simple_command : cmd_prefix cmd_word cmd_suffix		1
+**                | cmd_prefix cmd_word					2
+**                | cmd_prefix							3
+**                | cmd_name cmd_suffix					4
+**                | cmd_name							5
 */
-
-t_astnode		*simple_command5(t_token **token)
-{
-	return (cmd_name(token));
-}
 
 t_astnode		*simple_command4(t_token **token)
 {
@@ -84,14 +79,6 @@ t_astnode		*simple_command1(t_token **token)
 	node->right = rnode;
 	return (node);
 }
-
-/*
-** 1: 			mnode	rnode
-** 2: nothing
-** 3:	lnode	mnode	rnode
-** 4:	lnode	mnode
-** 5: nothing
-*/
 
 t_astnode		*simple_command(t_token **token)
 {
