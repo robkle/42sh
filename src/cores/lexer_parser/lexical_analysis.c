@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/08 21:49:43 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/08 23:11:04 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		alias_requirement(t_lexical_service self, int sub)
 	if (sub == 0 &&
 		self.tk->type == TOKEN_WORD &&
 		is_alias(self.tk->data, self.prev_tk))
+		return (1);
+	if (self.keep_alias_substitution && sub == 0 && self.tk->type == TOKEN_WORD && find_alias2(self.tk->data) != NULL)
 		return (1);
 	return (0);
 }
@@ -52,14 +54,12 @@ t_token	*lexical_analysis_service(char *input, char *fix_alias_name, int sub)
 			if (fix_alias_name && ft_strequ(fix_alias_name, self.tk->data))
 				alias_infinite_loop(&self, fix_alias_name);
 			else
-			{
 				alias_substitution(&self, (fix_alias_name == NULL) ?
 				(self.tk)->data : fix_alias_name);
-				continue;
-			}
+			if (self.tk == NULL)
+				continue ;
 		}
-		else
-			self.prev_tk = self.tk;
+		self.prev_tk = self.tk;
 		add_token_into_token_list(&(self.stream), self.tk);
 	}
 	return (self.stream);

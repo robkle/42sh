@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:49:46 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 19:05:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/08 22:21:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,33 @@
 **                | cmd_name						2
 */
 
+t_astnode		*simple_command5(t_token **token)
+{
+	return (cmd_name(token));
+}
+
 t_astnode		*simple_command4(t_token **token)
+{
+	t_astnode	*node;
+	t_astnode	*mnode;
+	t_astnode	*rnode;
+
+	if ((mnode = cmd_name(token)) == NULL)
+		return (NULL);
+	if ((rnode = cmd_suffix(token)) == NULL)
+		return (clear_ast(mnode));
+	node = build_node(AST_simple_command);
+	node->middle = mnode;
+	node->right = rnode;
+	return (node);
+}
+
+t_astnode		*simple_command3(t_token **token)
+{
+	return (cmd_prefix(token));
+}
+
+t_astnode		*simple_command2(t_token **token)
 {
 	t_astnode *node;
 	t_astnode *lnode;
@@ -36,12 +62,7 @@ t_astnode		*simple_command4(t_token **token)
 	return (node);
 }
 
-/*
-** note: in line 61, in grammar, it is word but in this shell, it will be
-** replaced with command name
-*/
-
-t_astnode		*simple_command3(t_token **token)
+t_astnode		*simple_command1(t_token **token)
 {
 	t_astnode *node;
 	t_astnode *lnode;
@@ -59,27 +80,6 @@ t_astnode		*simple_command3(t_token **token)
 	}
 	node = build_node(AST_simple_command);
 	node->left = lnode;
-	node->middle = mnode;
-	node->right = rnode;
-	return (node);
-}
-
-t_astnode		*simple_command2(t_token **token)
-{
-	return (cmd_name(token));
-}
-
-t_astnode		*simple_command1(t_token **token)
-{
-	t_astnode	*node;
-	t_astnode	*mnode;
-	t_astnode	*rnode;
-
-	if ((mnode = cmd_name(token)) == NULL)
-		return (NULL);
-	if ((rnode = cmd_suffix(token)) == NULL)
-		return (clear_ast(mnode));
-	node = build_node(AST_simple_command);
 	node->middle = mnode;
 	node->right = rnode;
 	return (node);

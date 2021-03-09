@@ -6,13 +6,10 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 19:05:16 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 19:05:32 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/08 22:22:00 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_astnode		*simple_command5(t_token **token)
-{
-	return (cmd_prefix(token));
-}
+
