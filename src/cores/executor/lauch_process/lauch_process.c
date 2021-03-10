@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/25 09:02:53 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/10 20:15:47 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int		lauch_simple_command(t_job *j, t_process *p)
 	{
 		p->status = lauch_in_parent_process(p);
 		p->completed = COMPLETED;
+		reset_stdin_stdout_stderr_channels(saved);
+		return (p->status);
 	}
 	else
 		fork_and_launch_in_child_process(j, p);
