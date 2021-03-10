@@ -6,13 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 03:36:24 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/10 17:13:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/10 17:37:03 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	unify_space(char *clip)
+static void	shorten_spaces(char *clip)
 {
 	while (*clip)
 	{
@@ -56,7 +56,7 @@ char		*get_clip_external(char raw_clip[])
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSANOW, &raw);
-	unify_space(clip);
+	shorten_spaces(clip);
 	return (clip);
 }
 
