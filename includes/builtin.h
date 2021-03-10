@@ -104,8 +104,10 @@ t_token	*alias_substitution(t_lexical_service *lex, char *fix_alias_name);
 				// t_token **prev_token, t_token **tk_lst);
 char			*find_alias_str(char *str);
 t_alias *find_alias2(char *str);
-void			remove_all(t_alias ***aliaslist);
+int				remove_all(t_alias ***aliaslist);
 void			set_aliastable(void);
+int				print_all(void);
+int				count_arr(void);
 /*
 ** End Alias built-in
 */
