@@ -94,7 +94,7 @@ int		alias_loop(t_process *c, int status)
 	int i;
 	int returnvalue;
 
-	i = 0;
+	i = 1;
 	returnvalue = 0;
 	while (c->av[i] != NULL)
 	{
