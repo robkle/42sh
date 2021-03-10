@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/09 15:03:42 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/10 19:35:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXECUTION_H
 # include "struct.h"
 
-# define NOT_COMPLETED -1
+# define NOT_COMPLETED 0
 # define COMPLETED 1
 # define NOT_STOPPED 0
 # define STOPPED 1

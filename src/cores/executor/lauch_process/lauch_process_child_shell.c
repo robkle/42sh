@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/09 18:56:03 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/10 19:37:47 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void handle_assignment_in_child_process(t_assignment *list)
 
 static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 {
-	sig_controller(CHILD);
 	(j->pipe_fd_closer[0]) ? close(j->pipe_fd_closer[0]) : 0;
 	(j->pipe_fd_closer[1]) ? close(j->pipe_fd_closer[1]) : 0;
 	if (p->first_assignment)
@@ -126,6 +125,7 @@ static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 	set_process_group_id(j, getpid());
 	if (j->foreground)
 		ft_tcsetpgrp(STDIN_FILENO, j->pgid);
+	sig_controller(CHILD);
 	exit(lauch_process(p, path));
 }
 
