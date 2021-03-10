@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/08 21:57:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/10 10:49:20 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int				init_shell(char **envp)
 	}
 	/* signal */
 	sig_controller(PARENT);
+	init_signal_messages();
 	/* job control */
 	g_shell.shell_pgid = getpgrp();
 	if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)

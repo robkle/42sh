@@ -241,6 +241,7 @@ SIGNAL_DIR := $(FEATURES_DIR)/signal
 SIGNAL_FILE += sig_handler.c
 SIGNAL_FILE += eof_handler.c
 SIGNAL_FILE += post_signals.c
+SIGNAL_FILE += init_signal_messages.c
 SIGNAL := $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_FILE))
 # Expansion
 EXPANSION_DIR := $(FEATURES_DIR)/expansion

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stopped_and_terminated_jobs.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/08 21:58:23 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/10 10:58:00 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ void	mark_process_status_signal(t_process *p, int status)
 	if (WIFEXITED(status))
 		g_shell.exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
+    {
 		g_shell.exit_status = 128 + WTERMSIG(status);
-	// add printing signal here
+		ft_printf("%s: %d\n", g_shell.sig_msgs[WTERMSIG(status) - 1],
+			WTERMSIG(status));
+    }
 }
 
 int		mark_process_status_helper(

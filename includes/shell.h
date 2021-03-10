@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/03/08 21:57:39 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/10 10:28:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct			s_shell
 	unsigned int		exit_status;
 	t_hash				*hashtable[MAX_HASH];
 	t_builtin			*builtins;
+    char                sig_msgs[SIGNAL_NUMBER_OSX][LEN_MAX_SIG_MSG];
 }						t_shell;
 
 t_shell					g_shell;
