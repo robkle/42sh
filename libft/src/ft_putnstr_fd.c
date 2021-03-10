@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnjoin.c                                      :+:      :+:    :+:   */
+/*   ft_putnstr_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/16 13:54:43 by tango             #+#    #+#             */
-/*   Updated: 2021/03/10 16:26:33 by ihwang           ###   ########.fr       */
+/*   Created: 2021/03/10 16:46:18 by tango             #+#    #+#             */
+/*   Updated: 2021/03/10 16:47:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strnjoin(char const *s1, char const *s2, size_t n)
+void	ft_putnstr_fd(char const *s, size_t len, int fd)
 {
-	char	*fresh;
+    size_t  i;
 
-	fresh = (char*)malloc(ft_strlen(s1) + n + 1);
-	if (!fresh)
-		return (NULL);
-	ft_strcpy(fresh, s1);
-	fresh = ft_strncat(fresh, s2, n);
-	return (fresh);
+    i = 0;
+    while (s[i] && i < len)
+    {
+        write(fd, &s[i++], 1);
+    }
 }

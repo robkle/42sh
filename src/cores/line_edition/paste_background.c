@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paste_background.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 03:36:24 by marvin            #+#    #+#             */
-/*   Updated: 2021/01/28 14:05:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/10 17:13:20 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,40 @@ static void	unify_space(char *clip)
 	}
 }
 
-char		*get_clip_external(char raw_clip[])
+static char	*get_initial_clip(char raw_clip[])
 {
-	char			*clip;
-	char			*temp;
-	char			buf[BUFF_LINE_EDITION];
-	int				len;
+	char	*clip;
 
 	if (ft_strlen(raw_clip) >= BUFF_LINE_EDITION)
 		clip = ft_strndup(raw_clip, BUFF_LINE_EDITION);
 	else
 		clip = ft_strdup(raw_clip);
+	return (clip);
+}
+
+char		*get_clip_external(char raw_clip[])
+{
+	char			*clip;
+	char			*temp;
+	char			buf[BUFF_LINE_EDITION];
+	int				buflen;
+	t_term			raw;
+
+	clip = get_initial_clip(raw_clip);
 	temp = NULL;
-	while (read(STDIN_FILENO, buf, BUFF_LINE_EDITION) > 0)
+	tcgetattr(0, &raw);
+	raw.c_cc[VMIN] = 0;
+	raw.c_cc[VTIME] = 0;
+	tcsetattr(0, TCSANOW, &raw);
+	while ((buflen = read(STDIN_FILENO, buf, BUFF_LINE_EDITION)) > 0)
 	{
-		temp == NULL ? ioctl(0, TIOCSTI, "") : 0;
-		temp = ft_strnjoin(clip, buf, BUFF_LINE_EDITION, &len);
+		temp = ft_strnjoin(clip, buf, buflen);
 		ft_strdel(&clip);
 		clip = temp;
-		if (len != BUFF_LINE_EDITION)
-			break ;
 	}
+	raw.c_cc[VMIN] = 1;
+	raw.c_cc[VTIME] = 0;
+	tcsetattr(0, TCSANOW, &raw);
 	unify_space(clip);
 	return (clip);
 }
