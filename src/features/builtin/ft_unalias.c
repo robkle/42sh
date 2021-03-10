@@ -92,7 +92,7 @@ int		unalias_loop(t_process *c)
 	int status;
 	int returnvalue;
 
-	i = 0;
+	i = 1;
 	count = 0;
 	status = 0;
 	returnvalue = 0;
