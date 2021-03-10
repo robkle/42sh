@@ -36,19 +36,6 @@ int		find_alias(char *alias)
 	return (1);
 }
 
-int		count_arr(void)
-{
-	int i;
-
-	i = 0;
-	if (g_shell.alias != NULL)
-	{
-		while (g_shell.alias[i] != NULL)
-			i++;
-	}
-	return (i);
-}
-
 int		remove_alias(char *alias, t_alias ***aliaslist, int count)
 {
 	t_alias	**new;
@@ -78,7 +65,7 @@ int		remove_alias(char *alias, t_alias ***aliaslist, int count)
 	return (EXIT_SUCCESS);
 }
 
-void	remove_all(t_alias ***aliaslist)
+int		remove_all(t_alias ***aliaslist)
 {
 	int i;
 
@@ -95,32 +82,56 @@ void	remove_all(t_alias ***aliaslist)
 		free((*aliaslist));
 		(*aliaslist) = NULL;
 	}
+	return (EXIT_SUCCESS);
+}
+
+int		unalias_loop(t_process *c)
+{
+	int i;
+	int count;
+	int status;
+	int returnvalue;
+
+	i = 0;
+	count = 0;
+	status = 0;
+	returnvalue = 0;
+	while (c->av[i] != NULL)
+	{
+		if (ft_strcmp(c->av[i], "-a") == 0)
+			remove_all(&g_shell.alias);
+		else if (find_alias(c->av[i]) == 0)
+		{
+			count = count_arr() - 1;
+			if ((status = remove_alias(c->av[i], &g_shell.alias, count)) > 0)
+				returnvalue = status;
+		}
+		i++;
+	}
+	return (returnvalue);
 }
 
 int		ft_unalias(t_process *c)
 {
-	int i;
 	int status;
-	int count;
 
-	i = 1;
 	status = 0;
-	count = 0;
 	if (c->ac == 1)
-		ft_printf("unalias: usage: unalias [-a] name [name...]\n");
-	else
 	{
-		while (c->av[i] != NULL)
+		ft_printf("unalias: usage: unalias [-a] name [name...]\n");
+		return (EXIT_FAILURE);
+	}
+	else if (c->ac > 1 && ft_strncmp(c->av[1], "-", 1) == 0)
+	{
+		if (ft_strcmp(c->av[1], "-a") == 0)
+			return (remove_all(&g_shell.alias));
+		else
 		{
-			if (ft_strcmp(c->av[i], "-a") == 0)
-				remove_all(&g_shell.alias);
-			else if (find_alias(c->av[i]) == 0)
-			{
-				count = count_arr() - 1;
-				status = remove_alias(c->av[i], &g_shell.alias, count);
-			}
-			i++;
+			ft_printf("42sh: unalias: %s: invalid option\n", c->av[1]);
+			ft_printf("unalias: usage: unalias [-a] name [name...]\n");
+			return (EXIT_FAILURE);
 		}
 	}
+	status = unalias_loop(c);
 	return (status);
 }

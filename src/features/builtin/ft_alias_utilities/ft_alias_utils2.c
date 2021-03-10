@@ -17,3 +17,33 @@ void	set_aliastable(void)
 	g_shell.alias = (t_alias**)malloc(sizeof(t_alias*) + 1);
 	g_shell.alias[0] = NULL;
 }
+
+int		count_arr(void)
+{
+	int i;
+
+	i = 0;
+	if (g_shell.alias != NULL)
+	{
+		while (g_shell.alias[i] != NULL)
+			i++;
+	}
+	return (i);
+}
+
+int		print_all(void)
+{
+	int i;
+
+	i = 0;
+	if (g_shell.alias != NULL)
+	{
+		while (g_shell.alias[i] != NULL)
+		{
+			ft_printf("alias %s='%s'\n", g_shell.alias[i]->name,
+			g_shell.alias[i]->value);
+			i++;
+		}
+	}
+	return (EXIT_SUCCESS);
+}
