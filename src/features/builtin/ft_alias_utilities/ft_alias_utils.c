@@ -16,8 +16,7 @@ int		is_valid_alias_char(int c)
 {
 	if (c == '/' || c == '$' || c == '`' || c == '=' || c == '"' || c == '\''
 	|| c == '\\' || is_metacharacter(c) == 1)
-	{
-		ft_printf("42sh: alias: %c: invalid alias name\n", c);
+	{		
 		return (0);
 	}
 	return (1);
@@ -40,6 +39,7 @@ int		is_valid_alias_name(char *alias)
 	{
 		if (is_valid_alias_char(alias_name[i]) != 1)
 		{
+			ft_printf("42sh: alias: %s: invalid alias name\n", alias_name);
 			free(alias_name);
 			return (EXIT_FAILURE);
 		}

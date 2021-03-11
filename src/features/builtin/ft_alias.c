@@ -12,23 +12,6 @@
 
 #include "shell.h"
 
-int		print_all(void)
-{
-	int i;
-
-	i = 0;
-	if (g_shell.alias != NULL)
-	{
-		while (g_shell.alias[i] != NULL)
-		{
-			ft_printf("alias %s='%s'\n", g_shell.alias[i]->name,
-			g_shell.alias[i]->value);
-			i++;
-		}
-	}
-	return (EXIT_SUCCESS);
-}
-
 int		add_alias(int count, char *alias, t_alias ***aliaslist)
 {
 	t_alias	**new;
@@ -84,7 +67,7 @@ int		set_alias(char *alias, t_alias ***aliaslist)
 	return (add_alias(i + 1, alias, aliaslist));
 }
 
-void	print_alias(char *alias)
+int		print_alias(char *alias)
 {
 	int i;
 
@@ -97,25 +80,22 @@ void	print_alias(char *alias)
 			{
 				ft_printf("alias %s='%s'\n", g_shell.alias[i]->name,
 					g_shell.alias[i]->value);
-				return ;
+				return (EXIT_SUCCESS);
 			}
 			i++;
 		}
 	}
 	ft_printf("42sh: alias: %s: not found\n", alias);
+	return (EXIT_FAILURE);
 }
 
-int		ft_alias(t_process *c)
+int		alias_loop(t_process *c, int status)
 {
 	int i;
-	int status;
+	int returnvalue;
 
 	i = 1;
-	status = 0;
-	if (g_shell.alias == NULL)
-		set_aliastable();
-	if (c->ac == 1)
-		return (print_all());
+	returnvalue = 0;
 	while (c->av[i] != NULL)
 	{
 		if (ft_strcmp(c->av[i], "-p") == 0)
@@ -124,11 +104,39 @@ int		ft_alias(t_process *c)
 		{
 			if (is_valid_alias_name(c->av[i]) != 0)
 				return (EXIT_FAILURE);
-			status = set_alias(c->av[i], &g_shell.alias);
+			if ((status = set_alias(c->av[i], &g_shell.alias)) > 0)
+				returnvalue = status;
 		}
 		else
-			print_alias(c->av[i]);
+		{
+			if ((status = print_alias(c->av[i])) > 0)
+				returnvalue = status;
+		}
 		i++;
 	}
+	return (returnvalue);
+}
+
+int		ft_alias(t_process *c)
+{
+	int status;
+
+	status = 0;
+	if (g_shell.alias == NULL)
+		set_aliastable();
+	if (c->ac == 1)
+		return (print_all());
+	else if (c->ac > 1 && ft_strncmp(c->av[1], "-", 1) == 0)
+	{
+		if (ft_strcmp(c->av[1], "-p") == 0)
+			return (print_all());
+		else
+		{
+			ft_printf("42sh: alias: %s: invalid option\n", c->av[1]);
+			ft_printf("alias: usage. alias [-p] [name[=value] ... ]\n");
+			return (EXIT_FAILURE);
+		}
+	}
+	status = alias_loop(c, status);
 	return (status);
 }
