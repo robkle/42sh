@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 20:07:37 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 01:36:30 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/11 21:54:04 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	analyzing_phase_inhibitor(t_phase phase[], int *stack_pos, char ch)
 	}
 	else if (ch == '\\')
 	{
-		if (!is_quoting_phase(phase[(*stack_pos)]))
+		if (phase[*stack_pos] != PHASE_QUOTE)
 			phase[++(*stack_pos)] = PHASE_BACKSLASH;
 	}
 }

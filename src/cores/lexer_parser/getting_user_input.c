@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 18:19:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 02:44:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/11 21:56:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@ char	*destroy_get_command_service_struct(t_get_command_service self)
 	return (NULL);
 }
 
+int need_to_delete_back_slash_and_linefeed(char *str, t_phase phase)
+{
+	int len;
+
+	len = ft_strlen(str);
+	if (phase == PHASE_BACKSLASH)
+		return (1);
+	if (phase == PHASE_QUOTE)
+		return (0);
+	if (phase == PHASE_DQUOTE)
+		return (1);
+	return (0);
+}
+
 char	*get_command(t_lex_value lex_value)
 {
 	t_get_command_service self;
@@ -49,8 +63,8 @@ char	*get_command(t_lex_value lex_value)
 		self.prompt_type = choose_prompt_type(0, self.phase[self.i]);
 		if (self.phase[self.i] == PHASE_BACKSLASH)
 		{
-			self.cmd = delete_line_feed_at_the_end_of_the_cmd_string(self.cmd);
-			self.phase[self.i] = PHASE_CMD;
+			self.phase[self.i--] = 0;
+			self.cmd = delete_back_slash_and_line_feed(self.cmd);
 		}
 	}
 	return (self.cmd);
