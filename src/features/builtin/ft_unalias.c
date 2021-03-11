@@ -26,14 +26,14 @@ int		find_alias(char *alias)
 			(alias_name = set_name(alias))) == 0)
 			{
 				free(alias_name);
-				return (0);
+				return (EXIT_SUCCESS);
 			}
 			free(alias_name);
 			i++;
 		}
 	}
 	ft_printf("42sh: unalias: %s: not found\n", alias);
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 int		remove_alias(char *alias, t_alias ***aliaslist, int count)
@@ -100,12 +100,14 @@ int		unalias_loop(t_process *c)
 	{
 		if (ft_strcmp(c->av[i], "-a") == 0)
 			remove_all(&g_shell.alias);
-		else if (find_alias(c->av[i]) == 0)
+		else if ((status = find_alias(c->av[i])) == 0)
 		{
 			count = count_arr() - 1;
 			if ((status = remove_alias(c->av[i], &g_shell.alias, count)) > 0)
 				returnvalue = status;
 		}
+		else
+			returnvalue = status;
 		i++;
 	}
 	return (returnvalue);
