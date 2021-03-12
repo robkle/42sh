@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/03 14:20:43 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/12 20:25:19 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,13 @@ void	apply_termcap_str(char *str, int x, int y);
 size_t	get_current_row(void);
 size_t	get_current_column(void);
 int		ft_count_rows(t_l *l);
+
+/*
+** Row count
+*/
+int		ft_row_count(t_l *l);
+void	ft_line_count(t_l *l);
+int		ft_index_calc(t_l *l);
+int		ft_cursor_x(t_l *l);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rklein <rklein>                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:43:38 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/12 19:45:59 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/12 20:38:39 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,18 @@ int		ft_index_calc(t_l *l)
 		len += ft_atoi(l->lc[i]);
 	}
 	return (len - l->pmpt);
+}
+
+/*
+** calculates the x position of cursor for history command
+*/
+int		ft_cursor_x(t_l *l)
+{
+	int	i;
+
+	ft_line_count(l);
+	i = 0;
+	while (l->lc[i])
+		i++;
+	return (ft_atoi(l->lc[i - 1]));
 }

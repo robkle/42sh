@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/02 10:35:44 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/12 20:41:34 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ static void	up_down_key_apply_statuses(t_l *l)
 	int				starting_row_from_top;
 	int				new_starting_row;
 
-	line_rows = ft_count_rows(l);
+	//line_rows = ft_count_rows(l);//OLD
+	line_rows = ft_row_count(l) - 1;//NEW
+	l->y = line_rows;//NEW
+	l->x = ft_cursor_x(l);//NEW
+	l->nb = ft_strlen(l->line);//NEW
 	new_starting_row = l->starting_row;
 	if (l->starting_row < line_rows)
 		new_starting_row = line_rows;
