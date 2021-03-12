@@ -6,20 +6,20 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 04:00:07 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/18 19:11:41 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 22:57:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void ft_jobs_printing_with_argv(char **argv)
+void	ft_jobs_printing_with_argv(char **argv)
 {
-	int i;
-	t_job *j;
-	char *status;
+	int		i;
+	t_job	*j;
+	char	*status;
 
 	i = -1;
-	while(argv[++i])
+	while (argv[++i])
 	{
 		if ((j = is_valid_job_id(argv[i])) == NULL)
 			ft_dprintf(2, "%s: jobs: %s: no such job\n", SHELL_NAME, argv[i]);
@@ -34,10 +34,10 @@ void ft_jobs_printing_with_argv(char **argv)
 	}
 }
 
-void ft_jobs_printing_without_argv()
+void	ft_jobs_printing_without_argv(void)
 {
-	t_job *j_ptr;
-	char *status;
+	t_job	*j_ptr;
+	char	*status;
 
 	j_ptr = g_shell.first_job;
 	while (j_ptr)
@@ -51,7 +51,7 @@ void ft_jobs_printing_without_argv()
 	}
 }
 
-int ft_jobs(t_process *p)
+int		ft_jobs(t_process *p)
 {
 	update_status();
 	if (p->av[1])
@@ -61,11 +61,13 @@ int ft_jobs(t_process *p)
 	return (EXIT_SUCCESS);
 }
 
-int ft_jobs_child(t_process *p) {
+int		ft_jobs_child(t_process *p)
+{
 	int i;
 
 	i = 0;
-	if (p->av[1]) {
+	if (p->av[1])
+	{
 		while (p->av[++i])
 			ft_dprintf(2, "%s: jobs: %s: no such job\n", SHELL_NAME, p->av[i]);
 		return (EXIT_FAILURE);

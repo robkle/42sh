@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/09 20:25:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 23:11:06 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int				ft_fg_child();
 int				ft_bg(t_process *p);
 int				ft_bg_child();
 int				ft_export(int ac, char **av);
+int			export_parse_av(t_export *export, char **av);
+
 int				ft_set(void);
 int				ft_unset(int ac, char **av);
 

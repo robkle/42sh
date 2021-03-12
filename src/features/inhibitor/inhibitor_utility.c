@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 17:12:19 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/11 21:57:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 22:43:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,22 @@ int		jump_quote(char *input, int *i, char quote_type)
 		while (input[*i])
 		{
 			if (input[*i] == quote_type && is_real_character(input, *i))
-				break;
+				break ;
 			(*i)++;
 		}
 	}
 	if (input[*i] == '\0')
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+int		is_quoted(char *str)
+{
+	int i;
+
+	i = -1;
+	while (str[++i])
+		if (str[i] == '\\' || str[i] == '\'' || str[i] == '"')
+			return (1);
+	return (0);
 }

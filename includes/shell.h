@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/03/12 20:21:34 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 23:35:20 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,14 @@ void analyzing_phase(char *str, t_phase phase[], int *stack_pos);
 int		analyzing_pair_tokens(t_token *tk, t_token *prev_tk);
 int		is_near_unexpected_token(t_token *cur_tk, t_token *prev_tk);
 int	is_control_op(t_token_type type);
+
+
+// init stuff
+int	init_terminal_stuff(void);
+int	init_environment_variable_stuff(char **envp);
+int	init_signal_stuff(void);
+int init_job_control_stuff(void);
+int	init_history_stuff(void);
+int init_other_stuff(void);
 
 #endif

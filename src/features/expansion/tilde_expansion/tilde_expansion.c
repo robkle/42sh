@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tilde_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgrankul <vgrankul@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:42:54 by vgrankul          #+#    #+#             */
-/*   Updated: 2021/01/25 07:42:59 by vgrankul         ###   ########.fr       */
+/*   Updated: 2021/03/12 22:29:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,12 @@ int		expand_assignments(char **assignment)
 	i = 0;
 	final = NULL;
 	while ((*assignment)[i] != '\0' && (*assignment)[i] != '=')
-		i++;	
+		i++;
 	variables = ft_strsplit(&(*assignment)[i + 1], ':');
 	if (variables[0] != NULL)
 	{
 		name = ft_strsub((*assignment), 0, i + 1);
-		expand_assignment_variables(&final, &variables, name);		
+		expand_assignment_variables(&final, &variables, name);
 		free(name);
 		free((*assignment));
 		(*assignment) = final;

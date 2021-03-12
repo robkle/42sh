@@ -52,6 +52,10 @@ INCLUDE			:= -Iincludes/ -Ilibft/includes/ -Ift_printf/includes/
 # library
 LIB				:= -L$(LIBFT_DIR)/ -lft -L$(FT_RPINTF_DIR)/ -lftprintf -ltermcap
 ############################ Create core files ################################
+#Init
+INIT_DIR := $(CORE_DIR)/init
+INIT_FILE += init_terminal_stuff.c
+INIT := $(addprefix $(INIT_DIR)/,$(INIT_FILE))
 #Lexer & Parser
 LEXER_PARSER_DIR := $(CORE_DIR)/lexer_parser
 LEXER_PARSER_FILE += tokenizing_service.c
@@ -147,6 +151,7 @@ LINE_EDITION_FILE += line_edition_utilities.c
 LINE_EDITION_FILE += paste_background.c
 LINE_EDITION := $(addprefix $(LINE_EDITION_DIR)/,$(LINE_EDITION_FILE))
 # SUM-UP Core
+CORE += $(INIT)
 CORE += $(LEXER_PARSER)
 CORE += $(SEMANTIC)
 CORE += $(EXECUTOR)
@@ -186,6 +191,7 @@ BUILT_IN_FILE += ft_alias_utilities/ft_alias_utils2.c
 BUILT_IN_FILE += ft_set.c
 BUILT_IN_FILE += ft_unset.c
 BUILT_IN_FILE += ft_export.c
+BUILT_IN_FILE += ft_export_utilities/ft_export_parse.c
 BUILT_IN_FILE += ft_hash.c
 BUILT_IN_FILE += ft_hash_utilities/ft_hash_utils.c
 BUILT_IN_FILE += ft_type.c
@@ -272,9 +278,7 @@ INHIBITOR_DIR := $(FEATURES_DIR)/inhibitor
 INHIBITOR_FILE += tool_for_checking.c
 INHIBITOR_FILE += inhibitor_utility.c
 INHIBITOR_FILE += quote_removal.c
-INHIBITOR_FILE += ansi_c.c
-INHIBITOR_FILE += octal_value.c
-INHIBITOR_FILE += hex_value.c
+INHIBITOR_FILE += remove_quoting_tools.c
 INHIBITOR := $(addprefix $(INHIBITOR_DIR)/,$(INHIBITOR_FILE))
 # Auto-complition
 AUTO_COMPLETION_DIR := $(FEATURES_DIR)/auto_completion
@@ -297,6 +301,7 @@ AUTO_COMPLETION := $(addprefix $(AUTO_COMPLETION_DIR)/,$(AUTO_COMPLETION_FILE))
 # Intern var and environment var
 INTERN_ENVIRONMENT_VAR_DIR := $(FEATURES_DIR)/intern_and_environment_var
 INTERN_ENVIRONMENT_VAR_FILE += environment_var.c
+INTERN_ENVIRONMENT_VAR_FILE += environment_var_export.c
 INTERN_ENVIRONMENT_VAR_FILE += internal_var.c
 INTERN_ENVIRONMENT_VAR_FILE += internal_var2.c
 INTERN_ENVIRONMENT_VAR = $(addprefix $(INTERN_ENVIRONMENT_VAR_DIR)/,$(INTERN_ENVIRONMENT_VAR_FILE))

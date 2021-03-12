@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:11:11 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/27 12:27:27 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 22:48:20 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@ char	**set_env(char **sample)
 	}
 	env[i] = NULL;
 	return (env);
-}
-
-int		is_eligible_to_export_to_env(t_var var)
-{
-	if (var.name && var.value && var.exported)
-		return (1);
-	return (0);
 }
 
 void	update_environment_var(char *name, char *value)

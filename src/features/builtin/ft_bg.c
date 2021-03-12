@@ -6,36 +6,32 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 13:05:50 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 17:22:43 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 23:18:14 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int ft_bg_middle_man(t_job *j)
+int	ft_bg_execute(t_job *j)
+{
+	if (job_is_stopped(j))
+		return (continue_the_suspended_job(j));
+	update_status();
+	if (job_is_completed(j))
+		ft_dprintf(2, "%s: bg: job has terminated\n", SHELL_NAME);
+	else
+		ft_dprintf(2, "%s: bg: job %d already in background\n",
+			SHELL_NAME,
+			j->id);
+	return (EXIT_FAILURE);
+}
+
+int	ft_bg_middle_man(t_job *j)
 {
 	if (j != NULL)
-	{
-		if (job_is_stopped(j))
-			return (continue_the_suspended_job(j));
-		update_status();
-		if (job_is_completed(j))
-			ft_dprintf(2, "%s: bg: job has terminated\n", SHELL_NAME);
-		else
-			ft_dprintf(2, "%s: bg: job %d already in background\n", SHELL_NAME, j->id);
-		return (EXIT_FAILURE);
-	}
+		return (ft_bg_execute(j));
 	if ((j = find_the_current_job()) != NULL)
-	{
-		if (job_is_stopped(j))
-			return (continue_the_suspended_job(j));
-		update_status();
-		if (job_is_completed(j))
-			ft_dprintf(2, "%s: bg: job has terminated\n", SHELL_NAME);
-		else
-			ft_dprintf(2, "%s: bg: job %d already in background\n", SHELL_NAME, j->id);
-		return (EXIT_FAILURE);
-	}
+		return (ft_bg_execute(j));
 	ft_dprintf(2, "%s: bg: current: no such job\n", SHELL_NAME);
 	return (EXIT_FAILURE);
 }
@@ -43,7 +39,7 @@ int ft_bg_middle_man(t_job *j)
 int	ft_bg(t_process *p)
 {
 	t_job *j;
-	
+
 	j = NULL;
 	if (p->av[1] == NULL || ft_strequ(p->av[1], "%"))
 		return (ft_bg_middle_man(j));
@@ -53,7 +49,7 @@ int	ft_bg(t_process *p)
 	return (EXIT_FAILURE);
 }
 
-int ft_bg_child()
+int	ft_bg_child(void)
 {
 	ft_dprintf(2, "%s: bg: no job control\n", SHELL_NAME);
 	return (EXIT_FAILURE);

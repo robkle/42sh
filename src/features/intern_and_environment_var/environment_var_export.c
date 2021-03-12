@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_set.c                                           :+:      :+:    :+:   */
+/*   environment_var_export.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/09 03:36:20 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/12 22:57:54 by dthan            ###   ########.fr       */
+/*   Created: 2021/03/12 22:48:08 by dthan             #+#    #+#             */
+/*   Updated: 2021/03/12 22:48:22 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	ft_set(void)
+int		is_eligible_to_export_to_env(t_var var)
 {
-	int i;
-
-	i = -1;
-	while (g_shell.intern_var[++i])
-		if (g_shell.intern_var[i]->name && g_shell.intern_var[i]->value)
-			ft_printf("%s=%s\n",
-				g_shell.intern_var[i]->name,
-				g_shell.intern_var[i]->value);
-	return (EXIT_SUCCESS);
+	if (var.name && var.value && var.exported)
+		return (1);
+	return (0);
 }
