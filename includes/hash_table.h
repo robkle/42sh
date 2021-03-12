@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   hash_table.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/12 21:58:56 by dthan            ###   ########.fr       */
+/*   Created: 2021/03/12 20:20:28 by dthan             #+#    #+#             */
+/*   Updated: 2021/03/12 20:21:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef HASH_TABLE_H
+# define HASH_TABLE_H
+# include "struct.h"
 
-void	executor(t_astnode *ast)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
-	execute_complete_command(ast);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGINT, sig_int_handler);
-}
+char	*is_in_hashtable(char *name);
+char	*get_path(t_process *p);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/28 13:19:29 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 21:54:36 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,3 @@ int		make_child_path_sub(t_process *c, char *path)
 	free(path);
 	return (EXIT_FAILURE);
 }
-
-/* not used
-char	*make_child_path(t_process *c)
-{
-	char	buf[PATH_MAX];
-	char	*path;
-
-	path = build_path(c);
-	ft_strcpy(buf, path);
-	ft_strdel(&path);
-	if (access(buf, X_OK))
-	{
-		ft_dprintf(2, "%s: %s: Permission denied\n", SHELL_NAME, buf);
-		return (NULL);
-	}
-	ft_strcat(buf, "/");
-	ft_strcat(buf, c->av[0]);
-	if (!access(buf, X_OK))
-		return (ft_strdup(buf));
-	ft_dprintf(2, "%s: %s: Permission denied\n", SHELL_NAME, buf);
-	return (NULL);
-}
-*/

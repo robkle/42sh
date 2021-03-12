@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 01:52:52 by tango             #+#    #+#             */
-/*   Updated: 2021/02/25 06:13:50 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 21:14:02 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,50 +74,11 @@ int	redirecting_stdout_and_stderr(t_redi *redi)
 	return (EXIT_SUCCESS);
 }
 
-int	duplicating_file_descriptor(t_redi *redi)
-{
-	int			duplicated_fd;
-	int			old_fd;
-	struct stat	statbuf;
-
-	if (fstat(ft_atoi(redi->word), &statbuf) == -1 || ft_atoi(redi->word) > 2)
-	{
-		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42sh", redi->word);
-		return (EXIT_FAILURE);
-	}
-	old_fd = STDOUT_FILENO;
-	if (redi->n)
-		old_fd = ft_atoi(redi->n);
-	duplicated_fd = dup(ft_atoi(redi->word));
-	dup2(duplicated_fd, old_fd);
-	close(duplicated_fd);
-	return (EXIT_SUCCESS);
-}
-
-int	close_file_descriptor(t_redi *redi)
-{
-	int			dev_null;
-	struct stat	statbuf;
-
-	if (redi->n && fstat(ft_atoi(redi->n), &statbuf) == -1)
-	{
-		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42s", redi->n);
-		return (EXIT_FAILURE);
-	}
-	dev_null = open("/dev/null", O_WRONLY);
-	if (redi->n)
-		dup2(dev_null, ft_atoi(redi->n));
-	else
-		dup2(dev_null, STDOUT_FILENO);
-	close(dev_null);
-	return (EXIT_SUCCESS);
-}
-
 int	redirect_greatand(t_redi *redi)
 {
 	if (ft_strequ(redi->word, "-"))
-		return (close_file_descriptor(redi));
+		return (close_file_descriptor(redi, STDOUT_FILENO));
 	else if (!is_made_of_digits(redi->word))
 		return (redirecting_stdout_and_stderr(redi));
-	return (duplicating_file_descriptor(redi));
+	return (duplicating_file_descriptor(redi, STDOUT_FILENO));
 }

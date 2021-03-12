@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 18:19:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/11 21:56:54 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 22:21:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*destroy_get_command_service_struct(t_get_command_service self)
 	return (NULL);
 }
 
-int need_to_delete_back_slash_and_linefeed(char *str, t_phase phase)
+int		need_to_delete_back_slash_and_linefeed(char *str, t_phase phase)
 {
 	int len;
 

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/10 22:05:30 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 22:11:08 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ static int		shell(void)
 			continue ;
 		g_shell.first_heredoc = g_shell.heredoc_lst;
 		printBinaryTree(ast);
-		signal(SIGINT, SIG_DFL);
-		signal(SIGTSTP, SIG_DFL);
 		executor(ast);
-		signal(SIGTSTP, SIG_IGN);
-		signal(SIGINT, sig_int_handler);
 	}
 	return (0);
 }

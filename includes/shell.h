@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/03/10 10:28:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/12 20:21:34 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # include "handle_signal.h"
 # include "inhibitor.h"
 # include "intern_and_environment_var.h"
+# include "hash_table.h"
 
 # define F_TYPE_MASK 0170000
 # define KEY 1

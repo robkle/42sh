@@ -6,61 +6,22 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 01:52:52 by tango             #+#    #+#             */
-/*   Updated: 2021/02/22 19:27:06 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 21:13:56 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	close_file_descriptor2(t_redi *redi)
-{
-	int			dev_null;
-	struct stat	statbuf;
-
-	if (redi->n && fstat(ft_atoi(redi->n), &statbuf) == -1)
-	{
-		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42s", redi->n);
-		return (EXIT_FAILURE);
-	}
-	dev_null = open("/dev/null", O_WRONLY);
-	if (redi->n)
-		dup2(dev_null, ft_atoi(redi->n));
-	else
-		dup2(dev_null, STDIN_FILENO);
-	close(dev_null);
-	return (EXIT_SUCCESS);
-}
-
-int	duplicating_file_descriptor2(t_redi *redi)
-{
-	int			duplicated_fd;
-	int			old_fd;
-	struct stat	statbuf;
-
-	if (fstat(ft_atoi(redi->word), &statbuf) == -1 || ft_atoi(redi->word) > 2)
-	{
-		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42sh", redi->word);
-		return (EXIT_FAILURE);
-	}
-	old_fd = STDIN_FILENO;
-	if (redi->n)
-		old_fd = ft_atoi(redi->n);
-	duplicated_fd = dup(ft_atoi(redi->word));
-	dup2(duplicated_fd, old_fd);
-	close(duplicated_fd);
-	return (EXIT_SUCCESS);
-}
-
 int	redirect_lessand(t_redi *redi)
 {
 	if (ft_strequ(redi->word, "-"))
-		return (close_file_descriptor2(redi));
+		return (close_file_descriptor(redi, STDIN_FILENO));
 	if (!is_made_of_digits(redi->word))
 	{
 		ft_dprintf(2, "%s: %s: ambiguous redirect\n", "42sh", redi->word);
 		return (EXIT_FAILURE);
 	}
-	return (duplicating_file_descriptor2(redi));
+	return (duplicating_file_descriptor(redi, STDIN_FILENO));
 }
 
 int	redirect_less(t_redi *redi)

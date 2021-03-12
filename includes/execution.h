@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/10 19:35:09 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 21:11:31 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int			redirect_less(t_redi *redi);
 int			redirect_dless(t_redi *redi);
 void		set_stdin_stdout_stderr_channels(int old[3]);
 void		reset_stdin_stdout_stderr_channels(int saved[3]);
+int	close_file_descriptor(t_redi *redi, int old_fd);
+int	duplicating_file_descriptor(t_redi *redi, int old_fd);
 
 /*
 ** =========================== LAUCHING PROCESS ===============================
@@ -85,6 +87,7 @@ void		reset_stdin_stdout_stderr_channels(int saved[3]);
 int			lauch_simple_command(t_job *j, t_process *p);
 int			lauch_in_parent_process(t_process *p);
 void		fork_and_launch_in_child_process(t_job *j, t_process *p);
+int	execute_in_child_process(t_process *p, char *path);
 
 /*
 ** ========================== JOB CONTROL FUNCTIONS ===========================

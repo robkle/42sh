@@ -97,8 +97,6 @@ SEMANTIC := $(addprefix $(SEMANTIC_DIR)/,$(SEMANTIC_FILE))
 EXECUTOR_DIR := $(CORE_DIR)/executor
 EXECUTOR_FILE += print_binary_tree.c
 EXECUTOR_FILE += executor.c
-EXECUTOR_FILE += children.c
-EXECUTOR_FILE += check_path.c
 EXECUTOR_FILE += heredoc/heredoc.c
 EXECUTOR_FILE += heredoc/heredoc_tool.c
 EXECUTOR_FILE += execute_ast/execute_complete_command.c
@@ -120,8 +118,11 @@ EXECUTOR_FILE += execute_ast/execute_assignment_word.c
 EXECUTOR_FILE += redirection/handle_redirect.c
 EXECUTOR_FILE += redirection/redirects_great.c
 EXECUTOR_FILE += redirection/redirects_less.c
+EXECUTOR_FILE += redirection/redirection_tools.c
 EXECUTOR_FILE += lauch_process/lauch_process.c
 EXECUTOR_FILE += lauch_process/lauch_process_child_shell.c
+EXECUTOR_FILE += lauch_process/execute_in_child_process.c
+EXECUTOR_FILE += lauch_process/children.c
 EXECUTOR_FILE += lauch_process/lauch_process_parent_shell.c
 EXECUTOR := $(addprefix $(EXECUTOR_DIR)/,$(EXECUTOR_FILE))
 #Line Edition
@@ -299,6 +300,10 @@ INTERN_ENVIRONMENT_VAR_FILE += environment_var.c
 INTERN_ENVIRONMENT_VAR_FILE += internal_var.c
 INTERN_ENVIRONMENT_VAR_FILE += internal_var2.c
 INTERN_ENVIRONMENT_VAR = $(addprefix $(INTERN_ENVIRONMENT_VAR_DIR)/,$(INTERN_ENVIRONMENT_VAR_FILE))
+# Hash table
+HASH_TABLE_DIR := $(FEATURES_DIR)/hash_table
+HASH_TABLE_FILE += hash_table_tools.c
+HASH_TABLE = $(addprefix $(HASH_TABLE_DIR)/,$(HASH_TABLE_FILE))
 # SUM-UP FEATUREs
 FEATURES += $(BUILT_IN)
 FEATURES += $(HISTORY_MANAGEMENT)
@@ -310,6 +315,7 @@ FEATURES += $(EXPANSION)
 FEATURES += $(AUTO_COMPLETION)
 FEATURES += $(INHIBITOR)
 FEATURES += $(INTERN_ENVIRONMENT_VAR)
+FEATURES += $(HASH_TABLE)
 ########################### Create utility_FILE files ##############################
 UTILITY_DIR := src/utility
 UTILITY_FILE += get_var.c
