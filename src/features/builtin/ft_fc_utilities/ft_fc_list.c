@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 18:11:36 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/01 12:17:03 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/13 22:46:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	fc_print(int *r_ind, int ops)
 {
-	int i;		
+	int i;
 
 	i = r_ind[0];
 	if (r_ind[0] < r_ind[1])
@@ -36,7 +36,7 @@ static void	fc_print(int *r_ind, int ops)
 	ft_printf("\t%s\n", g_shell.history->hist[r_ind[0] - 1]);
 }
 
-static int fc_list_init_range(int *r_ind, char *first, char *last)
+static int	fc_list_init_range(int *r_ind, char *first, char *last)
 {
 	r_ind[0] = g_shell.history->curr;
 	r_ind[1] = g_shell.history->curr;
@@ -63,7 +63,7 @@ static int fc_list_init_range(int *r_ind, char *first, char *last)
 	return (EXIT_SUCCESS);
 }
 
-int	fc_list(int ops, char *first, char *last)
+int			fc_list(int ops, char *first, char *last)
 {
 	int	r_ind[2];
 

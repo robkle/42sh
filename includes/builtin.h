@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 20:46:33 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 22:51:34 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	clean_up_ft_fc_struct(t_ft_fc instance);
 int fc_parse_input(t_process *p, t_ft_fc *self);
 int				fc_error_no_command_found(void);
 int				fc_error_history_specification_out_of_range(void);
+int			fc_error_invalid_option(char op);
+int			fc_error_option_requires_an_argument(void);
 int				fc_range(char *str);
 // int				fc_exec(int ops, char *editor, char **block);
 int				fc_s_op(char *replace, char *first);
@@ -91,6 +93,8 @@ int				fc_e_op(int ops, char *editor, char *first, char *last);
 int				fc_list(int ops, char *first, char *last);
 int				ft_fc(t_process *p);
 void			ft_fc_execute(char *cmd);
+int fc_check_editor(char *editor);
+char		*fc_return_cmd(char *str);
 /*
 ** End of Fc built-in
 */
@@ -114,6 +118,7 @@ int				remove_all(t_alias ***aliaslist);
 void			set_aliastable(void);
 int				print_all(void);
 int				count_arr(void);
+
 /*
 ** End Alias built-in
 */
