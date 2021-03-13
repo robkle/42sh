@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 16:49:44 by tango             #+#    #+#             */
-/*   Updated: 2021/03/14 01:09:38 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 01:17:52 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ void		init_signal_messages(char *sig_msgs[SIGNAL_NUMBER_OSX])
 	sig_msgs[15] = SIGURG_MSG;
 	return (init_signal_messages2(sig_msgs));
 }
-

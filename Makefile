@@ -71,6 +71,7 @@ LEXER_PARSER_FILE += token_creator.c
 LEXER_PARSER_FILE += getting_user_input.c
 LEXER_PARSER_FILE += analyzing_phase.c
 LEXER_PARSER_FILE += analyzing_phase_helper.c
+LEXER_PARSER_FILE += token_tools.c
 LEXER_PARSER := $(addprefix $(LEXER_PARSER_DIR)/,$(LEXER_PARSER_FILE))
 #Parser
 SEMANTIC_DIR := $(CORE_DIR)/semantic
@@ -250,8 +251,6 @@ ALIAS := $(addprefix $(ALIAS_DIR)/,$(ALIAS_FILE))
 # Signal
 SIGNAL_DIR := $(FEATURES_DIR)/signal
 SIGNAL_FILE += sig_handler.c
-SIGNAL_FILE += eof_handler.c
-SIGNAL_FILE += post_signals.c
 SIGNAL_FILE += init_signal_messages.c
 SIGNAL := $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_FILE))
 # Expansion
