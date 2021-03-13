@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 21:09:04 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/12 21:09:19 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 17:45:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	duplicating_file_descriptor(t_redi *redi, int old_fd)
 {
 	int			duplicated_fd;
-	struct stat	statbuf;
+	// struct stat	statbuf;
 
-	if (fstat(ft_atoi(redi->word), &statbuf) == -1 || ft_atoi(redi->word) > 2)
+	if (redi->n && fcntl(ft_atoi(redi->n), F_GETFD) == -1)
 	{
 		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42sh", redi->word);
 		return (EXIT_FAILURE);
@@ -32,19 +32,13 @@ int	duplicating_file_descriptor(t_redi *redi, int old_fd)
 
 int	close_file_descriptor(t_redi *redi, int old_fd)
 {
-	int			dev_null;
-	struct stat	statbuf;
-
-	if (redi->n && fstat(ft_atoi(redi->n), &statbuf) == -1)
+	if (redi->n && fcntl(ft_atoi(redi->n), F_GETFD) == -1)
 	{
 		ft_dprintf(2, "%s: %s: Bad file descriptor\n", "42s", redi->n);
 		return (EXIT_FAILURE);
 	}
-	dev_null = open("/dev/null", O_WRONLY);
 	if (redi->n)
-		dup2(dev_null, ft_atoi(redi->n));
-	else
-		dup2(dev_null, old_fd);
-	close(dev_null);
+		old_fd = ft_atoi(redi->n);
+	close(old_fd);
 	return (EXIT_SUCCESS);
 }
