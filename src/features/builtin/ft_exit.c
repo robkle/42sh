@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/13 16:26:36 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 20:10:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** @ delete enviroment
 ** delete the existing enviroment
 */
+
 static void delete_enviroment(char **env) {
 	int i;
 
@@ -24,10 +25,14 @@ static void delete_enviroment(char **env) {
 		ft_strdel(&env[i]);
 	free(env);
 }
-int			ft_exit_internal(int opt)
+
+// 1. checking only the first arg
+// 2. 
+
+int			ft_exit_internal(int ret_value)
 {
 	if (g_shell.pipe_indicator == 1)
-		return (opt);
+		return (ret_value);
 	/*
 	** history part
 	*/
@@ -67,13 +72,29 @@ int			ft_exit_internal(int opt)
 	*/
 	delete_builtin_commands();
 	
-	exit(opt);
+	exit(ret_value);
 	return (EXIT_FAILURE);
 }
 
 int			ft_exit(t_process *p)
 {
-	if (p->ac > 1)
-		return (ft_exit_internal(ft_atoi(p->av[1])));
+	char	ret_value;
+
+	if (p->ac == 2)
+	{
+		if (is_made_of_digits(p->av[1]))
+			ret_value = (char)ft_atoi(p->av[1]);
+		else
+		{
+			ft_dprintf(STDERR_FILENO, "%s: exit: %s: numeric argument required\n", SHELL_NAME, p->av[1]);
+			ret_value = EXIT_FAILURE;
+		}
+		return (ft_exit_internal((int)ret_value));
+	}
+	else if (p->ac > 2)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: exit: too many arguments\n", SHELL_NAME);
+		return (EXIT_FAILURE);
+	}
 	return (ft_exit_internal(g_shell.exit_status));
 }

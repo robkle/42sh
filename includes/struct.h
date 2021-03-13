@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 13:45:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 22:55:06 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,6 @@ typedef enum
 {
 	CLIP_SAVE = 0,
 	CLIP_TAKE,
-	CLIP_DELT
 }	t_clipping_options;
 
 typedef enum

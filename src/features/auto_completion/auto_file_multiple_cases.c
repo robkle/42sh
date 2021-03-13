@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auto_file_multiple_cases.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:59:10 by marvin            #+#    #+#             */
-/*   Updated: 2020/12/27 17:49:00 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 21:18:11 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		auto_complete_upto(size_t len, t_auto *auto_com)
 	largest_str = (char*)auto_com->largest_content;
 	target_for_printing = ft_strsub(largest_str, \
 			(int)ft_strlen(auto_com->target_str), len);
-    paste(auto_com->editor, NULL, 0, target_for_printing);
+    paste(auto_com->editor, NULL, target_for_printing);
 	delete_status_new_pos(&auto_com->status);
 	ft_strdel(&target_for_printing);
 	return (clear_auto_struct(auto_com));
