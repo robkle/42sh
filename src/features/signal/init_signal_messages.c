@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 16:49:44 by tango             #+#    #+#             */
-/*   Updated: 2021/03/13 23:19:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 01:04:02 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void init_signal_messages2(char *sig_msgs[SIGNAL_NUMBER_OSX])
 
 void init_signal_messages(char *sig_msgs[SIGNAL_NUMBER_OSX])
 {
-	ft_printf("here\n");
 	sig_msgs[0] = SIGHUP_MSG;
 	sig_msgs[1] = SIGINT_MSG;
 	sig_msgs[2] = SIGQUIT_MSG;
