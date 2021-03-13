@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:37:39 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/08 20:59:51 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 16:24:44 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ void	execute_pipe_sequence(t_astnode *ast, t_job *j)
 
 	j->stdout = STDOUT_FILENO;
 	if (ast->type == AST_pipe_sequence)
+	{
+		g_shell.pipe_indicator = 1;
 		execute_pipe_sequence_helper(pipefd, saved, ast, j);
+		g_shell.pipe_indicator = 0;
+	}
 	else
 		execute_command(ast, j);
 }

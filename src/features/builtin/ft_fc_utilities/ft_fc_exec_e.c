@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:30:35 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 00:28:54 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 21:50:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,7 @@ int fc_e_op(int ops, char *editor, char *first, char *last)
 		free(g_shell.history->tmp);
 	g_shell.history->tmp = cmd;
 	ft_fc_execute(cmd);
+	// if (cmd)
+	// 	free(cmd);
 	return (EXIT_SUCCESS);
 }

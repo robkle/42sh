@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:23:54 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/04 15:48:25 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/13 17:25:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int			ft_echo(t_process *p)
 	int		is_opt_n;
 	int		is_stop;
 
+	if (fcntl(STDOUT_FILENO, F_GETFD) == -1)
+	{
+		ft_dprintf(2, "%s: echo: Write error: Bad file descriptor\n", SHELL_NAME);
+		return (1);
+	}
 	i = 0;
 	is_opt_n = FALSE;
 	is_stop = FALSE;

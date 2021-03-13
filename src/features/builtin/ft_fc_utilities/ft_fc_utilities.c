@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 17:55:41 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 13:48:52 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 20:56:47 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,6 @@ int fc_error_no_command_found(void)
 	ft_dprintf(2, "%s: fc: no command found\n", SHELL_NAME);
 	return (EXIT_FAILURE);
 }
-
-// void fc_cleanup(char *editor, char **block)
-// {
-// 	if (editor)
-// 		free(editor);
-// 	if (block[FIRST])
-// 		free(block[FIRST]);
-// 	if (block[LAST])
-// 		free(block[LAST]);
-// 	if (block[REPLACE])
-// 		free(block[REPLACE]);
-// }
 
 t_token *tokenizing_service_fc(char *first_str)
 {

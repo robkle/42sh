@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/12 23:42:03 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 20:34:28 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	reset_value(t_token **tk_lst, t_astnode **ast)
 	g_shell.first_heredoc = NULL;
 	g_shell.history->tmp = NULL;
 	g_shell.signal_indicator = 0;
+	g_shell.pipe_indicator = 0;
 }
 
 static int	shell(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/02 11:28:18 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/13 16:26:36 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void delete_enviroment(char **env) {
 }
 int			ft_exit_internal(int opt)
 {
+	if (g_shell.pipe_indicator == 1)
+		return (opt);
 	/*
 	** history part
 	*/

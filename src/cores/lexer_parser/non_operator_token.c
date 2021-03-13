@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:51:17 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 01:47:42 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 19:16:58 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_token	*select_non_operator_token(
 	str = ft_strndup(&input[head], tail - head);
 	if (ft_strequ(str, EOF_VALUE))
 		return (non_operator_token(str, TOKEN_EOF));
-	if (is_made_of_digits(str) && input[tail] &&
+	if (is_made_of_digits(str) && ft_atoi(str) < 10 && input[tail] &&
 		(input[tail] == '<' || input[tail] == '>'))
 		return (non_operator_token(str, TOKEN_IO_NUMBER));
 	if (is_assignment_token(str, prev_tk))

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 13:50:03 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 14:50:41 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 20:33:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,37 +56,37 @@ int fc_error_option_requires_an_argument(void)
 	return (fc_print_usage());
 }
 
-int		fc_get_options(char *str, char *str_next, int *ops, char **editor)
-{
-	int i;
-	int op;
+// int		fc_get_options(char *str, char *str_next, int *ops, char **editor)
+// {
+// 	int i;
+// 	int op;
 
-	i = 0;
-	while (str[++i])
-	{
-		op = fc_get_option(str[i]);
-		if (op == 0)
-			return (fc_error_invalid_option(str[i]));
-		else if (op & FC_E_OP)
-		{
-			if (str_next || str[i + 1])
-			{
-				char *temp = *editor;
-				*editor = (str[i + 1]) ? ft_strdup(&str[i + 1]) : ft_strdup(str_next);
-				free(temp);
-				*ops |= op;
-				if (str[i + 1])
-					return (EXIT_SUCCESS);
-				return (2);
-			}
-			else
-				return (fc_error_option_requires_an_argument());
-		}
-		else
-			*ops |= op;
-	}
-	return (EXIT_SUCCESS);
-}
+// 	i = 0;
+// 	while (str[++i])
+// 	{
+// 		op = fc_get_option(str[i]);
+// 		if (op == 0)
+// 			return (fc_error_invalid_option(str[i]));
+// 		else if (op & FC_E_OP)
+// 		{
+// 			if (str_next || str[i + 1])
+// 			{
+// 				char *temp = *editor;
+// 				*editor = (str[i + 1]) ? ft_strdup(&str[i + 1]) : ft_strdup(str_next);
+// 				free(temp);
+// 				*ops |= op;
+// 				if (str[i + 1])
+// 					return (EXIT_SUCCESS);
+// 				return (2);
+// 			}
+// 			else
+// 				return (fc_error_option_requires_an_argument());
+// 		}
+// 		else
+// 			*ops |= op;
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
 
 
 int fc_exchange_editor(t_ft_fc *self, int op, char *str_next, char *parsed_str)
@@ -126,27 +126,27 @@ int		fc_get_options(char *str, char *str_next, t_ft_fc *self)
 	return (EXIT_SUCCESS);
 }
 
-int fc_parse_input(t_process *p, int *ops, char **editor, char **block)
-{
-	int i;
-	int ret;
+// int fc_parse_input(t_process *p, int *ops, char **editor, char **block)
+// {
+// 	int i;
+// 	int ret;
 
-	i = 0;
-	while (p->av[++i] && p->av[i][0] == '-' && p->av[i][1])
-	{
-		if (ft_num_check(p->av[i])) // need to check this later
-			break;
-		ret = fc_get_options(p->av[i], p->av[i + 1], ops, editor);
-		if (ret == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		else if (ret == 2)
-			i++;
-	}
-	(i < p->ac && p->av[i] && ft_strchr(p->av[i], '=')) ? block[REPLACE] = ft_strdup(p->av[i++]) : 0;
-	(i < p->ac && p->av[i]) ? block[FIRST] = ft_strdup(p->av[i++]) : 0;
-	(i < p->ac && p->av[i]) ? block[LAST] = ft_strdup(p->av[i]) : 0;
-	return (EXIT_SUCCESS);
-}
+// 	i = 0;
+// 	while (p->av[++i] && p->av[i][0] == '-' && p->av[i][1])
+// 	{
+// 		if (ft_num_check(p->av[i])) // need to check this later
+// 			break;
+// 		ret = fc_get_options(p->av[i], p->av[i + 1], ops, editor);
+// 		if (ret == EXIT_FAILURE)
+// 			return (EXIT_FAILURE);
+// 		else if (ret == 2)
+// 			i++;
+// 	}
+// 	(i < p->ac && p->av[i] && ft_strchr(p->av[i], '=')) ? block[REPLACE] = ft_strdup(p->av[i++]) : 0;
+// 	(i < p->ac && p->av[i]) ? block[FIRST] = ft_strdup(p->av[i++]) : 0;
+// 	(i < p->ac && p->av[i]) ? block[LAST] = ft_strdup(p->av[i]) : 0;
+// 	return (EXIT_SUCCESS);
+// }
 
 int fc_parse_input(t_process *p, t_ft_fc *self)
 {
@@ -156,7 +156,7 @@ int fc_parse_input(t_process *p, t_ft_fc *self)
 	i = 0;
 	while (p->av[++i] && p->av[i][0] == '-' && p->av[i][1])
 	{
-		if (ft_num_check(p->av[i])) // need to check this later
+		if (ft_num_check(p->av[i]))
 			break;
 		ret = fc_get_options(p->av[i], p->av[i + 1], self);
 		if (ret == EXIT_FAILURE)
