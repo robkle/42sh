@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 23:20:08 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/12 23:31:19 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 23:10:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	init_environment_variable_stuff(char **envp)
 int	init_signal_stuff(void)
 {
 	sig_controller(PARENT);
-	init_signal_messages();
+	// init_signal_messages();
 	return (EXIT_SUCCESS);
 }
 

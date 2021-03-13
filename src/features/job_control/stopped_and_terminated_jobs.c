@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/12 22:53:14 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 23:35:14 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,21 @@ void	mark_process_status_exit(t_process *p, int status)
 
 void	mark_process_status_signal(t_process *p, int status)
 {
+	static char *sig_msgs[SIGNAL_NUMBER_OSX];
+
 	p->completed = 1;
+	if (!ft_strequ(sig_msgs[0], SIGHUP_MSG))
+		init_signal_messages(sig_msgs);
 	if (WIFEXITED(status))
 		g_shell.exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
 		g_shell.exit_status = 128 + WTERMSIG(status);
-		ft_printf("%s: %d\n", g_shell.sig_msgs[WTERMSIG(status) - 1],
-			WTERMSIG(status));
+		if (WTERMSIG(status) - 1 <= SIGNAL_NUMBER_OSX)
+			ft_printf("%s: %d\n", sig_msgs[WTERMSIG(status) - 1],
+				WTERMSIG(status));
+		else
+			ft_printf("%s: %d\n", SHELL_NAME, WTERMSIG(status));
 	}
 }
 
