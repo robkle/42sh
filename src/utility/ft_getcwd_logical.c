@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getcwd_logical.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 15:12:46 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/04 15:17:15 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/14 01:14:42 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	shell program ends
 */
 
-char			*ft_getcwd_logical(void)
+char	*ft_getcwd_logical(void)
 {
 	char		*pwd;
 	t_stat		lg;
@@ -31,4 +31,3 @@ char			*ft_getcwd_logical(void)
 		return (NULL);
 	return (pwd);
 }
-
