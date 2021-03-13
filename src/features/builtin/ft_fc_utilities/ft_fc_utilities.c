@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 17:55:41 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 22:10:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 22:18:00 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ t_token *tokenizing_service_fc(char *first_str)
 		}
 		tokenizing_service_helper(&instance);
 	}
+	(instance.whole_cmd) ? free(instance.whole_cmd) : 0;
 	return (instance.token_stream);
 }
 
