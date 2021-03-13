@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/11 21:16:00 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 13:45:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -491,5 +491,12 @@ typedef struct get_line_service
 	t_l	line_edition;
 	char	buf[BUFF_LINE_EDITION];
 }	t_get_line_service;
+
+typedef struct s_ft_fc
+{
+	int ops;
+	char *editor;
+	char *blocks[3];
+}	t_ft_fc;
 
 #endif

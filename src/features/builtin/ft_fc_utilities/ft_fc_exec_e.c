@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:30:35 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/07 01:03:27 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 00:28:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static void fc_e_editing_process(char *editor)
 
 	ft_bzero(cmd, 4096);
 	ft_strcpy(cmd, editor);
-	ft_strcat(cmd, " "); //maybe add line break?
+	ft_strcat(cmd, " ");
 	ft_strcat(cmd, FC_EDITING_FILE);
 	ft_fc_execute(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/12 23:37:20 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 23:42:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	reset_value(t_token **tk_lst, t_astnode **ast)
 
 static int	shell(void)
 {
-	t_token *tk_lst;
-	t_astnode *ast;
+	t_token		*tk_lst;
+	t_astnode	*ast;
 
 	tk_lst = NULL;
 	ast = NULL;

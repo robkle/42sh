@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 17:55:41 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/06 16:32:50 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 13:48:52 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int fc_range(char *str)
 
 int fc_error_history_specification_out_of_range(void)
 {
-	ft_dprintf(2, "%s: fc: history specification out of range", SHELL_NAME);
+	ft_dprintf(2, "%s: fc: history specification out of range\n", SHELL_NAME);
 	return (EXIT_FAILURE);
 }
 
@@ -95,54 +95,16 @@ int fc_error_no_command_found(void)
 	return (EXIT_FAILURE);
 }
 
-void fc_cleanup(char *editor, char **block)
-{
-	if (editor)
-		free(editor);
-	if (block[FIRST])
-		free(block[FIRST]);
-	if (block[LAST])
-		free(block[LAST]);
-	if (block[REPLACE])
-		free(block[REPLACE]);
-}
-
-// int ft_fc_get_user_token(t_token **tk_lst, char *first_str)
+// void fc_cleanup(char *editor, char **block)
 // {
-// 	char *whole_cmd;
-// 	char *cmd;
-// 	int ret;
-// 	t_lex_value lex_value;
-
-// 	whole_cmd = NULL;
-// 	ret = EXIT_SUCCESS;
-// 	lex_value = LEX_CMD;
-// 	cmd = ft_strdup(first_str);
-// 	while ("user is editing")
-// 	{
-// 		lex_value = lexical_analysis_and_syntax_analysis(cmd, tk_lst, lex_value, 0);
-// 		if (lex_value == LEX_FAILURE || ft_strequ(cmd, ENTER_KEY))
-// 			free(cmd);
-// 		else
-// 			whole_cmd = ft_strjoin_and_free_2strings(whole_cmd, cmd);
-// 		if (lex_value == LEX_SUCCESS || lex_value == LEX_FAILURE)
-// 		{
-// 			ret = lex_value;
-// 			break ;
-// 		}
-// 		if ((cmd = get_command(lex_value)) == NULL)
-// 		{
-// 			ret = EXIT_FAILURE;
-// 			break ;
-// 		}
-// 	}
-// 	if (whole_cmd)
-// 	{
-// 		if (g_shell.history->tmp)
-// 			free(g_shell.history->tmp);
-// 		g_shell.history->tmp = whole_cmd;
-// 	}
-// 	return (ret);
+// 	if (editor)
+// 		free(editor);
+// 	if (block[FIRST])
+// 		free(block[FIRST]);
+// 	if (block[LAST])
+// 		free(block[LAST]);
+// 	if (block[REPLACE])
+// 		free(block[REPLACE]);
 // }
 
 t_token *tokenizing_service_fc(char *first_str)
@@ -150,20 +112,18 @@ t_token *tokenizing_service_fc(char *first_str)
 	t_tokennizing_service instance;
 
 	init_token_service_struct(&instance);
-	instance.single_cmd = first_str;
-	while (instance.lex_value != LEX_SUCCESS && instance.lex_value != LEX_FAILURE)
+	instance.single_cmd = ft_strdup(first_str);
+	tokenizing_service_helper(&instance);
+	while (instance.lex_value != LEX_SUCCESS &&
+		instance.lex_value != LEX_FAILURE)
 	{
-		instance.lex_value = lexical_and_syntax_analysis(instance.lex_value, instance.single_cmd, &(instance.token_stream));
-		if (instance.lex_value != LEX_FAILURE)
-			instance.whole_cmd = ft_strjoin_and_free_2strings(instance.whole_cmd, instance.single_cmd);
-		else
-			free(instance.single_cmd);
 		if ((instance.single_cmd = get_command(instance.lex_value)) == NULL)
 		{
 			(instance.token_stream) ? clear_token(instance.token_stream) : 0;
 			instance.token_stream = NULL;
 			break ;
 		}
+		tokenizing_service_helper(&instance);
 	}
 	if (instance.whole_cmd)
 		g_shell.history->tmp = instance.whole_cmd;

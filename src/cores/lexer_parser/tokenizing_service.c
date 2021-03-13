@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 13:47:57 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 05:16:26 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 00:17:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,17 @@ void		init_token_service_struct(t_tokennizing_service *self)
 	self->lex_value = LEX_CMD;
 }
 
+void		tokenizing_service_helper(t_tokennizing_service *self)
+{
+	self->lex_value = lexical_and_syntax_analysis(self->lex_value,
+		self->single_cmd, &(self->token_stream));
+	if (self->lex_value != LEX_FAILURE)
+		self->whole_cmd = ft_strjoin_and_free_2strings(
+			self->whole_cmd, self->single_cmd);
+	else
+		free(self->single_cmd);
+}
+
 t_token		*tokenizing_service(void)
 {
 	t_tokennizing_service instance;
@@ -65,13 +76,7 @@ t_token		*tokenizing_service(void)
 			instance.token_stream = NULL;
 			break ;
 		}
-		instance.lex_value = lexical_and_syntax_analysis(instance.lex_value,
-			instance.single_cmd, &(instance.token_stream));
-		if (instance.lex_value != LEX_FAILURE)
-			instance.whole_cmd = ft_strjoin_and_free_2strings(
-				instance.whole_cmd, instance.single_cmd);
-		else
-			free(instance.single_cmd);
+		tokenizing_service_helper(&instance);
 	}
 	if (instance.whole_cmd)
 		g_shell.history->tmp = instance.whole_cmd;

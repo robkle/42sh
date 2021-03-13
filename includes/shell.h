@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/03/12 23:35:20 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 00:17:51 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ t_prompt 				choose_prompt_type(t_lex_value lex, t_phase phase);
 
 // temp;
 t_token *tokenizing_service(void);
+void		tokenizing_service_helper(t_tokennizing_service *self);
 // t_token *lexical_analysis_service(char *input, char *alias, int sub);
 t_token	*lexical_analysis_service(char *input, char *fix_alias_name, int sub);
 int syntax_analysis_service(t_token *token_stream);

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/12 23:11:06 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 13:48:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ int				ft_cd_change_dir(t_cd *cd);
 # define LAST 1
 # define REPLACE 2
 
-void			fc_cleanup(char *editor, char **block);
+void init_ft_fc_struct(t_ft_fc *self);
+void clean_up_ft_fc_struct(t_ft_fc instance);
+
+// void			fc_cleanup(char *editor, char **block);
 int				fc_error_no_command_found(void);
 int				fc_error_history_specification_out_of_range(void);
 int				fc_range(char *str);
