@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_edition.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/03 14:20:43 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/13 21:17:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ int		add_key(char t[], t_l *l);
 int		cutting(t_l *l, int y_dec);
 void	cutting_clipping(t_l *l, int i, int j);
 char	*clipboard(char *str, int opt);
-int		paste(t_l *l, char raw_clip[], int clip_len, char *autocom_clip);
-void	paste_background(t_l *l, int clip_len);
+int		paste(t_l *l, char raw_clip[], char *autocom_clip);
 char	*get_clip_external(char raw_clip[]);
 char	*get_clip_autocom(t_auto *auto_com);
+void	paste_background(t_l *l, int clip_len);
 
 /*
 ** Line Edition Utilities

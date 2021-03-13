@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auto_file_one_case.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:17 by marvin            #+#    #+#             */
-/*   Updated: 2020/12/27 17:49:08 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 21:18:03 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			auto_complete_cmd_file(t_auto *auto_com)
 
 	complete_word = (char*)auto_com->list->content;
     word_to_fulfill = complete_word + ft_strlen(auto_com->target_str);
-    paste(auto_com->editor, NULL, 0, word_to_fulfill);
+    paste(auto_com->editor, NULL, word_to_fulfill);
 	if (complete_word[ft_strlen(complete_word) - 1] != '/')
 		auto_add_one_extra_char(auto_com->editor, ' ');
 	return (clear_auto_struct(auto_com));

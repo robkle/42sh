@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/11 21:16:00 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 20:54:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,6 @@ typedef enum
 {
 	CLIP_SAVE = 0,
 	CLIP_TAKE,
-	CLIP_DELT
 }	t_clipping_options;
 
 typedef enum
