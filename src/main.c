@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/12 22:11:08 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 16:25:10 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void reset_value(t_token **tk_lst, t_astnode **ast)
 	g_shell.first_heredoc = NULL;
 	g_shell.history->tmp = NULL;
 	g_shell.signal_indicator = 0;
+	g_shell.pipe_indicator = 0;
 }
 
 static int		shell(void)
@@ -134,6 +135,7 @@ int				init_shell(char **envp)
 	**	or exec_builtin() in lauch_proces_child_shell.c
 	*/
 	g_shell.builtins = set_builtin_commands();
+	g_shell.pipe_indicator = 0;
 	return (EXIT_SUCCESS);
 }
 
