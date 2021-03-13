@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:13:02 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/28 14:02:33 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 15:51:37 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ int			left_key(t_l *l)
 	if (l->x == 0 && l->y != 0)
 	{
 		l->y--;
-		l->x = l->co - 1;
+		//l->x = l->co - 1;//OLD
+		l->x = ft_atoi(l->lc[l->y]) - 1;//NEW
 		apply_termcap_str("up", 0, 0);
 		apply_termcap_str("ch", 0, l->co - 1);
+		apply_termcap_str("ch", 0, ft_atoi(l->lc[l->y]) - 1);//NEW
 	}
 	else
 	{
@@ -85,11 +87,17 @@ int			left_key(t_l *l)
 
 int			right_key(t_l *l)
 {
+	int	i;
+
 	if (l->rs)
 		ft_reverse_search_reset(l);
-	if (l->x + (l->y * l->co) - l->pmpt == l->nb)
+	i = ft_index_calc(l);//NEW
+	//if (l->x + (l->y * l->co) - l->pmpt == l->nb)//OLD
+	if (i == l->nb)//NEW
 		return (EXIT_SUCCESS);
-	if (l->x != l->co - 1)
+	//if (l->x != l->co - 1)//OLD
+	if ((l->x != ft_atoi(l->lc[l->y]) - 1) || \
+	(l->x == ft_atoi(l->lc[l->y]) - 1 && !l->lc[l->y + 1]))//NEW
 	{
 		apply_termcap_str("nd", 0, 0);
 		l->x++;
