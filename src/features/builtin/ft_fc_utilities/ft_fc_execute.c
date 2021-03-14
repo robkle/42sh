@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 22:20:16 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 02:05:50 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:27:37 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_token	*tokenizing_service_fc(char *first_str)
 {
 	t_tokennizing_service instance;
 
-	init_token_service_struct(&instance);
+	init_tokenizing_service_struct(&instance);
 	instance.single_cmd = ft_strdup(first_str);
 	tokenizing_service_helper(&instance);
 	while (instance.lex_value != LEX_SUCCESS &&

@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 13:47:57 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 00:17:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:30:44 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_lex_value	lex_value(t_token *tk, t_lex_value prev_lex_value)
+static t_lex_value	lex_value(t_token *tk, t_lex_value prev_lex_value)
 {
 	if (tk == NULL)
 		return (prev_lex_value == LEX_CMD) ? LEX_SUCCESS : prev_lex_value;
@@ -25,7 +25,7 @@ t_lex_value	lex_value(t_token *tk, t_lex_value prev_lex_value)
 	return (LEX_SUCCESS);
 }
 
-t_lex_value	lexical_and_syntax_analysis(
+static t_lex_value	lexical_and_syntax_analysis(
 	t_lex_value prev_lex_value, char *input, t_token **tk_lst)
 {
 	t_token *token_stream;
@@ -43,7 +43,7 @@ t_lex_value	lexical_and_syntax_analysis(
 		prev_lex_value));
 }
 
-void		init_token_service_struct(t_tokennizing_service *self)
+void			init_tokenizing_service_struct(t_tokennizing_service *self)
 {
 	self->whole_cmd = NULL;
 	self->single_cmd = NULL;
@@ -51,7 +51,7 @@ void		init_token_service_struct(t_tokennizing_service *self)
 	self->lex_value = LEX_CMD;
 }
 
-void		tokenizing_service_helper(t_tokennizing_service *self)
+void			tokenizing_service_helper(t_tokennizing_service *self)
 {
 	self->lex_value = lexical_and_syntax_analysis(self->lex_value,
 		self->single_cmd, &(self->token_stream));
@@ -62,11 +62,11 @@ void		tokenizing_service_helper(t_tokennizing_service *self)
 		free(self->single_cmd);
 }
 
-t_token		*tokenizing_service(void)
+t_token			*tokenizing_service(void)
 {
 	t_tokennizing_service instance;
 
-	init_token_service_struct(&instance);
+	init_tokenizing_service_struct(&instance);
 	while (instance.lex_value != LEX_SUCCESS &&
 		instance.lex_value != LEX_FAILURE)
 	{

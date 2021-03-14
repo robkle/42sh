@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 20:29:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/14 01:04:39 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:57:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,7 @@
 # define SIGUSR2_MSG "User defined signal 2"
 
 void	sig_controller(int option);
-void	default_post_sigint(t_l *l);
-char	*dquote_post_sigint(t_l *l);
-void	post_sigwinch(t_l *l);
-int		iseof_in_line(char *line);
-void	eof_handler(t_l *l);
 void	init_signal_messages(char *sig_msgs[SIGNAL_NUMBER_OSX]);
+void	sig_int_handler(int sig);
 
 #endif

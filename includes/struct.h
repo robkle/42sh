@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 02:02:09 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:43:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 # include <sys/types.h>
 # include <termios.h>
 # include "libft.h"
+#include "constant.h"
 
 # define BUFF_LINE_EDITION 8
+
+
 
 /*
 ** ============================== CORE STRUCT =================================
@@ -508,5 +511,6 @@ typedef struct s_ft_fc_excecute_service
 	t_heredoc	*shell_heredoc_lst;
 
 }	t_ft_fc_excecute_service;
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:06:11 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 18:56:41 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:13:48 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ t_astnode	*filename(t_token **token);
 t_astnode	*io_here(t_token **token);
 t_astnode	*here_end(t_token **token);
 t_astnode	*newline_list(t_token **token);
-
-void	linebreak(t_token **token);
-
+void		linebreak(t_token **token);
 t_astnode	*separator_op(t_token **token);
 t_astnode	*separotor(t_token **token);
 t_astnode	*sequential_sep(t_token **token);
@@ -83,6 +81,6 @@ t_astnode	*clear_ast(t_astnode *ast);
 /*
 ** Debug tree
 */
-void        printBinaryTree(t_astnode *t);
+void		printBinaryTree(t_astnode *t);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 09:43:57 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/26 18:19:20 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:40:27 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,11 @@
 # define PMPT_GRSS "\033[92m"
 # define PMPT_TMGT "\033[95m"
 # define PMPT_SKYB "\033[96m"
+
+# define F_TYPE_MASK 0170000
+# define KEY 1
+# define VAL 0
+# define TRUE 1
+# define FALSE 0
 
 #endif
