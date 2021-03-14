@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/12 20:25:19 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/14 21:12:46 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		home_key(t_l *l);
 int		end_key(t_l *l);
 int		ctrl_k(t_l *l, int y_dec);
 int		ctrl_l(t_l *l, int clip_len, int i);
-int		ctrl_left(t_l *l, int y_dec);
+int		ctrl_left(t_l *l/*, int y_dec*/);
 int		ctrl_right(t_l *l);
 int		ctrl_up(t_l *l);
 int		ctrl_down(t_l *l);

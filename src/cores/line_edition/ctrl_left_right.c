@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:15:39 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/28 13:56:31 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 21:17:51 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	move_cursor_right(t_l *l, int y_inc, int i)
+/*static void	move_cursor_right(t_l *l, int y_inc, int i)
 {
 	if (i + l->pmpt - (l->x + (l->y * l->co)) >= l->co - l->x)
 	{
@@ -46,9 +46,29 @@ int			ctrl_right(t_l *l)
 		i++;
 	}
 	return (EXIT_SUCCESS);
+}*/
+
+int	ctrl_right(t_l *l)
+{
+	int	index;
+
+	index = ft_index_calc(l);
+	if (index < l->nb && !ft_isspace(l->line[index]) && \
+	ft_isspace(l->line[index - 1]))
+	{
+		right_key(l);
+		index++;
+	}
+	while (index < l->nb && !(!ft_isspace(l->line[index]) && \
+	ft_isspace(l->line[index - 1])))
+	{
+		right_key(l);
+		index++;
+	}
+	return (EXIT_SUCCESS);
 }
 
-static void	ctrl_left_for_zero(t_l *l, int y_dec)
+/*static void	ctrl_left_for_zero(t_l *l, int y_dec)
 {
 	l->x = l->pmpt;
 	l->y = 0;
@@ -93,6 +113,30 @@ int			ctrl_left(t_l *l, int y_dec)
 		if ((i + l->pmpt) % l->co == 0)
 			y_dec++;
 		i--;
+	}
+	return (EXIT_SUCCESS);
+}*/
+
+int		ctrl_left(t_l *l)
+{
+	int	i;
+	int	index;
+
+	i = 0;
+	while (ft_isspace(l->line[i]))
+		i++;
+	index = ft_index_calc(l);
+	if (index > i && !ft_isspace(l->line[index]) && \
+	ft_isspace(l->line[index - 1]))
+	{
+		left_key(l);
+		index--;
+	}
+	while (index > i && !(!ft_isspace(l->line[index]) && \
+	ft_isspace(l->line[index - 1])))
+	{
+		left_key(l);
+		index--;
 	}
 	return (EXIT_SUCCESS);
 }

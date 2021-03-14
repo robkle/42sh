@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:13:02 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/13 15:51:37 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/14 16:24:31 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	bs_key_str(t_l *l)
 {
 	int				i;
+	int				index;
 
 	if (l->y == 0)
 	{
@@ -24,12 +25,16 @@ static void	bs_key_str(t_l *l)
 	}
 	else
 	{
-		ft_putstr(&l->line[l->x + (l->co * l->y) - l->pmpt]);
-		i = l->x + (l->co * l->y) - 2 - l->pmpt;
+		index = ft_index_calc(l);//NEW
+		//ft_putstr(&l->line[l->x + (l->co * l->y) - l->pmpt]);//OLD
+		ft_putstr(&l->line[index]);//NEW
+		//i = l->x + (l->co * l->y) - 2 - l->pmpt;//OLD
+		i = index - 2;//NEW
 		if (l->x == 0)
 		{
-			l->x = l->co - 1;
 			l->y--;
+			//l->x = l->co - 1;//OLD
+			l->x = ft_atoi(l->lc[l->y]) - 1;//NEW
 		}
 		else
 			l->x--;
@@ -50,7 +55,8 @@ int			bs_key(t_l *l)
 		if (l->x == 0 && l->y != 0)
 		{
 			apply_termcap_str("up", 0, 0);
-			apply_termcap_str("ch", 0, l->co);
+			//apply_termcap_str("ch", 0, l->co);//OLD
+			apply_termcap_str("ch", 0, ft_atoi(l->lc[l->y - 1]) - 1);//NEW
 		}
 		else
 			apply_termcap_str(LEFT, 0, 0);
@@ -74,7 +80,7 @@ int			left_key(t_l *l)
 		//l->x = l->co - 1;//OLD
 		l->x = ft_atoi(l->lc[l->y]) - 1;//NEW
 		apply_termcap_str("up", 0, 0);
-		apply_termcap_str("ch", 0, l->co - 1);
+		//apply_termcap_str("ch", 0, l->co - 1);//OLD
 		apply_termcap_str("ch", 0, ft_atoi(l->lc[l->y]) - 1);//NEW
 	}
 	else
