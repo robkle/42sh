@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 23:20:08 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 23:10:35 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 01:36:27 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	init_terminal_stuff(void)
 		return (EXIT_FAILURE);
 	while (ft_tcgetpgrp(g_shell.shell_terminal) !=
 			(g_shell.shell_pgid = getpgrp()))
-		kill (-g_shell.shell_pgid, SIGTTIN);
+		kill(-g_shell.shell_pgid, SIGTTIN);
 	return (EXIT_SUCCESS);
 }
 
@@ -39,11 +39,10 @@ int	init_environment_variable_stuff(char **envp)
 int	init_signal_stuff(void)
 {
 	sig_controller(PARENT);
-	// init_signal_messages();
 	return (EXIT_SUCCESS);
 }
 
-int init_job_control_stuff(void)
+int	init_job_control_stuff(void)
 {
 	g_shell.shell_pgid = getpgrp();
 	if (setpgid(g_shell.shell_pgid, g_shell.shell_pgid) == -1)
@@ -65,7 +64,7 @@ int	init_history_stuff(void)
 	return (EXIT_SUCCESS);
 }
 
-int init_other_stuff(void)
+int	init_other_stuff(void)
 {
 	g_shell.alias = NULL;
 	g_shell.signal_indicator = 0;

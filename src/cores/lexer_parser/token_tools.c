@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 01:30:02 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 01:30:04 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 01:37:21 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_token *find_current_token_in_new_stream(t_token *tk_lst)
+t_token	*find_current_token_in_new_stream(t_token *tk_lst)
 {
 	t_token *current_tk;
 	t_token *temp;
@@ -28,7 +28,7 @@ t_token *find_current_token_in_new_stream(t_token *tk_lst)
 	return (current_tk);
 }
 
-t_token *find_prev_token_in_new_stream(t_token *tk_lst)
+t_token	*find_prev_token_in_new_stream(t_token *tk_lst)
 {
 	t_token *prev_tk;
 	t_token *temp;

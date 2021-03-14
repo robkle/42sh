@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 22:55:06 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:02:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -497,5 +497,16 @@ typedef struct s_ft_fc
 	char *editor;
 	char *blocks[3];
 }	t_ft_fc;
+
+typedef struct s_ft_fc_excecute_service
+{
+	t_token		*tk_lst;
+	t_astnode	*ast;
+	t_heredoc	*fc_heredoc;
+	t_heredoc	*fc_heredoc_lst;
+	t_heredoc	*shell_first_heredoc;
+	t_heredoc	*shell_heredoc_lst;
+
+}	t_ft_fc_excecute_service;
 
 #endif
