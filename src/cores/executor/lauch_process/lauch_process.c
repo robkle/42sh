@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/10 21:56:34 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 15:24:24 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int		is_execute_on_parent_process(int foreground, char *cmd_name)
 {
 	if (!foreground)
+		return (0);
+	if (g_shell.pipe_indicator)
 		return (0);
 	if (cmd_name &&
 		!ft_strequ(cmd_name, "exit") &&
