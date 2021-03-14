@@ -132,6 +132,7 @@ unsigned int	hash_index(char *name);
 int				remove_hashentries(void);
 t_hash			*create_hash_node(char *name, char *path, int hits);
 unsigned int	hash_index(char *name);
+int				exists_in_hashtable(char *name, char *path, int index);
 /*
 ** End Hash built-in
 */
