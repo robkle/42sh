@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 04:00:07 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/12 22:57:21 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 21:05:39 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	ft_jobs_printing_with_argv(char **argv)
 			{
 				status = job_is_stopped(j) ? "Stopped(SIGTSTP)" : "Running";
 				format_job_info(j, status, 1);
+				if (j->notified == 0)
+					j->notified = 1;
 			}
 		}
 	}
@@ -46,6 +48,8 @@ void	ft_jobs_printing_without_argv(void)
 		{
 			status = job_is_stopped(j_ptr) ? "Stopped(SIGTSTP)" : "Running";
 			format_job_info(j_ptr, status, 1);
+			if (j_ptr->notified == 0)
+				j_ptr->notified = 1;
 		}
 		j_ptr = j_ptr->next;
 	}
