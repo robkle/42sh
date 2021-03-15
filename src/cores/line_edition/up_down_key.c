@@ -102,13 +102,11 @@ int			up_down(t_l *l, char t[])
 		ft_strdel(&tmp);
 	else if (ft_strequ(t, UP_ARROW_KEY))
 	{
+		if (tmp != NULL)
+			ft_strdel(&tmp);
 		if (g_shell.history->hst == g_shell.history->curr && l->line &&
 			ft_isprint(l->line[0]))
-		{
-			if (tmp != NULL)
-				ft_str
 			tmp = ft_strdup(l->line);
-		}
 		up_key(l);
 	}
 	else if (ft_strequ(t, DOWN_ARROW_KEY))
