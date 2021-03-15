@@ -70,5 +70,6 @@ int			paste(t_l *l, char raw_clip[], int clip_len, char *autocom_clip)
 	if (l->starting_row < ft_row_count(l) - 1)//NEW
 		wind_up_cursor(l/*, clip_len*/);
 	paste_background(l, clip_len);
+	ft_strdel(&clip);
 	return (EXIT_SUCCESS);
 }
