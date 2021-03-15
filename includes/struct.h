@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 02:43:09 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/15 23:45:12 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,66 @@
 # include <sys/types.h>
 # include <termios.h>
 # include "libft.h"
-#include "constant.h"
-
-# define BUFF_LINE_EDITION 8
-
-
+# include "constant.h"
 
 /*
 ** ============================== CORE STRUCT =================================
 */
 
+/*
+**									TOKEN MEANING
+**	TOKEN_APS, // &				control op
+**	TOKEN_SEMI, // ;			control op
+**	TOKEN_PIPE, // |			control	op
+**	TOKEN_OB, // (				not support
+**	TOKEN_CB, // )				not support
+**	TOKEN_WORD					support
+**	TOKEN_ASSIGNMENT_WORD		support
+**	TOKEN_NAME					not support
+**	TOKEN_NEWLINE,				support
+**	TOKEN_IO_NUMBER,			support
+**	TOKEN_AND_IF, // &&			control op
+**	TOKEN_OR_IF, // ||			control op
+**	TOKEN_DSEMI, // ;;			not support
+**	TOKEN_GREAT, // >			reidrect op
+**	TOKEN_DGREAT, // >>			redirect op
+**	TOKEN_LESS, // <			redirect op
+**	TOKEN_DLESS, // <<			redirect op
+**	TOKEN_LESSAND, // <&		redirect op
+**	TOKEN_GREATAND, // >&		redirect op
+**	TOKEN_LESSGREAT, // <>		not support
+**	TOKEN_DLESSDASH, // <<-		not support
+**	TOKEN_CLOBBER, // >|		not support
+**	TOKEN_EOF, //				eof only
+**	TOKEN_BROKEN, //			a string with quote contain eof
+*/
+
 typedef enum
 {
-	TOKEN_APS, // &		control op
-	TOKEN_SEMI, // ;	control op
-	TOKEN_PIPE, // |	control	op
-	TOKEN_OB, // (  // not support
-	TOKEN_CB, // )   //not support
+	TOKEN_APS,
+	TOKEN_SEMI,
+	TOKEN_PIPE,
+	TOKEN_OB,
+	TOKEN_CB,
 	TOKEN_WORD,
-	TOKEN_ASSIGNMENT_WORD, //not support
-	TOKEN_NAME, // not support
-	TOKEN_NEWLINE, // not yet, it depends
+	TOKEN_ASSIGNMENT_WORD,
+	TOKEN_NAME,
+	TOKEN_NEWLINE,
 	TOKEN_IO_NUMBER,
-	TOKEN_AND_IF, // &&		control op
-	TOKEN_OR_IF, // ||		control op
-	TOKEN_DSEMI, // ;;  // not support
-	TOKEN_GREAT, // >						reidrect op
-	TOKEN_DGREAT, // >>						redirect op
-	TOKEN_LESS, // <						redirect op
-	TOKEN_DLESS, // <<						redirect op
-	TOKEN_LESSAND, // <&					redirect op
-	TOKEN_GREATAND, // >&					redirect op
-	TOKEN_LESSGREAT, // <>  // not support
-	TOKEN_DLESSDASH, // <<- // not support
-	TOKEN_CLOBBER, // >|  // not support
-	TOKEN_EOF, //eof only
-	TOKEN_BROKEN, // a string with quote contain eof, and quote is not closed
+	TOKEN_AND_IF,
+	TOKEN_OR_IF,
+	TOKEN_DSEMI,
+	TOKEN_GREAT,
+	TOKEN_DGREAT,
+	TOKEN_LESS,
+	TOKEN_DLESS,
+	TOKEN_LESSAND,
+	TOKEN_GREATAND,
+	TOKEN_LESSGREAT,
+	TOKEN_DLESSDASH,
+	TOKEN_CLOBBER,
+	TOKEN_EOF,
+	TOKEN_BROKEN,
 }	t_token_type;
 
 typedef struct			s_token
@@ -89,14 +113,6 @@ typedef struct			s_astnode
 	struct s_astnode	*middle;
 }						t_astnode;
 
-/*
-**============================= FEATURE STRUCT ================================
-*/
-
-/*
-** Job, process, redi, heredoc struct
-*/
-
 typedef struct			s_heredoc
 {
 	char				*doc;
@@ -117,44 +133,12 @@ typedef struct			s_assignment
 	struct s_assignment	*next;
 }						t_assignment;
 
-typedef struct			s_process
-{
-	int					ac;
-	char				**av;
-	pid_t				pid;
-	int					stdin;
-	int					stdout;
-	int					stderr;
-	t_redi				*first_redi;
-	t_assignment		*first_assignment;
-	char				completed;
-	char				stopped;
-	int					status;
-	struct s_process	*next;
-}						t_process;
-
-typedef struct			s_job
-{
-	char				*command;
-	pid_t				pgid;
-	char				notified;
-	struct termios		term;
-	t_process			*first_process;
-	int					stdin;
-	int					stdout;
-	int					stderr;
-	int					foreground;
-	char				forked;
-	int					id;
-	int					pipe_fd_closer[2];
-	struct s_job		*next;
-}						t_job;
-
-typedef struct dirent	t_dirent;
-typedef struct stat		t_stat;
+/*
+** ============================= User input ===================================
+*/
 
 /*
-** Line Edit struct
+** Line Edition
 */
 
 typedef enum
@@ -186,7 +170,7 @@ typedef enum
 	PHASE_CMDSUBST,
 	PHASE_BRACEPARAM,
 	PHASE_STOP,
-	PHASE_HEREDOC // temp
+	PHASE_HEREDOC
 }	t_phase;
 
 typedef enum
@@ -229,15 +213,94 @@ typedef struct			s_l
 	int					y;
 	t_prompt			promp_type;
 	char				phase;
-	// int					down; // sanitized
-	// int					eof_flag; // sanitized
 	char				*rev_sr;
 	int					rs;
 	int					rs_i;
-	// t_auto				auto_com; // delete this later
 }						t_l;
 
 typedef struct termios	t_term;
+typedef struct dirent	t_dirent;
+typedef struct stat		t_stat;
+
+/*
+** Tokenizing
+*/
+
+typedef struct			s_get_line_service
+{
+	t_l					line_edition;
+	char				buf[BUFF_LINE_EDITION];
+}						t_get_line_service;
+
+typedef struct			s_get_command_service
+{
+	t_phase				phase[20];
+	int					i;
+	char				*cmd;
+	char				*line;
+	t_prompt			prompt_type;
+}						t_get_command_service;
+
+typedef struct			s_lexical_service
+{
+	int					i;
+	t_token				*stream;
+	t_token				*tk;
+	t_token				*prev_tk;
+	int					keep_alias_substitution;
+}						t_lexical_service;
+
+typedef struct			s_syntax_service
+{
+	t_token				*cur_tk;
+	t_token				*prev_tk;
+}						t_syntax_service;
+
+typedef struct			s_tokennizing_service
+{
+	char				*whole_cmd;
+	char				*single_cmd;
+	int					ret;
+	t_token				*token_stream;
+	t_lex_value			lex_value;
+}						t_tokennizing_service;
+
+/*
+**============================= FEATURE STRUCT ================================
+*/
+
+typedef struct			s_process
+{
+	int					ac;
+	char				**av;
+	pid_t				pid;
+	int					stdin;
+	int					stdout;
+	int					stderr;
+	t_redi				*first_redi;
+	t_assignment		*first_assignment;
+	char				completed;
+	char				stopped;
+	int					status;
+	struct s_process	*next;
+}						t_process;
+
+typedef struct			s_job
+{
+	char				*command;
+	pid_t				pgid;
+	char				notified;
+	struct termios		term;
+	t_process			*first_process;
+	int					stdin;
+	int					stdout;
+	int					stderr;
+	int					foreground;
+	char				forked;
+	int					id;
+	int					pipe_fd_closer[2];
+	struct s_job		*next;
+}						t_job;
 
 /*
 ** Auto completion
@@ -270,11 +333,11 @@ typedef enum
 **	char			cwd[]					: current working dir
 **	char			full_path[]				:
 **	char			*typed_str				: str which will be diagnosed to
-											specify the target for
-											auto_completion
+**											specify the target for
+**											auto_completion
 **	char			*target_str				: the extracted str from
-											typed_str in
-											auto_completion context
+**											typed_str in
+**											auto_completion context
 **	char			*path_env				:
 **	long			status					:
 */
@@ -317,12 +380,12 @@ typedef struct			s_auto_grid
 
 typedef struct			s_history
 {
-	char		**hist;
-	char		*tmp;
-	int			hst;
-	int			curr;
-	int			hstsize;
-	char		savedfile[256];
+	char				**hist;
+	char				*tmp;
+	int					hst;
+	int					curr;
+	int					hstsize;
+	char				savedfile[256];
 }						t_history;
 
 /*
@@ -334,19 +397,19 @@ typedef struct			s_history
 
 typedef struct			s_builtin_options
 {
-	char			*opt_set;
-	char			set_len;
-	unsigned int	operand_count;
-	unsigned long	applied;
-	char			invalid_opt;
-	int				opt;
+	char				*opt_set;
+	char				set_len;
+	unsigned int		operand_count;
+	unsigned long		applied;
+	char				invalid_opt;
+	int					opt;
 }						t_opt;
 
 typedef struct			s_var
 {
-	char *name;
-	char *value;
-	char exported;
+	char				*name;
+	char				*value;
+	char				exported;
 }						t_var;
 
 /*
@@ -358,10 +421,10 @@ typedef struct			s_var
 
 typedef	struct			s_export
 {
-	char			*opt_set;
-	int				opt;
-	char			synopsis;
-	char			*av[4096];
+	char				*opt_set;
+	int					opt;
+	char				synopsis;
+	char				*av[4096];
 }						t_export;
 
 /*
@@ -378,11 +441,11 @@ typedef enum
 
 typedef struct			s_cd
 {
-	char			*directory;
-	char			*curpath;
-	char			*prev_curpath;
-	char			print_info;
-	t_opt			opt;
+	char				*directory;
+	char				*curpath;
+	char				*prev_curpath;
+	char				print_info;
+	t_opt				opt;
 }						t_cd;
 
 /*
@@ -435,11 +498,11 @@ typedef enum
 
 typedef struct			s_hash
 {
-	char			*name;
-	char			*path;
-	int				hits;
-	struct s_hash	*next;
-	struct s_hash	*prev;
+	char				*name;
+	char				*path;
+	int					hits;
+	struct s_hash		*next;
+	struct s_hash		*prev;
 }						t_hash;
 
 /*
@@ -453,64 +516,21 @@ typedef struct			s_builtin
 	struct s_builtin	*next;
 }						t_builtin;
 
-
-// new
-typedef struct s_tokennizing_service // move later
+typedef struct			s_ft_fc
 {
-	char *whole_cmd;
-	char *single_cmd;
-	int ret;
-	t_token *token_stream;
-	t_lex_value lex_value;
-}	t_tokennizing_service;
+	int					ops;
+	char				*editor;
+	char				*blocks[3];
+}						t_ft_fc;
 
-typedef struct s_lexical_service
+typedef struct			s_ft_fc_excecute_service
 {
-	int i;
-	t_token *stream;
-	t_token *tk;
-	t_token *prev_tk;
-	int keep_alias_substitution;
-}	t_lexical_service;
-
-typedef struct s_syntax_service
-{
-	t_token *cur_tk;
-	t_token *prev_tk;
-}	t_syntax_service;
-
-typedef struct s_get_command_service
-{
-	t_phase phase[20];
-	int i;
-	char *cmd;
-	char *line;
-	t_prompt prompt_type;	
-}	t_get_command_service;
-
-typedef struct get_line_service
-{
-	t_l	line_edition;
-	char	buf[BUFF_LINE_EDITION];
-}	t_get_line_service;
-
-typedef struct s_ft_fc
-{
-	int ops;
-	char *editor;
-	char *blocks[3];
-}	t_ft_fc;
-
-typedef struct s_ft_fc_excecute_service
-{
-	t_token		*tk_lst;
-	t_astnode	*ast;
-	t_heredoc	*fc_heredoc;
-	t_heredoc	*fc_heredoc_lst;
-	t_heredoc	*shell_first_heredoc;
-	t_heredoc	*shell_heredoc_lst;
-
-}	t_ft_fc_excecute_service;
-
+	t_token				*tk_lst;
+	t_astnode			*ast;
+	t_heredoc			*fc_heredoc;
+	t_heredoc			*fc_heredoc_lst;
+	t_heredoc			*shell_first_heredoc;
+	t_heredoc			*shell_heredoc_lst;
+}						t_ft_fc_excecute_service;
 
 #endif
