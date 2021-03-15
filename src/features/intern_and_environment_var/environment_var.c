@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:11:11 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/12 22:48:20 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/15 23:01:25 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	add_environment_var(char *name, char *value)
 	i = -1;
 	while (g_shell.env[++i])
 		new_table[i] = g_shell.env[i];
-	new_table[i] = ft_strbuilder(3, new_table[i], name, "=", value);
+	new_table[i] = (char*)ft_memalloc(sizeof(char) * PATH_MAX);
+	ft_strcpy(new_table[i], name);
+	ft_strcat(new_table[i], "=");
+	ft_strcat(new_table[i], value);
 	new_table[i + 1] = NULL;
 	free(g_shell.env);
 	g_shell.env = new_table;
