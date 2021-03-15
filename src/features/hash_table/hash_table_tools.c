@@ -46,7 +46,7 @@ char	*get_path(t_process *p)
 	{
 		if ((path = find_executable(p->av[0])) != NULL)
 		{
-			add_hashentry(p->av[0], path, 1);
+			add_hashentry(p->av[0], path, 0);
 			free(path);
 			path = is_in_hashtable(p->av[0]);
 		}

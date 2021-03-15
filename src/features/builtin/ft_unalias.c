@@ -32,7 +32,7 @@ int		find_alias(char *alias)
 			i++;
 		}
 	}
-	ft_printf("42sh: unalias: %s: not found\n", alias);
+	ft_dprintf(2, "42sh: unalias: %s: not found\n", alias);
 	return (EXIT_FAILURE);
 }
 
@@ -120,7 +120,7 @@ int		ft_unalias(t_process *c)
 	status = 0;
 	if (c->ac == 1)
 	{
-		ft_printf("unalias: usage: unalias [-a] name [name...]\n");
+		ft_dprintf(2, "unalias: usage: unalias [-a] name [name...]\n");
 		return (EXIT_FAILURE);
 	}
 	else if (c->ac > 1 && ft_strncmp(c->av[1], "-", 1) == 0)
@@ -129,8 +129,8 @@ int		ft_unalias(t_process *c)
 			return (remove_all(&g_shell.alias));
 		else
 		{
-			ft_printf("42sh: unalias: %s: invalid option\n", c->av[1]);
-			ft_printf("unalias: usage: unalias [-a] name [name...]\n");
+			ft_dprintf(2, "42sh: unalias: %s: invalid option\n", c->av[1]);
+			ft_dprintf(2, "unalias: usage: unalias [-a] name [name...]\n");
 			return (EXIT_FAILURE);
 		}
 	}

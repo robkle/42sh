@@ -78,6 +78,13 @@ int		print_alias(char *alias)
 		{
 			if (ft_strcmp(g_shell.alias[i]->name, alias) == 0)
 			{
+				if (fcntl(STDOUT_FILENO, F_GETFD) == -1)
+				{
+					ft_dprintf(2, "%s: alias: Write error: ");
+					ft_dprintf(2, "Bad file descriptor\n",
+						SHELL_NAME);
+					return (EXIT_FAILURE);
+				}
 				ft_printf("alias %s='%s'\n", g_shell.alias[i]->name,
 					g_shell.alias[i]->value);
 				return (EXIT_SUCCESS);
@@ -85,7 +92,7 @@ int		print_alias(char *alias)
 			i++;
 		}
 	}
-	ft_printf("42sh: alias: %s: not found\n", alias);
+	ft_dprintf(2, "42sh: alias: %s: not found\n", alias);
 	return (EXIT_FAILURE);
 }
 
@@ -98,9 +105,7 @@ int		alias_loop(t_process *c, int status)
 	returnvalue = 0;
 	while (c->av[i] != NULL)
 	{
-		if (ft_strcmp(c->av[i], "-p") == 0)
-			print_all();
-		else if (ft_strchr(c->av[i], '=') != NULL)
+		if (ft_strchr(c->av[i], '=') != NULL)
 		{
 			if (is_valid_alias_name(c->av[i]) != 0)
 				return (EXIT_FAILURE);
@@ -126,17 +131,6 @@ int		ft_alias(t_process *c)
 		set_aliastable();
 	if (c->ac == 1)
 		return (print_all());
-	else if (c->ac > 1 && ft_strncmp(c->av[1], "-", 1) == 0)
-	{
-		if (ft_strcmp(c->av[1], "-p") == 0)
-			return (print_all());
-		else
-		{
-			ft_printf("42sh: alias: %s: invalid option\n", c->av[1]);
-			ft_printf("alias: usage. alias [-p] [name[=value] ... ]\n");
-			return (EXIT_FAILURE);
-		}
-	}
 	status = alias_loop(c, status);
 	return (status);
 }

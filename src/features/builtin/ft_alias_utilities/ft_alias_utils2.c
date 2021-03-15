@@ -36,14 +36,23 @@ int		print_all(void)
 	int i;
 
 	i = 0;
-	if (g_shell.alias != NULL)
+	if (fcntl(STDOUT_FILENO, F_GETFD) != -1)
 	{
-		while (g_shell.alias[i] != NULL)
+		if (g_shell.alias != NULL)
 		{
-			ft_printf("alias %s='%s'\n", g_shell.alias[i]->name,
-			g_shell.alias[i]->value);
-			i++;
+			while (g_shell.alias[i] != NULL)
+			{
+				ft_printf("alias %s='%s'\n", g_shell.alias[i]->name,
+				g_shell.alias[i]->value);
+				i++;
+			}
 		}
+	}
+	else
+	{
+		ft_dprintf(2, "%s: alias: Write error: Bad file descriptor\n",
+			SHELL_NAME);
+		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }

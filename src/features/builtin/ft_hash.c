@@ -112,7 +112,7 @@ int		hash_loop(t_process *c)
 		}
 		else
 		{
-			ft_printf("hash: %s: not found\n", c->av[i]);
+			ft_dprintf(2, "hash: %s: not found\n", c->av[i]);
 			status = EXIT_FAILURE;
 		}
 	}
@@ -125,7 +125,15 @@ int		ft_hash(t_process *c)
 
 	status = 0;
 	if (c->ac == 1)
+	{
+		if (fcntl(STDOUT_FILENO, F_GETFD) == -1)
+		{
+			ft_dprintf(2, "%s: hash: Write error: Bad file descriptor\n",
+				SHELL_NAME);
+			return (EXIT_FAILURE);
+		}
 		return (print_hashtable());
+	}
 	else if (c->ac == 2 && ft_strcmp(c->av[1], "-r") == 0)
 		return (remove_hashentries());
 	else if (c->ac != 2 && ft_strcmp(c->av[1], "-r") == 0)
