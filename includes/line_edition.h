@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/14 21:12:46 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/15 12:53:02 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		add_key(char t[], t_l *l);
 /*
 ** Copy & Paste
 */
-int		cutting(t_l *l, int y_dec);
+int		cutting(t_l *l/*, int y_dec*/);
 void	cutting_clipping(t_l *l, int i, int j);
 char	*clipboard(char *str, int opt);
 int		paste(t_l *l, char raw_clip[], int clip_len, char *autocom_clip);
@@ -116,6 +116,7 @@ int		ft_count_rows(t_l *l);
 /*
 ** Row count
 */
+int		ft_y_pos(t_l *l, int index);
 int		ft_row_count(t_l *l);
 void	ft_line_count(t_l *l);
 int		ft_index_calc(t_l *l);

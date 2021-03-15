@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 11:41:34 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/14 21:12:12 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/15 12:53:28 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		parse_line_edition_key(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 	if (ft_strequ(buf, BACKSLASH_KEY))
 		return (bs_key(line_edition));
 	else if (ft_strequ(buf, CUT_KEY))
-		return (cutting(line_edition, 0));
+		return (cutting(line_edition/*, 0*/));
 	else if (ft_strequ(buf, PASTE_KEY))
 		return (paste(line_edition, NULL, 0, NULL));
 	else if (ft_strequ(buf, HOME_KEY))

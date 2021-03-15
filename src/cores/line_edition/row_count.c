@@ -6,11 +6,39 @@
 /*   By: rklein <rklein>                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:43:38 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/12 20:38:39 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/15 16:40:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+// Calculates the row in which the given index
+int		ft_y_pos(t_l *l, int index)
+{
+	int i;
+	int	count;
+	int	row;
+
+	count = l->pmpt;
+	i = 0;
+	row = 1;
+	while (l->line[i] && i <= index)
+	{
+		count++;
+		if (l->line[i] == '\n')
+		{
+			row++;
+			count = 0;
+		}
+		else if (count == l->co)
+		{
+			row++;
+			count = 0;
+		}
+		i++;
+	}
+	return (row);
+}
 
 /*Counts the total number of rows of l->line*/ 
 int		ft_row_count(t_l *l)

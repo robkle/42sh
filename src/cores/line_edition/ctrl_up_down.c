@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:16:56 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/13 19:01:13 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/15 09:59:56 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ int				ctrl_down(t_l *l)
 	{
 		apply_termcap_str("do", 0, 0);
 		l->y++;
-		if (ft_atoi(l->lc[l->y]) < ft_atoi(l->lc[l->y - 1]))
+		if (ft_atoi(l->lc[l->y]) < l->x)
 		{
 			l->x = ft_atoi(l->lc[l->y]);
 			apply_termcap_str("ch", 0, l->x);
 		}
+		else
+			apply_termcap_str("ch", 0, l->x);
 	}
 	else
 	{
