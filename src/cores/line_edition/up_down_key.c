@@ -100,14 +100,18 @@ int			up_down(t_l *l, char t[])
 		ft_reverse_search_reset(l);
 	if (t == NULL)
 		ft_strdel(&tmp);
-	else if (t[0] == 27 && t[1] == 91 && t[2] == 'A')
+	else if (ft_strequ(t, UP_ARROW_KEY))
 	{
 		if (g_shell.history->hst == g_shell.history->curr && l->line &&
 			ft_isprint(l->line[0]))
+		{
+			if (tmp != NULL)
+				ft_str
 			tmp = ft_strdup(l->line);
+		}
 		up_key(l);
 	}
-	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
+	else if (ft_strequ(t, DOWN_ARROW_KEY))
 		down_key(l, tmp);
 	return (EXIT_SUCCESS);
 }
