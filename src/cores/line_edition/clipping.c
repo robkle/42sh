@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clipping.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:20:27 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 16:46:56 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 20:54:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ char				*clipboard(char *str, int opt)
 		if (clip)
 			return (clip);
 	}
-	else
-		ft_strdel(&clip);
 	return (NULL);
 }
 

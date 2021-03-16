@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/09 20:30:25 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 22:21:51 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int		alias_requirement(t_lexical_service self, int sub)
 		self.tk->type == TOKEN_WORD &&
 		is_alias(self.tk->data, self.prev_tk))
 		return (1);
-	if (self.keep_alias_substitution && sub == 0 && self.tk->type == TOKEN_WORD && find_alias2(self.tk->data) != NULL)
+	if (self.keep_alias_substitution &&
+		sub == 0 &&
+		self.tk->type == TOKEN_WORD &&
+		find_alias2(self.tk->data) != NULL)
 		return (1);
 	return (0);
 }

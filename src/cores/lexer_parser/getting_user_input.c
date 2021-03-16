@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 18:19:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/11 21:56:54 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:32:44 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	init_get_command_service_struct(
+static void	init_get_command_service_struct(
 	t_get_command_service *self, t_lex_value lex_value)
 {
 	ft_bzero(self->phase, 20);
@@ -22,28 +22,14 @@ void	init_get_command_service_struct(
 	self->prompt_type = choose_prompt_type(lex_value, 0);
 }
 
-char	*destroy_get_command_service_struct(t_get_command_service self)
+static char	*destroy_get_command_service_struct(t_get_command_service self)
 {
 	(self.cmd) ? free(self.cmd) : 0;
 	(self.line) ? free(self.line) : 0;
 	return (NULL);
 }
 
-int need_to_delete_back_slash_and_linefeed(char *str, t_phase phase)
-{
-	int len;
-
-	len = ft_strlen(str);
-	if (phase == PHASE_BACKSLASH)
-		return (1);
-	if (phase == PHASE_QUOTE)
-		return (0);
-	if (phase == PHASE_DQUOTE)
-		return (1);
-	return (0);
-}
-
-char	*get_command(t_lex_value lex_value)
+char		*get_command(t_lex_value lex_value)
 {
 	t_get_command_service self;
 

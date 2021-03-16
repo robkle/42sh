@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/27 15:24:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:48:59 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,11 @@
 # define UTILITIES_H
 # include "libft.h"
 
-# include <stdlib.h>
-# include "libft.h"
-
-# define KEY 1
-# define VAL 0
-
 char		*ft_getcwd_logical(void);
 int			is_made_of_digits(char *data);
 char		*ft_strjoin_and_free_string2(char *string1, char *string2);
 char		*ft_strjoin_and_free_string1(char *string1, char *string2);
 char		*ft_strjoin_and_free_2strings(char *string1, char *string2);
-// int 	set_oldpwd(char pwd[PATH_MAX]);
 void		increment_shlvl(void);
 char		*get_var(char *name, char **lst_var, int keyval);
 int			ft_isspace(int c);
@@ -36,7 +29,6 @@ int			ft_strchr_int(char *str, int c);
 int			ft_num_check(char *str);
 void		ft_swap(int *nums);
 int			ft_lstlen(t_list *head);
-
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strbuilder(int argc, char *str, ...);
 char		*ft_strbuilder_char(char *old, char c);

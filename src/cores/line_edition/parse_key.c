@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_key.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 11:41:34 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/15 12:53:28 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/13 21:18:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		parse_line_edition_key2(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 	else if (ft_strequ(buf, ESC_KEY) && line_edition->rs)
 		return (ft_reverse_search_reset(line_edition));
 	else if (ft_strlen(buf) > 1 && ft_isprint(buf[0]))
-		return (paste(line_edition, buf, 0, NULL));
+		return (paste(line_edition, buf, NULL));
 	return (EXIT_SUCCESS);
 }
 
@@ -60,7 +60,7 @@ int		parse_line_edition_key(char buf[BUFF_LINE_EDITION], t_l *line_edition)
 	else if (ft_strequ(buf, CUT_KEY))
 		return (cutting(line_edition/*, 0*/));
 	else if (ft_strequ(buf, PASTE_KEY))
-		return (paste(line_edition, NULL, 0, NULL));
+		return (paste(line_edition, NULL, NULL));
 	else if (ft_strequ(buf, HOME_KEY))
 		return (home_key(line_edition));
 	else if (ft_strequ(buf, END_KEY))

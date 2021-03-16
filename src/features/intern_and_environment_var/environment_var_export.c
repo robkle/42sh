@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jump_quote.c                                       :+:      :+:    :+:   */
+/*   environment_var_export.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/30 06:30:22 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/25 19:24:00 by dthan            ###   ########.fr       */
+/*   Created: 2021/03/12 22:48:08 by dthan             #+#    #+#             */
+/*   Updated: 2021/03/12 22:48:22 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void jump_quote(char *input, int *i, char quote_type)
+int		is_eligible_to_export_to_env(t_var var)
 {
-	(*i)++;
-	while(input[*i] && input[*i] != quote_type)
-		(*i)++;
+	if (var.name && var.value && var.exported)
+		return (1);
+	return (0);
 }

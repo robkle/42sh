@@ -16,7 +16,7 @@ int		is_valid_alias_char(int c)
 {
 	if (c == '/' || c == '$' || c == '`' || c == '=' || c == '"' || c == '\''
 	|| c == '\\' || is_metacharacter(c) == 1)
-	{		
+	{
 		return (0);
 	}
 	return (1);
@@ -31,7 +31,7 @@ int		is_valid_alias_name(char *alias)
 	alias_name = set_name(alias);
 	if ((ft_strcmp(alias_name, "\0") == 0) || alias_name == NULL)
 	{
-		ft_printf("42sh: alias: %s: not found\n", alias);
+		ft_dprintf(2, "42sh: alias: %s: not found\n", alias);
 		free(alias_name);
 		return (EXIT_FAILURE);
 	}
@@ -39,7 +39,7 @@ int		is_valid_alias_name(char *alias)
 	{
 		if (is_valid_alias_char(alias_name[i]) != 1)
 		{
-			ft_printf("42sh: alias: %s: invalid alias name\n", alias_name);
+			ft_dprintf(2, "42sh: alias: %s: invalid alias name\n", alias_name);
 			free(alias_name);
 			return (EXIT_FAILURE);
 		}
