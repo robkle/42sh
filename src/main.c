@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/13 20:34:28 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/16 22:57:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	shell(void)
 	{
 		reset_value(&tk_lst, &ast);
 		do_job_notification();
-		print_info();
+		// print_info();
 		if ((tk_lst = tokenizing_service()) == NULL)
 			continue ;
 		print_token(tk_lst);
@@ -48,7 +48,7 @@ static int	shell(void)
 		if (find_heredoc(ast) == EXIT_FAILURE)
 			continue ;
 		g_shell.first_heredoc = g_shell.heredoc_lst;
-		printBinaryTree(ast);
+		// printBinaryTree(ast);
 		executor(ast);
 	}
 	return (0);
