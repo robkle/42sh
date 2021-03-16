@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:10:13 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/03 15:42:37 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/13 16:52:19 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,16 @@ int					end_key(t_l *l)
 	if (l->rs)
 		ft_reverse_search_reset(l);
 	home_key(l);
-	l->y = (l->nb + l->pmpt) / l->co;
-	l->x = (l->nb + l->pmpt) % l->co;
+	i = 0;
+	while (++i <= l->nb)
+		right_key(l);
+	/*l->y = (l->nb + l->pmpt) / l->co;//OLD
+	//l->y = ft_row_count(l) - 1;//NEW
+	l->x = (l->nb + l->pmpt) % l->co;//OLD
+	//l->x = ft_cursor_x(l);//NEW
 	i = l->y;
 	while (i--)
 		apply_termcap_str("do", 0, 0);
-	apply_termcap_str("ch", 0, l->x);
+	apply_termcap_str("ch", 0, l->x);*/
 	return (EXIT_SUCCESS);
 }

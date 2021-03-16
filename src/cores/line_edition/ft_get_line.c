@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/07 03:32:40 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/16 16:14:39 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void		init_line_edition(t_l *line_edition, t_prompt prompt_type)
 	line_edition->y = 0;
 	line_edition->promp_type = prompt_type;
 	line_edition->rs = 0;
+	line_edition->lc = NULL;//NEW
 }
 
 /*
@@ -126,6 +127,9 @@ static void	ft_read_input(t_get_line_service *self, t_phase *phase, t_lex_value 
 {
 	while (read(STDIN_FILENO, self->buf, BUFF_LINE_EDITION) != -1)
 	{
+		if (g_shell.signal_indicator == SIGWINCH)
+			post_sigwinch(&(self->line_edition));
+		ft_line_count(&(self->line_edition));//NEW
 		if (g_shell.signal_indicator == SIGINT)
 		{
 			prepare_breaking_loop_due_to_signal(&(self->line_edition), 1);
@@ -181,5 +185,6 @@ char	*ft_get_line(
 	init_line_edition(&(instance.line_edition), prompt_type);
 	ft_read_input(&instance, phase, lex_value);
 	restore_term(&(instance.line_edition));
+	ft_arraydel(instance.line_edition.lc);//NEW
 	return (instance.line_edition.line);
 }

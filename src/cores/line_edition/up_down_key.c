@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   up_down_key.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/02 10:35:44 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/16 20:54:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,18 @@ int			ft_count_rows(t_l *l)
 static void	up_down_key_apply_statuses(t_l *l)
 {
 	int				i;
-	int				line_rows;
+	int				row_nb;
 	int				starting_row_from_top;
 	int				new_starting_row;
 
-	line_rows = ft_count_rows(l);
+	//line_rows = ft_count_rows(l);//OLD
+	row_nb = ft_row_count(l) - 1;//NEW
+	l->y = row_nb;//NEW
+	l->x = ft_cursor_x(l);//NEW
+	l->nb = ft_strlen(l->line);//NEW
 	new_starting_row = l->starting_row;
-	if (l->starting_row < line_rows)
-		new_starting_row = line_rows;
+	if (l->starting_row < row_nb)
+		new_starting_row = row_nb;
 	starting_row_from_top = l->total_row - l->starting_row;
 	i = get_current_row() - starting_row_from_top;
 	while (i-- > 0)
@@ -96,14 +100,16 @@ int			up_down(t_l *l, char t[])
 		ft_reverse_search_reset(l);
 	if (t == NULL)
 		ft_strdel(&tmp);
-	else if (t[0] == 27 && t[1] == 91 && t[2] == 'A')
+	else if (ft_strequ(t, UP_ARROW_KEY))
 	{
+		if (tmp != NULL)
+			ft_strdel(&tmp);
 		if (g_shell.history->hst == g_shell.history->curr && l->line &&
 			ft_isprint(l->line[0]))
 			tmp = ft_strdup(l->line);
 		up_key(l);
 	}
-	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
+	else if (ft_strequ(t, DOWN_ARROW_KEY))
 		down_key(l, tmp);
 	return (EXIT_SUCCESS);
 }

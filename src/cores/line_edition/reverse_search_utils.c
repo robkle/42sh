@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/28 14:06:41 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/15 11:52:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ void		ft_reverse_search_clear(t_l *l)
 	int	starting_row_from_top;
 	int	new_starting_row;
 
-	line_rows = l->rs ? ft_reverse_search_count_rows(l) : ft_count_rows(l);
+	//line_rows = l->rs ? ft_reverse_search_count_rows(l) : ft_count_rows(l);//OLD
+	line_rows = l->rs ? ft_reverse_search_count_rows(l) : ft_row_count(l);//NEW
+	if (!l->rs)//NEW
+	{
+		l->y = line_rows - 1;//NEW
+		l->x = ft_cursor_x(l);//NEW
+		l->nb = ft_strlen(l->line);//NEW
+	}
 	new_starting_row = l->starting_row;
 	if (l->starting_row < line_rows)
 		new_starting_row = line_rows;

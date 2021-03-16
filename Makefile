@@ -144,6 +144,7 @@ LINE_EDITION_FILE += home_end_key.c
 LINE_EDITION_FILE += left_right_bs_key.c
 LINE_EDITION_FILE += reverse_search.c
 LINE_EDITION_FILE += reverse_search_utils.c
+LINE_EDITION_FILE += row_count.c
 LINE_EDITION_FILE += term_attr.c
 LINE_EDITION_FILE += up_down_key.c
 # LINE_EDITION_FILE += carriage_return.c
@@ -253,6 +254,7 @@ ALIAS := $(addprefix $(ALIAS_DIR)/,$(ALIAS_FILE))
 SIGNAL_DIR := $(FEATURES_DIR)/signal
 SIGNAL_FILE += sig_handler.c
 SIGNAL_FILE += init_signal_messages.c
+SIGNAL_FILE += post_sigwinch.c
 SIGNAL := $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_FILE))
 # Expansion
 EXPANSION_DIR := $(FEATURES_DIR)/expansion

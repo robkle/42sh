@@ -204,6 +204,7 @@ typedef enum
 typedef struct			s_l
 {
 	char				*line;
+	char				**lc;
 	int					nb;
 	int					co;
 	int					total_row;
