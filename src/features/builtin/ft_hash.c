@@ -66,25 +66,6 @@ int		print_hashtable(void)
 	return (EXIT_SUCCESS);
 }
 
-int		exists_in_hashtable(char *name, char *path, int index)
-{
-	t_hash *tmp;
-
-	tmp = g_shell.hashtable[index];
-	while (tmp != NULL)
-	{
-		if (ft_strcmp(tmp->name, name) == 0)
-		{
-			free(tmp->path);
-			tmp->path = ft_strdup(path);
-			tmp->hits = 0;
-			return (0);
-		}
-		tmp = tmp->next;
-	}
-	return (1);
-}
-
 void	add_hashentry(char *name, char *path, int hits)
 {
 	int		index;
@@ -113,21 +94,15 @@ void	add_hashentry(char *name, char *path, int hits)
 	}
 }
 
-int		ft_hash(t_process *c)
+int		hash_loop(t_process *c)
 {
 	int		i;
+	int		status;
 	char	*path;
 
 	i = 0;
-	if (c->ac == 1)
-		return (print_hashtable());
-	else if (c->ac == 2 && ft_strcmp(c->av[1], "-r") == 0)
-		return (remove_hashentries());
-	else if (c->ac != 2 && ft_strcmp(c->av[1], "-r") == 0)
-	{
-		ft_dprintf(2, "42sh: hash: invalid option\nhash usage: hash [-r]\n");
-		return (-1);
-	}
+	path = NULL;
+	status = 0;
 	while (c->av[++i] != NULL)
 	{
 		if ((path = find_executable(c->av[i])))
@@ -136,7 +111,36 @@ int		ft_hash(t_process *c)
 			free(path);
 		}
 		else
-			ft_printf("hash: %s: not found\n", c->av[i]);
+		{
+			ft_dprintf(2, "hash: %s: not found\n", c->av[i]);
+			status = EXIT_FAILURE;
+		}
 	}
-	return (EXIT_SUCCESS);
+	return (status);
+}
+
+int		ft_hash(t_process *c)
+{
+	int		status;
+
+	status = 0;
+	if (c->ac == 1)
+	{
+		if (fcntl(STDOUT_FILENO, F_GETFD) == -1)
+		{
+			ft_dprintf(2, "%s: hash: Write error: Bad file descriptor\n",
+				SHELL_NAME);
+			return (EXIT_FAILURE);
+		}
+		return (print_hashtable());
+	}
+	else if (c->ac == 2 && ft_strcmp(c->av[1], "-r") == 0)
+		return (remove_hashentries());
+	else if (c->ac != 2 && ft_strcmp(c->av[1], "-r") == 0)
+	{
+		ft_dprintf(2, "42sh: hash: invalid option\nhash usage: hash [-r]\n");
+		return (EXIT_FAILURE);
+	}
+	status = hash_loop(c);
+	return (status);
 }

@@ -6,90 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 13:52:13 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/28 13:30:30 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 22:40:58 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-// 3 types of quoting
-// backslah
-// single quote
-// double quote
-
-/*
-** algorithm for removing quote
-** if it is backslash
-** if it is dquote and quote
-*/
-
-char *remove_quoting(char *str, int *i)
-{
-	char quote;
-	char buffer[4096];
-	int j;
-
-	ft_bzero(buffer, 4096);
-	quote = str[*i];
-	j = 0;
-	while (str[++*i])
-	{
-		if (str[*i] == quote && is_real_character(str, *i))
-			break ;
-		buffer[j++] = str[*i];
-	}
-	return (ft_strdup(buffer));
-}
-
-char *remove_quote(char *str)
-{
-	int i;
-	char *new;
-
-	if (!str)
-		return (NULL);
-	i = -1;
-	new = ft_strnew(0);
-	while (str[++i])
-	{
-		if ((str[i] == '\'' ||  str[i] == '"') && is_real_character(str, i))
-		{
-			new = ft_strjoin_and_free_2strings(new, remove_quoting(str, &i));
-			continue;
-		}
-		else if (str[i] == '\\')
-			i++;
-		new = ft_strbuilder_char(new, str[i]);
-	}
-	free(str);
-	return (new);
-}
-
-char *remove_quote2(char str[256])
-{
-	int i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if ((str[i] == '\'' ||  str[i] == '"' || str[i] == '\\') && is_real_character(str, i))
-			ft_strcpy(&str[i], &str[i + 1]);			
-	}
-	return (str);
-}
-
-int is_quoted(char *str)
-{
-	int i;
-
-	i = -1;
-	while (str[++i])
-		if (str[i] == '\\' || str[i] == '\'' ||  str[i] == '"')
-			return (1);
-	return (0);
-}
-
-static void quote_removal_in_av(t_process *p)
+static void	quote_removal_in_av(t_process *p)
 {
 	int i;
 
@@ -101,7 +24,7 @@ static void quote_removal_in_av(t_process *p)
 	}
 }
 
-static void quote_removal_in_redi(t_process *p)
+static void	quote_removal_in_redi(t_process *p)
 {
 	t_redi *redi_ptr;
 
@@ -114,7 +37,7 @@ static void quote_removal_in_redi(t_process *p)
 	}
 }
 
-int quote_removal(t_process *p)
+int			quote_removal(t_process *p)
 {
 	quote_removal_in_av(p);
 	quote_removal_in_redi(p);

@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/04 06:21:11 by dthan             #+#    #+#             */
-/*   Updated: 2021/01/25 07:37:44 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 22:44:26 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int is_quoting_phase(t_phase cur_phase)
+int	is_quoting_phase(t_phase cur_phase)
 {
 	if (cur_phase == PHASE_QUOTE ||
 		cur_phase == PHASE_DQUOTE ||
@@ -21,7 +21,7 @@ int is_quoting_phase(t_phase cur_phase)
 	return (0);
 }
 
-int is_real_character(char *str, int i)
+int	is_real_character(char *str, int i)
 {
 	int ct;
 

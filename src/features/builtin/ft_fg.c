@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 18:13:55 by dthan             #+#    #+#             */
-/*   Updated: 2020/12/18 18:13:57 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/12 22:59:17 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int wake_bg_job_up(t_job *j)
+int	wake_bg_job_up(t_job *j)
 {
 	update_status();
 	if (job_is_completed(j))
@@ -29,7 +29,7 @@ int wake_bg_job_up(t_job *j)
 	return (EXIT_SUCCESS);
 }
 
-int ft_fg_middle_man(t_job *job)
+int	ft_fg_middle_man(t_job *job)
 {
 	if (job != NULL)
 		return (wake_bg_job_up(job));
@@ -53,7 +53,7 @@ int	ft_fg(t_process *p)
 	return (EXIT_FAILURE);
 }
 
-int ft_fg_child()
+int	ft_fg_child(void)
 {
 	ft_dprintf(2, "%s: fg: no job control\n", SHELL_NAME);
 	return (EXIT_FAILURE);

@@ -6,13 +6,13 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 13:47:57 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/07 05:16:26 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 02:30:44 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_lex_value	lex_value(t_token *tk, t_lex_value prev_lex_value)
+static t_lex_value	lex_value(t_token *tk, t_lex_value prev_lex_value)
 {
 	if (tk == NULL)
 		return (prev_lex_value == LEX_CMD) ? LEX_SUCCESS : prev_lex_value;
@@ -25,7 +25,7 @@ t_lex_value	lex_value(t_token *tk, t_lex_value prev_lex_value)
 	return (LEX_SUCCESS);
 }
 
-t_lex_value	lexical_and_syntax_analysis(
+static t_lex_value	lexical_and_syntax_analysis(
 	t_lex_value prev_lex_value, char *input, t_token **tk_lst)
 {
 	t_token *token_stream;
@@ -43,7 +43,7 @@ t_lex_value	lexical_and_syntax_analysis(
 		prev_lex_value));
 }
 
-void		init_token_service_struct(t_tokennizing_service *self)
+void			init_tokenizing_service_struct(t_tokennizing_service *self)
 {
 	self->whole_cmd = NULL;
 	self->single_cmd = NULL;
@@ -51,11 +51,22 @@ void		init_token_service_struct(t_tokennizing_service *self)
 	self->lex_value = LEX_CMD;
 }
 
-t_token		*tokenizing_service(void)
+void			tokenizing_service_helper(t_tokennizing_service *self)
+{
+	self->lex_value = lexical_and_syntax_analysis(self->lex_value,
+		self->single_cmd, &(self->token_stream));
+	if (self->lex_value != LEX_FAILURE)
+		self->whole_cmd = ft_strjoin_and_free_2strings(
+			self->whole_cmd, self->single_cmd);
+	else
+		free(self->single_cmd);
+}
+
+t_token			*tokenizing_service(void)
 {
 	t_tokennizing_service instance;
 
-	init_token_service_struct(&instance);
+	init_tokenizing_service_struct(&instance);
 	while (instance.lex_value != LEX_SUCCESS &&
 		instance.lex_value != LEX_FAILURE)
 	{
@@ -65,13 +76,7 @@ t_token		*tokenizing_service(void)
 			instance.token_stream = NULL;
 			break ;
 		}
-		instance.lex_value = lexical_and_syntax_analysis(instance.lex_value,
-			instance.single_cmd, &(instance.token_stream));
-		if (instance.lex_value != LEX_FAILURE)
-			instance.whole_cmd = ft_strjoin_and_free_2strings(
-				instance.whole_cmd, instance.single_cmd);
-		else
-			free(instance.single_cmd);
+		tokenizing_service_helper(&instance);
 	}
 	if (instance.whole_cmd)
 		g_shell.history->tmp = instance.whole_cmd;

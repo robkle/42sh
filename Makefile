@@ -52,6 +52,10 @@ INCLUDE			:= -Iincludes/ -Ilibft/includes/ -Ift_printf/includes/
 # library
 LIB				:= -L$(LIBFT_DIR)/ -lft -L$(FT_RPINTF_DIR)/ -lftprintf -ltermcap
 ############################ Create core files ################################
+#Init
+INIT_DIR := $(CORE_DIR)/init
+INIT_FILE += init_terminal_stuff.c
+INIT := $(addprefix $(INIT_DIR)/,$(INIT_FILE))
 #Lexer & Parser
 LEXER_PARSER_DIR := $(CORE_DIR)/lexer_parser
 LEXER_PARSER_FILE += tokenizing_service.c
@@ -67,6 +71,7 @@ LEXER_PARSER_FILE += token_creator.c
 LEXER_PARSER_FILE += getting_user_input.c
 LEXER_PARSER_FILE += analyzing_phase.c
 LEXER_PARSER_FILE += analyzing_phase_helper.c
+LEXER_PARSER_FILE += token_tools.c
 LEXER_PARSER := $(addprefix $(LEXER_PARSER_DIR)/,$(LEXER_PARSER_FILE))
 #Parser
 SEMANTIC_DIR := $(CORE_DIR)/semantic
@@ -97,8 +102,6 @@ SEMANTIC := $(addprefix $(SEMANTIC_DIR)/,$(SEMANTIC_FILE))
 EXECUTOR_DIR := $(CORE_DIR)/executor
 EXECUTOR_FILE += print_binary_tree.c
 EXECUTOR_FILE += executor.c
-EXECUTOR_FILE += children.c
-EXECUTOR_FILE += check_path.c
 EXECUTOR_FILE += heredoc/heredoc.c
 EXECUTOR_FILE += heredoc/heredoc_tool.c
 EXECUTOR_FILE += execute_ast/execute_complete_command.c
@@ -120,16 +123,19 @@ EXECUTOR_FILE += execute_ast/execute_assignment_word.c
 EXECUTOR_FILE += redirection/handle_redirect.c
 EXECUTOR_FILE += redirection/redirects_great.c
 EXECUTOR_FILE += redirection/redirects_less.c
+EXECUTOR_FILE += redirection/redirection_tools.c
 EXECUTOR_FILE += lauch_process/lauch_process.c
 EXECUTOR_FILE += lauch_process/lauch_process_child_shell.c
+EXECUTOR_FILE += lauch_process/execute_in_child_process.c
+EXECUTOR_FILE += lauch_process/children.c
 EXECUTOR_FILE += lauch_process/lauch_process_parent_shell.c
 EXECUTOR := $(addprefix $(EXECUTOR_DIR)/,$(EXECUTOR_FILE))
 #Line Edition
 LINE_EDITION_DIR := $(CORE_DIR)/line_edition
 LINE_EDITION_FILE += add_key.c
 LINE_EDITION_FILE += clipping.c
-LINE_EDITION_FILE += ctrl_k.c
-LINE_EDITION_FILE += ctrl_l.c
+LINE_EDITION_FILE += ctrl_k_cut.c
+LINE_EDITION_FILE += ctrl_l_paste.c
 LINE_EDITION_FILE += ctrl_left_right.c
 LINE_EDITION_FILE += ctrl_up_down.c
 LINE_EDITION_FILE += ft_get_line.c
@@ -147,6 +153,7 @@ LINE_EDITION_FILE += line_edition_utilities.c
 LINE_EDITION_FILE += paste_background.c
 LINE_EDITION := $(addprefix $(LINE_EDITION_DIR)/,$(LINE_EDITION_FILE))
 # SUM-UP Core
+CORE += $(INIT)
 CORE += $(LEXER_PARSER)
 CORE += $(SEMANTIC)
 CORE += $(EXECUTOR)
@@ -173,11 +180,15 @@ BUILT_IN_FILE += ft_unsetenv.c
 BUILT_IN_FILE += ft_jobs.c
 BUILT_IN_FILE += ft_fg.c
 BUILT_IN_FILE += ft_fc.c
-BUILT_IN_FILE += ft_fc_utilities/ft_fc_exec.c
 BUILT_IN_FILE += ft_fc_utilities/ft_fc_exec_e.c
 BUILT_IN_FILE += ft_fc_utilities/ft_fc_exec_s.c
+BUILT_IN_FILE += ft_fc_utilities/ft_fc_execute.c
 BUILT_IN_FILE += ft_fc_utilities/ft_fc_utilities.c
+BUILT_IN_FILE += ft_fc_utilities/ft_fc_utilities2.c
 BUILT_IN_FILE += ft_fc_utilities/ft_fc_list.c
+BUILT_IN_FILE += ft_fc_utilities/ft_fc_struct_tools.c
+BUILT_IN_FILE += ft_fc_utilities/ft_fc_parse_input.c
+BUILT_IN_FILE += ft_fc_utilities/ft_fc_errors.c
 BUILT_IN_FILE += ft_bg.c
 BUILT_IN_FILE += ft_alias.c
 BUILT_IN_FILE += ft_unalias.c
@@ -186,8 +197,10 @@ BUILT_IN_FILE += ft_alias_utilities/ft_alias_utils2.c
 BUILT_IN_FILE += ft_set.c
 BUILT_IN_FILE += ft_unset.c
 BUILT_IN_FILE += ft_export.c
+BUILT_IN_FILE += ft_export_utilities/ft_export_parse.c
 BUILT_IN_FILE += ft_hash.c
 BUILT_IN_FILE += ft_hash_utilities/ft_hash_utils.c
+BUILT_IN_FILE += ft_hash_utilities/ft_hash_utils2.c
 BUILT_IN_FILE += ft_type.c
 BUILT_IN_FILE += ft_type_utilities/ft_init_builtin_commands.c
 BUILT_IN := $(addprefix $(BUILT_IN_DIR)/,$(BUILT_IN_FILE))
@@ -271,9 +284,7 @@ INHIBITOR_DIR := $(FEATURES_DIR)/inhibitor
 INHIBITOR_FILE += tool_for_checking.c
 INHIBITOR_FILE += inhibitor_utility.c
 INHIBITOR_FILE += quote_removal.c
-INHIBITOR_FILE += ansi_c.c
-INHIBITOR_FILE += octal_value.c
-INHIBITOR_FILE += hex_value.c
+INHIBITOR_FILE += remove_quoting_tools.c
 INHIBITOR := $(addprefix $(INHIBITOR_DIR)/,$(INHIBITOR_FILE))
 # Auto-complition
 AUTO_COMPLETION_DIR := $(FEATURES_DIR)/auto_completion
@@ -296,9 +307,14 @@ AUTO_COMPLETION := $(addprefix $(AUTO_COMPLETION_DIR)/,$(AUTO_COMPLETION_FILE))
 # Intern var and environment var
 INTERN_ENVIRONMENT_VAR_DIR := $(FEATURES_DIR)/intern_and_environment_var
 INTERN_ENVIRONMENT_VAR_FILE += environment_var.c
+INTERN_ENVIRONMENT_VAR_FILE += environment_var_export.c
 INTERN_ENVIRONMENT_VAR_FILE += internal_var.c
 INTERN_ENVIRONMENT_VAR_FILE += internal_var2.c
 INTERN_ENVIRONMENT_VAR = $(addprefix $(INTERN_ENVIRONMENT_VAR_DIR)/,$(INTERN_ENVIRONMENT_VAR_FILE))
+# Hash table
+HASH_TABLE_DIR := $(FEATURES_DIR)/hash_table
+HASH_TABLE_FILE += hash_table_tools.c
+HASH_TABLE = $(addprefix $(HASH_TABLE_DIR)/,$(HASH_TABLE_FILE))
 # SUM-UP FEATUREs
 FEATURES += $(BUILT_IN)
 FEATURES += $(HISTORY_MANAGEMENT)
@@ -310,6 +326,7 @@ FEATURES += $(EXPANSION)
 FEATURES += $(AUTO_COMPLETION)
 FEATURES += $(INHIBITOR)
 FEATURES += $(INTERN_ENVIRONMENT_VAR)
+FEATURES += $(HASH_TABLE)
 ########################### Create utility_FILE files ##############################
 UTILITY_DIR := src/utility
 UTILITY_FILE += get_var.c

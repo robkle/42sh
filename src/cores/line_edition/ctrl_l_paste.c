@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_l.c                                           :+:      :+:    :+:   */
+/*   ctrl_l_paste.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 01:37:15 by tango             #+#    #+#             */
-/*   Updated: 2021/03/15 16:39:41 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/13 21:17:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static void	paste_apply_screen(t_l *l, char *clip, int i)
 
 static void	wind_up_cursor(t_l *l/*, int clip_len*/)
 {
-	int				starting_row_from_top;
-	int				row_position;
-	int				nb_rewind;
-	int				gap_between_begin_end;
+	int		starting_row_from_top;
+	int		row_position;
+	int		nb_rewind;
+	int		gap_between_begin_end;
 
 	//l->starting_row = (l->nb + clip_len + l->pmpt) / l->co;//OLD
 	l->starting_row = ft_row_count(l) - 1;//NEW
@@ -42,18 +42,31 @@ static void	wind_up_cursor(t_l *l/*, int clip_len*/)
 	}
 }
 
-int			paste(t_l *l, char raw_clip[], int clip_len, char *autocom_clip)
+static char	*get_clip(char raw_clip[], char *autocom_clip)
+{
+	char	*clip;
+
+	if (autocom_clip)
+		clip = ft_strdup(autocom_clip);
+	else if (raw_clip)
+		clip = get_clip_external(raw_clip);
+	else
+	{
+		if (!(clip = clipboard(NULL, CLIP_TAKE)))
+			return (EXIT_SUCCESS);
+		clip = ft_strdup(clip);
+	}
+	return (clip);
+}
+
+int			paste(t_l *l, char raw_clip[], char *autocom_clip)
 {
 	char			*clip;
 	char			*tmp;
 	int				i;
+	int				clip_len;
 
-	if (autocom_clip)
-		clip = autocom_clip;
-	else if (raw_clip)
-		clip = get_clip_external(raw_clip);
-	else if (!(clip = clipboard(NULL, CLIP_TAKE)))
-		return (EXIT_SUCCESS);
+	clip = get_clip(raw_clip, autocom_clip);
 	clip_len = ft_strlen(clip);
 	//i = l->x + (l->y * l->co) - l->pmpt;//OLD
 	i = ft_index_calc(l);//NEW

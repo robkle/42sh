@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by vgrankul          #+#    #+#             */
-/*   Updated: 2021/03/09 20:23:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/14 01:33:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*find_alias_str(char *str)
 	return (NULL);
 }
 
-int	is_alias(char *str, t_token *prev_token)
+int		is_alias(char *str, t_token *prev_token)
 {
 	int i;
 
@@ -40,59 +40,12 @@ int	is_alias(char *str, t_token *prev_token)
 			if (ft_strequ(g_shell.alias[i]->name, str))
 				return (1);
 			i++;
-		}	
+		}
 	}
 	return (0);
 }
 
-int token_stream_length(t_token *lst)
-{
-	int ct;
-
-	ct = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		ct++;
-	}
-	return (ct);
-}
-
-t_token *find_current_token_in_new_stream(t_token *tk_lst)
-{
-	t_token *current_tk;
-	t_token *temp;
-
-	temp = tk_lst;
-	if (tk_lst == NULL)
-		return (NULL);
-	while (temp)
-	{
-		current_tk = temp;
-		temp = temp->next;
-	}
-	return (current_tk);
-}
-
-t_token *find_prev_token_in_new_stream(t_token *tk_lst)
-{
-	t_token *prev_tk;
-	t_token *temp;
-
-	temp = tk_lst;
-	if (tk_lst == NULL || tk_lst->next == NULL)
-		return (NULL);
-	while (temp->next)
-	{
-		prev_tk = temp;
-		temp = temp->next;
-	}
-	return (prev_tk);
-}
-
-// find alias, so we can get it name and value and pass to lexical_analysis_service
-
-t_alias *find_alias2(char *str)
+t_alias	*find_alias2(char *str)
 {
 	int i;
 
@@ -113,7 +66,9 @@ t_token	*alias_substitution(t_lexical_service *lex, char *fix_alias_name)
 
 	new_stream = NULL;
 	alias = find_alias2(lex->tk->data);
-	new_stream = lexical_analysis_service(alias->value, fix_alias_name, (ft_strnequ(lex->tk->data , alias->value, ft_strlen(lex->tk->data))) ? 1 : 0);
+	new_stream = lexical_analysis_service(alias->value, fix_alias_name,
+		(ft_strnequ(lex->tk->data, alias->value,
+		ft_strlen(lex->tk->data))) ? 1 : 0);
 	if (new_stream == NULL)
 	{
 		clear_token(lex->tk);
