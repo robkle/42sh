@@ -55,11 +55,11 @@ void			tokenizing_service_helper(t_tokennizing_service *self)
 {
 	self->lex_value = lexical_and_syntax_analysis(self->lex_value,
 		self->single_cmd, &(self->token_stream));
-	if (self->lex_value != LEX_FAILURE)
-		self->whole_cmd = ft_strjoin_and_free_2strings(
-			self->whole_cmd, self->single_cmd);
-	else
-		free(self->single_cmd);
+	// if (self->lex_value != LEX_FAILURE)
+	self->whole_cmd = ft_strjoin_and_free_2strings(
+		self->whole_cmd, self->single_cmd);
+	// else
+	// 	free(self->single_cmd);
 }
 
 t_token			*tokenizing_service(void)

@@ -17,13 +17,11 @@ static void	reset_value(t_token **tk_lst, t_astnode **ast)
 	(*tk_lst != NULL) ? clear_token((*tk_lst)) : 0;
 	(*ast != NULL) ? clear_ast(*ast) : 0;
 	(g_shell.heredoc_lst != NULL) ? clear_heredoc(g_shell.heredoc_lst) : 0;
-	append_history();
-	(g_shell.history->tmp != NULL) ? free(g_shell.history->tmp) : 0;
+	(g_shell.history->tmp != NULL) ? append_history() : 0;
 	*tk_lst = NULL;
 	*ast = NULL;
 	g_shell.heredoc_lst = NULL;
 	g_shell.first_heredoc = NULL;
-	g_shell.history->tmp = NULL;
 	g_shell.signal_indicator = 0;
 	g_shell.pipe_indicator = 0;
 }

@@ -21,6 +21,52 @@
 	return (ch);
 }*/
 
+/*
+
+open file
+int end_pos = 0;
+get nextline until get_next_line == -1
+contain the line in the buffer[4096];
+first ft_bzero(buffer, 4096);
+while (get_line_buffer(single_line))
+{
+	ft_strcat(buffer, single_line);
+	if ((end_pos = analyzing_the_buffer(&in_quotation)) != -1) --> means add buffer to history line
+	{
+		history[i] = ft_strndup(buffer, end_pos + 1);
+		..... history thing here
+		ft_strcpy(buffer, &buffer[end_pos + 1]);
+	}
+	else
+		ft_strcpy(buffer, "\n");
+}
+
+------
+what it will return:
+	1. return end_pos of the buffer:
+		a, if there is EOF
+			+ if EOF 
+		b, there is no EOF
+int analyzing_the_buffer(char [4096]buffer)
+{
+	int i = -1;
+
+	while (buffer[++i])
+	{
+		if (buffer[i] == 4) --> EOF character
+			return (i);
+		if (is_in_hibitor() == 1)
+		{
+			if (jump_quote() == EXIT_FAILURE))
+				return (-1);
+		}
+		else if ( && and || and | )
+			return (-1);
+	}
+	return (i == 0) ? -1 : i - 1;
+}
+*/
+
 int			hist_quote_jump(char *input, int *i, char qt)
 {
 	*i += 1;
@@ -42,7 +88,7 @@ int			ft_check_cont(char *buffer)
 
 	ch = 0;
 	i = -1;
-	if (buffer[ft_strlen(buffer) - 2] == 4)
+	if (buffer[ft_strlen(buffer) - 1] == 4)
 		return (0);
 	while (buffer[++i])
 	{
