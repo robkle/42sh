@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 01:05:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 01:20:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static int	lauch_process_which_can_change_shell2(t_process *p)
 		return (ft_type(p));
 	else if (ft_strequ(p->av[0], "pwd"))
 		return (ft_pwd(p));
+	else if (ft_strequ(p->av[0], "env"))
+		return (ft_env());
 	return (EXIT_FAILURE);
 }
 
