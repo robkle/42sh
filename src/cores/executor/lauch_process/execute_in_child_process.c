@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:45:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 01:18:43 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 01:25:39 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	is_builtin(char *cmd_name)
 {
 	if (ft_strequ(cmd_name, "exit") ||
 		ft_strequ(cmd_name, "cd") ||
-		ft_strequ(cmd_name, "pwd") ||
 		ft_strequ(cmd_name, "env") ||
 		ft_strequ(cmd_name, "jobs") ||
 		ft_strequ(cmd_name, "fg") ||

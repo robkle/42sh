@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:35:31 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 01:05:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 01:24:51 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_builtin			*set_builtin_commands(void)
 	head = add_node(head, "unset", ft_unset);
 	head = add_node(head, "hash", ft_hash);
 	head = add_node(head, "export", ft_export);
-	head = add_node(head, "pwd", ft_pwd);
 	head = add_node(head, "type", ft_type);
 	return (head);
 }

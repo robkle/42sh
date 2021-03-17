@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 01:13:51 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 01:26:44 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 */
 
 int				ft_env(void);
-int				ft_pwd(t_process *p);
 int				ft_echo(t_process *c);
 int				ft_exit(t_process *p);
 int				ft_cd(t_process *c);

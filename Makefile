@@ -164,7 +164,6 @@ BUILT_IN_DIR := $(FEATURES_DIR)/builtin
 BUILT_IN_FILE += ft_exit.c
 BUILT_IN_FILE += ft_echo.c
 BUILT_IN_FILE += ft_env.c
-BUILT_IN_FILE += ft_pwd.c
 BUILT_IN_FILE += ft_cd.c
 BUILT_IN_FILE += ft_cd_utilities/ft_cd_pwd_handle_builtin_opts.c
 BUILT_IN_FILE += ft_cd_utilities/ft_cd_access.c
