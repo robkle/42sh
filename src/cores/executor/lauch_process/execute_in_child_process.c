@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:45:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 01:16:45 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 01:18:43 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static int	is_builtin(char *cmd_name)
 		ft_strequ(cmd_name, "type") ||
 		ft_strequ(cmd_name, "export") ||
 		ft_strequ(cmd_name, "alias") ||
-		ft_strequ(cmd_name, "unalias"))
+		ft_strequ(cmd_name, "unalias") ||
+		ft_strequ(cmd_name, "fc"))
 		return (1);
 	return (0);
 }
@@ -51,6 +52,8 @@ static int	exec_builtin2(t_process *p)
 		return (ft_alias(p));
 	else if (ft_strequ(p->av[0], "unalias"))
 		return (ft_unalias(p));
+	else if (ft_strequ(p->av[0], "fc"))
+		return (ft_fc(p));
 	return (EXIT_FAILURE);
 }
 
@@ -64,10 +67,6 @@ static int	exec_builtin(t_process *p)
 		return (ft_pwd(p));
 	else if (ft_strequ(p->av[0], "env"))
 		return (ft_env());
-	// else if (ft_strequ(p->av[0], "setenv"))
-	// 	return (ft_setenv(p));
-	// else if (ft_strequ(p->av[0], "unsetenv"))
-	// 	return (ft_unsetenv(p));
 	else if (ft_strequ(p->av[0], "jobs"))
 		return (ft_jobs_child(p));
 	else if (ft_strequ(p->av[0], "fg"))
