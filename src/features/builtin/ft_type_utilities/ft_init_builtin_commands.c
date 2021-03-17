@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:35:31 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/03 16:00:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 01:05:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ t_builtin			*set_builtin_commands(void)
 	head = add_node(head, "alias", ft_alias);
 	head = add_node(head, "unalias", ft_unalias);
 	head = add_node(head, "cd", ft_cd);
-	head = add_node(head, "setenv", ft_setenv);
-	head = add_node(head, "unsetenv", ft_unsetenv);
 	head = add_node(head, "jobs", ft_jobs);
 	head = add_node(head, "fg", ft_fg);
 	head = add_node(head, "bg", ft_bg);

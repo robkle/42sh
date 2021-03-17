@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lauch_process_parent_shell.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 14:46:52 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/18 01:05:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,6 @@ static int	lauch_process_which_can_change_shell(t_process *p)
 		return (ft_unalias(p));
 	else if (ft_strequ(p->av[0], "cd"))
 		return (ft_cd(p));
-	else if (ft_strequ(p->av[0], "setenv"))
-		return (ft_setenv(p));
-	else if (ft_strequ(p->av[0], "unsetenv"))
-		return (ft_unsetenv(p));
 	else if (ft_strequ(p->av[0], "fg"))
 		return (ft_fg(p));
 	else if (ft_strequ(p->av[0], "bg"))
