@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:14:55 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 01:05:15 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 01:22:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int		is_execute_on_parent_process(int foreground, char *cmd_name)
 		!ft_strequ(cmd_name, "echo") &&
 		!ft_strequ(cmd_name, "hash") &&
 		!ft_strequ(cmd_name, "pwd") &&
-		!ft_strequ(cmd_name, "type"))
+		!ft_strequ(cmd_name, "type") &&
+		!ft_strequ(cmd_name, "fc"))
 		return (0);
 	return (1);
 }
