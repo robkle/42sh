@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/17 16:49:35 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/17 17:13:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,8 @@ static void	ft_read_input(t_get_line_service *self, t_phase *phase, t_lex_value 
 {
 	while (read(STDIN_FILENO, self->buf, BUFF_LINE_EDITION) != -1)
 	{
-		if (g_shell.signal_indicator == SIGWINCH)
-			post_sigwinch(&(self->line_edition));
+		//if (g_shell.signal_indicator == SIGWINCH)
+		//	post_sigwinch(&(self->line_edition));
 		ft_line_count(&(self->line_edition));//NEW
 		if (g_shell.signal_indicator == SIGINT)
 		{
