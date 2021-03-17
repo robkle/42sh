@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/15 23:21:54 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/18 01:13:51 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,44 @@ int				ft_pwd(t_process *p);
 int				ft_echo(t_process *c);
 int				ft_exit(t_process *p);
 int				ft_cd(t_process *c);
-int				ft_setenv(t_process *c);
-int				ft_unsetenv(t_process *c);
 int				ft_type(t_process *c);
 int				ft_jobs(t_process *p);
-int				ft_jobs_child(t_process *p);
 int				ft_fg(t_process *p);
-int				ft_fg_child();
 int				ft_bg(t_process *p);
-int				ft_bg_child();
 int				ft_export(int ac, char **av);
-int				export_parse_av(t_export *export, char **av);
-
 int				ft_set(void);
 int				ft_unset(int ac, char **av);
+int				ft_fc(t_process *p);
+int				ft_hash(t_process *c);
+int				ft_alias(t_process *c);
+int				ft_unalias(t_process *c);
+
+/*
+**	Built-in functions for child shell 
+*/
+
+int				ft_jobs_child(t_process *p);
+int				ft_bg_child();
+int				ft_fg_child();
+
+/*
+** Built-in functions no longer in use
+*/
+
+int				ft_setenv(t_process *c);
+int				ft_unsetenv(t_process *c);
 
 /*
 ** Exit built-in
 */
 
 int				ft_exit_internal(int opt);
+
+/*
+**	Export built-in
+*/
+
+int				export_parse_av(t_export *export, char **av);
 
 /*
 ** Cd built-in
@@ -86,7 +104,6 @@ int				fc_range(char *str);
 int				fc_s_op(char *replace, char *first);
 int				fc_e_op(int ops, char *editor, char *first, char *last);
 int				fc_list(int ops, char *first, char *last);
-int				ft_fc(t_process *p);
 void			ft_fc_execute(char *cmd);
 int				fc_check_editor(char *editor);
 char			*fc_return_cmd(char *str);
@@ -95,14 +112,10 @@ char			*fc_return_cmd(char *str);
 ** End of Fc built-in
 */
 
-int				ft_fg_child();
-
 /*
 ** Alias built-in
 */
 
-int				ft_alias(t_process *c);
-int				ft_unalias(t_process *c);
 int				is_alias(char *str, t_token *prev_token);
 t_token			*alias_substitution(
 	t_lexical_service *lex, char *fix_alias_name);
@@ -120,7 +133,6 @@ void			sort_alias_list(t_alias **aliaslist);
 ** Hash built-in
 */
 
-int				ft_hash(t_process *c);
 void			add_hashentry(char *name, char *path, int hits);
 unsigned int	hash_index(char *name);
 int				remove_hashentries(void);
