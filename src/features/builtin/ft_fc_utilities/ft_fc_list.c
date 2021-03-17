@@ -22,18 +22,18 @@ static void	fc_print(int *r_ind, int ops)
 		{
 			if (!(ops & FC_N_OP))
 				ft_printf("%d", i++);
-			ft_printf("\t%s\n", g_shell.history->hist[r_ind[0]++ - 1]);
+			ft_printf("\t%s", g_shell.history->hist[r_ind[0]++ - 1]);
 		}
 	else if (r_ind[0] > r_ind[1])
 		while (r_ind[0] > r_ind[1])
 		{
 			if (!(ops & FC_N_OP))
 				ft_printf("%d", i--);
-			ft_printf("\t%s\n", g_shell.history->hist[r_ind[0]-- - 1]);
+			ft_printf("\t%s", g_shell.history->hist[r_ind[0]-- - 1]);
 		}
 	if (!(ops & FC_N_OP))
 		ft_printf("%d", i++);
-	ft_printf("\t%s\n", g_shell.history->hist[r_ind[0] - 1]);
+	ft_printf("\t%s", g_shell.history->hist[r_ind[0] - 1]);
 }
 
 static int	fc_list_init_range(int *r_ind, char *first, char *last)
