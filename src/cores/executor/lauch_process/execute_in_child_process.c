@@ -28,7 +28,9 @@ static int	is_builtin(char *cmd_name)
 		ft_strequ(cmd_name, "unset") ||
 		ft_strequ(cmd_name, "hash") ||
 		ft_strequ(cmd_name, "type") ||
-		ft_strequ(cmd_name, "export"))
+		ft_strequ(cmd_name, "export") ||
+		ft_strequ(cmd_name, "alias") ||
+		ft_strequ(cmd_name, "unalias"))
 		return (1);
 	return (0);
 }
@@ -47,6 +49,10 @@ static int	exec_builtin2(t_process *p)
 		return (ft_hash(p));
 	else if (ft_strequ(p->av[0], "export"))
 		return (ft_export(p->ac, p->av));
+	else if (ft_strequ(p->av[0], "alias"))
+		return (ft_alias(p));
+	else if (ft_strequ(p->av[0], "unalias"))
+		return (ft_unalias(p));
 	return (EXIT_FAILURE);
 }
 
