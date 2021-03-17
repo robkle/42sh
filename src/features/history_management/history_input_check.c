@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 10:55:32 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/17 17:14:46 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/17 18:17:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@
 
 int			hist_quote_jump(char *input, int *i, char qt)
 {
-	ft_printf("[%d]", *i);//TEST
 	*i += 1;
-
 	while (input[*i])
 	{
-		if (input[*i] == qt && input[*i - 1] != '\\')
+		if (input[*i] == qt && is_real_character(input, *i))
 			break;
 		*i += 1;
 	}
