@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_in_child_process.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:45:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 14:47:37 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/17 19:08:40 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static int	is_builtin(char *cmd_name)
 		ft_strequ(cmd_name, "set") ||
 		ft_strequ(cmd_name, "unset") ||
 		ft_strequ(cmd_name, "hash") ||
-		ft_strequ(cmd_name, "type"))
+		ft_strequ(cmd_name, "type") ||
+		ft_strequ(cmd_name, "export"))
 		return (1);
 	return (0);
 }
@@ -44,6 +45,8 @@ static int	exec_builtin2(t_process *p)
 		return (ft_unset(p->ac, p->av));
 	else if (ft_strequ(p->av[0], "hash"))
 		return (ft_hash(p));
+	else if (ft_strequ(p->av[0], "export"))
+		return (ft_export(p->ac, p->av));
 	return (EXIT_FAILURE);
 }
 
@@ -57,10 +60,10 @@ static int	exec_builtin(t_process *p)
 		return (ft_pwd(p));
 	else if (ft_strequ(p->av[0], "env"))
 		return (ft_env());
-	else if (ft_strequ(p->av[0], "setenv"))
-		return (ft_setenv(p));
-	else if (ft_strequ(p->av[0], "unsetenv"))
-		return (ft_unsetenv(p));
+	// else if (ft_strequ(p->av[0], "setenv"))
+	// 	return (ft_setenv(p));
+	// else if (ft_strequ(p->av[0], "unsetenv"))
+	// 	return (ft_unsetenv(p));
 	else if (ft_strequ(p->av[0], "jobs"))
 		return (ft_jobs_child(p));
 	else if (ft_strequ(p->av[0], "fg"))
