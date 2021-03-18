@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/16 20:54:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 13:32:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ int			up_key(t_l *l)
 		return (EXIT_SUCCESS);
 	g_shell.history->hst--;
 	ft_strdel(&l->line);
-	l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);
+	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
+	(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - 1);//NEW
+	//l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);//OLD
 	up_down_key_apply_statuses(l);
 	return (EXIT_SUCCESS);
 }
@@ -86,7 +88,11 @@ static void	down_key(t_l *l, char *first)
 	g_shell.history->hst++;
 	ft_strdel(&l->line);
 	if (g_shell.history->hst != g_shell.history->curr)
-		l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);
+	{
+		l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
+		(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - 1);//NEW
+		//l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);//OLD
+	}
 	else
 		l->line = first ? ft_strdup(first) : ft_strnew(0);
 	up_down_key_apply_statuses(l);
