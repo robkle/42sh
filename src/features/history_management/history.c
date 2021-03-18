@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 21:12:12 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/18 22:50:44 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ void		append_history(void)
 {
 	if (g_shell.history->curr < g_shell.history->hstsize)
 	{
-		// before, you deleted the \n ^D
 		free(g_shell.history->hist[g_shell.history->curr]);
 		g_shell.history->hist[g_shell.history->curr++] = g_shell.history->tmp;
 		g_shell.history->hist[g_shell.history->curr] = ft_strnew(0);
