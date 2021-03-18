@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 16:20:12 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/18 21:12:12 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	append_history_realloc(void)
 	i = -1;
 	while (++i < g_shell.history->curr)
 		tmp[i] = g_shell.history->hist[i];
-	tmp[i] = ft_strdup(g_shell.history->tmp);
+	tmp[i] = g_shell.history->tmp;
 	g_shell.history->curr = i;
 	tmp[i++] = ft_strnew(0);
 	tmp[i] = NULL;
@@ -157,7 +157,7 @@ void		append_history(void)
 	{
 		// before, you deleted the \n ^D
 		free(g_shell.history->hist[g_shell.history->curr]);
-		g_shell.history->hist[g_shell.history->curr++] = ft_strdup(g_shell.history->tmp);
+		g_shell.history->hist[g_shell.history->curr++] = g_shell.history->tmp;
 		g_shell.history->hist[g_shell.history->curr] = ft_strnew(0);
 		g_shell.history->hist[g_shell.history->curr + 1] = NULL;
 	}
