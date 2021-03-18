@@ -6,13 +6,43 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/17 16:48:10 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/18 07:52:08 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 void		get_history(int fd)
+{
+	char	*line;
+	char	buffer[4096];
+	int		i;
+	int		end_pos;
+
+	fd = open(g_shell.history->savedfile, O_RDWR | O_CREAT, 0644);
+	ft_bzero(buffer, 4096);
+	i = 0;
+	while (get_next_line(fd, &line) && i <= HISTFILESIZE)
+	{	
+		ft_strcat(buffer, line);
+		if ((end_pos = ft_check_cont(buffer) != -1))
+		{
+			g_shell.history->hist[i++] = ft_strndup(buffer, end_pos + 1);
+			g_shell.history->curr = i;
+			ft_strcpy(buffer, &buffer[end_pos + 1]);	
+		}
+		else
+			ft_strcat(buffer, "\n");
+		free(line);
+	}
+	g_shell.history->hst = g_shell.history->curr;
+	g_shell.history->hist[i++] = ft_strnew(0);
+	g_shell.history->hist[i] = NULL;
+	g_shell.history->hstsize = HISTFILESIZE;
+	close(fd);
+}
+
+/*void		get_history(int fd)
 {
 	char	*line;
 	char	buffer[4096];
@@ -42,7 +72,7 @@ void		get_history(int fd)
 	g_shell.history->hist[i] = NULL;
 	g_shell.history->hstsize = HISTFILESIZE;
 	close(fd);
-}
+}*/
 
 static void	append_history_realloc(void)
 {

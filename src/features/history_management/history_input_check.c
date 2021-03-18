@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 10:55:32 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/17 18:17:45 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/18 07:52:38 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,40 @@ int analyzing_the_buffer(char [4096]buffer)
 	}
 	return (i == 0) ? -1 : i - 1;
 }
+
+
 */
 
-int			hist_quote_jump(char *input, int *i, char qt)
+int			ft_check_cont(char buf[])
+{
+	int	i;
+	int	ch;
+
+	ch = 0;
+	i = -1;
+	while (buf[++i])
+	{
+		if (buf[i] == 4)
+			return (i);
+		if (is_inhibitors(&buf[i], i, buf[i]))
+		{
+			if (jump_quote(&buf[i], &i, buf[i]) == EXIT_FAILURE)
+				return(-1);
+		}
+		else if (ft_strnequ(&buf[i], "&&", 2) || ft_strnequ(&buf[i], "||", 2))
+		{
+			ch = ch ? 0 : 1;
+			i++;
+		}
+		else if (buf[i] == '|')
+			ch = ch ? 0 : 1;
+		else if (ch && !ft_isspace(buf[i]))
+			ch =  0;
+	}
+	return (i == 0 || ch == 1 ? -1 : i - 1);
+}
+	
+/*int			hist_quote_jump(char *input, int *i, char qt)
 {
 	*i += 1;
 	while (input[*i])
@@ -111,7 +142,7 @@ int			ft_check_cont(char *buffer)
 			ch = ch ? 0 : 1;
 	}
 	return (ch);
-}
+}*/
 
 /*int			ft_check_cont(char *buffer)
 {	
