@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 13:47:57 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 02:30:44 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/18 21:23:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,8 @@ void			tokenizing_service_helper(t_tokennizing_service *self)
 {
 	self->lex_value = lexical_and_syntax_analysis(self->lex_value,
 		self->single_cmd, &(self->token_stream));
-	// if (self->lex_value != LEX_FAILURE)
 	self->whole_cmd = ft_strjoin_and_free_2strings(
 		self->whole_cmd, self->single_cmd);
-	// else
-	// 	free(self->single_cmd);
 }
 
 t_token			*tokenizing_service(void)
