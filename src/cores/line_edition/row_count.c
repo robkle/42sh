@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:43:38 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/16 23:25:09 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 20:40:15 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_line_count(t_l *l)
 	
 	ft_arraydel(l->lc);
 	row = ft_row_count(l);
-	l->lc = malloc(sizeof(char*) * row + 1);
+	l->lc = malloc(sizeof(char*) * (row + 1));
 	count = l->pmpt;
 	i = 0;
 	j = 0;
