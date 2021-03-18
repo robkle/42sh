@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 07:52:08 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/18 09:44:29 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		get_history(int fd)
 	while (get_next_line(fd, &line) && i <= HISTFILESIZE)
 	{	
 		ft_strcat(buffer, line);
-		if ((end_pos = ft_check_cont(buffer)) != -1)
+		if ((end_pos = ft_check_continue_hist(buffer)) != -1)
 		{
 			// ft_printf("before buffer: %s\n", buffer);
 			ft_bzero(buffer_history_with_line_break, 4096);
@@ -102,10 +102,59 @@ static void	append_history_realloc(void)
 	g_shell.history->hist = tmp;
 }
 
+/*
+**
+`echo abc"\n
+\n
+\n
+\"\n\0`
+-->
+"echo abc
+
+
+"     (note the line break after the closing dquote is the enter)
+-->
+what need to do in the history here:
+when user press up or down -> we bring to the user to see this format of the history
+`echo abc"\n
+\n
+\n
+\"\0    -->(we dont bring up the enter character anymore)
+`
+if they start edding the history line -> we copy this history line to line_edition_line
+`echo abc"\n
+\n
+\n
+\"\0`
+------------
+case 2
+`echo abc"\n
+\n
+\n
+^D\0`
+-->
+"echo abc"
+
+
+<hidden_ctrol-d>
+what need to do in the history here:
+when user press up or down -> we bring to the user to see this format of the history
+`echo abc"\n
+\n
+\n
+\0`
+if they start edding the history line -> we copy this history line to line_edition_line
+`echo abc"\n
+\n
+\n
+\0`
+*/
+
 void		append_history(void)
 {
 	if (g_shell.history->curr < g_shell.history->hstsize)
 	{
+		// before, you deleted the \n ^D
 		free(g_shell.history->hist[g_shell.history->curr]);
 		g_shell.history->hist[g_shell.history->curr++] = ft_strdup(g_shell.history->tmp);
 		g_shell.history->hist[g_shell.history->curr] = ft_strnew(0);
