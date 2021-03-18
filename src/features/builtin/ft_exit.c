@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/14 15:25:32 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/18 11:44:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ static void delete_enviroment(char **env) {
 		ft_strdel(&env[i]);
 	free(env);
 }
-
-// 1. checking only the first arg
-// 2. 
 
 int			ft_exit_internal(int ret_value)
 {

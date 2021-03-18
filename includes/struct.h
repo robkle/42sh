@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/15 23:45:12 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/18 12:18:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -446,6 +446,8 @@ typedef struct			s_cd
 	char				*curpath;
 	char				*prev_curpath;
 	char				print_info;
+	int					stdout;
+	int					stderr;
 	t_opt				opt;
 }						t_cd;
 

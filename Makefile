@@ -166,7 +166,6 @@ BUILT_IN_FILE += ft_echo.c
 BUILT_IN_FILE += ft_env.c
 BUILT_IN_FILE += ft_cd.c
 BUILT_IN_FILE += ft_cd_utilities/ft_cd_pwd_handle_builtin_opts.c
-BUILT_IN_FILE += ft_cd_utilities/ft_cd_access.c
 BUILT_IN_FILE += ft_cd_utilities/ft_cd_append_slash_to_curpath.c
 BUILT_IN_FILE += ft_cd_utilities/ft_cd_change_dir.c
 BUILT_IN_FILE += ft_cd_utilities/ft_cd_compress_curpath.c

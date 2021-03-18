@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 01:26:44 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 14:21:51 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,6 @@ void			delete_builtin_commands(void);
 
 int				make_child_binary(t_process *c);
 int				make_child_path_sub(t_process *c, char buf[]);
-int				possible_to_access_file(t_process *c);
-int				possible_to_access_dir(t_process *c);
 char			*find_executable(char *name);
 void			destroy_arr(char **arr);
 void			ft_cd_pwd_check_builtin_opts(char **av, t_opt *opt);

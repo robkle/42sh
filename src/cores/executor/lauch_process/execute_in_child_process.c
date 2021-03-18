@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:45:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 11:42:35 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 14:25:29 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,29 @@ static int	exec_builtin(t_process *p)
 	else if (ft_strequ(p->av[0], "bg"))
 		return (ft_bg_child());
 	return (exec_builtin2(p));
+}
+
+static int	possible_to_access_file(t_process *p)
+{
+	if (p->av[0][0] == '.' || p->av[0][0] == '/')
+	{
+		if (access(p->av[0], F_OK))
+		{
+			ft_dprintf(2, "%s: no such file or directory: %s\n", \
+				SHELL_NAME, p->av[0]);
+			return (0);
+		}
+		else if (access(p->av[0], X_OK))
+		{
+			ft_dprintf(2, "%s: Permission denied: %s\n", \
+				SHELL_NAME, p->av[0]);
+			return (0);
+		}
+		else
+			return (1);
+	}
+	else
+		return (0);
 }
 
 int			execute_in_child_process(t_process *p, char *path)

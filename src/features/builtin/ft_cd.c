@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/15 12:20:00 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 12:18:41 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int			ft_cd(t_process *c)
 	t_cd	cd;
 
 	ft_memset(&cd, 0, sizeof(t_cd));
+	cd.stdout = c->stdout;
+	cd.stderr = c->stderr;
 	ft_cd_pwd_init_opt(&opt, BUILTIN_CD_OPT_SET);
 	ft_cd_pwd_check_builtin_opts(c->av, &opt);
 	if (basic_error_check(c->av, opt) != 0)
