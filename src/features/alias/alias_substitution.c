@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by vgrankul          #+#    #+#             */
-/*   Updated: 2021/03/14 01:33:01 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/16 22:39:47 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,9 @@ t_token	*alias_substitution(t_lexical_service *lex, char *fix_alias_name)
 	new_stream = lexical_analysis_service(alias->value, fix_alias_name,
 		(ft_strnequ(lex->tk->data, alias->value,
 		ft_strlen(lex->tk->data))) ? 1 : 0);
+	clear_token(lex->tk);
 	if (new_stream == NULL)
-	{
-		clear_token(lex->tk);
 		return (NULL);
-	}
 	if (alias->value[ft_strlen(alias->value) - 1] == ' ' ||
 		alias->value[ft_strlen(alias->value) - 1] == '\t')
 		lex->keep_alias_substitution = 1;

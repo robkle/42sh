@@ -15,7 +15,7 @@
 int		is_valid_alias_char(int c)
 {
 	if (c == '/' || c == '$' || c == '`' || c == '=' || c == '"' || c == '\''
-	|| c == '\\' || is_metacharacter(c) == 1)
+	|| c == '\\' || c == '-' || is_metacharacter(c) == 1)
 	{
 		return (0);
 	}
