@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/15 23:45:12 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/18 14:00:34 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ typedef enum
 typedef struct			s_l
 {
 	char				*line;
+	char				*current;
 	char				**lc;
 	int					nb;
 	int					co;

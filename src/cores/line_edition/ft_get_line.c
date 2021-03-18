@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/17 17:13:44 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/18 14:06:27 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,5 +186,6 @@ char	*ft_get_line(
 	ft_read_input(&instance, phase, lex_value);
 	restore_term(&(instance.line_edition));
 	ft_arraydel(instance.line_edition.lc);//NEW
+	ft_strdel(&instance.line_edition.current);//NEW
 	return (instance.line_edition.line);
 }

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 13:32:45 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/18 14:07:10 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int			up_key(t_l *l)
 	return (EXIT_SUCCESS);
 }
 
-static void	down_key(t_l *l, char *first)
+static void	down_key(t_l *l)
 {
 	if (g_shell.history->curr == 0 ||
 		g_shell.history->hst == g_shell.history->curr)
@@ -94,28 +94,26 @@ static void	down_key(t_l *l, char *first)
 		//l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);//OLD
 	}
 	else
-		l->line = first ? ft_strdup(first) : ft_strnew(0);
+	{
+		l->line = l->current ? ft_strdup(l->current) : ft_strnew(0);
+		ft_strdel(&l->current);//
+		l->current = NULL;//
+	}
 	up_down_key_apply_statuses(l);
 }
 
 int			up_down(t_l *l, char t[])
 {
-	static char		*tmp;
-
 	if (l->rs)
 		ft_reverse_search_reset(l);
-	if (t == NULL)
-		ft_strdel(&tmp);
 	else if (ft_strequ(t, UP_ARROW_KEY))
 	{
-		if (tmp != NULL)
-			ft_strdel(&tmp);
 		if (g_shell.history->hst == g_shell.history->curr && l->line &&
 			ft_isprint(l->line[0]))
-			tmp = ft_strdup(l->line);
+			l->current = ft_strdup(l->line);
 		up_key(l);
 	}
 	else if (ft_strequ(t, DOWN_ARROW_KEY))
-		down_key(l, tmp);
+		down_key(l);
 	return (EXIT_SUCCESS);
 }
