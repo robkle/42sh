@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 07:52:08 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/18 09:44:29 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void		get_history(int fd)
 	while (get_next_line(fd, &line) && i <= HISTFILESIZE)
 	{	
 		ft_strcat(buffer, line);
-		if ((end_pos = ft_check_cont(buffer) != -1))
+		if ((end_pos = ft_check_continue_hist(buffer) != -1))
 		{
 			g_shell.history->hist[i++] = ft_strndup(buffer, end_pos + 1);
 			g_shell.history->curr = i;
-			ft_strcpy(buffer, &buffer[end_pos + 1]);	
+			ft_strcpy(buffer, &buffer[end_pos + 1]);
 		}
 		else
 			ft_strcat(buffer, "\n");

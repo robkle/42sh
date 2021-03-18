@@ -6,20 +6,20 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 10:55:32 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/18 07:52:38 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/18 09:13:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-/*static int	ft_quotes(int ch, int q)
+static int	ft_quotes(int ch, int q)
 {
 	if (!(ch % 4))
 		ch += q;
 	else if (ch % 4 == q)
 		ch -= q;
 	return (ch);
-}*/
+}
 
 /*
 
@@ -69,13 +69,14 @@ int analyzing_the_buffer(char [4096]buffer)
 
 */
 
-int			ft_check_cont(char buf[])
+int			ft_check_continue_hist(char buf[])
 {
 	int	i;
 	int	ch;
 
 	ch = 0;
 	i = -1;
+	ft_printf(">%s<\n", buf);//TEST
 	while (buf[++i])
 	{
 		if (buf[i] == 4)
@@ -95,6 +96,7 @@ int			ft_check_cont(char buf[])
 		else if (ch && !ft_isspace(buf[i]))
 			ch =  0;
 	}
+	ft_printf(">%c<\n", buf[i]);//TEST
 	return (i == 0 || ch == 1 ? -1 : i - 1);
 }
 	
@@ -110,9 +112,9 @@ int			ft_check_cont(char buf[])
 	if (input[*i] == '\0')
 		return (1);
 	return (0);
-}
+}*/
 
-int			ft_check_cont(char *buffer)
+/*int			ft_check_cont(char *buffer)
 {
 	int	i;
 	int	ch;
@@ -144,7 +146,7 @@ int			ft_check_cont(char *buffer)
 	return (ch);
 }*/
 
-/*int			ft_check_cont(char *buffer)
+int			ft_check_cont(char *buffer)
 {	
 	int	i;
 	int	ch;
@@ -166,4 +168,4 @@ int			ft_check_cont(char *buffer)
 			ch -= 4;
 	}
 	return (ch);
-}*/
+}
