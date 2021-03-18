@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:45:50 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 13:29:00 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 20:30:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,17 @@ int ft_cd_change_dir(t_cd *cd)
 {
 	if (chdir(cd->curpath) == -1)
 	{
-		ft_dprintf(cd->stderr, "%s: cd: No such file or directory\n", SHELL_NAME);
+		ft_dprintf(STDERR_FILENO, "%s: cd: No such file or directory\n", SHELL_NAME);
 		free(cd->curpath);
 		return (EXIT_FAILURE);
 	}
 	manipulate_var(cd);
 	if (cd->print_info == TRUE)
 	{
-		if (fcntl(cd->stdout, F_GETFD) == 0)
-			ft_dprintf(cd->stdout, "%s\n", cd->curpath);
+		if (fcntl(STDOUT_FILENO, F_GETFD) == 0)
+			ft_dprintf(STDOUT_FILENO, "%s\n", cd->curpath);
 		else
-			ft_dprintf(cd->stderr, "%s: cd: Write error: Bad file descriptor\n", SHELL_NAME);
+			ft_dprintf(STDERR_FILENO, "%s: cd: Write error: Bad file descriptor\n", SHELL_NAME);
 	}
     ft_strdel(&cd->curpath);
 	return (EXIT_SUCCESS);

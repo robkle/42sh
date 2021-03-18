@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:39:47 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 15:45:54 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 20:30:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ static char		check_access(t_cd *cd)
 	stat(cd->curpath, &sb);
 	if (access(cd->curpath, F_OK))
 	{
-		ft_dprintf(cd->stderr, "%s: cd: %s: No such file or directory\n", \
+		ft_dprintf(STDERR_FILENO, "%s: cd: %s: No such file or directory\n", \
 			SHELL_NAME, cd->directory);
 		return (EXIT_FAILURE);
 	}
 	else if ((sb.st_mode & F_TYPE_MASK) != S_IFDIR)
 	{
-		ft_dprintf(cd->stderr, "%s: cd: %s: Not a directory\n", SHELL_NAME, cd->directory);
+		ft_dprintf(STDERR_FILENO, "%s: cd: %s: Not a directory\n", SHELL_NAME, cd->directory);
 		return (EXIT_FAILURE);
 	}
 	else if (access(cd->curpath, X_OK))
 	{
-		ft_dprintf(cd->stderr, "%s: cd: %s: Permission denied\n", SHELL_NAME, cd->directory);
+		ft_dprintf(STDERR_FILENO, "%s: cd: %s: Permission denied\n", SHELL_NAME, cd->directory);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
