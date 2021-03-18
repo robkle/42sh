@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 03:36:24 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/13 20:25:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 23:01:11 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ char		*get_clip_external(char raw_clip[])
 	raw.c_cc[VMIN] = 0;
 	raw.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSANOW, &raw);
+	ft_bzero(buf, sizeof(buf));
 	while ((buf_len = read(STDIN_FILENO, buf, BUFF_LINE_EDITION)) > 0)
 	{
 		buf_and_null = ft_strnew(BUFF_LINE_EDITION);
-		ft_strncpy(buf_and_null, buf, buf_len);
+		ft_strncpy(buf_and_null, buf, BUFF_LINE_EDITION);
 		clip = ft_strjoin_and_free_2strings(clip, buf_and_null);
 		ft_bzero(buf, sizeof(buf));
 	}
