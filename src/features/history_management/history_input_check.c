@@ -6,20 +6,20 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 10:55:32 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/18 13:52:16 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/18 16:11:51 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int	ft_quotes(int ch, int q)
+/*static int	ft_quotes(int ch, int q)
 {
 	if (!(ch % 4))
 		ch += q;
 	else if (ch % 4 == q)
 		ch -= q;
 	return (ch);
-}
+}*/
 
 /*
 
@@ -144,7 +144,7 @@ int			ft_check_continue_hist(char buf[])
 	return (ch);
 }*/
 
-int			ft_check_cont(char *buffer)
+/*int			ft_check_cont(char *buffer)
 {	
 	int	i;
 	int	ch;
@@ -166,4 +166,4 @@ int			ft_check_cont(char *buffer)
 			ch -= 4;
 	}
 	return (ch);
-}
+}*/

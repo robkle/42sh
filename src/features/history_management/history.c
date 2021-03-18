@@ -6,45 +6,46 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 09:44:29 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/18 16:20:12 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		get_history(int fd)
+static int	read_history_file(int fd)
 {
 	char	*line;
-	char	buffer[4096];
-	char	buffer_history_with_line_break[4096];
+	char	buffer[2][4096];
 	int		i;
 	int		end_pos;
-	int j= 1;
-
-	fd = open(g_shell.history->savedfile, O_RDWR | O_CREAT, 0644);
-	ft_bzero(buffer, 4096);
+	
+	ft_bzero(buffer[0], 4096);
 	i = 0;
 	while (get_next_line(fd, &line) && i <= HISTFILESIZE)
 	{	
-		ft_strcat(buffer, line);
-		if ((end_pos = ft_check_continue_hist(buffer)) != -1)
+		ft_strcat(buffer[0], line);
+		if ((end_pos = ft_check_continue_hist(buffer[0])) != -1)
 		{
-			// ft_printf("before buffer: %s\n", buffer);
-			ft_bzero(buffer_history_with_line_break, 4096);
-			ft_strcpy(buffer_history_with_line_break, buffer);
-			ft_strcat(buffer_history_with_line_break, "\n");
-			g_shell.history->hist[i++] = ft_strdup(buffer_history_with_line_break);
+			ft_bzero(buffer[1], 4096);
+			ft_strncpy(buffer[1], buffer[0], end_pos + 1);
+			ft_strcat(buffer[1], "\n");
+			g_shell.history->hist[i++] = ft_strdup(buffer[1]);
 			g_shell.history->curr = i;
-			// ft_printf("%d\n", end_pos);
-			// ft_printf("when the left over: [%s]\n", &buffer[end_pos]);
-			ft_strcpy(buffer, &buffer[end_pos]);
-			// ft_printf("after buffer: %s\n", buffer);
-			j++;
+			ft_strcpy(buffer[0], &buffer[0][end_pos]);
 		}
 		else
-			ft_strcat(buffer, "\n");
+			ft_strcat(buffer[0], "\n");
 		free(line);
 	}
+	return (i);
+}
+
+void		get_history(int fd)
+{
+	int		i;
+
+	fd = open(g_shell.history->savedfile, O_RDWR | O_CREAT, 0644);
+	i = read_history_file(fd);//NEW
 	g_shell.history->hst = g_shell.history->curr;
 	g_shell.history->hist[i++] = ft_strnew(0);
 	g_shell.history->hist[i] = NULL;

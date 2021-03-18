@@ -6,13 +6,44 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:30:35 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 22:34:45 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/18 16:17:42 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static char	*fc_e_build_cmd(void)
+static char		*fc_e_build_cmd(void)
+{
+	int		fd;
+	char	*line;
+	char	cmd[4096];
+	char	buffer[4096];
+	int		end_pos;
+
+	ft_bzero(cmd, 4096);
+	ft_bzero(buffer, 4096);
+	fd = open(FC_EDITING_FILE, O_RDONLY, 0644);
+	while (get_next_line(fd, &line))
+	{
+		ft_strcat(buffer, line);
+		if ((end_pos = ft_check_continue_hist(buffer)) != -1)
+		{
+			if (cmd[0])
+				ft_strcat(cmd, ";");
+			ft_strncat(cmd, buffer, end_pos + 1);
+			ft_strcpy(buffer, &buffer[end_pos]);
+		}
+		else
+			ft_strcat(buffer, "\n");
+		free(line);
+	}
+	close(fd);
+	ft_strcat(cmd, "\n");
+	return (ft_strdup(cmd));
+}
+
+
+/*static char	*fc_e_build_cmd(void)
 {
 	char	*line;
 	char	cmd[4096];
@@ -31,7 +62,7 @@ static char	*fc_e_build_cmd(void)
 	}
 	close(fd);
 	return (ft_strdup(cmd));
-}
+}*/
 
 static int	fc_e_init_range(int *r_ind, char *first, char *last)
 {
@@ -55,15 +86,34 @@ static int	fc_e_init_range(int *r_ind, char *first, char *last)
 
 static void	fc_e_copy_lines_into_editor(int *r_ind)
 {
-	int fd;
+	int 	fd;
+	char	*format;
 
 	fd = open(FC_EDITING_FILE, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (r_ind[0] < r_ind[1])
+	{
 		while (r_ind[0] < r_ind[1])
-			ft_dprintf(fd, "%s\n", g_shell.history->hist[r_ind[0]++ - 1]);
+		{
+			format = ft_strndup(g_shell.history->hist[r_ind[0] - 1], \
+			(int)ft_strlen(g_shell.history->hist[r_ind[0] - 1]) - 1);
+			ft_dprintf(fd, "%s\n", format);//NEW
+			//ft_dprintf(fd, "%s\n", g_shell.history->hist[r_ind[0]++ - 1]);//OLD
+			ft_strdel(&format);
+			r_ind[0]++;//NEW
+		}
+	}
 	else if (r_ind[0] > r_ind[1])
+	{
 		while (r_ind[0] > r_ind[1])
-			ft_dprintf(fd, "%s\n", g_shell.history->hist[r_ind[0]-- - 1]);
+		{
+			format = ft_strndup(g_shell.history->hist[r_ind[0] - 1], \
+			(int)ft_strlen(g_shell.history->hist[r_ind[0] - 1]) - 1);
+			ft_dprintf(fd, "%s\n", format);//NEW
+			//ft_dprintf(fd, "%s\n", g_shell.history->hist[r_ind[0]-- - 1]);//OLD
+			ft_strdel(&format);
+			r_ind[0]--;//NEW
+		}
+	}
 	ft_dprintf(fd, "%s", g_shell.history->hist[r_ind[0] - 1]);
 	close(fd);
 }
