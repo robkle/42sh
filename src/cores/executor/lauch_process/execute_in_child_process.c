@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:45:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 01:25:39 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 11:42:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ static int	exec_builtin(t_process *p)
 		ft_exit(p);
 	else if (ft_strequ(p->av[0], "cd"))
 		return (ft_cd(p));
-	else if (ft_strequ(p->av[0], "pwd"))
-		return (ft_pwd(p));
 	else if (ft_strequ(p->av[0], "env"))
 		return (ft_env());
 	else if (ft_strequ(p->av[0], "jobs"))
