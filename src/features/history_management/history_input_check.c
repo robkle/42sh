@@ -82,7 +82,7 @@ int			ft_check_cont(char buf[])
 			return (i);
 		if (is_inhibitors(&buf[i], i, buf[i]))
 		{
-			if (jump_quote(&buf[i], &i, buf[i]) == EXIT_FAILURE)
+			if (jump_quote(buf, &i, buf[i]) == EXIT_FAILURE)
 				return(-1);
 		}
 		else if (ft_strnequ(&buf[i], "&&", 2) || ft_strnequ(&buf[i], "||", 2))
@@ -95,7 +95,7 @@ int			ft_check_cont(char buf[])
 		else if (ch && !ft_isspace(buf[i]))
 			ch =  0;
 	}
-	return (i == 0 || ch == 1 ? -1 : i - 1);
+	return (i == 0 || ch == 1 ? -1 : i);
 }
 	
 /*int			hist_quote_jump(char *input, int *i, char qt)
