@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_in_child_process.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:45:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 14:25:29 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/18 19:44:54 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	exec_builtin(t_process *p)
 	else if (ft_strequ(p->av[0], "env"))
 		return (ft_env());
 	else if (ft_strequ(p->av[0], "jobs"))
-		return (ft_jobs_child(p));
+		return (ft_jobs(p));
 	else if (ft_strequ(p->av[0], "fg"))
 		return (ft_fg_child());
 	else if (ft_strequ(p->av[0], "bg"))

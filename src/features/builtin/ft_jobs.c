@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 04:00:07 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 21:05:39 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/18 19:53:53 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,5 @@ int		ft_jobs(t_process *p)
 		ft_jobs_printing_with_argv(&p->av[1]);
 	else
 		ft_jobs_printing_without_argv();
-	return (EXIT_SUCCESS);
-}
-
-int		ft_jobs_child(t_process *p)
-{
-	int i;
-
-	i = 0;
-	if (p->av[1])
-	{
-		while (p->av[++i])
-			ft_dprintf(2, "%s: jobs: %s: no such job\n", SHELL_NAME, p->av[i]);
-		return (EXIT_FAILURE);
-	}
 	return (EXIT_SUCCESS);
 }
