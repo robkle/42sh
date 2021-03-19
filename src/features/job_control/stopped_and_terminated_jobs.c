@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   stopped_and_terminated_jobs.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/16 22:53:47 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 22:11:46 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+static char is_signal_should_print(int sig)
+{
+	if (sig == SIGINT || sig == SIGPIPE || sig == SIGURG || sig == SIGCONT \
+	|| sig == SIGCHLD || sig == SIGIO || sig == SIGXFSZ || sig == SIGWINCH \
+	|| sig == SIGINFO)
+	{
+		return (0);
+	}
+	return (1);
+}
 
 void	mark_process_status_exit(t_process *p, int status)
 {
@@ -34,7 +45,7 @@ void	mark_process_status_signal(t_process *p, int status)
 		if (WTERMSIG(status) - 1 <= SIGNAL_NUMBER_OSX &&
 			WTERMSIG(status) > 0)
 		{
-			if (WTERMSIG(status) != 13 && WTERMSIG(status) != 2)
+			if (is_signal_should_print(WTERMSIG(status)))
 				ft_printf("%s: %d\n", sig_msgs[WTERMSIG(status) - 1],
 					WTERMSIG(status));
 		}
