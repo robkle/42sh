@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/16 23:00:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/19 23:07:59 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@
 
 char	*ft_get_line(t_phase *phase, t_prompt prompt_type, \
 t_lex_value lex_value);
+void	ft_read_input(t_get_line_service *self, t_phase *phase, \
+t_lex_value lex_value)
 int		parse_key(char buf[BUFF_LINE_EDITION], t_l *line_edition);
 
 /*
@@ -116,10 +118,15 @@ int		ft_count_rows(t_l *l);
 /*
 ** Row count
 */
-int		ft_y_pos(t_l *l, int index);
 int		ft_row_count(t_l *l);
 void	ft_line_count(t_l *l);
+
+/*
+** Cursor and index position
+*/
+int		ft_y_pos(t_l *l, int index);
 int		ft_index_calc(t_l *l);
 int		ft_cursor_x(t_l *l);
+
 
 #endif

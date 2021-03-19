@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:13:02 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/14 16:24:31 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/19 22:46:33 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,13 @@ static void	bs_key_str(t_l *l)
 	}
 	else
 	{
-		index = ft_index_calc(l);//NEW
-		//ft_putstr(&l->line[l->x + (l->co * l->y) - l->pmpt]);//OLD
-		ft_putstr(&l->line[index]);//NEW
-		//i = l->x + (l->co * l->y) - 2 - l->pmpt;//OLD
-		i = index - 2;//NEW
+		index = ft_index_calc(l);
+		ft_putstr(&l->line[index]);
+		i = index - 2;
 		if (l->x == 0)
 		{
 			l->y--;
-			//l->x = l->co - 1;//OLD
-			l->x = ft_atoi(l->lc[l->y]) - 1;//NEW
+			l->x = ft_atoi(l->lc[l->y]) - 1;
 		}
 		else
 			l->x--;
@@ -55,8 +52,7 @@ int			bs_key(t_l *l)
 		if (l->x == 0 && l->y != 0)
 		{
 			apply_termcap_str("up", 0, 0);
-			//apply_termcap_str("ch", 0, l->co);//OLD
-			apply_termcap_str("ch", 0, ft_atoi(l->lc[l->y - 1]) - 1);//NEW
+			apply_termcap_str("ch", 0, ft_atoi(l->lc[l->y - 1]) - 1);
 		}
 		else
 			apply_termcap_str(LEFT, 0, 0);
@@ -77,11 +73,9 @@ int			left_key(t_l *l)
 	if (l->x == 0 && l->y != 0)
 	{
 		l->y--;
-		//l->x = l->co - 1;//OLD
-		l->x = ft_atoi(l->lc[l->y]) - 1;//NEW
+		l->x = ft_atoi(l->lc[l->y]) - 1;
 		apply_termcap_str("up", 0, 0);
-		//apply_termcap_str("ch", 0, l->co - 1);//OLD
-		apply_termcap_str("ch", 0, ft_atoi(l->lc[l->y]) - 1);//NEW
+		apply_termcap_str("ch", 0, ft_atoi(l->lc[l->y]) - 1);
 	}
 	else
 	{
@@ -97,13 +91,11 @@ int			right_key(t_l *l)
 
 	if (l->rs)
 		ft_reverse_search_reset(l);
-	i = ft_index_calc(l);//NEW
-	//if (l->x + (l->y * l->co) - l->pmpt == l->nb)//OLD
-	if (i == l->nb)//NEW
+	i = ft_index_calc(l);
+	if (i == l->nb)
 		return (EXIT_SUCCESS);
-	//if (l->x != l->co - 1)//OLD
 	if ((l->x != ft_atoi(l->lc[l->y]) - 1) || \
-	(l->x == ft_atoi(l->lc[l->y]) - 1 && !l->lc[l->y + 1]))//NEW
+	(l->x == ft_atoi(l->lc[l->y]) - 1 && !l->lc[l->y + 1]))
 	{
 		apply_termcap_str("nd", 0, 0);
 		l->x++;

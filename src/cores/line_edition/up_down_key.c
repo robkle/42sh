@@ -6,39 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/19 15:56:32 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/19 21:57:11 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-int			ft_count_rows(t_l *l)
-{
-	int	count;
-	int	row;
-	int	i;
-	int	lb;
-
-	count = 0;
-	row = 0;
-	lb = 0;
-	i = -1;
-	while (l->line[++i])
-	{
-		if (l->line[i] == '\n')
-		{
-			row++;
-			lb = 1;
-			count = 0;
-		}
-		row = lb ? row + (count / l->co) : row + ((count + l->pmpt) / l->co);
-		count++;
-	}
-	l->nb = count;
-	l->y = row;
-	l->x = lb ? count % l->co : (count + l->pmpt) % l->co;
-	return (row);
-}
 
 static void	up_down_key_apply_statuses(t_l *l)
 {
@@ -47,11 +19,10 @@ static void	up_down_key_apply_statuses(t_l *l)
 	int				starting_row_from_top;
 	int				new_starting_row;
 
-	//line_rows = ft_count_rows(l);//OLD
-	row_nb = ft_row_count(l) - 1;//NEW
-	l->y = row_nb;//NEW
-	l->x = ft_cursor_x(l);//NEW
-	l->nb = ft_strlen(l->line);//NEW
+	row_nb = ft_row_count(l) - 1;
+	l->y = row_nb;
+	l->x = ft_cursor_x(l);
+	l->nb = ft_strlen(l->line);
 	new_starting_row = l->starting_row;
 	if (l->starting_row < row_nb)
 		new_starting_row = row_nb;
@@ -66,6 +37,7 @@ static void	up_down_key_apply_statuses(t_l *l)
 	if (l->x == 0)
 		ft_putchar('\n');
 }
+
 int			up_key(t_l *l)
 {
 	int len;
@@ -78,10 +50,7 @@ int			up_key(t_l *l)
 	len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
 	d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
 	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
-	(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - d);
-//	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
-//	(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - 1);//NEW
-	//l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);//OLD
+	len - d);
 	up_down_key_apply_statuses(l);
 	return (EXIT_SUCCESS);
 }
@@ -101,16 +70,13 @@ static void	down_key(t_l *l)
 		len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
 		d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
 		l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
-		(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - d);
-	//	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
-	//	(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - 1);//NEW
-		//l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);//OLD
+		len - d);
 	}
 	else
 	{
 		l->line = l->current ? ft_strdup(l->current) : ft_strnew(0);
-		ft_strdel(&l->current);//
-		l->current = NULL;//
+		ft_strdel(&l->current);
+		l->current = NULL;
 	}
 	up_down_key_apply_statuses(l);
 }

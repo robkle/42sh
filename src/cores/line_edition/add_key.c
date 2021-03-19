@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:11:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/15 11:51:05 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/19 22:51:40 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	append_char(char t[], t_l *l)
 {
-	char			*tmp;
+	char	*tmp;
 
 	if (l->line == NULL)
 		l->line = ft_strnew(2);
@@ -53,37 +53,28 @@ static void	store_cursor_position(t_l *l)
 
 static void	insert_char(char t[], t_l *l)
 {
-	char			*tmp;
+	char		*tmp;
 	int			insert;
 	int			add_row[2];
 
-	insert = ft_index_calc(l);//NEW
-	add_row[0] = ft_row_count(l);//NEW
+	insert = ft_index_calc(l);
+	add_row[0] = ft_row_count(l);
 	tmp = ft_strnew(l->nb + 1);
-	//tmp = ft_strncpy(tmp, l->line, l->x + (l->y * l->co) - l->pmpt);//OLD
-	tmp = ft_strncpy(tmp, l->line, insert); //NEW
+	tmp = ft_strncpy(tmp, l->line, insert);
 	tmp = ft_addchar(tmp, t[0]);
-	//tmp = ft_strcat(tmp, &l->line[l->x + (l->y * l->co) - l->pmpt]);//OLD
-	tmp = ft_strcat(tmp, &l->line[insert]);//NEW
+	tmp = ft_strcat(tmp, &l->line[insert]);
 	ft_strdel(&l->line);
 	l->line = tmp;
 	ft_putchar(t[0]);
-	//if (l->x != ft_atoi(l->lc[l->y]) - 1)//NEW
-	if (l->x != l->co - 1)//OLD
+	if (l->x != l->co - 1)
 		apply_termcap_str("cd", 0, 0);
 	else
 		apply_termcap_str("do", 0, 0);
 	apply_termcap_str("sc", 0, 0);
-	//ft_putstr(&l->line[l->x + (l->y * l->co) - l->pmpt + 1]);//OLD
-	ft_putstr(&l->line[insert + 1]);//NEW
+	ft_putstr(&l->line[insert + 1]);
 	apply_termcap_str("rc", 0, 0);
-	add_row[1] = ft_row_count(l);//NEW
-	/*if ((l->nb + l->pmpt) % l->co == 0 && \
-			l->starting_row < (l->nb + l->pmpt) / l->co)
-	{
-		l->starting_row++;
-	}*/
-	l->starting_row += add_row[1] - add_row[0];//NEW
+	add_row[1] = ft_row_count(l);
+	l->starting_row += add_row[1] - add_row[0];
 	store_cursor_position(l);
 }
 
@@ -93,8 +84,7 @@ int			add_key(char t[], t_l *l)
 		ft_reverse_search_add(t, l);
 	else
 	{
-		//if (l->nb != l->x + (l->co * l->y) - l->pmpt)//OLD
-		if (l->nb != ft_index_calc(l))//NEW
+		if (l->nb != ft_index_calc(l))
 			insert_char(t, l);
 		else
 			append_char(t, l);

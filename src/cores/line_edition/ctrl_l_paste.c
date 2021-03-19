@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 01:37:15 by tango             #+#    #+#             */
-/*   Updated: 2021/03/13 21:17:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/19 22:01:04 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,16 @@ static void	paste_apply_screen(t_l *l, char *clip, int i)
 	apply_termcap_str("rc", 0, 0);
 }
 
-static void	wind_up_cursor(t_l *l/*, int clip_len*/)
+static void	wind_up_cursor(t_l *l)
 {
 	int		starting_row_from_top;
 	int		row_position;
 	int		nb_rewind;
 	int		gap_between_begin_end;
 
-	//l->starting_row = (l->nb + clip_len + l->pmpt) / l->co;//OLD
-	l->starting_row = ft_row_count(l) - 1;//NEW
+	l->starting_row = ft_row_count(l) - 1;
 	starting_row_from_top = l->total_row - l->starting_row;
-	//gap_between_begin_end = (l->y * l->co + l->x + clip_len) / l->co;//OLD
-	gap_between_begin_end = ft_y_pos(l, ft_index_calc(l)); //NEW
+	gap_between_begin_end = ft_y_pos(l, ft_index_calc(l));
 	row_position = starting_row_from_top + gap_between_begin_end;
 	nb_rewind = get_current_row() - row_position;
 	while (nb_rewind-- > 0)
@@ -68,8 +66,7 @@ int			paste(t_l *l, char raw_clip[], char *autocom_clip)
 
 	clip = get_clip(raw_clip, autocom_clip);
 	clip_len = ft_strlen(clip);
-	//i = l->x + (l->y * l->co) - l->pmpt;//OLD
-	i = ft_index_calc(l);//NEW
+	i = ft_index_calc(l);
 	paste_apply_screen(l, clip, i);
 	tmp = ft_strnew(l->nb + clip_len);
 	if (l->line)
@@ -79,9 +76,8 @@ int			paste(t_l *l, char raw_clip[], char *autocom_clip)
 		tmp = ft_strcat(tmp, &l->line[i]);
 	ft_strdel(&l->line);
 	l->line = tmp;
-	//if (l->starting_row < (l->nb + l->pmpt + clip_len) / l->co)//OLD
-	if (l->starting_row < ft_row_count(l) - 1)//NEW
-		wind_up_cursor(l/*, clip_len*/);
+	if (l->starting_row < ft_row_count(l) - 1)
+		wind_up_cursor(l);
 	paste_background(l, clip_len);
 	ft_strdel(&clip);
 	return (EXIT_SUCCESS);
