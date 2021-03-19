@@ -54,11 +54,11 @@ int ft_cd_prune_dotdot_dot_slash(t_cd *cd)
         free(split);
         return (ft_cd_compress_curpath(cd));
     }
-    new_curpath = ft_strnew(0);
+	new_curpath = ft_strdup("/");
     i = -1;
     while (split[++i] != NULL)
     {
-        if (ft_strequ(split[i], "..") && i != 0 && !is_root_dir(new_curpath) && !ft_strequ(&new_curpath[ft_strlen(new_curpath) - 2], ".."))
+	if (ft_strequ(split[i], "..") && i != 0 && !is_root_dir(new_curpath) && !ft_strequ(&new_curpath[ft_strlen(new_curpath) - 2], ".."))
         {
             slash = ft_strrchr(new_curpath, '/');
             if (slash != new_curpath)
@@ -67,9 +67,12 @@ int ft_cd_prune_dotdot_dot_slash(t_cd *cd)
                 *(++slash) = '\0';
             continue ;
         }
-        if (ft_strequ(split[i], "."))
+		if (ft_strequ(split[i], "."))
             continue ;
-        new_curpath = ft_strjoin_and_free_string1(new_curpath, "/");
+		else if (ft_strequ(split[i], "..") && i == 0 && cd->curpath[0] == '/')
+			continue ;
+		if (new_curpath[ft_strlen(new_curpath) - 1] != '/')
+			new_curpath = ft_strjoin_and_free_string1(new_curpath, "/");
         new_curpath = ft_strjoin_and_free_string1(new_curpath, split[i]);
     }
     ft_strlst_del(&split, i);
