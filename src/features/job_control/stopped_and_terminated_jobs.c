@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stopped_and_terminated_jobs.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/19 22:11:46 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/19 23:01:44 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static char is_signal_should_print(int sig)
 {
 	if (sig == SIGINT || sig == SIGPIPE || sig == SIGURG || sig == SIGCONT \
 	|| sig == SIGCHLD || sig == SIGIO || sig == SIGXFSZ || sig == SIGWINCH \
-	|| sig == SIGINFO)
+	// || sig == SIGINFO)
+	)
 	{
 		return (0);
 	}
