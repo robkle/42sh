@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 08:49:08 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/13 20:55:47 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 19:17:46 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,16 @@ int	fc_process(t_ft_fc instance)
 	return (ret);
 }
 
-int	ft_fc(t_process *p)
+int	ft_fc(t_process *p, int foreground)
 {
 	t_ft_fc instance;
 
+	if (!foreground)
+	{
+		ft_dprintf(2, "%s: fc: Unable to run fc in background\n",
+			SHELL_NAME);
+		return (EXIT_FAILURE);
+	}
 	if (g_shell.history->curr == 0)
 	{
 		ft_dprintf(2, "%s: fc: history specification out of range\n",

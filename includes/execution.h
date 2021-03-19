@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/15 23:11:37 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 19:18:27 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int			duplicating_file_descriptor(t_redi *redi, int old_fd);
 int			lauch_simple_command(t_job *j, t_process *p);
 int			lauch_in_parent_process(t_process *p);
 void		fork_and_launch_in_child_process(t_job *j, t_process *p);
-int			execute_in_child_process(t_process *p, char *path);
+int			execute_in_child_process(t_job *j, t_process *p, char *path);
 
 /*
 ** ========================== JOB CONTROL FUNCTIONS ===========================

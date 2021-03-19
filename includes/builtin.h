@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 19:54:10 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 19:18:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int				ft_bg(t_process *p);
 int				ft_export(int ac, char **av);
 int				ft_set(void);
 int				ft_unset(int ac, char **av);
-int				ft_fc(t_process *p);
+int				ft_fc(t_process *p, int foreground);
 int				ft_hash(t_process *c);
 int				ft_alias(t_process *c);
 int				ft_unalias(t_process *c);

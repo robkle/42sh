@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:45:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 19:44:54 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 19:19:03 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	is_builtin(char *cmd_name)
 	return (0);
 }
 
-static int	exec_builtin2(t_process *p)
+static int	exec_builtin2(t_job *j, t_process *p)
 {
 	if (ft_strequ(p->av[0], "echo"))
 		return (ft_echo(p));
@@ -52,11 +52,11 @@ static int	exec_builtin2(t_process *p)
 	else if (ft_strequ(p->av[0], "unalias"))
 		return (ft_unalias(p));
 	else if (ft_strequ(p->av[0], "fc"))
-		return (ft_fc(p));
+		return (ft_fc(p, j->foreground));
 	return (EXIT_FAILURE);
 }
 
-static int	exec_builtin(t_process *p)
+static int	exec_builtin(t_job *j, t_process *p)
 {
 	if (ft_strequ(p->av[0], "exit"))
 		ft_exit(p);
@@ -70,7 +70,7 @@ static int	exec_builtin(t_process *p)
 		return (ft_fg_child());
 	else if (ft_strequ(p->av[0], "bg"))
 		return (ft_bg_child());
-	return (exec_builtin2(p));
+	return (exec_builtin2(j, p));
 }
 
 static int	possible_to_access_file(t_process *p)
@@ -96,14 +96,14 @@ static int	possible_to_access_file(t_process *p)
 		return (0);
 }
 
-int			execute_in_child_process(t_process *p, char *path)
+int			execute_in_child_process(t_job *j, t_process *p, char *path)
 {
 	if (p->av[0] == NULL)
 		return (EXIT_SUCCESS);
 	if (ft_strchr(p->av[0], '/') != NULL && possible_to_access_file(p))
 		return (make_child_binary(p));
 	else if (is_builtin(p->av[0]))
-		return (exec_builtin(p));
+		return (exec_builtin(j, p));
 	else if (path != NULL)
 		return (make_child_path_sub(p, path));
 	else if (p->av[0][0] != '.' && p->av[0][0] != '/')

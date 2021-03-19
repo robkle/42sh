@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 22:20:16 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 02:27:37 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 19:20:01 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ void			ft_fc_execute(char *cmd)
 	if (find_heredoc(instance.ast) == EXIT_FAILURE)
 		return (destroy_ft_fc_execute_service(instance));
 	g_shell.first_heredoc = g_shell.heredoc_lst;
-	executor(instance.ast);
+	execute_complete_command(instance.ast);
 	destroy_ft_fc_execute_service(instance);
 }

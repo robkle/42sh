@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:30:35 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 16:17:42 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/19 19:00:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,33 @@ static void	fc_e_copy_lines_into_editor(int *r_ind)
 	close(fd);
 }
 
+// static void	fc_e_editing_process(char *editor)
+// {
+// 	char cmd[4096];
+
+// 	ft_bzero(cmd, 4096);
+// 	ft_strcpy(cmd, editor);
+// 	ft_strcat(cmd, " ");
+// 	ft_strcat(cmd, FC_EDITING_FILE);
+// 	ft_fc_execute(cmd);
+// }
+
 static void	fc_e_editing_process(char *editor)
 {
-	char cmd[4096];
+	char *av[3];
+	char *editor_path;
+	int pid;
 
-	ft_bzero(cmd, 4096);
-	ft_strcpy(cmd, editor);
-	ft_strcat(cmd, " ");
-	ft_strcat(cmd, FC_EDITING_FILE);
-	ft_fc_execute(cmd);
+	editor_path = find_executable(editor);
+	av[0] = editor;
+	av[1] = ft_strdup(FC_EDITING_FILE);
+	av[2] = NULL;
+	pid = fork();
+	if (pid == 0)
+		execve(editor_path, av, g_shell.env);
+	wait(NULL);
+	free(av[1]);
+	free(editor_path);
 }
 
 /*

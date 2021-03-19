@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 03:49:29 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/12 20:50:47 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 19:14:49 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 	if (j->foreground)
 		ft_tcsetpgrp(STDIN_FILENO, j->pgid);
 	sig_controller(CHILD);
-	exit(execute_in_child_process(p, path));
+	exit(execute_in_child_process(j, p, path));
 }
 
 void		fork_and_launch_in_child_process(t_job *j, t_process *p)
