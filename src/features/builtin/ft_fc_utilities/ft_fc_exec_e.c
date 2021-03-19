@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:30:35 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/19 19:00:15 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 20:01:55 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ static char		*fc_e_build_cmd(void)
 	while (get_next_line(fd, &line))
 	{
 		ft_strcat(buffer, line);
-		if ((end_pos = ft_check_continue_hist(buffer)) != -1)
+		if ((end_pos = ft_check_continue_hist(buffer)) != -1 && line[0])
 		{
 			if (cmd[0])
 				ft_strcat(cmd, ";");
 			ft_strncat(cmd, buffer, end_pos + 1);
 			ft_strcpy(buffer, &buffer[end_pos]);
 		}
-		else
+		else if (line[0])
 			ft_strcat(buffer, "\n");
 		free(line);
 	}
@@ -41,7 +41,6 @@ static char		*fc_e_build_cmd(void)
 	ft_strcat(cmd, "\n");
 	return (ft_strdup(cmd));
 }
-
 
 /*static char	*fc_e_build_cmd(void)
 {
@@ -181,6 +180,7 @@ int			fc_e_op(int ops, char *editor, char *first, char *last)
 	if (g_shell.history->tmp)
 		free(g_shell.history->tmp);
 	g_shell.history->tmp = cmd;
+	ft_printf("%s", cmd);
 	ft_fc_execute(cmd);
 	return (EXIT_SUCCESS);
 }
