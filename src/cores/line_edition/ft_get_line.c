@@ -6,13 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/19 23:12:16 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/19 23:16:41 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		init_line_edition(t_l *line_edition, t_prompt prompt_type)
+void	init_line_edition(t_l *line_edition, t_prompt prompt_type)
 {
 	tgetent(NULL, ft_getenv("TERM"));
 	ft_bzero(line_edition, sizeof(t_l));
@@ -26,7 +26,7 @@ void		init_line_edition(t_l *line_edition, t_prompt prompt_type)
 	line_edition->y = 0;
 	line_edition->promp_type = prompt_type;
 	line_edition->rs = 0;
-	line_edition->lc = NULL;//NEW
+	line_edition->lc = NULL;
 }
 
 /*
@@ -52,7 +52,7 @@ void		init_line_edition(t_l *line_edition, t_prompt prompt_type)
 **		yet, but it could be useful in the future
 */
 
-void init_get_line_service(t_get_line_service *self, t_prompt prompt_type)
+void	init_get_line_service(t_get_line_service *self, t_prompt prompt_type)
 {
 	print_prompt(prompt_type);
 	ft_bzero(self->buf, BUFF_LINE_EDITION);
@@ -71,7 +71,7 @@ char	*ft_get_line(
 	init_line_edition(&(instance.line_edition), prompt_type);
 	ft_read_input(&instance, phase, lex_value);
 	restore_term(&(instance.line_edition));
-	ft_arraydel(instance.line_edition.lc);//NEW
-	ft_strdel(&instance.line_edition.current);//NEW
+	ft_arraydel(instance.line_edition.lc);
+	ft_strdel(&instance.line_edition.current);
 	return (instance.line_edition.line);
 }

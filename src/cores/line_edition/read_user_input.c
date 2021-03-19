@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 23:01:31 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/19 23:04:48 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/19 23:24:12 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,31 @@ void		prepare_breaking_loop(
 	}
 }
 
-void prepare_breaking_loop_due_to_signal(t_l *line_edition, int reverse_search_reset)
+void		prepare_breaking_loop_due_to_signal(t_l *line_edition, \
+int reverse_search_reset)
 {
 	if (reverse_search_reset)
 	{
 		if (line_edition->rs)
 			ft_reverse_search_reset(line_edition);
-		
 	}
 	(line_edition->line) ? free(line_edition->line) : 0;
 	line_edition->line = NULL;
 }
 
-void	ft_read_input(t_get_line_service *self, t_phase *phase, t_lex_value lex_value)
+static void	ft_window_and_line_size(t_l *l)
+{
+	if (g_shell.signal_indicator == SIGWINCH)
+		handle_sigwinch(l);
+	ft_line_count(l);
+}
+
+void		ft_read_input(t_get_line_service *self, t_phase *phase, \
+t_lex_value lex_value)
 {
 	while (read(STDIN_FILENO, self->buf, BUFF_LINE_EDITION) != -1)
 	{
-		if (g_shell.signal_indicator == SIGWINCH)
-			handle_sigwinch(&(self->line_edition));
-		ft_line_count(&(self->line_edition));
+		ft_window_and_line_size(&(self->line_edition));
 		if (g_shell.signal_indicator == SIGINT)
 		{
 			prepare_breaking_loop_due_to_signal(&(self->line_edition), 1);
@@ -101,7 +107,8 @@ void	ft_read_input(t_get_line_service *self, t_phase *phase, t_lex_value lex_val
 		if (ft_strequ(self->buf, ENTER_KEY) || \
 		(ft_strequ(self->buf, CTRL_D_KEY) && self->line_edition.nb == 0))
 		{
-			prepare_breaking_loop(self->buf, &(self->line_edition), phase, lex_value);
+			prepare_breaking_loop(self->buf, &(self->line_edition), \
+			phase, lex_value);
 			break ;
 		}
 		else if (parse_key(self->buf, &(self->line_edition)) == EXIT_FAILURE)

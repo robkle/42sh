@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/19 23:07:59 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/19 23:14:00 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 char	*ft_get_line(t_phase *phase, t_prompt prompt_type, \
 t_lex_value lex_value);
 void	ft_read_input(t_get_line_service *self, t_phase *phase, \
-t_lex_value lex_value)
+t_lex_value lex_value);
 int		parse_key(char buf[BUFF_LINE_EDITION], t_l *line_edition);
 
 /*

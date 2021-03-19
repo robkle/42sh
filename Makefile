@@ -151,6 +151,7 @@ LINE_EDITION_FILE += term_attr.c
 LINE_EDITION_FILE += up_down_key.c
 # LINE_EDITION_FILE += carriage_return.c
 LINE_EDITION_FILE += get_prompt.c
+LINE_EDITION_FILE += get_prompt_print.c
 LINE_EDITION_FILE += line_edition_utilities.c
 LINE_EDITION_FILE += paste_background.c
 LINE_EDITION := $(addprefix $(LINE_EDITION_DIR)/,$(LINE_EDITION_FILE))
