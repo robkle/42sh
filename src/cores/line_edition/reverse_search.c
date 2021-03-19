@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:53 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/15 11:19:47 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/19 21:53:32 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void		ft_reverse_search_bs(t_l *l)
 			ft_reverse_search_scan(l, 'a');
 		ft_reverse_search_clear(l);
 		ft_putstr(l->rev_sr);
-		ft_putstr(g_shell.history->hist[g_shell.history->hst]);
+		ft_rs_print();
 	}
 }
 
@@ -88,7 +88,7 @@ void		ft_reverse_search_add(char t[], t_l *l)
 	ft_reverse_search_scan(l, 'a');
 	ft_reverse_search_clear(l);
 	ft_putstr(l->rev_sr);
-	ft_putstr(g_shell.history->hist[g_shell.history->hst]);
+	ft_rs_print();
 }
 
 int			ft_reverse_search(t_l *l)
@@ -110,6 +110,6 @@ int			ft_reverse_search(t_l *l)
 	}
 	ft_reverse_search_clear(l);
 	ft_putstr(l->rev_sr);
-	ft_putstr(g_shell.history->hist[g_shell.history->hst]);
+	ft_rs_print();
 	return (EXIT_SUCCESS);
 }

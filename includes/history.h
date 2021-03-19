@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 04:00:14 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 09:14:23 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/19 21:42:07 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void			ft_reverse_search_add(char t[], t_l *l);
 void			ft_reverse_search_bs(t_l *l);
 int				ft_reverse_search_reset(t_l *l);
 void			ft_reverse_search_clear(t_l *l);
-
+void			ft_rs_print(void);
 char			*ft_getenv(const char *name);
 void			ft_swap_int(int *a, int *b);
 

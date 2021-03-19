@@ -6,11 +6,29 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/15 11:52:24 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/19 21:56:11 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+void		ft_rs_print(void)
+{
+	char	*tmp;
+	int		len;
+	int		d;
+
+	if (g_shell.history->hist[g_shell.history->hst][0])
+	{
+		len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
+		d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
+		tmp = ft_strndup(g_shell.history->hist[g_shell.history->hst], len - d);
+		ft_putstr(tmp);
+		free(tmp);
+	}
+	else
+		ft_putstr(g_shell.history->hist[g_shell.history->hst]);
+}
 
 static int	ft_reverse_search_count_rows(t_l *l)
 {
@@ -44,13 +62,12 @@ void		ft_reverse_search_clear(t_l *l)
 	int	starting_row_from_top;
 	int	new_starting_row;
 
-	//line_rows = l->rs ? ft_reverse_search_count_rows(l) : ft_count_rows(l);//OLD
-	line_rows = l->rs ? ft_reverse_search_count_rows(l) : ft_row_count(l);//NEW
-	if (!l->rs)//NEW
+	line_rows = l->rs ? ft_reverse_search_count_rows(l) : ft_row_count(l);
+	if (!l->rs)
 	{
-		l->y = line_rows - 1;//NEW
-		l->x = ft_cursor_x(l);//NEW
-		l->nb = ft_strlen(l->line);//NEW
+		l->y = line_rows - 1;
+		l->x = ft_cursor_x(l);
+		l->nb = ft_strlen(l->line);
 	}
 	new_starting_row = l->starting_row;
 	if (l->starting_row < line_rows)
@@ -66,10 +83,15 @@ void		ft_reverse_search_clear(t_l *l)
 
 int			ft_reverse_search_reset(t_l *l)
 {
+	int	len;
+	int	d;
+
 	free(l->rev_sr);
 	l->rs = 0;
 	free(l->line);
-	l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);
+	len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
+	d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
+	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], len - d);
 	ft_reverse_search_clear(l);
 	print_prompt(l->promp_type);
 	ft_putstr(l->line);
