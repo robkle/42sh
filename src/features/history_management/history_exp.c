@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 15:39:56 by rklein            #+#    #+#             */
-/*   Updated: 2021/02/19 16:15:35 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/19 14:24:54 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int		ft_construct_exp(char **line, char *exp, char **split, \
 
 	if (exp)
 	{
+		exp[(int)ft_strlen(exp) - 1] = '\0';//NEW
 		r = 1;
 		tmp = ft_strjoin(exp, exp_split[1]);
 		*line = ft_strjoin(split[0], tmp);

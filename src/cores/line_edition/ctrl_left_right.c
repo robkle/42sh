@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:15:39 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/14 21:17:51 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/19 16:05:27 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,28 @@ int			ctrl_right(t_l *l)
 	return (EXIT_SUCCESS);
 }*/
 
+static int	ctrl_right_pos_check(char *line, int index)
+{
+	if (index == 0)
+		return (1);
+	if (ft_isspace(line[index - 1]))
+		return (1);
+	return (0);
+}
+
 int	ctrl_right(t_l *l)
 {
 	int	index;
 
 	index = ft_index_calc(l);
 	if (index < l->nb && !ft_isspace(l->line[index]) && \
-	ft_isspace(l->line[index - 1]))
+	/*ft_isspace(l->line[index - 1])*/ ctrl_right_pos_check(l->line, index))
 	{
 		right_key(l);
 		index++;
 	}
 	while (index < l->nb && !(!ft_isspace(l->line[index]) && \
-	ft_isspace(l->line[index - 1])))
+	/*ft_isspace(l->line[index - 1])*/ ctrl_right_pos_check(l->line, index)))
 	{
 		right_key(l);
 		index++;

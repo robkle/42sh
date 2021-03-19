@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/19 10:55:59 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/19 17:34:38 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		get_history(int fd)
 	int		i;
 
 	fd = open(g_shell.history->savedfile, O_RDWR | O_CREAT, 0644);
-	i = read_history_file(fd);//NEW
+	i = read_history_file(fd);
 	g_shell.history->hst = g_shell.history->curr;
 	g_shell.history->hist[i++] = ft_strnew(0);
 	g_shell.history->hist[i] = NULL;
@@ -128,9 +128,13 @@ void		append_history(void)
 	{
 		if (g_shell.history->hist[g_shell.history->curr])
 			free(g_shell.history->hist[g_shell.history->curr]);
-		g_shell.history->hist[g_shell.history->curr++] = g_shell.history->tmp;
-		g_shell.history->hist[g_shell.history->curr] = ft_strnew(0);
-		g_shell.history->hist[g_shell.history->curr + 1] = NULL;
+		g_shell.history->hist[g_shell.history->curr] = g_shell.history->tmp;
+		if (g_shell.history->tmp)
+		{
+			g_shell.history->curr++;
+			g_shell.history->hist[g_shell.history->curr] = ft_strnew(0);
+			g_shell.history->hist[g_shell.history->curr + 1] = NULL;
+		}
 	}
 	else
 		append_history_realloc();

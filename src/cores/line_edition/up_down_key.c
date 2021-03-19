@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 14:07:10 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/19 15:56:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,21 @@ static void	up_down_key_apply_statuses(t_l *l)
 	if (l->x == 0)
 		ft_putchar('\n');
 }
-
 int			up_key(t_l *l)
 {
+	int len;
+	int	d;
+
 	if (g_shell.history->curr == 0 || g_shell.history->hst == 0)
 		return (EXIT_SUCCESS);
 	g_shell.history->hst--;
 	ft_strdel(&l->line);
+	len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
+	d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
 	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
-	(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - 1);//NEW
+	(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - d);
+//	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
+//	(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - 1);//NEW
 	//l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);//OLD
 	up_down_key_apply_statuses(l);
 	return (EXIT_SUCCESS);
@@ -82,6 +88,9 @@ int			up_key(t_l *l)
 
 static void	down_key(t_l *l)
 {
+	int len;
+	int	d;
+
 	if (g_shell.history->curr == 0 ||
 		g_shell.history->hst == g_shell.history->curr)
 		return ;
@@ -89,8 +98,12 @@ static void	down_key(t_l *l)
 	ft_strdel(&l->line);
 	if (g_shell.history->hst != g_shell.history->curr)
 	{
+		len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
+		d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
 		l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
-		(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - 1);//NEW
+		(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - d);
+	//	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
+	//	(int)ft_strlen(g_shell.history->hist[g_shell.history->hst]) - 1);//NEW
 		//l->line = ft_strdup(g_shell.history->hist[g_shell.history->hst]);//OLD
 	}
 	else
