@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 23:05:40 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 10:55:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	read_history_file(int fd)
 	
 	ft_bzero(buffer[0], 4096);
 	i = 0;
-	while (get_next_line(fd, &line) && i <= HISTFILESIZE)
+	while (get_next_line(fd, &line) && i < HISTFILESIZE)
 	{	
 		ft_strcat(buffer[0], line);
 		if ((end_pos = ft_check_continue_hist(buffer[0])) != -1)
@@ -85,7 +85,25 @@ void		get_history(int fd)
 	close(fd);
 }*/
 
-static void	append_history_realloc(void)
+static void append_history_realloc(void)
+{
+	char	**tmp;
+	int		i;
+
+	g_shell.history->hstsize += HISTFILESIZE;
+	tmp = (char**)ft_memalloc(sizeof(char*) * (g_shell.history->hstsize + 2));
+	i = -1;
+	while (++i < g_shell.history->curr)
+		tmp[i] = ft_strdup(g_shell.history->hist[i]);
+	tmp[i++] = g_shell.history->tmp;
+	g_shell.history->curr = i;
+	tmp[i++] = ft_strnew(0);
+	tmp[i] = NULL;
+	ft_arraydel(g_shell.history->hist);
+	g_shell.history->hist = tmp;
+}
+
+/*static void	append_history_realloc(void)
 {
 	char	**tmp;
 	int		i;
@@ -102,61 +120,14 @@ static void	append_history_realloc(void)
 	tmp[i] = NULL;
 	free(g_shell.history->hist);
 	g_shell.history->hist = tmp;
-}
-
-/*
-**
-`echo abc"\n
-\n
-\n
-\"\n\0`
--->
-"echo abc
-
-
-"     (note the line break after the closing dquote is the enter)
--->
-what need to do in the history here:
-when user press up or down -> we bring to the user to see this format of the history
-`echo abc"\n
-\n
-\n
-\"\0    -->(we dont bring up the enter character anymore)
-`
-if they start edding the history line -> we copy this history line to line_edition_line
-`echo abc"\n
-\n
-\n
-\"\0`
-------------
-case 2
-`echo abc"\n
-\n
-\n
-^D\0`
--->
-"echo abc"
-
-
-<hidden_ctrol-d>
-what need to do in the history here:
-when user press up or down -> we bring to the user to see this format of the history
-`echo abc"\n
-\n
-\n
-\0`
-if they start edding the history line -> we copy this history line to line_edition_line
-`echo abc"\n
-\n
-\n
-\0`
-*/
+}*/
 
 void		append_history(void)
 {
 	if (g_shell.history->curr < g_shell.history->hstsize)
 	{
-		free(g_shell.history->hist[g_shell.history->curr]);
+		if (g_shell.history->hist[g_shell.history->curr])
+			free(g_shell.history->hist[g_shell.history->curr]);
 		g_shell.history->hist[g_shell.history->curr++] = g_shell.history->tmp;
 		g_shell.history->hist[g_shell.history->curr] = ft_strnew(0);
 		g_shell.history->hist[g_shell.history->curr + 1] = NULL;

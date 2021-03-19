@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 23:20:08 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 01:36:27 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 10:38:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	init_history_stuff(void)
 	g_shell.history = (t_history*)malloc(sizeof(t_history));
 	g_shell.history->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 2));
 	g_shell.history->tmp = NULL;
+	g_shell.history->curr = 0;//NEW
 	ft_bzero(g_shell.history->savedfile, 256);
 	getcwd(g_shell.history->savedfile, 256);
 	ft_strcat(g_shell.history->savedfile, "/.history");
