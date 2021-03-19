@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 01:52:52 by tango             #+#    #+#             */
-/*   Updated: 2021/03/12 21:14:02 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/19 17:54:12 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	redirect_great(t_redi *redi)
 			SHELL_NAME, redi->word);
 		return (EXIT_FAILURE);
 	}
+	if (new_fd > 2 || new_fd < 0)
+		return (EXIT_SUCCESS);
 	dup2(old_fd, new_fd);
 	close(old_fd);
 	return (EXIT_SUCCESS);
