@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/19 21:56:11 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/20 15:30:42 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,15 @@ int			ft_reverse_search_reset(t_l *l)
 	free(l->rev_sr);
 	l->rs = 0;
 	free(l->line);
-	len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
-	d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
-	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], len - d);
+	if (g_shell.history->hist[g_shell.history->hst][0])
+	{
+		len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
+		d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
+		l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
+		len - d);
+	}
+	else
+		l->line = ft_strnew(0);
 	ft_reverse_search_clear(l);
 	print_prompt(l->promp_type);
 	ft_putstr(l->line);

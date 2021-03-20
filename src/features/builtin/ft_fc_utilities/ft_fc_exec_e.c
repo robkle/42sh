@@ -6,62 +6,40 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:30:35 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/19 20:01:55 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/20 16:17:03 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static char		*fc_e_build_cmd(void)
+static char	*fc_e_build_cmd(void)
 {
 	int		fd;
 	char	*line;
-	char	cmd[4096];
-	char	buffer[4096];
+	char	buffer[2][4096];
 	int		end_pos;
 
-	ft_bzero(cmd, 4096);
-	ft_bzero(buffer, 4096);
+	ft_bzero(buffer[0], 4096);
+	ft_bzero(buffer[1], 4096);
 	fd = open(FC_EDITING_FILE, O_RDONLY, 0644);
 	while (get_next_line(fd, &line))
 	{
-		ft_strcat(buffer, line);
-		if ((end_pos = ft_check_continue_hist(buffer)) != -1 && line[0])
+		ft_strcat(buffer[0], line);
+		if ((end_pos = ft_check_continue_hist(buffer[0])) != -1 && line[0])
 		{
-			if (cmd[0])
-				ft_strcat(cmd, ";");
-			ft_strncat(cmd, buffer, end_pos + 1);
-			ft_strcpy(buffer, &buffer[end_pos]);
+			if (buffer[1][0])
+				ft_strcat(buffer[1], ";");
+			ft_strncat(buffer[1], buffer[0], end_pos + 1);
+			ft_strcpy(buffer[0], &buffer[0][end_pos]);
 		}
 		else if (line[0])
-			ft_strcat(buffer, "\n");
+			ft_strcat(buffer[0], "\n");
 		free(line);
 	}
 	close(fd);
-	ft_strcat(cmd, "\n");
-	return (ft_strdup(cmd));
+	ft_strcat(buffer[1], "\n");
+	return (ft_strdup(buffer[1]));
 }
-
-/*static char	*fc_e_build_cmd(void)
-{
-	char	*line;
-	char	cmd[4096];
-	int		fd;
-
-	ft_bzero(cmd, 4096);
-	fd = open(FC_EDITING_FILE, O_RDONLY, 0644);
-	while (get_next_line(fd, &line))
-	{
-		if (cmd[0] && !ft_check_cont(cmd))
-			ft_strcat(cmd, ";");
-		ft_strcat(cmd, line);
-		if (ft_check_cont(cmd))
-			ft_strcat(cmd, "\n");
-		free(line);
-	}
-	close(fd);
-	return (ft_strdup(cmd));
-}*/
 
 static int	fc_e_init_range(int *r_ind, char *first, char *last)
 {
@@ -83,22 +61,19 @@ static int	fc_e_init_range(int *r_ind, char *first, char *last)
 	return (EXIT_SUCCESS);
 }
 
-static void	fc_e_copy_lines_into_editor(int *r_ind)
+static void	fc_e_copy_lines_into_editor(int fd, int *r_ind)
 {
-	int 	fd;
 	char	*format;
 
-	fd = open(FC_EDITING_FILE, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (r_ind[0] < r_ind[1])
 	{
 		while (r_ind[0] < r_ind[1])
 		{
 			format = ft_strndup(g_shell.history->hist[r_ind[0] - 1], \
 			(int)ft_strlen(g_shell.history->hist[r_ind[0] - 1]) - 1);
-			ft_dprintf(fd, "%s\n", format);//NEW
-			//ft_dprintf(fd, "%s\n", g_shell.history->hist[r_ind[0]++ - 1]);//OLD
+			ft_dprintf(fd, "%s\n", format);
 			ft_strdel(&format);
-			r_ind[0]++;//NEW
+			r_ind[0]++;
 		}
 	}
 	else if (r_ind[0] > r_ind[1])
@@ -107,32 +82,19 @@ static void	fc_e_copy_lines_into_editor(int *r_ind)
 		{
 			format = ft_strndup(g_shell.history->hist[r_ind[0] - 1], \
 			(int)ft_strlen(g_shell.history->hist[r_ind[0] - 1]) - 1);
-			ft_dprintf(fd, "%s\n", format);//NEW
-			//ft_dprintf(fd, "%s\n", g_shell.history->hist[r_ind[0]-- - 1]);//OLD
+			ft_dprintf(fd, "%s\n", format);
 			ft_strdel(&format);
-			r_ind[0]--;//NEW
+			r_ind[0]--;
 		}
 	}
 	ft_dprintf(fd, "%s", g_shell.history->hist[r_ind[0] - 1]);
-	close(fd);
 }
-
-// static void	fc_e_editing_process(char *editor)
-// {
-// 	char cmd[4096];
-
-// 	ft_bzero(cmd, 4096);
-// 	ft_strcpy(cmd, editor);
-// 	ft_strcat(cmd, " ");
-// 	ft_strcat(cmd, FC_EDITING_FILE);
-// 	ft_fc_execute(cmd);
-// }
 
 static void	fc_e_editing_process(char *editor)
 {
-	char *av[3];
-	char *editor_path;
-	int pid;
+	char	*av[3];
+	char	*editor_path;
+	int		pid;
 
 	editor_path = find_executable(editor);
 	av[0] = editor;
@@ -167,6 +129,7 @@ int			fc_e_op(int ops, char *editor, char *first, char *last)
 {
 	char	*cmd;
 	int		r_ind[2];
+	int		fd;
 
 	if (fc_check_editor(editor) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -174,7 +137,9 @@ int			fc_e_op(int ops, char *editor, char *first, char *last)
 		return (EXIT_FAILURE);
 	if (ops & FC_R_OP)
 		ft_swap_int(&r_ind[0], &r_ind[1]);
-	fc_e_copy_lines_into_editor(r_ind);
+	fd = open(FC_EDITING_FILE, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	fc_e_copy_lines_into_editor(fd, r_ind);
+	close(fd);
 	fc_e_editing_process(editor);
 	cmd = fc_e_build_cmd();
 	if (g_shell.history->tmp)
