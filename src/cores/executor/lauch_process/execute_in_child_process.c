@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_in_child_process.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:45:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/19 19:19:03 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/20 16:42:08 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	exec_builtin(t_job *j, t_process *p)
 	return (exec_builtin2(j, p));
 }
 
-static int	possible_to_access_file(t_process *p)
+static int	is_accessable_file(t_process *p)
 {
 	if (p->av[0][0] == '.' || p->av[0][0] == '/')
 	{
@@ -100,12 +100,12 @@ int			execute_in_child_process(t_job *j, t_process *p, char *path)
 {
 	if (p->av[0] == NULL)
 		return (EXIT_SUCCESS);
-	if (ft_strchr(p->av[0], '/') != NULL && possible_to_access_file(p))
-		return (make_child_binary(p));
+	if (path == NULL && is_accessable_file(p))
+		return (exec_file(p));
 	else if (is_builtin(p->av[0]))
 		return (exec_builtin(j, p));
 	else if (path != NULL)
-		return (make_child_path_sub(p, path));
+		return (exec_file_in_path(p, path));
 	else if (p->av[0][0] != '.' && p->av[0][0] != '/')
 		ft_dprintf(2, "%s: %s: command not found\n", SHELL_NAME, p->av[0]);
 	return (127);

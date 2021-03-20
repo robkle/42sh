@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/12 21:54:36 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/20 16:41:03 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		make_child_binary(t_process *p)
+int		exec_file(t_process *p)
 {
 	t_stat	sb;
 	char	buf[PATH_MAX];
@@ -28,8 +28,15 @@ int		make_child_binary(t_process *p)
 	return (EXIT_FAILURE);
 }
 
-int		make_child_path_sub(t_process *c, char *path)
+int		exec_file_in_path(t_process *c, char *path)
 {
+	if (access(path, X_OK))
+	{
+		ft_dprintf(2, "%s: %s: Permission denied\n", \
+			SHELL_NAME, path);
+		free(path);
+		return (EXIT_FAILURE);
+	}
 	execve(path, c->av, g_shell.env);
 	free(path);
 	return (EXIT_FAILURE);

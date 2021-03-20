@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/19 19:18:49 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/20 16:41:31 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ unsigned int	hash_index(char *name);
 int				exists_in_hashtable(char *name, char *path, int index);
 
 /*
-** Type built-in
+** Type built-inmake_child_path_sub
 */
 
 t_builtin		*set_builtin_commands(void);
@@ -149,8 +149,8 @@ void			delete_builtin_commands(void);
 ** ============================= Other Utils ==================================
 */
 
-int				make_child_binary(t_process *c);
-int				make_child_path_sub(t_process *c, char buf[]);
+int				exec_file(t_process *c);
+int				exec_file_in_path(t_process *c, char buf[]);
 char			*find_executable(char *name);
 void			destroy_arr(char **arr);
 void			ft_cd_pwd_check_builtin_opts(char **av, t_opt *opt);
