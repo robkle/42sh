@@ -6,23 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/19 23:01:44 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/20 16:36:08 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static char is_signal_should_print(int sig)
-{
-	if (sig == SIGINT || sig == SIGPIPE || sig == SIGURG || sig == SIGCONT \
-	|| sig == SIGCHLD || sig == SIGIO || sig == SIGXFSZ || sig == SIGWINCH \
-	// || sig == SIGINFO)
-	)
-	{
-		return (0);
-	}
-	return (1);
-}
 
 void	mark_process_status_exit(t_process *p, int status)
 {

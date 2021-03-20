@@ -100,7 +100,7 @@ SEMANTIC_FILE += AST/linebreak.c
 SEMANTIC := $(addprefix $(SEMANTIC_DIR)/,$(SEMANTIC_FILE))
 #Executor
 EXECUTOR_DIR := $(CORE_DIR)/executor
-EXECUTOR_FILE += print_binary_tree.c
+# EXECUTOR_FILE += print_binary_tree.c
 EXECUTOR_FILE += executor.c
 EXECUTOR_FILE += heredoc/heredoc.c
 EXECUTOR_FILE += heredoc/heredoc_tool.c
@@ -252,7 +252,7 @@ ALIAS := $(addprefix $(ALIAS_DIR)/,$(ALIAS_FILE))
 # Signal
 SIGNAL_DIR := $(FEATURES_DIR)/signal
 SIGNAL_FILE += sig_handler.c
-SIGNAL_FILE += init_signal_messages.c
+SIGNAL_FILE += signal_messages.c
 SIGNAL_FILE += handle_sigwinch.c
 SIGNAL := $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_FILE))
 # Expansion

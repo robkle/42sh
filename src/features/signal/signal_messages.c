@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_signal_messages.c                             :+:      :+:    :+:   */
+/*   signal_messages.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 16:49:44 by tango             #+#    #+#             */
-/*   Updated: 2021/03/14 01:17:52 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/20 16:29:40 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <shell.h>
+
+char		is_signal_should_print(int sig)
+{
+	if (sig == SIGINT || sig == SIGPIPE || sig == SIGURG || sig == SIGCONT \
+	|| sig == SIGCHLD || sig == SIGIO || sig == SIGXFSZ || sig == SIGWINCH \
+	// || sig == SIGINFO)
+	)
+	{
+		return (0);
+	}
+	return (1);
+}
 
 static void	init_signal_messages2(char *sig_msgs[SIGNAL_NUMBER_OSX])
 {

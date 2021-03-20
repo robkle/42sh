@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
-/*   Updated: 2021/03/14 02:52:12 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/20 16:38:42 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,9 @@ t_shell				g_shell;
 
 int					init_terminal_stuff(void);
 int					init_environment_variable_stuff(char **envp);
-int					init_signal_stuff(void);
 int					init_job_control_stuff(void);
 int					init_history_stuff(void);
-int					init_other_stuff(void);
+int					init_signal_and_other_stuff(void);
 
 /*
 ** Tokenizing service

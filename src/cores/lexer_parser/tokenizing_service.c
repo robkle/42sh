@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 13:47:57 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 21:23:49 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/20 16:12:11 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_lex_value	lexical_and_syntax_analysis(
 		prev_lex_value));
 }
 
-void			init_tokenizing_service_struct(t_tokennizing_service *self)
+void				init_tokenizing_service_struct(t_tokennizing_service *self)
 {
 	self->whole_cmd = NULL;
 	self->single_cmd = NULL;
@@ -51,7 +51,7 @@ void			init_tokenizing_service_struct(t_tokennizing_service *self)
 	self->lex_value = LEX_CMD;
 }
 
-void			tokenizing_service_helper(t_tokennizing_service *self)
+void				tokenizing_service_helper(t_tokennizing_service *self)
 {
 	self->lex_value = lexical_and_syntax_analysis(self->lex_value,
 		self->single_cmd, &(self->token_stream));
@@ -59,7 +59,7 @@ void			tokenizing_service_helper(t_tokennizing_service *self)
 		self->whole_cmd, self->single_cmd);
 }
 
-t_token			*tokenizing_service(void)
+t_token				*tokenizing_service(void)
 {
 	t_tokennizing_service instance;
 

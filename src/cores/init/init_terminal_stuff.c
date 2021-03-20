@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 23:20:08 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/19 10:38:39 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/20 16:22:35 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ int	init_environment_variable_stuff(char **envp)
 	return (EXIT_SUCCESS);
 }
 
-int	init_signal_stuff(void)
-{
-	sig_controller(PARENT);
-	return (EXIT_SUCCESS);
-}
-
 int	init_job_control_stuff(void)
 {
 	g_shell.shell_pgid = getpgrp();
@@ -52,20 +46,7 @@ int	init_job_control_stuff(void)
 	return (EXIT_SUCCESS);
 }
 
-int	init_history_stuff(void)
-{
-	g_shell.history = (t_history*)malloc(sizeof(t_history));
-	g_shell.history->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 2));
-	g_shell.history->tmp = NULL;
-	g_shell.history->curr = 0;//NEW
-	ft_bzero(g_shell.history->savedfile, 256);
-	getcwd(g_shell.history->savedfile, 256);
-	ft_strcat(g_shell.history->savedfile, "/.history");
-	get_history(0);
-	return (EXIT_SUCCESS);
-}
-
-int	init_other_stuff(void)
+int	init_signal_and_other_stuff(void)
 {
 	g_shell.alias = NULL;
 	g_shell.signal_indicator = 0;
@@ -73,5 +54,19 @@ int	init_other_stuff(void)
 	g_shell.heredoc_lst = NULL;
 	g_shell.exit_status = 1;
 	g_shell.builtins = set_builtin_commands();
+	sig_controller(PARENT);
+	return (EXIT_SUCCESS);
+}
+
+int	init_history_stuff(void)
+{
+	g_shell.history = (t_history*)malloc(sizeof(t_history));
+	g_shell.history->hist = (char**)malloc(sizeof(char*) * (HISTFILESIZE + 2));
+	g_shell.history->tmp = NULL;
+	g_shell.history->curr = 0;
+	ft_bzero(g_shell.history->savedfile, 256);
+	getcwd(g_shell.history->savedfile, 256);
+	ft_strcat(g_shell.history->savedfile, "/.history");
+	get_history(0);
 	return (EXIT_SUCCESS);
 }
