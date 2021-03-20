@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/20 15:42:12 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/20 18:29:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ static void	append_history_realloc(void)
 
 void		append_history(void)
 {
+	if (ft_strequ(g_shell.history->tmp, "\n"))
+	{
+		free(g_shell.history->tmp);
+		g_shell.history->tmp = NULL;
+		return ;
+	}
 	if (g_shell.history->curr < g_shell.history->hstsize)
 	{
 		if (g_shell.history->hist[g_shell.history->curr])
