@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 14:25:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/20 03:05:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int			ft_arraylen(char **array);
 void		ft_lstdel_strdel(t_list **alst);
 char		*ft_llitoa(long long n);
 long long	ft_atolli(const char *str);
+long long	ft_atolli_check(const char *str, char *stat);
 int			is_number_str(char *str);
 char		*ft_strrev(char *str);
 int			ft_findchr(char *str, int c);

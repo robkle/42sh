@@ -349,6 +349,7 @@ UTILITY_FILE += ft_tcgetpgrp.c
 UTILITY_FILE += ft_lstdel_strdel.c
 UTILITY_FILE += ft_arraylen.c
 UTILITY_FILE += ft_atolli.c
+UTILITY_FILE += ft_atolli_check.c
 UTILITY_FILE += ft_llitoa.c
 UTILITY_FILE += is_number_str.c
 UTILITY_FILE += ft_strrev.c
