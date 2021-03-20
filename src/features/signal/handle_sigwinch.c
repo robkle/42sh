@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   post_sigwinch.c                                    :+:      :+:    :+:   */
+/*   handle_sigwinch.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 01:11:00 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/16 23:12:28 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/20 18:20:20 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		handle_sigwinch(t_l *l)
+void	handle_sigwinch(t_l *l)
 {
 	apply_termcap_str("cl", 0, 0);
 	print_prompt(l->promp_type);
