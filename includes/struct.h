@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/18 20:28:45 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 11:11:12 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,8 +347,8 @@ typedef enum
 typedef struct			s_auto
 {
 	t_list				*list;
-	size_t				largest_content_size;
-	void				*largest_content;
+	size_t				longest_len;
+	void				*longest;
 	size_t				count_list;
 	char				cwd[PATH_MAX];
 	char				full_path[PATH_MAX];
@@ -394,15 +394,15 @@ typedef struct			s_history
 ** struct for options in builtin
 */
 
-# define BUILTIN_NO_OPT (unsigned int) 0
-# define BUILTIN_INVALID_OPT (unsigned int) -1
+# define BUILTIN_NO_OPT  0
+# define BUILTIN_INVALID_OPT -1
 
 typedef struct			s_builtin_options
 {
 	char				*opt_set;
 	char				set_len;
 	unsigned int		operand_count;
-	unsigned long		applied;
+	char				applied;
 	char				invalid_opt;
 	int					opt;
 }						t_opt;

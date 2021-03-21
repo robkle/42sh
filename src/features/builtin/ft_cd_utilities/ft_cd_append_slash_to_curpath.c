@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:37:19 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/02 17:47:40 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 11:34:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 **	step7 in posix doc
 */
 
-int ft_cd_append_slash_to_curpath(t_cd *cd)
+int			ft_cd_append_slash_to_curpath(t_cd *cd)
 {
-	char *pwd;
-	char *tmp;
+	char	*pwd;
+	char	*tmp;
 
 	if (cd->opt.applied & BUILTIN_CD_OPT_P)
 		return (ft_cd_change_dir(cd));
@@ -32,7 +32,7 @@ int ft_cd_append_slash_to_curpath(t_cd *cd)
 		else
 		{
 			tmp = ft_strjoin(pwd, "/");
-			cd->curpath = ft_strjoin_and_free_2strings(tmp, cd->curpath); 
+			cd->curpath = ft_strjoin_and_free_2strings(tmp, cd->curpath);
 		}
 	}
 	return (ft_cd_prune_dotdot_dot_slash(cd));

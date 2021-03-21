@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 03:23:45 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/20 16:41:31 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 03:40:16 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				ft_alias(t_process *c);
 int				ft_unalias(t_process *c);
 
 /*
-**	Built-in functions for child shell 
+**	Built-in functions for child shell
 */
 
 int				ft_bg_child();

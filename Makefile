@@ -287,7 +287,8 @@ INHIBITOR_FILE += remove_quoting_tools.c
 INHIBITOR := $(addprefix $(INHIBITOR_DIR)/,$(INHIBITOR_FILE))
 # Auto-complition
 AUTO_COMPLETION_DIR := $(FEATURES_DIR)/auto_completion
-AUTO_COMPLETION_FILE += auto_status.c
+AUTO_COMPLETION_FILE += auto_set_status.c
+AUTO_COMPLETION_FILE += auto_delete_status.c
 AUTO_COMPLETION_FILE += auto_completion.c
 #AUTO_COMPLETION_FILE += auto_dir.c
 AUTO_COMPLETION_FILE += auto_file.c

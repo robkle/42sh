@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 17:43:34 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/02 17:53:10 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 11:50:51 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void		ft_cd_pwd_init_opt(t_opt *opt, const char *opt_set)
 	opt->opt_set = (char*)opt_set;
 	opt->set_len = (char)ft_strlen(opt_set);
 }
-
 
 static void	add_option(t_opt *opt, char ch)
 {
@@ -49,8 +48,8 @@ void		ft_cd_pwd_check_builtin_opts(char **av, t_opt *opt)
 	{
 		opt->operand_count += 1;
 		arg_len = ft_strlen(av[i]);
-		j = 1;
-		while (j < arg_len)
+		j = 0;
+		while (++j < arg_len)
 		{
 			if (ft_strchr(opt->opt_set, av[i][j]) == NULL)
 			{
@@ -60,7 +59,6 @@ void		ft_cd_pwd_check_builtin_opts(char **av, t_opt *opt)
 			}
 			else
 				add_option(opt, av[i][j]);
-			++j;
 		}
 		++i;
 	}

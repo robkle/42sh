@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_setenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2021/01/12 04:08:59 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/21 11:16:58 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int			ft_setenv(t_process *c)
 			;
 		else if (c->av[i][j] != '=' || j == 0)
 		{
-			ft_dprintf(2, "%s: setenv: '%s': not a valid identifier\n", SHELL_NAME, c->av[i]);
+			ft_dprintf(2, "%s: setenv: '%s': not a valid identifier\n", \
+			SHELL_NAME, c->av[i]);
 			return (EXIT_FAILURE);
 		}
 		else

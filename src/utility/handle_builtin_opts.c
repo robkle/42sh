@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtin_opts.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 17:43:34 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/14 01:13:24 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/21 11:41:26 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void		check_builtin_opts(char **av, t_opt *opt)
 	int		j;
 	int		arg_len;
 
-	i = 1;
-	if (av[i] == NULL)
+	i = 0;
+	if (av[++i] == NULL)
 		return ;
 	while (av[i][0] == '-' && ft_strlen(av[i]) != 1)
 	{
@@ -61,6 +61,5 @@ void		check_builtin_opts(char **av, t_opt *opt)
 				add_option(opt, av[i][j]);
 			++j;
 		}
-		++i;
 	}
 }

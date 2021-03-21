@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_messages.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 16:49:44 by tango             #+#    #+#             */
-/*   Updated: 2021/03/20 18:20:51 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/21 11:39:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ char		is_signal_should_print(int sig)
 {
 	if (sig == SIGINT || sig == SIGPIPE || sig == SIGURG || sig == SIGCONT \
 	|| sig == SIGCHLD || sig == SIGIO || sig == SIGXFSZ || sig == SIGWINCH \
-	// || sig == SIGINFO)
-	)
+	|| sig == SIGINFO)
 	{
 		return (0);
 	}

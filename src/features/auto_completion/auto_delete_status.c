@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd_get_curpath_from_dir.c                       :+:      :+:    :+:   */
+/*   auto_delete_status.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 17:35:42 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/21 11:25:55 by ihwang           ###   ########.fr       */
+/*   Created: 2021/03/21 04:13:17 by ihwang            #+#    #+#             */
+/*   Updated: 2021/03/21 04:14:19 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-/*
-**	step6 in posix doc
-*/
-
-char		ft_cd_get_curpath_from_dir(t_cd *cd)
+void	delete_status_new_pos(long *status)
 {
-	cd->curpath = ft_strdup(cd->directory);
-	return (ft_cd_append_slash_to_curpath(cd));
+	*status &= ~AUTO_STAT_NEW_POS;
+}
+
+void	delete_status_dir(long *status)
+{
+	*status &= ~AUTO_STAT_DIR;
+}
+
+void	delete_status_completed(long *status)
+{
+	*status &= ~AUTO_STAT_COMPLETED;
+}
+
+void	delete_status_over_term_size(long *status)
+{
+	*status &= ~AUTO_STAT_OVER_TERM_SIZE;
 }

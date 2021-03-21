@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auto_make_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:50:06 by marvin            #+#    #+#             */
-/*   Updated: 2020/12/27 17:49:44 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/21 03:56:19 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void		del_lst(t_auto *auto_com)
 	auto_com->list = NULL;
 }
 
-void			auto_make_list(t_auto *auto_com)
+void		auto_make_list(t_auto *auto_com)
 {
-	DIR			*dirp;
+	DIR		*dirp;
 
 	if (auto_com->list && !(auto_com->status & AUTO_STAT_LIST))
 		del_lst(auto_com);
@@ -38,4 +38,3 @@ void			auto_make_list(t_auto *auto_com)
 	auto_get_list(auto_com, dirp);
 	closedir(dirp);
 }
-

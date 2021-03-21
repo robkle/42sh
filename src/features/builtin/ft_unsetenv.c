@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unsetenv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/27 17:41:31 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/21 11:18:19 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int			ft_unsetenv(t_process *c)
 			NULL;
 		if (c->av[i][j] != '\0')
 		{
-			ft_dprintf(2, "%s: unsetenv: '%s': not a valid identifier\n", SHELL_NAME, c->av[i]);
+			ft_dprintf(2, "%s: unsetenv: '%s': not a valid identifier\n", \
+			SHELL_NAME, c->av[i]);
 			return (EXIT_FAILURE);
 		}
 		else if ((index = is_env(c->av[i])))
