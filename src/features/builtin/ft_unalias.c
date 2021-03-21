@@ -45,7 +45,7 @@ int		remove_alias(char *alias, t_alias ***aliaslist, int count)
 
 	j = 0;
 	i = 0;
-	if (!(new = (t_alias**)malloc(count * sizeof(t_alias*) + 1)))
+	if (!(new = (t_alias**)malloc((count + 1) * sizeof(t_alias*))))
 		return (EXIT_FAILURE);
 	while (j < count)
 	{

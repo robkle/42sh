@@ -19,7 +19,7 @@ int		add_alias(int count, char *alias, t_alias ***aliaslist)
 
 	j = 0;
 	if ((*aliaslist) != NULL &&
-	(new = (t_alias**)malloc(count * sizeof(t_alias*) + 1)))
+	(new = (t_alias**)malloc((count + 1) * sizeof(t_alias*))))
 	{
 		while ((*aliaslist)[j] != NULL)
 		{

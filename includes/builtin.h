@@ -35,7 +35,7 @@ int				ft_alias(t_process *c);
 int				ft_unalias(t_process *c);
 
 /*
-**	Built-in functions for child shell 
+**	Built-in functions for child shell
 */
 
 int				ft_bg_child();
