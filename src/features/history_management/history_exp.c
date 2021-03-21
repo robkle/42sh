@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 15:39:56 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/20 10:12:10 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/21 08:45:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int		ft_construct_exp(char **line, char *exp, char **split, \
 	else
 	{
 		r = 0;
-		*line = ft_strnew(0);
+		*line = ft_strdup("\n");
 		ft_printf("%s: %s: event not found\n", SHELL_NAME, exp_split[0]);
 	}
 	free(exp);
