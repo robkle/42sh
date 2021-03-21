@@ -65,6 +65,8 @@ int			paste(t_l *l, char raw_clip[], char *autocom_clip)
 	int				clip_len;
 
 	clip = get_clip(raw_clip, autocom_clip);
+	if (clip == NULL)
+		return (EXIT_SUCCESS);
 	clip_len = ft_strlen(clip);
 	i = ft_index_calc(l);
 	paste_apply_screen(l, clip, i);
