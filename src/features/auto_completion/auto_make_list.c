@@ -6,35 +6,44 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:50:06 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/21 03:56:19 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 13:52:44 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		del_lst(t_auto *auto_com)
+static char		is_duplicated_cmd(t_list *list, char *cmd)
 {
-	t_list	*temp_list;
-	char	*temp_content;
-
-	while (auto_com->list)
+	while (list)
 	{
-		temp_list = auto_com->list;
-		temp_content = (char*)temp_list->content;
-		ft_strdel(&temp_content);
-		auto_com->list = auto_com->list->next;
-		free(temp_list);
+		if (ft_strequ((char *)list->content, cmd))
+			return (TRUE);
+		list = list->next;
 	}
-	auto_com->list = NULL;
+	return (FALSE);
 }
 
-void		auto_make_list(t_auto *auto_com)
+void			auto_make_list(char path[], t_auto *auto_com)
 {
-	DIR		*dirp;
+	t_list		*node;
+	DIR			*dirp;
+	t_dirent	*dir;
+	size_t		target_str_len;
 
-	if (auto_com->list && !(auto_com->status & AUTO_STAT_LIST))
-		del_lst(auto_com);
-	dirp = opendir(auto_com->full_path);
-	auto_get_list(auto_com, dirp);
+	dirp = opendir(path);
+	target_str_len = ft_strlen(auto_com->target_str);
+	while ((dir = readdir(dirp)))
+	{
+		if (ft_strnequ(auto_com->target_str, dir->d_name, target_str_len) &&
+			!is_duplicated_cmd(auto_com->list, dir->d_name))
+		{
+			auto_com->count_list++;
+			node = ft_lstnew_str((void *)dir->d_name, ft_strlen(dir->d_name));
+			if (auto_com->list == NULL)
+				auto_com->list = node;
+			else
+				auto_add_list_on_spot(auto_com, node);
+		}
+	}
 	closedir(dirp);
 }

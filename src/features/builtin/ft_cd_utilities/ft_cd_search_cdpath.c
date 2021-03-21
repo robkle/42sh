@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:31:25 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/21 11:51:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 15:10:28 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	*get_curpath_from_directory(t_cd *cd)
 
 int			ft_cd_search_cdpath(t_cd *cd)
 {
-	int i;
+	int		i;
 	char	**path_split;
 
 	if (ft_getvar("CDPATH") != NULL)
