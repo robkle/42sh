@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:06:11 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/14 02:13:48 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/21 03:51:32 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_astnode	*clear_ast(t_astnode *ast);
 
 /*
 ** Debug tree
+** void		printBinaryTree(t_astnode *t);
 */
-void		printBinaryTree(t_astnode *t);
 
 #endif

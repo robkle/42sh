@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 14:46:48 by ihwang            #+#    #+#             */
-/*   Updated: 2020/12/26 19:11:40 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/21 03:49:49 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_lstadd_tail(t_list **alst, t_list *new)
 	if (alst && new)
 	{
 		ptr = *alst;
-		while(ptr->next)
+		while (ptr->next)
 			ptr = ptr->next;
 		ptr->next = new;
 	}

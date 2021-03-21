@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:45:50 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 20:30:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 11:49:53 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 **	step10 in posix doc
 */
 
-static void ft_cd_set_env(char *name, char *value)
+static void	ft_cd_set_env(char *name, char *value)
 {
-	char **av;
+	char	**av;
 
 	av = (char**)malloc(sizeof(char*) * 3);
 	av[0] = (char*)malloc(ft_strlen("export") + 1);
@@ -51,18 +51,20 @@ static void	manipulate_var(t_cd *cd)
 	else
 	{
 		ft_memset((void*)absolute_path, 0, sizeof(absolute_path));
-		if (getcwd(absolute_path, sizeof(absolute_path)) != NULL && ft_getenv("PWD"))
+		if (getcwd(absolute_path, sizeof(absolute_path)) != NULL \
+		&& ft_getenv("PWD"))
 			ft_cd_set_env("PWD", absolute_path);
 	}
-    if (is_root_dir(ft_getenv("PWD")))
+	if (is_root_dir(ft_getenv("PWD")))
 		ft_cd_set_env("PWD", "/");
 }
 
-int ft_cd_change_dir(t_cd *cd)
+int			ft_cd_change_dir(t_cd *cd)
 {
 	if (chdir(cd->curpath) == -1)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: cd: No such file or directory\n", SHELL_NAME);
+		ft_dprintf(STDERR_FILENO, "%s: cd: No such file or directory\n", \
+		SHELL_NAME);
 		free(cd->curpath);
 		return (EXIT_FAILURE);
 	}
@@ -72,8 +74,9 @@ int ft_cd_change_dir(t_cd *cd)
 		if (fcntl(STDOUT_FILENO, F_GETFD) == 0)
 			ft_dprintf(STDOUT_FILENO, "%s\n", cd->curpath);
 		else
-			ft_dprintf(STDERR_FILENO, "%s: cd: Write error: Bad file descriptor\n", SHELL_NAME);
+			ft_dprintf(STDERR_FILENO, \
+			"%s: cd: Write error: Bad file descriptor\n", SHELL_NAME);
 	}
-    ft_strdel(&cd->curpath);
+	ft_strdel(&cd->curpath);
 	return (EXIT_SUCCESS);
 }

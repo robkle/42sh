@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_dir.c                                         :+:      :+:    :+:   */
+/*   wait_for_space_or_carrage_return.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/27 13:47:07 by marvin            #+#    #+#             */
-/*   Updated: 2020/12/27 17:48:53 by dthan            ###   ########.fr       */
+/*   Created: 2021/03/21 14:04:02 by ihwang            #+#    #+#             */
+/*   Updated: 2021/03/21 14:58:44 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void        auto_dir(t_l *l)
+void		wait_for_space_or_carrage_return(char buf[])
 {
-    if (auto_is_dir(l->auto_com.full_path, l->auto_com.target_str))
-    {
-        set_status_dir(&l->auto_com.status);
-        //auto_ready_to_print(l);
-    }
+	ft_putstr("--More--");
+	auto_read_input("\n q", buf);
 }

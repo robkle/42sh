@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 16:46:18 by tango             #+#    #+#             */
-/*   Updated: 2021/03/10 16:47:42 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 03:54:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	ft_putnstr_fd(char const *s, size_t len, int fd)
 {
-    size_t  i;
+	size_t i;
 
-    i = 0;
-    while (s[i] && i < len)
-    {
-        write(fd, &s[i++], 1);
-    }
+	i = 0;
+	while (s[i] && i < len)
+	{
+		write(fd, &s[i++], 1);
+	}
 }

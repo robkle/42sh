@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:43:17 by ihwang            #+#    #+#             */
-/*   Updated: 2021/02/02 17:49:46 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 11:25:32 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 **	step9 in posix doc
 */
 
-static char is_initial_path_of(char *curpath, char *path_var)
+static char	is_initial_path_of(char *curpath, char *path_var)
 {
 	return (ft_strnstr(curpath, path_var, ft_strlen(path_var)) != NULL);
 }
 
-static char *cnvt_curpath_to_relative_path(char *curpath)
+static char	*cnvt_curpath_to_relative_path(char *curpath)
 {
 	char	*relative_path;
 	char	buf[PATH_MAX];
@@ -33,15 +33,16 @@ static char *cnvt_curpath_to_relative_path(char *curpath)
 	return (ft_strdup(relative_path));
 }
 
-int ft_cd_compress_curpath(t_cd *cd)
+int			ft_cd_compress_curpath(t_cd *cd)
 {
-	char *var;
-	size_t cpath_len;
-	size_t dir_len;
+	char	*var;
+	size_t	cpath_len;
+	size_t	dir_len;
 
 	cpath_len = ft_strlen(cd->curpath);
 	dir_len = ft_strlen(cd->directory);
-	if (cpath_len + FT_CD_NULL_LEN > PATH_MAX && dir_len + FT_CD_NULL_LEN < PATH_MAX)
+	if (cpath_len + FT_CD_NULL_LEN > PATH_MAX \
+	&& dir_len + FT_CD_NULL_LEN < PATH_MAX)
 	{
 		var = ft_getenv("PWD");
 		if (var != NULL)

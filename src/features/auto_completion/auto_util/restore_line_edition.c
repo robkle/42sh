@@ -1,42 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_add_list_on_spot.c                            :+:      :+:    :+:   */
+/*   restore_line_edition.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/14 23:33:41 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/21 04:24:25 by ihwang           ###   ########.fr       */
+/*   Created: 2021/03/21 14:07:01 by ihwang            #+#    #+#             */
+/*   Updated: 2021/03/21 14:07:27 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void			auto_add_list_on_spot(t_auto *auto_com, t_list *node)
+void		restore_line_edition(t_auto *auto_com)
 {
-	t_list		*prev;
-	t_list		*list;
+	t_l		*editor;
 
-	prev = NULL;
-	list = auto_com->list;
-	while (list)
+	editor = auto_com->editor;
+	if (g_shell.signal_indicator != SIGINT)
 	{
-		if (ft_strcmp((char*)list->content, (char*)node->content) > 0)
-		{
-			node->next = list;
-			if (prev)
-				prev->next = node;
-			else
-				auto_com->list = node;
-			return ;
-		}
-		prev = list;
-		if (list->next)
-			list = list->next;
-		else
-		{
-			list->next = node;
-			return ;
-		}
+		print_info();
+		print_prompt(auto_com->editor->promp_type);
 	}
+	ft_putstr(editor->line);
+	apply_termcap_str("cm", editor->x, editor->y + get_current_row() - 1);
+	editor->starting_row = editor->total_row - get_current_row() - 1;
+	ft_beep_sound();
 }

@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_add_list_on_spot.c                            :+:      :+:    :+:   */
+/*   auto_read_input.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/14 23:33:41 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/21 04:24:25 by ihwang           ###   ########.fr       */
+/*   Created: 2021/03/21 14:00:31 by ihwang            #+#    #+#             */
+/*   Updated: 2021/03/21 14:00:43 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void			auto_add_list_on_spot(t_auto *auto_com, t_list *node)
+void		auto_read_input(const char *input_set, char buf[])
 {
-	t_list		*prev;
-	t_list		*list;
-
-	prev = NULL;
-	list = auto_com->list;
-	while (list)
+	while ((read(STDIN_FILENO, buf, sizeof(BUFF_LINE_EDITION))) > 1 ||
+			(!ft_strchr(input_set, buf[0])))
 	{
-		if (ft_strcmp((char*)list->content, (char*)node->content) > 0)
-		{
-			node->next = list;
-			if (prev)
-				prev->next = node;
-			else
-				auto_com->list = node;
-			return ;
-		}
-		prev = list;
-		if (list->next)
-			list = list->next;
-		else
-		{
-			list->next = node;
-			return ;
-		}
+		if (g_shell.signal_indicator == SIGINT)
+			break ;
+		ft_beep_sound();
+		ft_bzero(buf, sizeof(BUFF_LINE_EDITION));
 	}
 }

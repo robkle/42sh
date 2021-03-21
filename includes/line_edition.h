@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/19 23:14:00 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/21 03:48:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		home_key(t_l *l);
 int		end_key(t_l *l);
 int		ctrl_k(t_l *l, int y_dec);
 int		ctrl_l(t_l *l, int clip_len, int i);
-int		ctrl_left(t_l *l/*, int y_dec*/);
+int		ctrl_left(t_l *l);
 int		ctrl_right(t_l *l);
 int		ctrl_up(t_l *l);
 int		ctrl_down(t_l *l);
@@ -99,7 +99,7 @@ int		add_key(char t[], t_l *l);
 /*
 ** Copy & Paste
 */
-int		cutting(t_l *l/*, int y_dec*/);
+int		cutting(t_l *l);
 void	cutting_clipping(t_l *l, int i, int j);
 char	*clipboard(char *str, int opt);
 int		paste(t_l *l, char raw_clip[], char *autocom_clip);
@@ -127,6 +127,5 @@ void	ft_line_count(t_l *l);
 int		ft_y_pos(t_l *l, int index);
 int		ft_index_calc(t_l *l);
 int		ft_cursor_x(t_l *l);
-
 
 #endif

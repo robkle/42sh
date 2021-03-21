@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 14:56:26 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 11:46:10 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 11:18:01 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	look_for_path(char *arg, char **path)
 	*path = get_full_path(arg, split);
 	split_count = -1;
 	while (split[++split_count])
-		NULL ;
+		NULL;
 	ft_strlst_del(&split, split_count);
 	if (*path)
 		return (EXIT_SUCCESS);
@@ -116,7 +116,8 @@ int			ft_type(t_process *c)
 		else if ((ret_code = look_for_path(c->av[i], &path)) == EXIT_SUCCESS)
 			ft_printf("%s is %s\n", c->av[i], path);
 		else
-			ft_dprintf(STDERR_FILENO, "%s: type: %s: not found\n", SHELL_NAME, c->av[i]);
+			ft_dprintf(STDERR_FILENO, "%s: type: %s: not found\n", \
+			SHELL_NAME, c->av[i]);
 		ft_strdel(&path);
 		alias = NULL;
 	}

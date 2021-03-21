@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/18 20:30:55 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/21 11:19:16 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ static char	basic_error_check(char **av, t_opt opt)
 
 	status = 0;
 	if (opt.applied == BUILTIN_INVALID_OPT)
-		status = ft_dprintf(2, "%s: cd: %c: invalid option\n", SHELL_NAME, opt.invalid_opt);
+		status = ft_dprintf(2, "%s: cd: %c: invalid option\n", \
+		SHELL_NAME, opt.invalid_opt);
 	if (av[opt.operand_count + 2] != NULL)
 		status = ft_dprintf(2, "%s: cd: too many arguments\n", SHELL_NAME);
-	if (av[opt.operand_count + 1] == NULL && !ft_getenv("HOME")) //step1
+	if (av[opt.operand_count + 1] == NULL && !ft_getenv("HOME"))
 		status = ft_dprintf(2, "%s cd: HOME not set\n", SHELL_NAME);
-	return (status);	
+	return (status);
 }
 
 static void	integrate_cd_options(t_opt *opt)
@@ -73,12 +74,13 @@ int			ft_cd(t_process *c)
 	cd.opt = opt;
 	if (get_directory(c, &cd, &opt) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (*(cd.directory) == '/') // step3
+	if (*(cd.directory) == '/')
 	{
 		cd.curpath = ft_strdup(cd.directory);
 		return (ft_cd_append_slash_to_curpath(&cd));
 	}
-	else if (ft_strnstr(cd.directory, "..", 2) || ft_strnstr(cd.directory, ".", 1)) //step4
+	else if (ft_strnstr(cd.directory, "..", 2) || \
+	ft_strnstr(cd.directory, ".", 1))
 		return (ft_cd_get_curpath_from_dir(&cd));
 	else
 		return (ft_cd_search_cdpath(&cd));
