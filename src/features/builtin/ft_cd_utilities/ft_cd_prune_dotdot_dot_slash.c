@@ -52,7 +52,7 @@ static void		prune(t_cd *cd, char **split, char **new_curpath)
 	while (split[++i] != NULL)
 	{
 		if (ft_strequ(split[i], "..") && i != 0 && !is_root_dir(*new_curpath) \
-		&& !ft_strequ(&*new_curpath[ft_strlen(*new_curpath) - 2], ".."))
+		&& !ft_strequ(&(*new_curpath[ft_strlen(*new_curpath) - 2]), ".."))
 		{
 			slash = ft_strrchr(*new_curpath, '/');
 			if (slash != *new_curpath)
@@ -65,7 +65,7 @@ static void		prune(t_cd *cd, char **split, char **new_curpath)
 			continue;
 		else if (ft_strequ(split[i], "..") && i == 0 && cd->curpath[0] == '/')
 			continue;
-		if (*new_curpath[ft_strlen(*new_curpath) - 1] != '/')
+		if ((*new_curpath)[ft_strlen(*new_curpath) - 1] != '/')
 			*new_curpath = ft_strjoin_and_free_string1(*new_curpath, "/");
 		*new_curpath = ft_strjoin_and_free_string1(*new_curpath, split[i]);
 	}
