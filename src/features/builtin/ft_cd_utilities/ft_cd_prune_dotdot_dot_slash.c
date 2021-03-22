@@ -42,17 +42,33 @@ static char		check_access(t_cd *cd)
 	return (EXIT_SUCCESS);
 }
 
-static void		prune(t_cd *cd, char **split, char **new_curpath)
+static void		update_new_curpath(char **new_curpath, char *path)
+{
+	char		*target;
+
+	if ((*new_curpath)[ft_strlen(*new_curpath) - 1] != '/')
+		*new_curpath = ft_strjoin_and_free_string1(*new_curpath, "/");
+	target = ft_strjoin(*new_curpath, path);
+	if (is_root_dir(*new_curpath) && is_root_dir(target))
+		free(target);
+	else
+	{
+		free(*new_curpath);
+		*new_curpath = target;
+	}
+}
+
+static void		prune(char **paths, char **new_curpath)
 {
 	int			i;
 	char		*slash;
 
 	*new_curpath = ft_strdup("/");
 	i = -1;
-	while (split[++i] != NULL)
+	while (paths[++i] != NULL)
 	{
-		if (ft_strequ(split[i], "..") && i != 0 && !is_root_dir(*new_curpath) \
-		&& !ft_strequ(&(*new_curpath[ft_strlen(*new_curpath) - 2]), ".."))
+		if (ft_strequ(paths[i], "..") && i != 0 && !is_root_dir(*new_curpath) \
+		&& !ft_strequ(&(*new_curpath)[ft_strlen(*new_curpath) - 2], ".."))
 		{
 			slash = ft_strrchr(*new_curpath, '/');
 			if (slash != *new_curpath)
@@ -61,33 +77,51 @@ static void		prune(t_cd *cd, char **split, char **new_curpath)
 				*(++slash) = '\0';
 			continue;
 		}
-		if (ft_strequ(split[i], "."))
+		if (ft_strequ(paths[i], "."))
 			continue;
-		else if (ft_strequ(split[i], "..") && i == 0 && cd->curpath[0] == '/')
-			continue;
-		if ((*new_curpath)[ft_strlen(*new_curpath) - 1] != '/')
-			*new_curpath = ft_strjoin_and_free_string1(*new_curpath, "/");
-		*new_curpath = ft_strjoin_and_free_string1(*new_curpath, split[i]);
+		update_new_curpath(new_curpath, paths[i]);
 	}
+}
+
+static char		**split_paths(char *curpath, int *path_len)
+{
+	char		**paths;
+	char		**temp;
+	int			i;
+
+	temp = ft_strsplit(curpath, '/');
+	*path_len = 0;
+	while (temp[*path_len])
+		(*path_len)++;
+	if (curpath[0] == '/')
+	{
+		paths = (char**)ft_memalloc(sizeof(char*) * (*path_len + 2));
+		paths[0] = ft_strdup("/");
+		i = 0;
+		while (++i < *path_len + 1)
+			paths[i] = ft_strdup(temp[i - 1]);
+		ft_strlst_del(&temp, *path_len);
+		(*path_len)++;
+	}
+	else
+		paths = temp;
+	return (paths);
 }
 
 int				ft_cd_prune_dotdot_dot_slash(t_cd *cd)
 {
-	char		**split;
+	int			path_len;
+	char		**paths;
 	char		*new_curpath;
-	int			i;
 
-	split = ft_strsplit(cd->curpath, '/');
-	if (split[0] == NULL)
+	paths = split_paths(cd->curpath, &path_len);
+	if (paths[0] == NULL)
 	{
-		free(split);
+		free(paths);
 		return (ft_cd_compress_curpath(cd));
 	}
-	prune(cd, split, &new_curpath);
-	i = -1;
-	while (split[++i])
-		NULL;
-	ft_strlst_del(&split, i);
+	prune(paths, &new_curpath);
+	ft_strlst_del(&paths, path_len);
 	ft_strdel(&cd->curpath);
 	cd->curpath = new_curpath;
 	if ((check_access(cd)) == EXIT_FAILURE)
