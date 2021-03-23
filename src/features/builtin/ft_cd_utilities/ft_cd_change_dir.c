@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:45:50 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/23 10:54:57 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/23 15:58:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int			ft_cd_change_dir(t_cd *cd)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: cd: No such file or directory\n", \
 		SHELL_NAME);
-		free(cd->curpath);
+		ft_strdel(&cd->curpath);
 		return (EXIT_FAILURE);
 	}
 	manipulate_var(cd);
