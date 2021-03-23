@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:23 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/21 14:16:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/23 22:39:36 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static char		get_list_and_count(t_auto *auto_com)
 	if (list_status == EXIT_FAILURE)
 		return (-1);
 	count = get_count(auto_com);
-	auto_prune_list(auto_com, count);
 	return (count);
 }
 
