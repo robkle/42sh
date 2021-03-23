@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 20:29:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/20 16:38:49 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/22 17:23:42 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 # include "struct.h"
 
 # define SIGNAL_NUMBER_OSX 31
+
+# if defined SIGINFO
+# else
+#  define SIGINFO 127
+# endif
 
 # define SIGHUP_MSG "Hangup"
 # define SIGINT_MSG "Interrupt"
