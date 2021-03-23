@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 20:12:39 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/21 14:19:31 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/23 23:39:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int		auto_print_in_term_size(t_auto *auto_com, t_auto_grid *grid);
 int		auto_print_over_term_size(t_auto *auto_com);
 int		auto_print_in_one_column(t_auto *auto_com);
 int		auto_print_in_two_columns(t_auto *auto_com);
-void	auto_prune_list(t_auto *auto_com, size_t count);
 void	auto_make_list(char path[], t_auto *auto_com);
 void	auto_add_one_extra_char(t_l *l, char c);
 void	auto_add_list_on_spot(t_auto *auto_com, t_list *node);
