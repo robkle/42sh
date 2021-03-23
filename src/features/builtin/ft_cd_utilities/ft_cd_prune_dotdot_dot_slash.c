@@ -6,15 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:39:47 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/21 11:46:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/23 14:45:43 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-/*
-**	step8 in posix doc
-*/
 
 static char		check_access(t_cd *cd)
 {
@@ -50,10 +46,10 @@ static void		update_new_curpath(char **new_curpath, char *path)
 		*new_curpath = ft_strjoin_and_free_string1(*new_curpath, "/");
 	target = ft_strjoin(*new_curpath, path);
 	if (is_root_dir(*new_curpath) && is_root_dir(target))
-		free(target);
+		ft_strdel(&target);
 	else
 	{
-		free(*new_curpath);
+		ft_strdel(new_curpath);
 		*new_curpath = target;
 	}
 }
@@ -107,6 +103,10 @@ static char		**split_paths(char *curpath, int *path_len)
 		paths = temp;
 	return (paths);
 }
+
+/*
+**	step8 in posix doc
+*/
 
 int				ft_cd_prune_dotdot_dot_slash(t_cd *cd)
 {

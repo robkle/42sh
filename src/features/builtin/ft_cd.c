@@ -6,11 +6,20 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/21 11:19:16 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/23 14:49:08 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+/*
+**	Ft_cd has been implemented refering to Posix man page
+**	which specifies every step that a Posix-compliant cd command shall follow.
+**	You can search for ft_cd's functions which are corresponding to each of
+**	the steps with 'step[step number]` keyword.
+**
+**	Link:[https://man7.org/linux/man-pages/man1/cd.1p.html]
+*/
 
 static char	basic_error_check(char **av, t_opt opt)
 {
@@ -38,7 +47,7 @@ static char	get_directory(t_process *c, t_cd *cd, t_opt *opt)
 {
 	if (c->av[opt->operand_count + 1] == NULL)
 	{
-		if ((ft_getenv("HOME") == NULL))
+		if (ft_getenv("HOME") == NULL)
 		{
 			ft_dprintf(2, "%s: cd: HOME not set\n", SHELL_NAME);
 			return (EXIT_FAILURE);
@@ -47,7 +56,7 @@ static char	get_directory(t_process *c, t_cd *cd, t_opt *opt)
 	}
 	else if (ft_strequ(c->av[opt->operand_count + 1], "-"))
 	{
-		if ((ft_getenv("OLDPWD") == NULL))
+		if (ft_getenv("OLDPWD") == NULL)
 		{
 			ft_dprintf(2, "%s: cd: OLDPWD not set\n", SHELL_NAME);
 			return (EXIT_FAILURE);
@@ -59,6 +68,28 @@ static char	get_directory(t_process *c, t_cd *cd, t_opt *opt)
 		cd->directory = c->av[opt->operand_count + 1];
 	return (EXIT_SUCCESS);
 }
+
+/*
+** step3 and step4 in Posix doc
+*/
+
+static int	ft_cd_starting_slash_or_dotdot(t_cd *cd)
+{
+	if (*(cd->directory) == '/')
+	{
+		cd->curpath = ft_strdup(cd->directory);
+		return (ft_cd_append_slash_to_curpath(cd));
+	}
+	else if (ft_strnstr(cd->directory, "..", 2) || \
+	ft_strnstr(cd->directory, ".", 1))
+		return (ft_cd_get_curpath_from_dir(cd));
+	else
+		return (ft_cd_search_cdpath(cd));
+}
+
+/*
+**	step1 and step2 in Posix doc
+*/
 
 int			ft_cd(t_process *c)
 {
@@ -74,14 +105,5 @@ int			ft_cd(t_process *c)
 	cd.opt = opt;
 	if (get_directory(c, &cd, &opt) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (*(cd.directory) == '/')
-	{
-		cd.curpath = ft_strdup(cd.directory);
-		return (ft_cd_append_slash_to_curpath(&cd));
-	}
-	else if (ft_strnstr(cd.directory, "..", 2) || \
-	ft_strnstr(cd.directory, ".", 1))
-		return (ft_cd_get_curpath_from_dir(&cd));
-	else
-		return (ft_cd_search_cdpath(&cd));
+	return (ft_cd_starting_slash_or_dotdot(&cd));
 }

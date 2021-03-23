@@ -6,15 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:45:50 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/21 11:49:53 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/23 10:54:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-/*
-**	step10 in posix doc
-*/
 
 static void	ft_cd_set_env(char *name, char *value)
 {
@@ -58,6 +54,10 @@ static void	manipulate_var(t_cd *cd)
 	if (is_root_dir(ft_getenv("PWD")))
 		ft_cd_set_env("PWD", "/");
 }
+
+/*
+**	step10 in posix doc
+*/
 
 int			ft_cd_change_dir(t_cd *cd)
 {
