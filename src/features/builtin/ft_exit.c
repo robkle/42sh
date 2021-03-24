@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/21 11:24:21 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/24 15:05:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,16 @@ int			ft_exit_internal(int ret_value)
 	remove_all(&g_shell.alias);
 	remove_hashentries();
 	delete_builtin_commands();
-	ft_dprintf(STDERR_FILENO, "exit\n");
+	if (g_shell.pipe_indicator == 0)
+		ft_dprintf(STDERR_FILENO, "exit\n");
 	exit(ret_value);
 	return (EXIT_FAILURE);
 }
 
-static int	numeric_arguemtn_error(char *arg)
+static int	too_many_args_error(void)
 {
-	ft_dprintf(STDERR_FILENO, "%s: exit: %s: numeric argument required\n", \
-	SHELL_NAME, arg);
+	ft_dprintf(STDERR_FILENO, "%s: exit: too many arguments\n", \
+	SHELL_NAME);
 	return (EXIT_FAILURE);
 }
 
@@ -67,15 +68,16 @@ int			ft_exit(t_process *p)
 		{
 			ret_value = (char)ft_atolli_check(p->av[1], &is_longlong);
 			if (is_longlong && p->ac > 2)
-				ft_dprintf(STDERR_FILENO, "%s: exit: too many arguments\n", \
-				SHELL_NAME);
+				return (too_many_args_error());
 			if (is_longlong)
 				ft_exit_internal(ret_value);
 			if (!is_longlong)
-				return (numeric_arguemtn_error(p->av[1]));
+				ft_dprintf(2, "%s: exit: %s: numeric argument required\n", \
+				SHELL_NAME, p->av[1]);
 		}
 		else
-			return (numeric_arguemtn_error(p->av[1]));
+			ft_dprintf(2, "%s: exit: %s: numeric argument required\n", \
+			SHELL_NAME, p->av[1]);
 	}
 	return (ft_exit_internal(g_shell.exit_status));
 }
