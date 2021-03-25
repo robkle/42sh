@@ -6,15 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:31:25 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/21 15:10:28 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/23 10:55:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-/*
-**	step5 in posix doc
-*/
 
 static char	is_valid_cdpath(t_cd *cd, char *path)
 {
@@ -77,6 +73,10 @@ static char	*get_curpath_from_directory(t_cd *cd)
 	path = ft_strjoin_and_free_string1(path, cd->directory);
 	return (path);
 }
+
+/*
+**	step5 in posix doc
+*/
 
 int			ft_cd_search_cdpath(t_cd *cd)
 {

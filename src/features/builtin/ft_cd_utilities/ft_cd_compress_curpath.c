@@ -6,19 +6,15 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 17:43:17 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/21 11:25:32 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/23 15:14:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-/*
-**	step9 in posix doc
-*/
-
-static char	is_initial_path_of(char *curpath, char *path_var)
+static char	is_initial_path_of(char pwd[], char *curpath)
 {
-	return (ft_strnstr(curpath, path_var, ft_strlen(path_var)) != NULL);
+	return (ft_strnstr(pwd, curpath, ft_strlen(curpath)) != NULL);
 }
 
 static char	*cnvt_curpath_to_relative_path(char *curpath)
@@ -33,9 +29,14 @@ static char	*cnvt_curpath_to_relative_path(char *curpath)
 	return (ft_strdup(relative_path));
 }
 
+/*
+**	step9 in posix doc
+*/
+
 int			ft_cd_compress_curpath(t_cd *cd)
 {
 	char	*var;
+	char	pwd[PATH_MAX];
 	size_t	cpath_len;
 	size_t	dir_len;
 
@@ -45,16 +46,16 @@ int			ft_cd_compress_curpath(t_cd *cd)
 	&& dir_len + FT_CD_NULL_LEN < PATH_MAX)
 	{
 		var = ft_getenv("PWD");
-		if (var != NULL)
-			var = ft_strdup(var);
-		if (var[ft_strlen(var) - 1] != '/')
-			var = ft_strjoin_and_free_string1(var, "/");
-		if (is_initial_path_of(cd->curpath, var))
+		if (var == NULL)
+			return (ft_cd_change_dir(cd));
+		ft_strcpy(pwd, var);
+		if (pwd[ft_strlen(pwd) - 1] != '/')
+			ft_addchar(pwd, '/');
+		if (is_initial_path_of(pwd, cd->curpath))
 		{
 			cd->prev_curpath = cd->curpath;
 			cd->curpath = cnvt_curpath_to_relative_path(cd->curpath);
 		}
-		free(var);
 	}
 	return (ft_cd_change_dir(cd));
 }

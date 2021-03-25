@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/21 11:11:12 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/23 21:47:43 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,6 +440,17 @@ typedef enum
 	BUILTIN_CD_OPT_P = (1 << 0),
 	BUILTIN_CD_OPT_L = (1 << 1)
 }	t_cd_opts;
+
+/*
+**	cd struct
+**	directory	: An argument that cd took. e.g. `$> cd [directory]`
+**	curpath		: The actual path that cd will change to
+**	prev_curpath: A candidate to be set to PWD. The value varies by the options
+**	cd took e.g. '-L' or '-P'
+**	print_info	: Boolean that determines whether cd prints `curpath`
+**	e.g. `$> cd -`
+**	opt			: option set
+*/
 
 typedef struct			s_cd
 {
