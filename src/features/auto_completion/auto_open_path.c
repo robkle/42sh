@@ -6,37 +6,14 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 13:47:23 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/23 22:39:36 by tango            ###   ########.fr       */
+/*   Updated: 2021/03/26 01:02:40 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static size_t	get_count(t_auto *auto_com)
-{
-	t_list		*iter;
-	size_t		count;
-	char		*content;
-	char		*target_str;
-
-	iter = auto_com->list;
-	count = 0;
-	target_str = auto_com->target_str;
-	while (iter != NULL)
-	{
-		content = iter->content;
-		if ((!ft_strequ(content, "./") && !ft_strequ(content, "../")) || \
-				((ft_strequ(content, "./") || ft_strequ(content, "../")) && \
-				(ft_strequ(target_str, ".") || ft_strequ(target_str, ".."))))
-			count++;
-		iter = iter->next;
-	}
-	return (count);
-}
-
 static char		get_list_and_count(t_auto *auto_com)
 {
-	size_t		count;
 	DIR			*dirp;
 	char		list_status;
 
@@ -45,21 +22,19 @@ static char		get_list_and_count(t_auto *auto_com)
 	closedir(dirp);
 	if (list_status == EXIT_FAILURE)
 		return (-1);
-	count = get_count(auto_com);
-	return (count);
+	return (0);
 }
 
 int				auto_file_open_path(t_auto *auto_com)
 {
-	size_t	count;
-
-	count = get_list_and_count(auto_com);
-	if (count <= 0)
+	if (get_list_and_count(auto_com) == -1)
+		return (clear_auto_struct(auto_com));
+	if (auto_com->count_list <= 0)
 	{
 		ft_beep_sound();
 		return (clear_auto_struct(auto_com));
 	}
-	else if (count > 1)
+	else if (auto_com->count_list > 1)
 		return (auto_cmd_file_multiple_cases(auto_com));
 	else
 		return (auto_file_one_case(auto_com));
