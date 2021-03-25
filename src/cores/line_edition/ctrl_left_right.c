@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_left_right.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:15:39 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/19 22:20:49 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/25 13:12:19 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int			ctrl_right(t_l *l)
 {
 	int	index;
 
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	index = ft_index_calc(l);
 	if (index < l->nb && !ft_isspace(l->line[index]) && \
 	ctrl_right_pos_check(l->line, index))
@@ -46,6 +48,8 @@ int			ctrl_left(t_l *l)
 	int	i;
 	int	index;
 
+	if (l->rs)
+		ft_reverse_search_reset(l);
 	i = 0;
 	while (ft_isspace(l->line[i]))
 		i++;
