@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/26 14:51:30 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/26 15:59:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void		ft_rs_print(void)
 {
-	char	*tmp;
+	//char	*tmp;
+	char	tmp[4096];
 	int		len;
 	int		d;
 
@@ -22,9 +23,11 @@ void		ft_rs_print(void)
 	{
 		len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
 		d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
-		tmp = ft_strndup(g_shell.history->hist[g_shell.history->hst], len - d);
+		ft_bzero(tmp, 4096);
+		ft_strncpy(tmp, g_shell.history->hist[g_shell.history->hst], len - d);
+		//tmp = ft_strndup(g_shell.history->hist[g_shell.history->hst], len - d);
 		ft_putstr(tmp);
-		free(tmp);
+		//free(tmp);
 	}
 	else
 		ft_putstr(g_shell.history->hist[g_shell.history->hst]);

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:43:38 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/26 14:57:20 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/26 16:13:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			ft_row_count_rs(t_l *l)
 	else
 		ft_strcpy(tmp, g_shell.history->hist[g_shell.history->hst]);
 	i = 0;
-	row = 1 + count / l->co;
+	row = 1 + (count / l->co);
 	//while (g_shell.history->hist[g_shell.history->hst][i])
 	while (tmp[i])
 	{
@@ -90,7 +90,7 @@ static void	ft_recalc_lc(t_l *l)
 	int row;
 
 	ft_arraydel(l->lc);
-	row = ft_row_count(l);
+	row = l->rs ? ft_row_count_rs(l) : ft_row_count(l);
 	l->lc = malloc(sizeof(char*) * (row + 1));
 }
 
