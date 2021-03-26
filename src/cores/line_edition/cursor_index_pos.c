@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 22:30:29 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/19 22:40:23 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/26 13:51:57 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,41 @@
 **Calculates the row in which the given index
 */
 
+static int	ft_y_pos_rs(t_l *l, int index)
+{
+	int i;
+	int	count;
+	int	row;
+
+	count = ft_strlen(l->rev_sr);
+	i = 0;
+	row = 1;
+	while (g_shell.history->hist[g_shell.history->hst][i] == '\n' && i <= index)
+	{
+		count++;
+		if (g_shell.history->hist[g_shell.history->hst][i] == '\n')
+		{
+			row++;
+			count = 0;
+		}
+		else if (count == l->co)
+		{
+			row++;
+			count = 0;
+		}
+		i++;
+	}
+	return (row);
+}
+
 int		ft_y_pos(t_l *l, int index)
 {
 	int i;
 	int	count;
 	int	row;
 
+	if (l->rs)
+		return (ft_y_pos_rs(l, index));
 	count = l->pmpt;
 	i = 0;
 	row = 1;

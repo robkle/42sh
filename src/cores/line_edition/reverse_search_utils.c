@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/20 15:30:42 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/26 14:51:30 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		ft_rs_print(void)
 		ft_putstr(g_shell.history->hist[g_shell.history->hst]);
 }
 
+/*
 static int	ft_reverse_search_count_rows(t_l *l)
 {
 	int	count;
@@ -54,7 +55,7 @@ static int	ft_reverse_search_count_rows(t_l *l)
 	l->x = count % l->co;
 	return (row);
 }
-
+*/
 void		ft_reverse_search_clear(t_l *l)
 {
 	int	i;
@@ -62,7 +63,7 @@ void		ft_reverse_search_clear(t_l *l)
 	int	starting_row_from_top;
 	int	new_starting_row;
 
-	line_rows = l->rs ? ft_reverse_search_count_rows(l) : ft_row_count(l);
+	line_rows = l->rs ? ft_row_count_rs(l) : ft_row_count(l);
 	if (!l->rs)
 	{
 		l->y = line_rows - 1;
@@ -101,5 +102,6 @@ int			ft_reverse_search_reset(t_l *l)
 	ft_reverse_search_clear(l);
 	print_prompt(l->promp_type);
 	ft_putstr(l->line);
+	ft_line_count(l);
 	return (home_key(l));
 }
