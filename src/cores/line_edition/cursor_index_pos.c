@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 22:30:29 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/26 13:51:57 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/26 23:14:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		ft_cursor_x(t_l *l)
 {
 	int	i;
 
-	ft_line_count(l);
+	l->rs ? ft_line_count_rs(l) : ft_line_count(l);
 	i = 0;
 	while (l->lc[i])
 		i++;
