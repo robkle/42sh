@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 22:30:29 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/26 23:14:33 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/27 22:42:56 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	ft_y_pos_rs(t_l *l, int index)
 	return (row);
 }
 
-int		ft_y_pos(t_l *l, int index)
+int			ft_y_pos(t_l *l, int index)
 {
 	int i;
 	int	count;
@@ -76,7 +76,7 @@ int		ft_y_pos(t_l *l, int index)
 ** calculates the index of l->line on which the cursor is
 */
 
-int		ft_index_calc(t_l *l)
+int			ft_index_calc(t_l *l)
 {
 	int	i;
 	int len;
@@ -94,7 +94,7 @@ int		ft_index_calc(t_l *l)
 ** calculates the x position of cursor for history command
 */
 
-int		ft_cursor_x(t_l *l)
+int			ft_cursor_x(t_l *l)
 {
 	int	i;
 

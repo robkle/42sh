@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/26 15:59:17 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/27 22:37:42 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		ft_rs_print(void)
 {
-	//char	*tmp;
 	char	tmp[4096];
 	int		len;
 	int		d;
@@ -25,40 +24,12 @@ void		ft_rs_print(void)
 		d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
 		ft_bzero(tmp, 4096);
 		ft_strncpy(tmp, g_shell.history->hist[g_shell.history->hst], len - d);
-		//tmp = ft_strndup(g_shell.history->hist[g_shell.history->hst], len - d);
 		ft_putstr(tmp);
-		//free(tmp);
 	}
 	else
 		ft_putstr(g_shell.history->hist[g_shell.history->hst]);
 }
 
-/*
-static int	ft_reverse_search_count_rows(t_l *l)
-{
-	int	count;
-	int	row;
-	int	i;
-
-	count = ft_strlen(l->rev_sr);
-	row = count / l->co;
-	i = -1;
-	while (g_shell.history->hist[g_shell.history->hst][++i])
-	{
-		if (g_shell.history->hist[g_shell.history->hst][i] == '\n')
-		{
-			row++;
-			count = 0;
-		}
-		row += count / l->co;
-		count++;
-	}
-	l->nb = count;
-	l->y = row;
-	l->x = count % l->co;
-	return (row);
-}
-*/
 void		ft_reverse_search_clear(t_l *l)
 {
 	int	i;
