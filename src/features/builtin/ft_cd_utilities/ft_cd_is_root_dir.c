@@ -17,7 +17,7 @@ char	is_root_dir(char *path)
 	t_stat root;
 	t_stat path_stat;
 
-	if (path == NULL)
+	if (path == NULL || access(path, F_OK) != 0)
 		return (FALSE);
 	stat("/", &root);
 	stat(path, &path_stat);
