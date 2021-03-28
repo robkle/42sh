@@ -6,39 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/20 18:29:16 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/26 23:52:15 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static int	read_history_file(int fd)
-{
-	char	*line;
-	char	buffer[2][4096];
-	int		i;
-	int		end_pos;
-
-	ft_bzero(buffer[0], 4096);
-	i = 0;
-	while (get_next_line(fd, &line) && i < HISTFILESIZE)
-	{
-		ft_strcat(buffer[0], line);
-		if ((end_pos = ft_check_continue_hist(buffer[0])) != -1)
-		{
-			ft_bzero(buffer[1], 4096);
-			ft_strncpy(buffer[1], buffer[0], end_pos + 1);
-			ft_strcat(buffer[1], "\n");
-			g_shell.history->hist[i++] = ft_strdup(buffer[1]);
-			g_shell.history->curr = i;
-			ft_strcpy(buffer[0], &buffer[0][end_pos]);
-		}
-		else
-			ft_strcat(buffer[0], "\n");
-		free(line);
-	}
-	return (i);
-}
 
 void		get_history(int fd)
 {
