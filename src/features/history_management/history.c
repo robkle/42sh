@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/26 23:52:15 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/28 15:32:13 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 void		get_history(int fd)
 {
 	int		i;
+	char	**ptr_container;
 
 	fd = open(g_shell.history->savedfile, O_RDWR | O_CREAT, 0644);
-	i = read_history_file(fd);
+	ptr_container = g_shell.history->hist;
+	i = read_commands_from_a_file(fd, ptr_container);
+	g_shell.history->curr = i;
 	g_shell.history->hst = g_shell.history->curr;
 	g_shell.history->hist[i++] = ft_strnew(0);
 	g_shell.history->hist[i] = NULL;
@@ -45,7 +48,7 @@ static void	append_history_realloc(void)
 
 void		append_history(void)
 {
-	if (ft_strequ(g_shell.history->tmp, "\n"))
+	if (ft_isspace_str(g_shell.history->tmp))
 	{
 		free(g_shell.history->tmp);
 		g_shell.history->tmp = NULL;

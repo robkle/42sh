@@ -6,40 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:30:35 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/20 16:17:03 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/28 18:53:04 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static char	*fc_e_build_cmd(void)
-{
-	int		fd;
-	char	*line;
-	char	buffer[2][4096];
-	int		end_pos;
-
-	ft_bzero(buffer[0], 4096);
-	ft_bzero(buffer[1], 4096);
-	fd = open(FC_EDITING_FILE, O_RDONLY, 0644);
-	while (get_next_line(fd, &line))
-	{
-		ft_strcat(buffer[0], line);
-		if ((end_pos = ft_check_continue_hist(buffer[0])) != -1 && line[0])
-		{
-			if (buffer[1][0])
-				ft_strcat(buffer[1], ";");
-			ft_strncat(buffer[1], buffer[0], end_pos + 1);
-			ft_strcpy(buffer[0], &buffer[0][end_pos]);
-		}
-		else if (line[0])
-			ft_strcat(buffer[0], "\n");
-		free(line);
-	}
-	close(fd);
-	ft_strcat(buffer[1], "\n");
-	return (ft_strdup(buffer[1]));
-}
 
 static int	fc_e_init_range(int *r_ind, char *first, char *last)
 {
@@ -63,16 +34,11 @@ static int	fc_e_init_range(int *r_ind, char *first, char *last)
 
 static void	fc_e_copy_lines_into_editor(int fd, int *r_ind)
 {
-	char	*format;
-
 	if (r_ind[0] < r_ind[1])
 	{
 		while (r_ind[0] < r_ind[1])
 		{
-			format = ft_strndup(g_shell.history->hist[r_ind[0] - 1], \
-			(int)ft_strlen(g_shell.history->hist[r_ind[0] - 1]) - 1);
-			ft_dprintf(fd, "%s\n", format);
-			ft_strdel(&format);
+			write_history_commands_into_editor(fd, r_ind);
 			r_ind[0]++;
 		}
 	}
@@ -80,14 +46,11 @@ static void	fc_e_copy_lines_into_editor(int fd, int *r_ind)
 	{
 		while (r_ind[0] > r_ind[1])
 		{
-			format = ft_strndup(g_shell.history->hist[r_ind[0] - 1], \
-			(int)ft_strlen(g_shell.history->hist[r_ind[0] - 1]) - 1);
-			ft_dprintf(fd, "%s\n", format);
-			ft_strdel(&format);
+			write_history_commands_into_editor(fd, r_ind);
 			r_ind[0]--;
 		}
 	}
-	ft_dprintf(fd, "%s", g_shell.history->hist[r_ind[0] - 1]);
+	write_history_commands_into_editor(fd, r_ind);
 }
 
 static void	fc_e_editing_process(char *editor)
@@ -125,9 +88,25 @@ static void	fc_e_editing_process(char *editor)
 **		6. execute and change the command with g_shell.history->tmp
 */
 
+static void	fc_e_execution_loop(char *cmd[])
+{
+	int	i;
+
+	i = -1;
+	if (g_shell.history->tmp)
+		ft_strdel(&(g_shell.history->tmp));
+	while (cmd[++i])
+	{
+		g_shell.history->tmp = cmd[i];
+		ft_printf("%s", cmd[i]);
+		ft_fc_execute(cmd[i]);
+		(g_shell.history->tmp != NULL) ? append_history() : 0;
+	}
+}
+
 int			fc_e_op(int ops, char *editor, char *first, char *last)
 {
-	char	*cmd;
+	char	*cmd[52];
 	int		r_ind[2];
 	int		fd;
 
@@ -141,11 +120,8 @@ int			fc_e_op(int ops, char *editor, char *first, char *last)
 	fc_e_copy_lines_into_editor(fd, r_ind);
 	close(fd);
 	fc_e_editing_process(editor);
-	cmd = fc_e_build_cmd();
-	if (g_shell.history->tmp)
-		free(g_shell.history->tmp);
-	g_shell.history->tmp = cmd;
-	ft_printf("%s", cmd);
-	ft_fc_execute(cmd);
+	ft_bzero(cmd, sizeof(char*) * 52);
+	fc_e_build_cmd(cmd);
+	fc_e_execution_loop(cmd);
 	return (EXIT_SUCCESS);
 }

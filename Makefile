@@ -181,6 +181,7 @@ BUILT_IN_FILE += ft_jobs.c
 BUILT_IN_FILE += ft_fg.c
 BUILT_IN_FILE += ft_fc.c
 BUILT_IN_FILE += ft_fc_utilities/ft_fc_exec_e.c
+BUILT_IN_FILE += ft_fc_utilities/ft_fc_exec_e2.c
 BUILT_IN_FILE += ft_fc_utilities/ft_fc_exec_s.c
 BUILT_IN_FILE += ft_fc_utilities/ft_fc_execute.c
 BUILT_IN_FILE += ft_fc_utilities/ft_fc_utilities.c
@@ -220,11 +221,11 @@ JOB_CONTROL := $(addprefix $(JOB_CONTROL_DIR)/,$(JOB_CONTROL_FILE))
 # History Management
 HISTORY_MANAGEMENT_DIR := $(FEATURES_DIR)/history_management
 HISTORY_MANAGEMENT_FILE += history.c
-HISTORY_MANAGEMENT_FILE += read_history_file.c
-HISTORY_MANAGEMENT_FILE += read_history_file_utils.c
+HISTORY_MANAGEMENT_FILE += read_file.c
+HISTORY_MANAGEMENT_FILE += read_file_utils.c
+HISTORY_MANAGEMENT_FILE += read_file_utils2.c
 HISTORY_MANAGEMENT_FILE += history_exp.c
 HISTORY_MANAGEMENT_FILE += history_exp_utils.c
-HISTORY_MANAGEMENT_FILE += history_input_check.c
 HISTORY_MANAGEMENT := $(addprefix $(HISTORY_MANAGEMENT_DIR)/,$(HISTORY_MANAGEMENT_FILE))
 # Arithmetic Expansion
 ARITHMETIC_EXPANSION_DIR := $(FEATURES_DIR)/arithmetic_expansion
@@ -363,6 +364,7 @@ UTILITY_FILE += ft_atolli_check.c
 UTILITY_FILE += ft_llitoa.c
 UTILITY_FILE += is_number_str.c
 UTILITY_FILE += ft_strrev.c
+UTILITY_FILE += ft_isspace_str.c
 UTILITY := $(addprefix $(UTILITY_DIR)/,$(UTILITY_FILE))
 
 ############################ SUM-UP SOURCE FILES ##############################
