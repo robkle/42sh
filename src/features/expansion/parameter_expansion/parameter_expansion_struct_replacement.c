@@ -6,11 +6,19 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:34:44 by dthan             #+#    #+#             */
-/*   Updated: 2021/02/28 14:02:08 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/28 21:14:00 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+void						simple_parameter_expansion_change_value_helper(
+	char replacement[256], char *value)
+{
+	ft_strcpy(replacement, value);
+	if (is_replacement_has_quotation(replacement))
+		add_back_slash_in_front(replacement);
+}
 
 int							simple_parameter_expansion(
 	char replacement[256], char parameter[256])
@@ -35,7 +43,8 @@ int							simple_parameter_expansion(
 	{
 		var = ft_getvar(parameter);
 		if (var->value)
-			ft_strcpy(replacement, var->value);
+			simple_parameter_expansion_change_value_helper(
+				replacement, var->value);
 	}
 	return (EXIT_SUCCESS);
 }
