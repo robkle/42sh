@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 12:36:51 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/01 11:06:50 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/29 11:08:56 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ typedef enum	e_pr
 */
 int				ft_arx(t_process *p);
 int				ft_arx_lexer(char *arx, long long int *res);
+
+/*
+** arx_check.c
+*/
+int				ft_is_arithmetic_expansion(char *str);
+void			ft_arx_get_range(char *str, int range[]);
+int				ft_jump_arx_exp(char *str, int *i);
 
 /*
 ** arx_exp.c
