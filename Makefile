@@ -39,7 +39,7 @@
 #		project, I recommend you to put its file into the UTILITY.
 #		Ex: functions which in the man page
 CC				:= clang
-CFLAGS			:= -Wall -Wextra -Werror -g # g flag for debugger
+CFLAGS			:= -Wall -Wextra -Werror -g  #g flag for debugger
 PROGRAM			:= 42sh
 # library dir
 LIBFT_DIR		:= ./libft

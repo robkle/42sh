@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 11:02:52 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/29 11:16:30 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/29 17:43:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_is_arithmetic_expansion(char *str)
 ** Finds range of arx expansion
 */
 
-void	ft_arx_get_range(char *str, int range[])
+int		ft_arx_get_range(char *str, int range[])
 {
 	int i;
 
@@ -49,11 +49,13 @@ void	ft_arx_get_range(char *str, int range[])
 			str[i + 1] == '(' && str[i + 2] && str[i + 2] == '(')
 		{
 			range[0] = i;
-			ft_jump_arx_exp(str, &i);
+			if(ft_jump_arx_exp(str, &i) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
 			range[1] = i;
 			break ;
 		}
 	}
+	return (EXIT_SUCCESS);	
 }
 
 /*
@@ -67,16 +69,10 @@ int		ft_jump_arx_exp(char *str, int *i)
 	stack = 0;
 	while (str[++(*i)])
 	{
-		if (ft_strnequ(&str[*i], "((", 2))
-		{
+		if (str[*i] == '(')
 			stack++;
-			++(*i);
-		}
-		else if (ft_strnequ(&str[*i], "))", 2))
-		{
+		else if (str[*i] == ')')
 			stack--;
-			++(*i);
-		}
 		else if ((str[*i] == '"' || str[*i] == '\'' || str[*i] == '\\') &&
 				is_real_character(str, *i))
 		{
@@ -86,5 +82,7 @@ int		ft_jump_arx_exp(char *str, int *i)
 		if (stack == 0)
 			break ;
 	}
-	return ((str[*i] == '\0') ? EXIT_FAILURE : EXIT_SUCCESS);
+	if (str[*i] == '\0' || !ft_strnequ(&str[*i - 1], "))", 2))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
