@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 22:16:25 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/29 15:14:44 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/29 15:43:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	ft_init_rs_row_count(t_l *l, char tmp[], int *count)
 	if (g_shell.history->hist[g_shell.history->hst][0])
 	{
 		len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
-		//d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
 		d = 1;
 		ft_strncpy(tmp, g_shell.history->hist[g_shell.history->hst], \
 		len - d);
