@@ -92,5 +92,6 @@ int						remove_smallest_prefix_pattern(
 int						tilde_expansion(t_process *p);
 char					*get_login_value(char *t_prefix);
 int						tilde_prefix_len(char *word);
+char					*get_value(char *t_prefix);
 
 #endif

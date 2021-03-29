@@ -12,22 +12,6 @@
 
 #include "shell.h"
 
-char	*get_value(char *t_prefix)
-{
-	char *value;
-
-	if ((ft_strcmp(t_prefix, "~/") == 0 || ft_strcmp(t_prefix, "~") == 0) &&
-		(value = ft_getenv("HOME")) != NULL)
-		return (ft_strdup(value));
-	else if (ft_strcmp(t_prefix, "~+") == 0 &&
-		(value = ft_getenv("PWD")) != NULL)
-		return (ft_strdup(value));
-	else if (ft_strcmp(t_prefix, "~-") == 0 &&
-		(value = ft_getenv("OLDPWD")) != NULL)
-		return (ft_strdup(value));
-	return (value = get_login_value(&t_prefix[1]));
-}
-
 int		expand_tilde(char **word)
 {
 	int		i;
@@ -100,6 +84,22 @@ int		expand_assignments(char **assignment)
 	return (EXIT_SUCCESS);
 }
 
+int		expand_internal_variables(t_process *p)
+{
+	t_assignment	*assign_tmp;
+	int				status;
+
+	assign_tmp = p->first_assignment;
+	status = 0;
+	while (assign_tmp != NULL)
+	{
+		if (ft_strchr(assign_tmp->data, '=') != NULL)
+			status = expand_assignments(&assign_tmp->data);
+		assign_tmp = assign_tmp->next;
+	}
+	return (status);
+}
+
 int		tilde_expansion(t_process *p)
 {
 	int		i;
@@ -123,5 +123,6 @@ int		tilde_expansion(t_process *p)
 			status = expand_tilde(&tmp->word);
 		tmp = tmp->next;
 	}
+	status = expand_internal_variables(p);
 	return (status);
 }
