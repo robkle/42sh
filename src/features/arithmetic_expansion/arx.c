@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 20:28:05 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/29 17:44:12 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/29 20:16:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	ft_arx_expand(char **str)
 
 	range[0] = 0;
 	range[1] = 0;
-	if(ft_arx_get_range(*str, range) == EXIT_FAILURE)
+	if (ft_arx_get_range(*str, range) == EXIT_FAILURE)
 	{
 		ft_dprintf(2, "42sh: syntax error in expression\n");
 		return (EXIT_FAILURE);

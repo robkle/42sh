@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 10:43:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/29 18:49:59 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/29 20:11:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ char		*ft_calc(t_st *postfix)
 		if (!ft_strequ(postfix->type, "operator"))
 			ft_push_stack(&stack, postfix->op, postfix->type);
 		else if (ft_strequ(postfix->op, "u+") || ft_strequ(postfix->op, "u-"))
-			stack->op = ft_strequ(postfix->op, "u-") ? \
-			ft_llitoa(-1 * (ft_atolli(stack->op))) : stack->op;
+		{
+			if (ft_strequ(postfix->op, "u-"))
+				ft_calc_unary(stack);
+		}
 		else if (ft_strequ(postfix->op, "p++") || \
 		ft_strequ(postfix->op, "p--") || ft_strequ(postfix->op, "s++") || \
 		ft_strequ(postfix->op, "s--"))

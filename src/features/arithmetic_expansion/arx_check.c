@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 11:02:52 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/29 17:43:15 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/29 20:16:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int		ft_arx_get_range(char *str, int range[])
 			str[i + 1] == '(' && str[i + 2] && str[i + 2] == '(')
 		{
 			range[0] = i;
-			if(ft_jump_arx_exp(str, &i) == EXIT_FAILURE)
+			if (ft_jump_arx_exp(str, &i) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			range[1] = i;
 			break ;
 		}
 	}
-	return (EXIT_SUCCESS);	
+	return (EXIT_SUCCESS);
 }
 
 /*

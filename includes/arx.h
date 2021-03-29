@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 12:36:51 by rklein            #+#    #+#             */
-/*   Updated: 2021/03/29 17:43:48 by marvin           ###   ########.fr       */
+/*   Updated: 2021/03/29 20:12:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void			ft_base_calc(t_st *infix);
 ** calc.c
 */
 char			*ft_calc(t_st *postfix);
+void			ft_calc_unary(t_st	*stack);
 
 /*
 ** checker.c
