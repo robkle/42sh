@@ -6,18 +6,23 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:22:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/28 15:32:13 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/29 21:36:34 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		get_history(int fd)
+int			get_history(int fd)
 {
 	int		i;
 	char	**ptr_container;
 
 	fd = open(g_shell.history->savedfile, O_RDWR | O_CREAT, 0644);
+	if (fd == -1)
+	{
+		ft_dprintf(2, "42sh: Fatal error: .history: Permission denied\n");
+		return (EXIT_FAILURE);
+	}
 	ptr_container = g_shell.history->hist;
 	i = read_commands_from_a_file(fd, ptr_container);
 	g_shell.history->curr = i;
@@ -26,6 +31,7 @@ void		get_history(int fd)
 	g_shell.history->hist[i] = NULL;
 	g_shell.history->hstsize = HISTFILESIZE;
 	close(fd);
+	return (EXIT_SUCCESS);
 }
 
 static void	append_history_realloc(void)
