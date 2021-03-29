@@ -41,9 +41,11 @@ void	expand_assignment_variables(char **final, char ***variables, char *name)
 {
 	int		i;
 	char	*tmp;
+	char	*tmp2;
 
 	i = 0;
 	tmp = NULL;
+	tmp2 = NULL;
 	while ((*variables)[i] != NULL)
 	{
 		if ((*variables)[i][0] == '~')
@@ -53,8 +55,10 @@ void	expand_assignment_variables(char **final, char ***variables, char *name)
 		else
 		{
 			tmp = ft_strjoin(":", (*variables)[i]);
-			(*final) = ft_strjoin((*final), tmp);
+			tmp2 = (*final);
+			(*final) = ft_strjoin(tmp2, tmp);
 			free(tmp);
+			free(tmp2);
 		}
 		i++;
 	}
