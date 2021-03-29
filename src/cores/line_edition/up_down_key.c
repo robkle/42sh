@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/19 21:57:11 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/29 15:42:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ static void	up_down_key_apply_statuses(t_l *l)
 	apply_termcap_str("cd", 0, 0);
 	l->starting_row = new_starting_row;
 	ft_putstr(l->line);
-	if (l->x == 0)
-		ft_putchar('\n');
 }
 
 int			up_key(t_l *l)
@@ -48,7 +46,7 @@ int			up_key(t_l *l)
 	g_shell.history->hst--;
 	ft_strdel(&l->line);
 	len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
-	d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
+	d = 1;
 	l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
 	len - d);
 	up_down_key_apply_statuses(l);
@@ -68,7 +66,7 @@ static void	down_key(t_l *l)
 	if (g_shell.history->hst != g_shell.history->curr)
 	{
 		len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
-		d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
+		d = 1;
 		l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
 		len - d);
 	}
