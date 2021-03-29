@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:47:47 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/27 22:37:42 by rklein           ###   ########.fr       */
+/*   Updated: 2021/03/29 15:14:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void		ft_rs_print(void)
 	if (g_shell.history->hist[g_shell.history->hst][0])
 	{
 		len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
-		d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
+		//d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
+		d = 1;
 		ft_bzero(tmp, 4096);
 		ft_strncpy(tmp, g_shell.history->hist[g_shell.history->hst], len - d);
 		ft_putstr(tmp);
@@ -67,7 +68,8 @@ int			ft_reverse_search_reset(t_l *l)
 	if (g_shell.history->hist[g_shell.history->hst][0])
 	{
 		len = ft_strlen(g_shell.history->hist[g_shell.history->hst]);
-		d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
+		//d = g_shell.history->hist[g_shell.history->hst][len - 1] == 4 ? 2 : 1;
+		d = 1;
 		l->line = ft_strndup(g_shell.history->hist[g_shell.history->hst], \
 		len - d);
 	}
