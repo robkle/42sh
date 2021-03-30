@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/03/28 19:06:08 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/30 18:45:18 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,24 @@ static void	delete_enviroment(char **env)
 	free(env);
 }
 
-int			ft_exit_internal(int ret_value)
+static void	append_and_delete_save_history(void)
 {
 	(g_shell.history->tmp != NULL) ? append_history() : 0;
 	delete_save_history();
 	ft_arraydel(g_shell.history->hist);
 	free(g_shell.history->tmp);
 	free(g_shell.history);
-	delete_enviroment(g_shell.env);
-	clean_table_intern_var(g_shell.intern_var);
-	if (g_shell.first_job)
-	{
-		update_status();
-		delete_job(g_shell.first_job, 1);
-	}
+}
+
+int			ft_exit_internal(int ret_value)
+{
 	remove_all(&g_shell.alias);
 	remove_hashentries();
 	delete_builtin_commands();
+	append_and_delete_save_history();
+	delete_all_jobs_before_exit(g_shell.first_job);
+	clean_table_intern_var(g_shell.intern_var);
+	delete_enviroment(g_shell.env);
 	if (g_shell.pipe_indicator == 0)
 		ft_dprintf(STDERR_FILENO, "exit\n");
 	exit(ret_value);
