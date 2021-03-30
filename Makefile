@@ -209,6 +209,7 @@ BUILT_IN := $(addprefix $(BUILT_IN_DIR)/,$(BUILT_IN_FILE))
 JOB_CONTROL_DIR := $(FEATURES_DIR)/job_control
 JOB_CONTROL_FILE += job_utils.c
 JOB_CONTROL_FILE += job_utils2.c
+JOB_CONTROL_FILE += job_utils3.c
 JOB_CONTROL_FILE += create_delete_job_tools.c
 JOB_CONTROL_FILE += process_utils.c
 JOB_CONTROL_FILE += delete_process_tools.c

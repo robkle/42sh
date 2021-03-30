@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 20:34:20 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/30 18:41:30 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/30 20:57:32 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ t_job		*find_the_current_job(void);
 t_job		*find_job(pid_t pgid);
 void		job_command_builder(int argc, t_job *j, ...);
 void		delete_all_jobs_before_exit(t_job *first_job);
+void		set_job_complete_because_of_signal(t_job *j);
 
 /*
 ** Process tools

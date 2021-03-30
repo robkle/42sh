@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stopped_and_terminated_jobs.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 02:37:24 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/30 20:17:31 by dthan            ###   ########.fr       */
+/*   Updated: 2021/03/30 20:57:05 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,6 @@ void	mark_process_status_exit(t_process *p, int status)
 	ft_putchar('\n');
 	p->stopped = 1;
 	g_shell.exit_status = 128 + WSTOPSIG(status);
-}
-
-void	set_job_complete_because_of_signal(t_job *j)
-{
-	t_process *p_ptr;
-
-	p_ptr = j->first_process;
-	while (p_ptr)
-	{
-		if (!p_ptr->completed)
-		{
-			kill(p_ptr->pid, SIGTERM);
-			p_ptr->completed = 1;
-		}
-		p_ptr = p_ptr->next;
-	}
 }
 
 void	print_signal(char *sig_message, int sig_number, t_job *j)
@@ -70,7 +54,8 @@ void	mark_process_status_signal(t_process *p, int status, t_job *j)
 			WTERMSIG(status) > 0)
 		{
 			if (is_signal_should_print(WTERMSIG(status)))
-				print_signal(sig_msgs[WTERMSIG(status) - 1], WTERMSIG(status), j);
+				print_signal(sig_msgs[WTERMSIG(status) - 1], \
+				WTERMSIG(status), j);
 		}
 		else
 			ft_printf("%s: Unknown signal%d\n", SHELL_NAME, WTERMSIG(status));
@@ -109,7 +94,8 @@ int		mark_process_status(t_job *j, pid_t pid, int status)
 		j_ptr = j;
 		while (j_ptr)
 		{
-			ret = mark_process_status_helper(j_ptr->first_process, pid, status, j);
+			ret = mark_process_status_helper(\
+			j_ptr->first_process, pid, status, j);
 			if (ret == 0)
 				return (0);
 			j_ptr = j_ptr->next;
