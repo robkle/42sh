@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 14:19:47 by rklein            #+#    #+#             */
-/*   Updated: 2021/04/01 14:20:32 by rklein           ###   ########.fr       */
+/*   Updated: 2021/04/01 15:19:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int			ft_arx_assign(t_process *p)
 		{
 			if (ft_arx_replace_redi(&ptr->data) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			ptr = ptr->next;
 		}
+		ptr = ptr->next;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -40,8 +40,8 @@ int			ft_arx_redi(t_process *p)
 		{
 			if (ft_arx_replace_redi(&redi_ptr->word) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			redi_ptr = redi_ptr->next;
 		}
+		redi_ptr = redi_ptr->next;
 	}
 	return (EXIT_SUCCESS);
 }
