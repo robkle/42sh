@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 20:28:05 by rklein            #+#    #+#             */
-/*   Updated: 2021/04/01 13:45:29 by marvin           ###   ########.fr       */
+/*   Updated: 2021/04/01 14:21:27 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	ft_arx_expand(char **str)
 ** recursive function that sends each arx in av[i] for expansion
 */
 
-static int	ft_arx_replace_av(char **av, int i)
+int			ft_arx_replace_av(char **av, int i)
 {
 	char *arx;
 	char *tmp;
@@ -115,7 +115,7 @@ static int	ft_arx_replace_av(char **av, int i)
 	return (EXIT_SUCCESS);
 }
 
-static int	ft_arx_replace_redi(char **word)
+int			ft_arx_replace_redi(char **word)
 {
 	char *arx;
 	char *tmp;
@@ -131,52 +131,5 @@ static int	ft_arx_replace_redi(char **word)
 	free(tmp);
 	if (ft_is_arithmetic_expansion(*word))
 		return (ft_arx_replace_redi(word));
-	return (EXIT_SUCCESS);
-}
-
-int			ft_arx_redi(t_process *p)
-{
-	t_redi	*redi_ptr;
-
-	redi_ptr = p->first_redi;
-	while (redi_ptr)
-	{
-		if (ft_is_arithmetic_expansion(redi_ptr->word))
-		{
-			if (ft_arx_replace_redi(&redi_ptr->word) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			redi_ptr = redi_ptr->next;
-		}
-	}
-	return (EXIT_SUCCESS);
-}
-
-/*
-** Loops through av, checks each for arx.
-** If arx is found it is send to be expanded
-*/
-
-int			ft_arx_av(t_process *p)
-{
-	int		i;
-
-	i = -1;
-	while (p->av[++i])
-	{
-		if (ft_is_arithmetic_expansion(p->av[i]))
-		{
-			if (ft_arx_replace_av(p->av, i) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
-	}
-	return (EXIT_SUCCESS);
-}
-
-int			ft_arx(t_process *p)
-{
-	if (ft_arx_redi(p) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (ft_arx_av(p) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

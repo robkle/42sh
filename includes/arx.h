@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 12:36:51 by rklein            #+#    #+#             */
-/*   Updated: 2021/04/01 13:46:56 by marvin           ###   ########.fr       */
+/*   Updated: 2021/04/01 14:25:02 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,18 @@ typedef enum	e_pr
 }				t_pr;
 
 /*
-** arx.c
+** arx_handler.c
 */
 int				ft_arx(t_process *p);
 int				ft_arx_av(t_process *p);
 int				ft_arx_redi(t_process *p);
+int				ft_arx_assign(t_process *p);
+
+/*
+** arx.c
+*/
+int				ft_arx_replace_av(char **av, int i);
+int				ft_arx_replace_redi(char **word);
 int				ft_arx_lexer(char *arx, long long int *res);
 
 /*
