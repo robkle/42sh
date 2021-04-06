@@ -19,7 +19,8 @@ static void	set_process_group_id(t_job *j, pid_t pid)
 	setpgid(pid, j->pgid);
 }
 
-static void	handle_assignment_in_child_process(t_assignment *list)
+static void	handle_assignment_in_child_process(t_assignment *list, t_process *p,
+char **path)
 {
 	t_assignment	*ptr;
 	char			*name;
@@ -31,6 +32,8 @@ static void	handle_assignment_in_child_process(t_assignment *list)
 		name = ft_strndup(ptr->data, ft_strchr(ptr->data, '=') - &ptr->data[0]);
 		value = ft_strdup(ft_strchr(ptr->data, '=') + 1);
 		add_update_environment_var(name, value);
+		if (ft_strequ(name, "PATH"))
+			(*path) = get_path(p);
 		(name) ? free(name) : 0;
 		(value) ? free(value) : 0;
 		ptr = ptr->next;
@@ -42,7 +45,7 @@ static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 	(j->pipe_fd_closer[0]) ? close(j->pipe_fd_closer[0]) : 0;
 	(j->pipe_fd_closer[1]) ? close(j->pipe_fd_closer[1]) : 0;
 	if (p->first_assignment)
-		handle_assignment_in_child_process(p->first_assignment);
+		handle_assignment_in_child_process(p->first_assignment, p, &path);
 	if (handle_redirection(p) == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
 	set_process_group_id(j, getpid());
@@ -54,10 +57,22 @@ static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 
 void		fork_and_launch_in_child_process(t_job *j, t_process *p)
 {
-	pid_t	pid;
-	char	*path;
+	pid_t			pid;
+	t_assignment	*ptr;
+	char			*path;
+	char			*name;
 
+	ptr = p->first_assignment;
 	path = get_path(p);
+	name = NULL;
+	while (ptr)
+	{
+		name = ft_strndup(ptr->data, ft_strchr(ptr->data, '=') - &ptr->data[0]);
+		if (ft_strequ(name, "PATH"))
+			remove_hashentries();
+		(name) ? free(name) : 0;
+		ptr = ptr->next;
+	}
 	pid = fork();
 	if (pid == 0)
 		lauch_in_child_process(j, p, path);
