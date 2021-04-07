@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 16:53:57 by dthan             #+#    #+#             */
-/*   Updated: 2021/03/30 19:40:53 by dthan            ###   ########.fr       */
+/*   Updated: 2021/04/07 01:02:17 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,25 @@ void	format_job_info(t_job *j, const char *status, int opt)
 	ft_putchar('\n');
 }
 
+int		need_to_do_notification_completed_job(t_job *j)
+{
+	t_process *process_ptr;
+
+	if (j->foreground)
+		return (0);
+	process_ptr = j->first_process;
+	while (process_ptr)
+	{
+		if (!process_ptr->notified)
+			return (1);
+		process_ptr = process_ptr->next;
+	}
+	return (0);
+}
+
 void	do_job_notification_completed_job(t_job *j, t_job *jlast, t_job *jnext)
 {
-	if (!j->foreground)
+	if (need_to_do_notification_completed_job(j))
 		format_job_info(j, "Done", 0);
 	if (jlast)
 		jlast->next = jnext;
