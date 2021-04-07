@@ -55,9 +55,8 @@ static void	lauch_in_child_process(t_job *j, t_process *p, char *path)
 	exit(execute_in_child_process(j, p, path));
 }
 
-void		fork_and_launch_in_child_process(t_job *j, t_process *p)
+char		*get_path_for_child_process(t_process *p)
 {
-	pid_t			pid;
 	t_assignment	*ptr;
 	char			*path;
 	char			*name;
@@ -69,10 +68,22 @@ void		fork_and_launch_in_child_process(t_job *j, t_process *p)
 	{
 		name = ft_strndup(ptr->data, ft_strchr(ptr->data, '=') - &ptr->data[0]);
 		if (ft_strequ(name, "PATH"))
+		{
+			path = NULL;
 			remove_hashentries();
+		}
 		(name) ? free(name) : 0;
 		ptr = ptr->next;
 	}
+	return (path);
+}
+
+void		fork_and_launch_in_child_process(t_job *j, t_process *p)
+{
+	pid_t			pid;
+	char			*path;
+
+	path = get_path_for_child_process(p);
 	pid = fork();
 	if (pid == 0)
 		lauch_in_child_process(j, p, path);
