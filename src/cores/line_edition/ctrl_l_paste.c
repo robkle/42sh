@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 01:37:15 by tango             #+#    #+#             */
-/*   Updated: 2021/04/06 15:50:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/04/07 19:41:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	wind_up_cursor(t_l *l)
 	l->starting_row = ft_row_count(l) - 1;
 	starting_row_from_top = l->total_row - l->starting_row;
 	gap_between_begin_end = ft_y_pos(l, ft_index_calc(l));
-	row_position = starting_row_from_top + gap_between_begin_end - 1;
+	row_position = starting_row_from_top + gap_between_begin_end;
 	nb_rewind = get_current_row() - row_position;
 	while (nb_rewind-- > 0)
 	{
