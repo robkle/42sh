@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signal.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 20:29:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/22 17:23:42 by tango            ###   ########.fr       */
+/*   Updated: 2021/04/07 19:06:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 
 void	sig_controller(int option);
 void	init_signal_messages(char *sig_msgs[SIGNAL_NUMBER_OSX]);
+void	delete_signal_messages(char **msgs);
 void	sig_int_handler(int sig);
 void	handle_sigwinch(t_l *l);
 char	is_signal_should_print(int sig);

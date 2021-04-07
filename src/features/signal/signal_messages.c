@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   signal_messages.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 16:49:44 by tango             #+#    #+#             */
-/*   Updated: 2021/04/06 23:30:33 by dthan            ###   ########.fr       */
+/*   Updated: 2021/04/07 19:06:18 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <shell.h>
+
+void		delete_signal_messages(char **msgs)
+{
+	int i;
+
+	if (msgs == NULL)
+		return ;
+	i = -1;
+	while (++i < SIGNAL_NUMBER_OSX)
+		free(msgs[i]);
+}
 
 char		is_signal_should_print(int sig)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2021/04/07 01:11:46 by dthan            ###   ########.fr       */
+/*   Updated: 2021/04/07 19:06:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,6 @@ static void	append_and_delete_save_history(void)
 	ft_arraydel(g_shell.history->hist);
 	free(g_shell.history->tmp);
 	free(g_shell.history);
-}
-
-static void	delete_signal_messages(char **msgs)
-{
-	int i;
-
-	if (msgs == NULL)
-		return ;
-	i = -1;
-	while (++i < SIGNAL_NUMBER_OSX)
-		free(msgs[i]);
 }
 
 int			ft_exit_internal(int ret_value)
