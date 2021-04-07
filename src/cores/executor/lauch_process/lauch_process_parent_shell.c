@@ -74,6 +74,8 @@ static int	lauch_assignment_words(t_assignment *list)
 			intern_var->exported = 0;
 		(is_intern_var(intern_var->name)) ? update_intern_var(intern_var) :
 			add_intern_var(intern_var);
+		if (ft_strequ(intern_var->name, "PATH"))
+			remove_hashentries();
 		ptr = ptr->next;
 	}
 	return (EXIT_SUCCESS);
