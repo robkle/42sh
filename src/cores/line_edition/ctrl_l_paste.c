@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 01:37:15 by tango             #+#    #+#             */
-/*   Updated: 2021/04/07 19:41:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2021/03/19 22:01:04 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,10 @@ static char	*get_clip(char raw_clip[], char *autocom_clip)
 	return (clip);
 }
 
-static void	update_line(t_l *l, char *clip, int cursor_idx)
-{
-	char	*tmp;
-	int		clip_len;
-
-	clip_len = ft_strlen(clip);
-	tmp = ft_strnew(l->nb + clip_len);
-	if (l->line)
-		tmp = ft_strncpy(tmp, l->line, cursor_idx);
-	tmp = ft_strcat(tmp, clip);
-	if (l->line)
-		tmp = ft_strcat(tmp, &l->line[cursor_idx]);
-	ft_strdel(&l->line);
-	l->line = tmp;
-}
-
 int			paste(t_l *l, char raw_clip[], char *autocom_clip)
 {
 	char			*clip;
+	char			*tmp;
 	int				i;
 	int				clip_len;
 
@@ -85,7 +70,14 @@ int			paste(t_l *l, char raw_clip[], char *autocom_clip)
 	clip_len = ft_strlen(clip);
 	i = ft_index_calc(l);
 	paste_apply_screen(l, clip, i);
-	update_line(l, clip, i);
+	tmp = ft_strnew(l->nb + clip_len);
+	if (l->line)
+		tmp = ft_strncpy(tmp, l->line, i);
+	tmp = ft_strcat(tmp, clip);
+	if (l->line)
+		tmp = ft_strcat(tmp, &l->line[i]);
+	ft_strdel(&l->line);
+	l->line = tmp;
 	if (l->starting_row < ft_row_count(l) - 1)
 		wind_up_cursor(l);
 	paste_background(l, clip_len);
