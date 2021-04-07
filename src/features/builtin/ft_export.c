@@ -37,14 +37,12 @@ int	ft_export_print(void)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_export_export(char **av)
+int	ft_export_export(char **av, int i)
 {
-	int		i;
 	t_var	*var_temp;
 	char	name[4096];
 	char	value[4096];
 
-	i = -1;
 	while (av[++i])
 	{
 		ft_bzero(name, 4096);
@@ -62,14 +60,18 @@ int	ft_export_export(char **av)
 		var_temp->value = (ft_strchr(av[i], '=')) ? ft_strdup(value) : NULL;
 		(is_intern_var(var_temp->name)) ?
 			update_intern_var(var_temp) : add_intern_var(var_temp);
+		if (ft_strequ(var_temp->name, "PATH"))
+			remove_hashentries();
 	}
 	return (EXIT_SUCCESS);
 }
 
 int	ft_export(int ac, char **av)
 {
-	t_export export;
+	t_export	export;
+	int			i;
 
+	i = -1;
 	(void)ac;
 	ft_bzero(&export, sizeof(t_export));
 	export.opt_set = ft_strdup(BUILTIN_EXPORT_OPT_SET);
@@ -81,5 +83,5 @@ int	ft_export(int ac, char **av)
 	free(export.opt_set);
 	if (export.synopsis == 0 || export.synopsis == 1)
 		return (ft_export_print());
-	return (ft_export_export(export.av));
+	return (ft_export_export(export.av, i));
 }
