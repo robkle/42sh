@@ -20,10 +20,6 @@ Repository contains a Makefile for:<br />
 * deleting executable (**make fclean**)<br />
 * recompiling (**make re**)<br />
 
-<%--
-Example of 42sh:<br />
-<img src="screenshot.png" alt="example" width="500"/><br />
---%>
 #### Notes:
 This project was done together with [dthan](https://github.com/xopxop), [ihwang](https://github.com/ihwang) and [VictoriaElisabet](https://github.com/VictoriaElisabet) and is part of my studies at Hive Helsinki.<br />
 My part of the code handles the history, arithmetic expansion and line edition of user input. <br />
